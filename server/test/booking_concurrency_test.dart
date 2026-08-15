@@ -213,6 +213,138 @@ void main() {
     expect(row.first[0], 240);
   });
 
+  group('multi-session plans', () {
+    test('an eight-session plan lands as eight real times', () async {
+      // Story: "An eight-session package is eight rows, never one vague
+      // appointment object." Before this, a submitted plan confirmed one
+      // session and silently dropped the other seven.
+      final holds = <BookingHold>[];
+      for (var week = 0; week < 8; week++) {
+        holds.add(
+          await service.holdSlot(
+            userId: studentA,
+            professionalId: professionalId,
+            startsAt: slotStart.add(Duration(days: 7 * week)),
+            durationMinutes: 60,
+          ),
+        );
+      }
+
+      final booking = await service.confirmBooking(
+        userId: studentA,
+        holdId: holds.first.id,
+        additionalHoldIds: holds.skip(1).map((hold) => hold.id).toList(),
+        subject: 'Endodontics',
+        goal: 'A weekly block working through my own cases.',
+      );
+
+      final sessions = await db.execute(
+        'SELECT position, starts_at FROM booking_sessions '
+        'WHERE booking_id = @id ORDER BY position',
+        {'id': booking.id},
+      );
+      expect(sessions.length, 8);
+
+      // Positions are chronological, so session 1 is the first one attended
+      // rather than the first one picked.
+      for (var index = 0; index < 8; index++) {
+        expect(sessions[index][0], index + 1);
+        expect(
+          (sessions[index][1]! as DateTime).toUtc(),
+          slotStart.add(Duration(days: 7 * index)),
+        );
+      }
+
+      // Eight hours at 800/hour.
+      expect(booking.totalEgp, 6400);
+
+      // And every slot is still held on the professional's timeline, now as a
+      // session rather than a hold.
+      final reserved = await db.execute(
+        "SELECT count(*) FROM slot_reservations "
+        "WHERE booking_id = @id AND kind = 'session' AND status = 'active'",
+        {'id': booking.id},
+      );
+      expect(reserved.first[0], 8);
+    });
+
+    test('a plan with one taken slot leaves nothing behind', () async {
+      final mine = <BookingHold>[];
+      for (var week = 0; week < 3; week++) {
+        mine.add(
+          await service.holdSlot(
+            userId: studentA,
+            professionalId: professionalId,
+            startsAt: slotStart.add(Duration(days: 7 * week)),
+            durationMinutes: 60,
+          ),
+        );
+      }
+
+      // The fourth "hold" is someone else's — the case where a slot went while
+      // the student was still filling the plan.
+      final theirs = await service.holdSlot(
+        userId: studentB,
+        professionalId: professionalId,
+        startsAt: slotStart.add(const Duration(days: 21)),
+        durationMinutes: 60,
+      );
+
+      await expectLater(
+        service.confirmBooking(
+          userId: studentA,
+          holdId: mine.first.id,
+          additionalHoldIds: [...mine.skip(1).map((h) => h.id), theirs.id],
+          subject: 'Endodontics',
+          goal: 'A weekly block working through my own cases.',
+        ),
+        throwsA(isA<ApiException>()),
+      );
+
+      // All or nothing: no booking, no sessions, and the three legitimate
+      // holds are still holds rather than half-confirmed sessions.
+      final bookings = await db.execute('SELECT count(*) FROM bookings');
+      expect(bookings.first[0], 0);
+      final sessions = await db.execute(
+        'SELECT count(*) FROM booking_sessions',
+      );
+      expect(sessions.first[0], 0);
+      final held = await db.execute(
+        "SELECT count(*) FROM slot_reservations "
+        "WHERE kind = 'hold' AND status = 'active'",
+      );
+      expect(held.first[0], 4);
+    });
+
+    test('a plan may not span two professionals', () async {
+      await _createProfessional(db, 2);
+      final first = await service.holdSlot(
+        userId: studentA,
+        professionalId: professionalId,
+        startsAt: slotStart,
+        durationMinutes: 60,
+      );
+      final second = await service.holdSlot(
+        userId: studentA,
+        professionalId: 2,
+        startsAt: slotStart,
+        durationMinutes: 60,
+      );
+
+      // One price cannot cover two people's time.
+      await expectLater(
+        service.confirmBooking(
+          userId: studentA,
+          holdId: first.id,
+          additionalHoldIds: [second.id],
+          subject: 'Endodontics',
+          goal: 'Trying to book two different tutors as one plan.',
+        ),
+        throwsA(isA<ApiException>()),
+      );
+    });
+  });
+
   test('another user cannot confirm someone else\'s hold', () async {
     final hold = await service.holdSlot(
       userId: studentA,
@@ -307,10 +439,11 @@ Future<void> _createProfessional(TestDatabase db, int id) async {
       id, slug, kind, display_name_en, display_name_ar, hourly_rate_egp,
       is_approved
     ) VALUES (
-      @id, 'dr-mona-adel', 'tutoring', 'Dr. Mona Adel', 'د. منى عادل', 800, true
+      @id, @slug, 'tutoring', 'Dr. Mona Adel', 'د. منى عادل', 800, true
     )
     ''',
-    {'id': id},
+    // The handle is unique per professional, as it is in production.
+    {'id': id, 'slug': id == 1 ? 'dr-mona-adel' : 'dr-mona-adel-$id'},
   );
 }
 

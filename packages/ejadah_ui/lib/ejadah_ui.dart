@@ -7,6 +7,7 @@
 library;
 
 export 'src/components/ejadah_badges.dart';
+export 'src/components/ejadah_booking.dart';
 export 'src/components/ejadah_buttons.dart';
 export 'src/components/ejadah_cards.dart';
 export 'src/components/ejadah_inputs.dart';

@@ -63,4 +63,23 @@ class LocalStore {
 
   Future<void> setActiveTab(int index) =>
       _preferences.setInt(_activeTabKey, index);
+
+  /// Filters for one People door, kept per door.
+  ///
+  /// Tutoring, mentoring and consulting are filtered by different things, so a
+  /// single shared set would surprise on every switch.
+  Future<Map<String, dynamic>?> peopleFilters(String door) async {
+    final raw = await _preferences.getString(_peopleFiltersKey(door));
+    if (raw == null) return null;
+    final decoded = jsonDecode(raw);
+    return decoded is Map<String, dynamic> ? decoded : null;
+  }
+
+  Future<void> savePeopleFilters(String door, Map<String, dynamic> filters) =>
+      _preferences.setString(_peopleFiltersKey(door), jsonEncode(filters));
+
+  Future<void> clearPeopleFilters(String door) =>
+      _preferences.remove(_peopleFiltersKey(door));
+
+  static String _peopleFiltersKey(String door) => 'ejadah.people_filters.$door';
 }

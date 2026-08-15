@@ -6,4 +6,10 @@
 # this suite does not need, and the concurrency the product actually depends on
 # is exercised *inside* booking_concurrency_test.dart, where ten simultaneous
 # callers race for one slot.
+#
+# This only covers one process. Two `dart test` runs at once still share the
+# database and will wipe each other's fixtures — the symptom is a foreign-key
+# violation on a user that was just created, or a duplicate primary key on a
+# fixture the setUp truncated. Set TEST_DATABASE_URL to point a second run at
+# its own database.
 concurrency: 1

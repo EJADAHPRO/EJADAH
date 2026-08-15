@@ -310,7 +310,7 @@ class _Pagination extends ConsumerWidget {
           EjadahIconButton(
             // Mirrors in Arabic — "previous" is on the reading-start side.
             icon: EjadahIcons.chevronBack,
-            semanticLabel: context.strings.back,
+            semanticLabel: context.strings.previousPage,
             onPressed: page.page > 1
                 ? () => controller.goToPage(page.page - 1)
                 : null,
@@ -329,7 +329,7 @@ class _Pagination extends ConsumerWidget {
           const SizedBox(width: EjadahSpacing.md),
           EjadahIconButton(
             icon: EjadahIcons.chevronForward,
-            semanticLabel: context.strings.continueAction,
+            semanticLabel: context.strings.nextPage,
             onPressed: page.hasMore
                 ? () => controller.goToPage(page.page + 1)
                 : null,

@@ -90,32 +90,60 @@ class BookingService {
   /// All-or-nothing: the booking, its sessions, the reservation conversion, the
   /// payment record and the professional's earnings row either all commit or
   /// none of them do.
+  /// Confirms one or more held slots as a single booking.
+  ///
+  /// A multi-session plan is one booking with one `booking_sessions` row per
+  /// real time — never a single vague appointment standing in for eight. All of
+  /// it happens in one transaction: an eight-session plan where the seventh
+  /// slot was taken while the student was filling the sixth must leave nothing
+  /// behind, not seven confirmed sessions and a hole.
   Future<Booking> confirmBooking({
     required String userId,
     required String holdId,
     required String subject,
     required String goal,
     int? packageId,
+    List<String> additionalHoldIds = const [],
   }) async {
     return _database.runTx((tx) async {
-      // Locks the reservation row for the length of the transaction, so a
-      // concurrent confirmation of the same hold waits rather than racing.
-      final hold = await _repository.lockReservation(holdId, session: tx);
+      // Sorted so two concurrent plans sharing slots lock them in the same
+      // order and deadlock instead of neither finishing.
+      final holdIds = <String>{holdId, ...additionalHoldIds}.toList()..sort();
 
-      if (hold == null || hold.status != 'active' || hold.kind != 'hold') {
-        throw ApiException.conflict(message: ApiErrorCopy.holdExpired);
+      final holds = <ReservationRecord>[];
+      for (final id in holdIds) {
+        // Locks the reservation row for the length of the transaction, so a
+        // concurrent confirmation of the same hold waits rather than racing.
+        final hold = await _repository.lockReservation(id, session: tx);
+
+        if (hold == null || hold.status != 'active' || hold.kind != 'hold') {
+          throw ApiException.conflict(message: ApiErrorCopy.holdExpired);
+        }
+        if (hold.heldByUserId != userId) {
+          throw ApiException.authorization();
+        }
+        if (hold.expiresAt != null && !hold.expiresAt!.isAfter(_now())) {
+          // The hold ran out. The copy confirms nothing was charged.
+          await _repository.releaseReservation(id, session: tx);
+          throw ApiException.conflict(message: ApiErrorCopy.holdExpired);
+        }
+        holds.add(hold);
       }
-      if (hold.heldByUserId != userId) {
-        throw ApiException.authorization();
+
+      // Every session in a plan is with the same professional; a plan spanning
+      // two of them is not a thing the product offers, and silently booking it
+      // would produce one price for two people's time.
+      final professionalId = holds.first.professionalId;
+      if (holds.any((hold) => hold.professionalId != professionalId)) {
+        throw ApiException.conflict();
       }
-      if (hold.expiresAt != null && !hold.expiresAt!.isAfter(_now())) {
-        // The hold ran out. The copy confirms nothing was charged.
-        await _repository.releaseReservation(holdId, session: tx);
-        throw ApiException.conflict(message: ApiErrorCopy.holdExpired);
-      }
+
+      // Chronological, so position 1 is the first session the student attends
+      // rather than the first one they happened to pick.
+      holds.sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
       final professional = await _repository.findProfessional(
-        hold.professionalId,
+        professionalId,
         session: tx,
       );
       if (professional == null) throw ApiException.notFound();
@@ -126,14 +154,13 @@ class BookingService {
       final pricing = await _priceFor(
         professional: professional,
         packageId: packageId,
-        startsAt: hold.startsAt,
-        endsAt: hold.endsAt,
+        sessions: holds,
         session: tx,
       );
 
       final bookingId = await _repository.insertBooking(
         userId: userId,
-        professionalId: hold.professionalId,
+        professionalId: professionalId,
         packageId: packageId,
         kind: professional.kind,
         totalEgp: pricing.totalEgp,
@@ -145,22 +172,25 @@ class BookingService {
 
       // One row per scheduled session — never a single vague appointment for a
       // multi-session package.
-      final sessionId = await _repository.insertBookingSession(
-        bookingId: bookingId,
-        position: 1,
-        startsAt: hold.startsAt,
-        endsAt: hold.endsAt,
-        session: tx,
-      );
+      for (var index = 0; index < holds.length; index++) {
+        final hold = holds[index];
+        final sessionId = await _repository.insertBookingSession(
+          bookingId: bookingId,
+          position: index + 1,
+          startsAt: hold.startsAt,
+          endsAt: hold.endsAt,
+          session: tx,
+        );
 
-      // The hold becomes the session's reservation in place, so the slot is
-      // never briefly free between releasing a hold and inserting a booking.
-      await _repository.convertHoldToSession(
-        reservationId: holdId,
-        bookingId: bookingId,
-        bookingSessionId: sessionId,
-        session: tx,
-      );
+        // The hold becomes the session's reservation in place, so the slot is
+        // never briefly free between releasing a hold and inserting a booking.
+        await _repository.convertHoldToSession(
+          reservationId: hold.id,
+          bookingId: bookingId,
+          bookingSessionId: sessionId,
+          session: tx,
+        );
+      }
 
       await _repository.insertPayment(
         userId: userId,
@@ -172,7 +202,8 @@ class BookingService {
 
       _logger.info('booking created', {
         'booking': bookingId,
-        'professional': hold.professionalId,
+        'professional': professionalId,
+        'sessions': holds.length,
         // The goal is free text the student wrote and may contain clinical
         // detail; it is never logged and never sent to analytics.
       });
@@ -302,8 +333,7 @@ class BookingService {
   Future<({int totalEgp, int platformFeeEgp})> _priceFor({
     required ProfessionalRecord professional,
     required int? packageId,
-    required DateTime startsAt,
-    required DateTime endsAt,
+    required List<ReservationRecord> sessions,
     required Session session,
   }) async {
     if (packageId != null) {
@@ -314,15 +344,23 @@ class BookingService {
       if (package == null || package.professionalId != professional.id) {
         throw ApiException.notFound();
       }
+      // A package price covers the package, however many sessions it holds —
+      // that is what buying a package means.
       return (
         totalEgp: package.priceEgp,
         platformFeeEgp: _feeOn(package.priceEgp),
       );
     }
 
-    final minutes = endsAt.difference(startsAt).inMinutes;
-    // Integer arithmetic so a price is exact rather than a rounded float.
-    final total = (professional.hourlyRateEgp * minutes / 60).round();
+    // Without a package, every session is charged at the hourly rate for its
+    // own length. Integer arithmetic so a price is exact rather than a rounded
+    // float, and rounded per session so the total is the sum of what each line
+    // says rather than a figure that disagrees with its own breakdown.
+    var total = 0;
+    for (final slot in sessions) {
+      final minutes = slot.endsAt.difference(slot.startsAt).inMinutes;
+      total += (professional.hourlyRateEgp * minutes / 60).round();
+    }
     return (totalEgp: total, platformFeeEgp: _feeOn(total));
   }
 

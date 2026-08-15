@@ -1,4 +1,5 @@
 import 'package:ejadah_localization/ejadah_localization.dart';
+import 'package:ejadah_models/ejadah_models.dart';
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +18,16 @@ import '../features/career/presentation/programmes_screen.dart';
 import '../features/career/presentation/shortlist_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/learn/presentation/learn_screen.dart';
+import '../features/people/presentation/my_bookings_screen.dart';
 import '../features/people/presentation/people_screen.dart';
+import '../features/people/presentation/professional_list_screen.dart';
+import '../features/people/presentation/professional_profile_screen.dart';
+import '../features/profile/presentation/certificates_screen.dart';
+import '../features/profile/presentation/cpd_screen.dart';
+import '../features/profile/presentation/delete_account_screen.dart';
+import '../features/profile/presentation/nfc_card_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
+import '../features/profile/presentation/settings_screen.dart';
 import '../features/profile/presentation/public_profile_screen.dart';
 import '../features/profile/presentation/verify_certificate_screen.dart';
 import '../features/roadmap/presentation/roadmap_funnel_screen.dart';
@@ -185,6 +194,65 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/shortlist',
         builder: (context, state) =>
             _screen('shortlist', const ShortlistScreen()),
+      ),
+
+      // --- People: the doors, a professional, and the user's own sessions ----
+      GoRoute(
+        path: '/people/who/:slug',
+        builder: (context, state) => _screen(
+          'professional-profile',
+          ProfessionalProfileScreen(slug: state.pathParameters['slug']!),
+        ),
+      ),
+      GoRoute(
+        // Tutoring, mentoring or consulting. An unknown door resolves to the
+        // not-found state rather than an empty list that looks like a bug.
+        path: '/people/:kind',
+        builder: (context, state) {
+          // Strictly resolved, not coerced: ServiceKind.fromWire falls back to
+          // tutoring, which would answer a mistyped link with the wrong door's
+          // list and no sign anything was wrong.
+          final kind = ServiceKind.values
+              .where((value) => value.wire == state.pathParameters['kind'])
+              .firstOrNull;
+          if (kind == null) {
+            return _screen('not-found', const NotFoundScreen());
+          }
+          return _screen(
+            'professional-list',
+            ProfessionalListScreen(kind: kind),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/bookings',
+        builder: (context, state) =>
+            _screen('my-bookings', const MyBookingsScreen()),
+      ),
+
+      // --- Profile sub-screens ----------------------------------------------
+      GoRoute(
+        path: '/profile/card',
+        builder: (context, state) => _screen('nfc-card', const NfcCardScreen()),
+      ),
+      GoRoute(
+        path: '/profile/certificates',
+        builder: (context, state) =>
+            _screen('certificates', const CertificatesScreen()),
+      ),
+      GoRoute(
+        path: '/profile/cpd',
+        builder: (context, state) => _screen('cpd', const CpdScreen()),
+      ),
+      GoRoute(
+        path: '/profile/settings',
+        builder: (context, state) =>
+            _screen('settings', const SettingsScreen()),
+      ),
+      GoRoute(
+        path: '/profile/delete',
+        builder: (context, state) =>
+            _screen('delete-account', const DeleteAccountScreen()),
       ),
 
       // --- The tab shell -----------------------------------------------------

@@ -16,13 +16,20 @@ import 'modules/home/home_routes.dart';
 import 'modules/home/home_service.dart';
 import 'modules/notifications/notification_routes.dart';
 import 'modules/notifications/notification_scheduler.dart';
+import 'modules/people/booking_service.dart';
 import 'modules/people/people_repository.dart';
+import 'modules/people/people_routes.dart';
+import 'modules/people/people_service.dart';
+import 'modules/profile/profile_repository.dart';
+import 'modules/profile/profile_routes.dart';
+import 'modules/profile/profile_service.dart';
 import 'modules/roadmap/roadmap_repository.dart';
 import 'modules/roadmap/roadmap_routes.dart';
 import 'modules/roadmap/roadmap_service.dart';
 import 'observability/logger.dart';
 import 'services/mailer.dart';
 import 'services/password_hasher.dart';
+import 'services/payments/payment_provider.dart';
 import 'services/token_service.dart';
 
 /// The composed application.
@@ -89,6 +96,26 @@ class EjadahApp {
 
     final notifications = NotificationScheduler(database);
 
+    // The simulator is the only provider built here, and AppConfig refuses to
+    // boot with it in production — so a real provider landing later replaces
+    // this line without any route knowing.
+    final payments = DevPaymentProvider(
+      config: config,
+      logger: log.child('payments'),
+    );
+    final bookingService = BookingService(
+      database: database,
+      repository: peopleRepository,
+      payments: payments,
+      config: config,
+      logger: log.child('booking'),
+    );
+    final peopleService = PeopleService(peopleRepository);
+    final profileService = ProfileService(
+      repository: ProfileRepository(database),
+      config: config,
+    );
+
     final api = Router()
       ..mount(
         '/auth',
@@ -100,7 +127,9 @@ class EjadahApp {
       ..mount('/career', careerRoutes(careerService).call)
       ..mount('/roadmap', roadmapRoutes(roadmapService).call)
       ..mount('/home', homeRoutes(homeService, authService).call)
-      ..mount('/notifications', notificationRoutes(notifications).call);
+      ..mount('/notifications', notificationRoutes(notifications).call)
+      ..mount('/people', peopleRoutes(peopleService, bookingService).call)
+      ..mount('/profile', profileRoutes(profileService).call);
 
     final root = Router()
       ..mount('/api/v1', api.call)

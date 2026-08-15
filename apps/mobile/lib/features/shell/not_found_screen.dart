@@ -16,7 +16,9 @@ class NotFoundScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: EjadahEmptyState(
-          title: strings.errTitle,
+          // Not the feed error title: "We couldn't load your feed" means
+          // nothing on a cold-start deep link to a programme that closed.
+          title: strings.sysContentUnavailableTitle,
           body: strings.contentUnavailableBody,
           actionLabel: strings.browseProgrammes,
           onAction: () => context.go('/programmes'),

@@ -109,8 +109,11 @@ class _FunnelState extends ConsumerState<RoadmapFunnelScreen> {
                               ? _generate()
                               : controller.advance()
                         : null,
-                    // A disabled control explains itself when tapped.
-                    disabledReason: strings.nextQuestion,
+                    // A disabled control explains itself when tapped — and the
+                    // explanation has to be about what is missing. "Next
+                    // question" was the name of the thing that would happen,
+                    // not the reason it could not.
+                    disabledReason: strings.answerToContinue,
                     onDisabledTap: (reason) =>
                         showEjadahToast(context, message: reason),
                   ),
@@ -166,21 +169,27 @@ class _GeneratingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(
-            width: 32,
-            height: 32,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: EjadahColors.orange,
-            ),
-          ),
-          const SizedBox(height: EjadahSpacing.md),
-          Text(context.strings.roadmapCtaTitle, style: context.type.h5()),
-        ],
+    body: SafeArea(
+      child: EjadahPageBody(
+        child: ListView(
+          children: [
+            const SizedBox(height: EjadahSpacing.section),
+            Text(context.strings.roadmapCtaTitle, style: context.type.h4()),
+            const SizedBox(height: EjadahSpacing.lg),
+            // Skeletons, not a spinner: the shapes are the ones the roadmap is
+            // about to fill — headline, then stages — so the wait shows what is
+            // coming rather than that something is happening.
+            const Skeleton(width: 220, height: 20),
+            const SizedBox(height: EjadahSpacing.md),
+            const Skeleton(width: double.infinity, height: 120),
+            const SizedBox(height: EjadahSpacing.section),
+            const CardSkeleton(),
+            const SizedBox(height: EjadahSpacing.cardGap),
+            const CardSkeleton(),
+            const SizedBox(height: EjadahSpacing.cardGap),
+            const CardSkeleton(),
+          ],
+        ),
       ),
     ),
   );
