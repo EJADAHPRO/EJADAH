@@ -31,6 +31,9 @@ class LanguageScreen extends ConsumerWidget {
                   semanticLabel: label,
                   onTap: () async {
                     await ref.read(languageProvider.notifier).set(language);
+                    // Recorded here, at the one action that ends first run, so
+                    // the pick is never asked for twice.
+                    await ref.read(localStoreProvider).setOnboardingComplete();
                     if (context.mounted) context.go('/home');
                   },
                   child: Center(

@@ -118,10 +118,10 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
         final ProgrammesReady ready => [
           SliverToBoxAdapter(child: _ResultCount(page: ready.page)),
           const SliverToBoxAdapter(child: SizedBox(height: EjadahSpacing.xs)),
-          SliverList.separated(
+          // 1 → 2 → 3 columns with the window. On a phone this is the same
+          // single-column list it has always been.
+          SliverCardGrid(
             itemCount: ready.page.items.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: EjadahSpacing.cardGap),
             itemBuilder: (context, index) {
               final programme = ready.page.items[index];
               return ProgrammeCard(

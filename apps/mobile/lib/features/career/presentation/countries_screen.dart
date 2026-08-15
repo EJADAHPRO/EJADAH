@@ -45,13 +45,16 @@ class CountriesScreen extends ConsumerWidget {
               retryLabel: strings.retry,
               onRetry: () => ref.invalidate(countriesProvider),
             ),
-            data: (items) => ListView.separated(
+            // 1 → 2 → 3 columns with the window, single-column on a phone.
+            data: (items) => CustomScrollView(
               key: const PageStorageKey('countries'),
-              itemCount: items.length,
-              separatorBuilder: (_, _) =>
-                  const SizedBox(height: EjadahSpacing.cardGap),
-              itemBuilder: (context, index) =>
-                  _CountryCard(guide: items[index]),
+              slivers: [
+                SliverCardGrid(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) =>
+                      _CountryCard(guide: items[index]),
+                ),
+              ],
             ),
           ),
         ),

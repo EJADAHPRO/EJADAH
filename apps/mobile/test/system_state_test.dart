@@ -422,7 +422,7 @@ final List<_StateCase> _cases = [
   ),
   (
     name: 'server error',
-    title: (s) => FailureCopy.errorTitle.resolve(_languageOf(s)),
+    title: (s) => s.sysServerErrorTitle,
     build: (probe) => ServerErrorScreen(onRetry: probe.fire),
     route: null,
   ),
@@ -465,7 +465,7 @@ final List<_StateCase> _cases = [
   ),
   (
     name: 'content unavailable',
-    title: (s) => FailureCopy.errorTitle.resolve(_languageOf(s)),
+    title: (s) => s.sysContentUnavailableTitle,
     build: (probe) => const ContentUnavailableScreen(),
     route: '/programmes',
   ),
@@ -507,6 +507,12 @@ Map<String, String> _systemCopy(EjadahStrings s, AppLanguage language) => {
   'browseProgrammes': s.browseProgrammes,
   'signIn': s.signIn,
   'maybeLater': s.maybeLater,
+  'sysServerErrorTitle': s.sysServerErrorTitle,
+  'sysContentUnavailableTitle': s.sysContentUnavailableTitle,
+  'sysOfflineBody': s.sysOfflineBody,
+  'sysSessionExpiredBody': s.sysSessionExpiredBody,
+  'sysErrorBoundaryBody': s.sysErrorBoundaryBody,
+  'sysRateLimitedBody': s.sysRateLimitedBody,
   'FailureCopy.errorTitle': FailureCopy.errorTitle.resolve(language),
   'FailureCopy.sessionExpired': FailureCopy.sessionExpired.resolve(language),
   'FailureCopy.rateLimited': FailureCopy.rateLimited.resolve(language),
@@ -587,7 +593,13 @@ class _App extends StatelessWidget {
       data: MediaQuery.of(
         context,
       ).copyWith(textScaler: TextScaler.linear(textScale)),
-      child: content ?? const SizedBox.shrink(),
+      // Routes install a gradient budget in the real app; the harness stands in
+      // for one, rather than the assertion that enforces the six-per-screen
+      // limit being something tests have to route around.
+      child: GradientBudget(
+        screenName: 'test',
+        child: content ?? const SizedBox.shrink(),
+      ),
     ),
   );
 

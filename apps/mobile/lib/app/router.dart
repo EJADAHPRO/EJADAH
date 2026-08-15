@@ -17,6 +17,8 @@ import '../features/career/presentation/programme_detail_screen.dart';
 import '../features/career/presentation/programmes_screen.dart';
 import '../features/career/presentation/shortlist_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/learn/presentation/course_detail_screen.dart';
+import '../features/learn/presentation/course_list_screen.dart';
 import '../features/learn/presentation/learn_screen.dart';
 import '../features/people/presentation/my_bookings_screen.dart';
 import '../features/people/presentation/people_screen.dart';
@@ -34,6 +36,7 @@ import '../features/roadmap/presentation/roadmap_funnel_screen.dart';
 import '../features/roadmap/presentation/roadmap_result_screen.dart';
 import '../features/shell/app_shell.dart';
 import '../features/shell/not_found_screen.dart';
+import 'providers.dart';
 
 /// Wraps a route's screen in its own gradient budget.
 ///
@@ -74,7 +77,7 @@ final _rootKey = GlobalKey<NavigatorState>();
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootKey,
-    initialLocation: AppTab.home.path,
+    initialLocation: ref.watch(startupLocationProvider),
     debugLogDiagnostics: false,
     redirect: (context, state) {
       final auth = ref.read(authControllerProvider);
@@ -194,6 +197,35 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/shortlist',
         builder: (context, state) =>
             _screen('shortlist', const ShortlistScreen()),
+      ),
+
+      // --- Learn: the catalogue and a course ---------------------------------
+      GoRoute(
+        // `handoff/deep-links.md`: a shared course link opens the course.
+        path: '/course/:slug',
+        builder: (context, state) => _screen(
+          'course-detail',
+          CourseDetailScreen(slug: state.pathParameters['slug']!),
+        ),
+      ),
+      GoRoute(
+        // One list per department. An unknown department is a not-found, not
+        // silently the first one — Department.fromWire would coerce it.
+        path: '/courses/:department',
+        builder: (context, state) {
+          final department = Department.values
+              .where(
+                (value) => value.wire == state.pathParameters['department'],
+              )
+              .firstOrNull;
+          if (department == null) {
+            return _screen('not-found', const NotFoundScreen());
+          }
+          return _screen(
+            'course-list',
+            CourseListScreen(department: department),
+          );
+        },
       ),
 
       // --- People: the doors, a professional, and the user's own sessions ----

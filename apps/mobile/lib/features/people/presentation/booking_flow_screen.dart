@@ -419,7 +419,7 @@ class _GoalStepState extends State<_GoalStep> {
           controller: widget.controller,
           focusNode: _focus,
           maxLines: 4,
-          errorText: showError ? strings.goalLabel : null,
+          errorText: showError ? strings.goalTooShort : null,
         ),
         const SizedBox(height: EjadahSpacing.sm),
         // Always on screen, in every state of this step.
@@ -606,7 +606,8 @@ class _StickyBar extends ConsumerWidget {
       BookingStep.goal => (
         strings.continueAction,
         state.isGoalLongEnough ? controller.next : null,
-        strings.goalLabel,
+        // The disabled reason names what is missing, not the field.
+        strings.goalTooShort,
       ),
       BookingStep.review => (strings.payExternally, onConfirm, null),
       BookingStep.payment ||

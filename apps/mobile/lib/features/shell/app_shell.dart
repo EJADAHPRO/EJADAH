@@ -27,7 +27,8 @@ class AppShell extends ConsumerWidget {
           index,
           initialLocation: index == navigationShell.currentIndex,
         );
-        // The active tab is restored on next launch.
+        // Read back by `main` on the next launch, which resolves it into the
+        // router's initial location.
         ref.read(localStoreProvider).setActiveTab(index);
       },
     ),

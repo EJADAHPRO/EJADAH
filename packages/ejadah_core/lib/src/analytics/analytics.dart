@@ -85,16 +85,21 @@ class AnalyticsDispatcher implements AnalyticsService {
     required AnalyticsService delegate,
     required String appVersion,
     required AppLanguage Function() language,
-    DateTime? firstOpenAt,
+    DateTime Function()? firstOpenAt,
   }) : _delegate = delegate,
        _appVersion = appVersion,
        _language = language,
-       _firstOpenAt = firstOpenAt ?? DateTime.now().toUtc();
+       // A function rather than a value: the real first-open instant is read
+       // from disk, which the container cannot await while it is being built.
+       // Defaulting to construction time silently turned every event's
+       // `ms_since_first_open` into session age, which is a different number
+       // with the same name — and the activation funnel is measured on it.
+       _firstOpenAt = firstOpenAt ?? DateTime.now().toUtc;
 
   final AnalyticsService _delegate;
   final String _appVersion;
   final AppLanguage Function() _language;
-  final DateTime _firstOpenAt;
+  final DateTime Function() _firstOpenAt;
 
   String? _persona;
 
@@ -145,7 +150,7 @@ class AnalyticsDispatcher implements AnalyticsService {
 
     final msSinceFirstOpen = DateTime.now()
         .toUtc()
-        .difference(_firstOpenAt)
+        .difference(_firstOpenAt())
         .inMilliseconds;
 
     await _delegate.track(event, {

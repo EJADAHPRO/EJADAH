@@ -38,9 +38,16 @@ class _SkeletonState extends State<Skeleton>
   );
 
   @override
-  void initState() {
-    super.initState();
-    _controller.repeat();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Started here rather than in initState, and re-checked on every
+    // dependency change, so switching reduce-motion on mid-session actually
+    // stops the ticker instead of only hiding what it drives.
+    if (context.ejadah.reduceMotion) {
+      _controller.stop();
+    } else if (!_controller.isAnimating) {
+      _controller.repeat();
+    }
   }
 
   @override

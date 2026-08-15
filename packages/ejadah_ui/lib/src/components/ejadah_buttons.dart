@@ -46,14 +46,21 @@ class EjadahPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = context.ejadah;
 
-    final content = SizedBox(
-      height: EjadahSizes.primaryButtonHeight,
+    // A minimum rather than a fixed height, so the label can wrap instead of
+    // ellipsizing. At 200% text scale on a 320pt phone almost every Arabic
+    // label overflows 52 — "العودة للرئيسية" needs 420pt — and a truncated
+    // primary action is a button whose purpose the user cannot read.
+    final content = ConstrainedBox(
+      constraints: const BoxConstraints(
+        minHeight: EjadahSizes.primaryButtonHeight,
+      ),
       child: Center(
         child: isLoading
             ? const _ButtonSpinner(color: EjadahColors.onDark)
             : Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const SizedBox(width: EjadahSpacing.sm),
                   if (icon != null) ...[
                     Icon(
                       icon,
@@ -68,10 +75,10 @@ class EjadahPrimaryButton extends StatelessWidget {
                       style: tokens.typography.button(
                         color: EjadahColors.onDark,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                  const SizedBox(width: EjadahSpacing.sm),
                 ],
               ),
       ),

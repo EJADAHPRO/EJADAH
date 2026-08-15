@@ -199,7 +199,11 @@ class EjadahTypography {
       TextStyle(
         fontFamily: displayFamily,
         fontSize: headingSizeFor(size, text),
-        fontWeight: _weight(weight),
+        // Amiri ships at 700 and only 700 — the brand guide specifies that
+        // weight. Asking for 800 in Arabic would get a synthesised face rather
+        // than the one the type pairing was chosen for, so the request is
+        // clamped to what actually exists.
+        fontWeight: _weight(_isArabic && weight > 700 ? 700 : weight),
         height: lineHeightFor(TextDensity.tight),
         letterSpacing: letterSpacingFor(size),
         color: color,

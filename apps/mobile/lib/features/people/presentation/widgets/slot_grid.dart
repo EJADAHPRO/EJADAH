@@ -64,6 +64,9 @@ class SlotGrid extends StatelessWidget {
                 SlotButton(
                   label: CairoTime.time(slot.startsAt),
                   isAvailable: slot.isAvailable,
+                  // A taken slot says so out loud. Tint and an inert target
+                  // carry it visually; a screen-reader user gets the words.
+                  unavailableLabel: context.strings.slotUnavailable,
                   isSelected: selected?.startsAt == slot.startsAt,
                   onTap: () => onSelect(slot),
                 ),

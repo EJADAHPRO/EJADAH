@@ -235,6 +235,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get coursesTitle => 'تعلّم من أطباء التعليم مهنتهم';
 
   @override
+  String get cpdTitle => 'سجل التطوير المهني';
+
+  @override
+  String get cpdTotal => 'إجمالي الساعات';
+
+  @override
   String get createAccount => 'إنشاء الحساب';
 
   @override
@@ -304,6 +310,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get deleteAccountTitle => 'حذف حسابك';
+
+  @override
+  String get deleteStepTwo => 'المتابعة إلى الخطوة 2';
 
   @override
   String get departmentBusiness => 'الأعمال والمساندة';
@@ -414,6 +423,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get fDegreeType => 'الدرجة';
 
   @override
+  String get fDestination => 'الوجهة';
+
+  @override
   String get fDuration => 'المدة';
 
   @override
@@ -430,6 +442,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get fLanguage => 'لغة الدراسة';
+
+  @override
+  String get fMaxRate => 'الحد الأقصى للسعر';
 
   @override
   String get fRank => 'تصنيف QS';
@@ -524,6 +539,10 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get goalLabel => 'ما الذي تحتاجه من هذه الجلسة؟';
+
+  @override
+  String get goalTooShort =>
+      'اكتب سطرًا أو سطرين عمّا تحتاجه — سيجعل الجلسة أكثر فائدة بكثير.';
 
   @override
   String get gotIt => 'أتقنتها';
@@ -637,6 +656,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get licensingRoute => 'مسار الترخيص';
+
+  @override
+  String get linksLabel => 'الروابط';
 
   @override
   String get manageOnWeb => 'الإدارة على ejadah.com';
@@ -1219,6 +1241,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get slotTakenTitle => 'حُجز هذا الموعد للتو';
 
   @override
+  String get slotUnavailable => 'محجوز بالفعل';
+
+  @override
   String get sourceMissing =>
       'لا يوجد رابط رسمي في هذا السجل — تحقّق قبل التقديم.';
 
@@ -1491,6 +1516,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get verifyValid => 'هذه الشهادة صحيحة';
 
   @override
+  String get versionLabel => 'الإصدار';
+
+  @override
   String get viewDetails => 'عرض التفاصيل';
 
   @override
@@ -1524,6 +1552,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get whatYouLearn => 'ماذا ستتعلّم';
+
+  @override
+  String get wifiOnlyDownloads => 'التنزيل عبر الواي فاي فقط';
 
   @override
   String get withdrawWeb => 'السحب على ejadah.com';

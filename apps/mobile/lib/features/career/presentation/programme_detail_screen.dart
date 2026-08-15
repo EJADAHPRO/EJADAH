@@ -10,9 +10,24 @@ import '../../../app/providers.dart';
 import '../../auth/auth_controller.dart';
 import '../data/career_repository.dart';
 
-final programmeProvider = FutureProvider.family<Programme, int>(
-  (ref, id) => ref.watch(careerRepositoryProvider).programme(id),
-);
+final programmeProvider = AsyncNotifierProvider.family<
+  ProgrammeDetailController,
+  Programme,
+  int
+>(ProgrammeDetailController.new);
+
+/// One programme, with the save state the screen can move ahead of the server.
+class ProgrammeDetailController
+    extends FamilyAsyncNotifier<Programme, int> {
+  @override
+  Future<Programme> build(int programmeId) =>
+      ref.watch(careerRepositoryProvider).programme(programmeId);
+
+  /// Moves the heart without waiting for the round trip.
+  void setSaved(bool isSaved, {required Programme of}) {
+    state = AsyncData(of.withSummary(of.summary.copyWith(isSaved: isSaved)));
+  }
+}
 
 /// A programme's full record.
 ///
@@ -173,8 +188,17 @@ class _Body extends ConsumerWidget {
     }
 
     final repository = ref.read(careerRepositoryProvider);
+    final wasSaved = programme.summary.isSaved;
+
+    // Optimistic, like the list version of the same action. Two screens doing
+    // the same thing differently is a defect in itself, and a heart that waits
+    // on the network is the one the design explicitly rules out.
+    ref
+        .read(programmeProvider(programme.id).notifier)
+        .setSaved(!wasSaved, of: programme);
+
     try {
-      if (programme.summary.isSaved) {
+      if (wasSaved) {
         await repository.unsave(programme.id);
       } else {
         await repository.save(programme.id);
@@ -186,8 +210,24 @@ class _Body extends ConsumerWidget {
               'days_to_deadline': programme.summary.daysRemaining,
             });
       }
-      ref.invalidate(programmeProvider(programme.id));
+      if (!context.mounted) return;
+
+      showEjadahToast(
+        context,
+        message: wasSaved
+            ? context.strings.undoRemove
+            : context.strings.savedToast,
+        // Removal is reversible for five seconds, here as in the list.
+        undoLabel: wasSaved ? context.strings.undo : null,
+        onUndo: wasSaved
+            ? () => _toggleSave(context, ref, isAuthenticated)
+            : null,
+      );
     } on Failure catch (failure) {
+      // The heart goes back to what the server still believes.
+      ref
+          .read(programmeProvider(programme.id).notifier)
+          .setSaved(wasSaved, of: programme);
       if (!context.mounted) return;
       showEjadahToast(context, message: failure.message(context));
     }

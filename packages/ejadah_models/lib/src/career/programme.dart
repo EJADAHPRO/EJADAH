@@ -175,6 +175,37 @@ class Programme extends ValueObject {
   });
 
   final ProgrammeSummary summary;
+
+  /// The same record with a different summary.
+  ///
+  /// Exists for the one field a screen legitimately moves ahead of the server:
+  /// the shortlist heart, which must respond within 100ms and roll back if the
+  /// request fails. Everything else here is the server's to state.
+  Programme withSummary(ProgrammeSummary value) => Programme(
+    summary: value,
+    studyType: studyType,
+    intakeMonth: intakeMonth,
+    cohortSize: cohortSize,
+    minYears: minYears,
+    maxYears: maxYears,
+    studyMode: studyMode,
+    costRaw: costRaw,
+    language: language,
+    qsRank: qsRank,
+    acceptanceRate: acceptanceRate,
+    ieltsScore: ieltsScore,
+    ieltsRequirement: ieltsRequirement,
+    gpaRequirement: gpaRequirement,
+    experienceRequirement: experienceRequirement,
+    hasScholarship: hasScholarship,
+    hasEgyptianGovtFunding: hasEgyptianGovtFunding,
+    thesisRequired: thesisRequired,
+    interviewRequired: interviewRequired,
+    rating: rating,
+    sourceDeadlineText: sourceDeadlineText,
+    dataQualityNote: dataQualityNote,
+  );
+
   final String studyType;
   final String intakeMonth;
   final String cohortSize;

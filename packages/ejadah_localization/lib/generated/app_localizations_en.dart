@@ -237,6 +237,12 @@ class EjadahStringsEn extends EjadahStrings {
   String get coursesTitle => 'Learn from dentists who teach for a living';
 
   @override
+  String get cpdTitle => 'CPD ledger';
+
+  @override
+  String get cpdTotal => 'Total credits';
+
+  @override
   String get createAccount => 'Create account';
 
   @override
@@ -302,6 +308,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get deleteAccountTitle => 'Delete your account';
+
+  @override
+  String get deleteStepTwo => 'Continue to step 2';
 
   @override
   String get departmentBusiness => 'Business & Paradental';
@@ -415,6 +424,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get fDegreeType => 'DEGREE';
 
   @override
+  String get fDestination => 'Destination';
+
+  @override
   String get fDuration => 'Duration';
 
   @override
@@ -431,6 +443,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get fLanguage => 'Language';
+
+  @override
+  String get fMaxRate => 'Maximum rate';
 
   @override
   String get fRank => 'QS rank';
@@ -526,6 +541,10 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get goalLabel => 'What do you need from this session?';
+
+  @override
+  String get goalTooShort =>
+      'Write a line or two about what you need — it makes the session far more useful.';
 
   @override
   String get gotIt => 'Got it';
@@ -639,6 +658,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get licensingRoute => 'LICENSING ROUTE';
+
+  @override
+  String get linksLabel => 'Links';
 
   @override
   String get manageOnWeb => 'Manage on ejadah.com';
@@ -1226,6 +1248,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get slotTakenTitle => 'That time just went';
 
   @override
+  String get slotUnavailable => 'Already booked';
+
+  @override
   String get sourceMissing =>
       'No official source URL in this record — verify before applying.';
 
@@ -1500,6 +1525,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get verifyValid => 'This certificate is valid';
 
   @override
+  String get versionLabel => 'Version';
+
+  @override
   String get viewDetails => 'Details';
 
   @override
@@ -1534,6 +1562,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get whatYouLearn => 'WHAT YOU WILL LEARN';
+
+  @override
+  String get wifiOnlyDownloads => 'Download over Wi-Fi only';
 
   @override
   String get withdrawWeb => 'Withdraw on ejadah.com';

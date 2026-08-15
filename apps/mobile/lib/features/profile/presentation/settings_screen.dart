@@ -111,7 +111,7 @@ class SettingsScreen extends ConsumerWidget {
               SectionHeader(title: strings.toolsLabel),
               // Wi-fi-only downloads. A device preference, not an account one.
               _Toggle(
-                title: strings.download,
+                title: strings.wifiOnlyDownloads,
                 value: wifiOnly,
                 onChanged: (value) =>
                     ref.read(wifiOnlyDownloadsProvider.notifier).set(value),
@@ -152,7 +152,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               EjadahListRow(
-                title: strings.appName,
+                title: strings.versionLabel,
                 subtitle: appVersion,
               ),
 

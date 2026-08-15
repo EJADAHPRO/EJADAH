@@ -23,7 +23,7 @@ class CpdScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: EjadahAppBar(
-        title: strings.incCpd,
+        title: strings.cpdTitle,
         onBack: () => Navigator.of(context).maybePop(),
         backLabel: strings.back,
       ),
@@ -47,7 +47,7 @@ class CpdScreen extends ConsumerWidget {
             ),
             data: (data) => data.entries.isEmpty
                 ? EjadahEmptyState(
-                    title: strings.incCpd,
+                    title: strings.cpdTitle,
                     body: strings.verifyNote,
                     actionLabel: strings.addCertificate,
                     onAction: () => Navigator.of(context).push(
@@ -68,7 +68,7 @@ class CpdScreen extends ConsumerWidget {
                           '${data.totalPoints}',
                           style: context.type.h4(),
                         ),
-                        label: strings.incCpd,
+                        label: strings.cpdTotal,
                         emphasis: EjadahColors.orangeText,
                       ),
                       const SizedBox(height: EjadahSpacing.md),

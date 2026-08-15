@@ -321,8 +321,9 @@ class _FilterSheetState extends State<_FilterSheet> {
                 ),
                 if (destinations.isNotEmpty)
                   _FacetGroup(
-                    // A mentor is matched on the move they made.
-                    label: strings.fRegion,
+                    // A mentor is matched on the move they made — the
+                    // destination, which is not the same facet as region.
+                    label: strings.fDestination,
                     options: destinations,
                     selected: _draft.destinations,
                     onChanged: (values) => setState(

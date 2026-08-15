@@ -173,7 +173,7 @@ class _NfcEditorScreenState extends ConsumerState<NfcEditorScreen> {
                 maxLines: 4,
               ),
               const SizedBox(height: EjadahSpacing.lg),
-              SectionHeader(title: strings.toolsLabel),
+              SectionHeader(title: strings.linksLabel),
               for (final key in _linkKeys) ...[
                 const SizedBox(height: EjadahSpacing.sm),
                 EjadahInput(

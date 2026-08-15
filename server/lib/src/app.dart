@@ -14,6 +14,9 @@ import 'modules/career/career_routes.dart';
 import 'modules/career/career_service.dart';
 import 'modules/home/home_routes.dart';
 import 'modules/home/home_service.dart';
+import 'modules/learn/learn_repository.dart';
+import 'modules/learn/learn_routes.dart';
+import 'modules/learn/learn_service.dart';
 import 'modules/notifications/notification_routes.dart';
 import 'modules/notifications/notification_scheduler.dart';
 import 'modules/people/booking_service.dart';
@@ -111,6 +114,10 @@ class EjadahApp {
       logger: log.child('booking'),
     );
     final peopleService = PeopleService(peopleRepository);
+    final learnService = LearnService(
+      repository: LearnRepository(database),
+      config: config,
+    );
     final profileService = ProfileService(
       repository: ProfileRepository(database),
       config: config,
@@ -128,6 +135,7 @@ class EjadahApp {
       ..mount('/roadmap', roadmapRoutes(roadmapService).call)
       ..mount('/home', homeRoutes(homeService, authService).call)
       ..mount('/notifications', notificationRoutes(notifications).call)
+      ..mount('/learn', learnRoutes(learnService).call)
       ..mount('/people', peopleRoutes(peopleService, bookingService).call)
       ..mount('/profile', profileRoutes(profileService).call);
 

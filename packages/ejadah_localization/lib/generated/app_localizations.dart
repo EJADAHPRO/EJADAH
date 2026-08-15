@@ -530,6 +530,18 @@ abstract class EjadahStrings {
   /// **'Learn from dentists who teach for a living'**
   String get coursesTitle;
 
+  /// No description provided for @cpdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CPD ledger'**
+  String get cpdTitle;
+
+  /// No description provided for @cpdTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total credits'**
+  String get cpdTotal;
+
   /// No description provided for @createAccount.
   ///
   /// In en, this message translates to:
@@ -643,6 +655,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Delete your account'**
   String get deleteAccountTitle;
+
+  /// No description provided for @deleteStepTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to step 2'**
+  String get deleteStepTwo;
 
   /// No description provided for @departmentBusiness.
   ///
@@ -848,6 +866,12 @@ abstract class EjadahStrings {
   /// **'DEGREE'**
   String get fDegreeType;
 
+  /// No description provided for @fDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get fDestination;
+
   /// No description provided for @fDuration.
   ///
   /// In en, this message translates to:
@@ -883,6 +907,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Language'**
   String get fLanguage;
+
+  /// No description provided for @fMaxRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum rate'**
+  String get fMaxRate;
 
   /// No description provided for @fRank.
   ///
@@ -1057,6 +1087,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'What do you need from this session?'**
   String get goalLabel;
+
+  /// No description provided for @goalTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a line or two about what you need — it makes the session far more useful.'**
+  String get goalTooShort;
 
   /// No description provided for @gotIt.
   ///
@@ -1273,6 +1309,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'LICENSING ROUTE'**
   String get licensingRoute;
+
+  /// No description provided for @linksLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get linksLabel;
 
   /// No description provided for @manageOnWeb.
   ///
@@ -2372,6 +2414,12 @@ abstract class EjadahStrings {
   /// **'That time just went'**
   String get slotTakenTitle;
 
+  /// No description provided for @slotUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Already booked'**
+  String get slotUnavailable;
+
   /// No description provided for @sourceMissing.
   ///
   /// In en, this message translates to:
@@ -2882,6 +2930,12 @@ abstract class EjadahStrings {
   /// **'This certificate is valid'**
   String get verifyValid;
 
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get versionLabel;
+
   /// No description provided for @viewDetails.
   ///
   /// In en, this message translates to:
@@ -2947,6 +3001,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'WHAT YOU WILL LEARN'**
   String get whatYouLearn;
+
+  /// No description provided for @wifiOnlyDownloads.
+  ///
+  /// In en, this message translates to:
+  /// **'Download over Wi-Fi only'**
+  String get wifiOnlyDownloads;
 
   /// No description provided for @withdrawWeb.
   ///

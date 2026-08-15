@@ -97,7 +97,9 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
               if (!_isSecondStep) ...[
                 const SizedBox(height: EjadahSpacing.lg),
                 EjadahSecondaryButton(
-                  label: strings.continueAction,
+                  // Names the step, so the two-step shape is visible before
+                  // the second one appears.
+                  label: strings.deleteStepTwo,
                   onPressed: () => setState(() => _isSecondStep = true),
                 ),
               ] else ...[

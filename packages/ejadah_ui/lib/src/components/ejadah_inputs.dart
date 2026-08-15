@@ -82,7 +82,11 @@ class EjadahInput extends StatelessWidget {
               hintStyle: type.bodyText(color: EjadahColors.labelMuted),
               filled: true,
               fillColor: EjadahColors.card,
-              isDense: true,
+              // 48 is the specified field height, and the token existed
+              // unused; isDense plus 12 of padding rendered 44.
+              constraints: const BoxConstraints(
+                minHeight: EjadahSizes.inputHeight,
+              ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: EjadahSpacing.sm,
                 vertical: EjadahSpacing.sm,
