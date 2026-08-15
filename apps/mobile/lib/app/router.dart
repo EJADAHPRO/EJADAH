@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/auth_controller.dart';
+import '../features/auth/presentation/forgot_password_screen.dart';
 import '../features/auth/presentation/language_screen.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
 import '../features/auth/presentation/sign_up_screen.dart';
@@ -24,6 +25,15 @@ import '../features/roadmap/presentation/roadmap_funnel_screen.dart';
 import '../features/roadmap/presentation/roadmap_result_screen.dart';
 import '../features/shell/app_shell.dart';
 import '../features/shell/not_found_screen.dart';
+
+/// Wraps a route's screen in its own gradient budget.
+///
+/// The six-per-screen limit is only enforceable where a [GradientBudget] sits
+/// above the gradients, and a rule that depends on each new screen remembering
+/// to opt in is a rule that erodes. Installing it here means every route is
+/// counted by construction — including the next one somebody adds.
+Widget _screen(String name, Widget child) =>
+    GradientBudget(screenName: name, child: child);
 
 /// The five tabs. Home · Learn · Career · People · Profile.
 enum AppTab {
@@ -75,77 +85,106 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
       return null;
     },
-    errorBuilder: (context, state) => const NotFoundScreen(),
+    errorBuilder: (context, state) =>
+        _screen('not-found', const NotFoundScreen()),
     routes: [
       // --- Public, chrome-free ----------------------------------------------
       GoRoute(
         path: '/dr/:slug',
-        builder: (context, state) =>
-            PublicProfileScreen(slug: state.pathParameters['slug']!),
+        builder: (context, state) => _screen(
+          'public-profile',
+          PublicProfileScreen(slug: state.pathParameters['slug']!),
+        ),
       ),
       GoRoute(
         path: '/verify/:code',
-        builder: (context, state) =>
-            VerifyCertificateScreen(code: state.pathParameters['code']!),
+        builder: (context, state) => _screen(
+          'verify-certificate',
+          VerifyCertificateScreen(code: state.pathParameters['code']!),
+        ),
       ),
 
       // --- First run ---------------------------------------------------------
       GoRoute(
         path: '/language',
-        builder: (context, state) => const LanguageScreen(),
+        builder: (context, state) =>
+            _screen('language', const LanguageScreen()),
       ),
       GoRoute(
         path: '/sign-in',
+        builder: (context, state) => _screen(
+          'sign-in',
+          SignInScreen(next: state.uri.queryParameters['next']),
+        ),
+      ),
+      GoRoute(
+        path: '/forgot-password',
         builder: (context, state) =>
-            SignInScreen(next: state.uri.queryParameters['next']),
+            _screen('forgot-password', const ForgotPasswordScreen()),
       ),
       GoRoute(
         path: '/sign-up',
-        builder: (context, state) => SignUpScreen(
-          // Set when the user arrived from the guest gate, so the analytics
-          // event can report guest-first conversion.
-          fromGate: state.uri.queryParameters['intent'] == 'gate',
-          next: state.uri.queryParameters['next'],
+        builder: (context, state) => _screen(
+          'sign-up',
+          SignUpScreen(
+            // Set when the user arrived from the guest gate, so the analytics
+            // event can report guest-first conversion.
+            fromGate: state.uri.queryParameters['intent'] == 'gate',
+            next: state.uri.queryParameters['next'],
+          ),
         ),
       ),
 
       // --- The roadmap funnel: guest-capable throughout ----------------------
       GoRoute(
         path: '/roadmap/new',
-        builder: (context, state) =>
-            RoadmapFunnelScreen(seedPath: state.uri.queryParameters['path']),
+        builder: (context, state) => _screen(
+          'roadmap-funnel',
+          RoadmapFunnelScreen(seedPath: state.uri.queryParameters['path']),
+        ),
       ),
       GoRoute(
         path: '/roadmap/:id',
-        builder: (context, state) =>
-            RoadmapResultScreen(roadmapId: state.pathParameters['id']!),
+        builder: (context, state) => _screen(
+          'roadmap-result',
+          RoadmapResultScreen(roadmapId: state.pathParameters['id']!),
+        ),
       ),
 
       // --- Detail routes, pushed over the current tab ------------------------
       GoRoute(
         path: '/programme/:id',
-        builder: (context, state) => ProgrammeDetailScreen(
-          programmeId: int.parse(state.pathParameters['id']!),
+        builder: (context, state) => _screen(
+          'programme-detail',
+          ProgrammeDetailScreen(
+            programmeId: int.parse(state.pathParameters['id']!),
+          ),
         ),
       ),
       GoRoute(
         path: '/country/:iso',
-        builder: (context, state) => CountryDetailScreen(
-          iso: state.pathParameters['iso']!,
-          initialTab: state.uri.queryParameters['tab'],
+        builder: (context, state) => _screen(
+          'country-detail',
+          CountryDetailScreen(
+            iso: state.pathParameters['iso']!,
+            initialTab: state.uri.queryParameters['tab'],
+          ),
         ),
       ),
       GoRoute(
         path: '/countries',
-        builder: (context, state) => const CountriesScreen(),
+        builder: (context, state) =>
+            _screen('countries', const CountriesScreen()),
       ),
       GoRoute(
         path: '/programmes',
-        builder: (context, state) => const ProgrammesScreen(),
+        builder: (context, state) =>
+            _screen('programmes', const ProgrammesScreen()),
       ),
       GoRoute(
         path: '/shortlist',
-        builder: (context, state) => const ShortlistScreen(),
+        builder: (context, state) =>
+            _screen('shortlist', const ShortlistScreen()),
       ),
 
       // --- The tab shell -----------------------------------------------------
@@ -159,7 +198,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppTab.home.path,
-                builder: (context, state) => const HomeScreen(),
+                builder: (context, state) =>
+                    _screen('home', const HomeScreen()),
               ),
             ],
           ),
@@ -167,7 +207,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppTab.learn.path,
-                builder: (context, state) => const LearnScreen(),
+                builder: (context, state) =>
+                    _screen('learn', const LearnScreen()),
               ),
             ],
           ),
@@ -175,7 +216,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppTab.career.path,
-                builder: (context, state) => const CareerHubScreen(),
+                builder: (context, state) =>
+                    _screen('career', const CareerHubScreen()),
               ),
             ],
           ),
@@ -183,7 +225,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppTab.people.path,
-                builder: (context, state) => const PeopleScreen(),
+                builder: (context, state) =>
+                    _screen('people', const PeopleScreen()),
               ),
             ],
           ),
@@ -191,7 +234,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppTab.profile.path,
-                builder: (context, state) => const ProfileScreen(),
+                builder: (context, state) =>
+                    _screen('profile', const ProfileScreen()),
               ),
             ],
           ),

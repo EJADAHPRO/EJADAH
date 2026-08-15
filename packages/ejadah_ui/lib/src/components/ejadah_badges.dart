@@ -227,10 +227,10 @@ class SourceLine extends StatelessWidget {
     );
 
     if (onOpenSource == null) return line;
+    // An 11sp row is about 20 high; the outbound link under it still needs 44.
     return EjadahPressable(
       onTap: onOpenSource,
       haptic: PressHaptic.selection,
-      enforceMinimumTarget: false,
       semanticLabel: sourceName,
       child: line,
     );
@@ -265,7 +265,8 @@ class EjadahFilterChip extends StatelessWidget {
       onTap: onTap,
       haptic: PressHaptic.selection,
       isButton: false,
-      enforceMinimumTarget: false,
+      // 36 is the chip's *visual* height. The target underneath it still has
+      // to be 44 — the rule the handoff calls one of the two most-felt.
       semanticLabel: label,
       child: AnimatedContainer(
         duration: context.ejadah.motion(EjadahMotion.fast),
@@ -277,7 +278,13 @@ class EjadahFilterChip extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? EjadahColors.tint(EjadahColors.orange)
+              // A lighter tint than the usual 8%: `orangeText` sits at 4.83:1
+              // on the plain background, and the standard tint under it drops
+              // to 4.46 — below AA. The surface gives way, not the token.
+              ? EjadahColors.tint(
+                  EjadahColors.orange,
+                  EjadahColors.subtleTintOpacity,
+                )
               : EjadahColors.card,
           borderRadius: EjadahRadius.all(EjadahRadius.pill),
           border: Border.all(

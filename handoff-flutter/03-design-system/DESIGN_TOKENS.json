@@ -4,27 +4,137 @@
     "rule": "every visual constant resolves to a token; raw values are defects"
   },
   "color": {
-    "brand": { "red": "#FF2D32", "orange": "#FF6B1A", "amber": "#FFAA18", "gold": "#FFC62E" },
-    "surface": { "offWhite": "#FFF9EF", "white": "#FFFFFF", "paleGray": "#F5F2EC", "borderGray": "#E7E2DA", "charcoal": "#1B1B1B", "deep": "#121212", "espresso": "#24201D" },
-    "text": { "primary": "#1B1B1B", "secondary": "#716D67", "labelMuted": "#6B6862", "labelStrong": "#5A5751", "orangeText": "#C2450F", "onDark": "#FFFFFF", "onDarkMuted": "rgba(255,255,255,0.72)", "onDarkFaint": "rgba(255,255,255,0.55)" },
-    "semantic": { "success": "#2D9B68", "info": "#496FA8", "danger": "#FF2D32", "warningText": "#8A5C00", "successText": "#1B6B47", "dangerText": "#C41419" },
-    "banned": { "8E8A83": "fails AA (2.84-3.28:1); false pass in legacy docs — never reintroduce" }
+    "brand": {
+      "red": "#FF2D32",
+      "orange": "#FF6B1A",
+      "amber": "#FFAA18",
+      "gold": "#FFC62E"
+    },
+    "surface": {
+      "offWhite": "#FFF9EF",
+      "white": "#FFFFFF",
+      "paleGray": "#F5F2EC",
+      "borderGray": "#E7E2DA",
+      "charcoal": "#1B1B1B",
+      "deep": "#121212",
+      "espresso": "#24201D"
+    },
+    "text": {
+      "primary": "#1B1B1B",
+      "secondary": "#716D67",
+      "labelMuted": "#6B6862",
+      "labelStrong": "#5A5751",
+      "orangeText": "#C2450F",
+      "onDark": "#FFFFFF",
+      "onDarkMuted": "rgba(255,255,255,0.72)",
+      "onDarkFaint": "rgba(255,255,255,0.55)"
+    },
+    "semantic": {
+      "success": "#2D9B68",
+      "info": "#496FA8",
+      "danger": "#FF2D32",
+      "warningText": "#8A5C00",
+      "infoText": "#3E5F8F",
+      "successText": "#1B6B47",
+      "dangerText": "#C41419"
+    },
+    "banned": {
+      "8E8A83": "fails AA (2.84-3.28:1); false pass in legacy docs — never reintroduce"
+    }
   },
   "gradient": {
-    "brand": { "stops": ["#FF2D32", "#FF6B1A", "#FFC62E"], "positions": [0, 0.5, 1.0], "angleLTR": 135, "angleRTL": 225 },
+    "brand": {
+      "stops": [
+        "#FF2D32",
+        "#FF6B1A",
+        "#FFC62E"
+      ],
+      "positions": [
+        0,
+        0.5,
+        1.0
+      ],
+      "angleLTR": 135,
+      "angleRTL": 225
+    },
     "maxPerScreen": 6,
-    "permittedUses": ["primaryButton", "logoTile", "stepMarker", "headingEmphasisPhrase", "closingCtaBand", "activeTabIndicator"]
+    "permittedUses": [
+      "primaryButton",
+      "logoTile",
+      "stepMarker",
+      "headingEmphasisPhrase",
+      "closingCtaBand",
+      "activeTabIndicator"
+    ]
   },
   "type": {
-    "families": { "displayEn": "Playfair Display", "bodyEn": "Inter", "displayAr": "Amiri", "bodyAr": "IBM Plex Sans Arabic" },
-    "sizes": { "micro": 11, "caption": 12, "small": 13, "body": 14, "bodyLg": 16, "h6": 18, "h5": 20, "h4": 22, "h3": 24, "h2": 28, "h1": 32, "display": 36 },
-    "lineHeight": { "tightEn": 1.25, "tightAr": 1.45, "snugEn": 1.45, "snugAr": 1.65, "bodyEn": 1.70, "bodyAr": 1.85 },
-    "letterSpacing": { "eyebrowEn": 0.08, "ar": 0 },
-    "arHeadingReduce": { "abovePct": 0.12, "thresholdChars": 28 },
-    "weights": { "displayBold": 700, "displayBlack": 800, "regular": 400, "medium": 500, "semibold": 600, "bold": 700, "extrabold": 800 }
+    "families": {
+      "displayEn": "Playfair Display",
+      "bodyEn": "Inter",
+      "displayAr": "Amiri",
+      "bodyAr": "IBM Plex Sans Arabic"
+    },
+    "sizes": {
+      "micro": 11,
+      "caption": 12,
+      "small": 13,
+      "body": 14,
+      "bodyLg": 16,
+      "h6": 18,
+      "h5": 20,
+      "h4": 22,
+      "h3": 24,
+      "h2": 28,
+      "h1": 32,
+      "display": 36
+    },
+    "lineHeight": {
+      "tightEn": 1.25,
+      "tightAr": 1.45,
+      "snugEn": 1.45,
+      "snugAr": 1.65,
+      "bodyEn": 1.7,
+      "bodyAr": 1.85
+    },
+    "letterSpacing": {
+      "eyebrowEn": 0.08,
+      "ar": 0
+    },
+    "arHeadingReduce": {
+      "abovePct": 0.12,
+      "thresholdChars": 28
+    },
+    "weights": {
+      "displayBold": 700,
+      "displayBlack": 800,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800
+    }
   },
-  "space": [4, 8, 12, 16, 20, 24, 32, 40, 48, 64],
-  "radius": { "xs": 4, "sm": 8, "md": 12, "lg": 16, "xl": 20, "xxl": 24, "pill": 999 },
+  "space": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64
+  ],
+  "radius": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "xxl": 24,
+    "pill": 999
+  },
   "elevation": {
     "card": "0 1px 3px rgba(0,0,0,0.05)",
     "raised": "0 8px 28px rgba(0,0,0,0.10)",
@@ -32,18 +142,38 @@
     "primaryGlow": "0 4px 20px rgba(255,107,26,0.28)",
     "stickyTop": "0 -12px 40px rgba(0,0,0,0.18)"
   },
-  "opacity": { "disabled": 0.5, "comingSoon": 0.6, "blurLocked": 0.55 },
+  "opacity": {
+    "disabled": 0.5,
+    "comingSoon": 0.6,
+    "blurLocked": 0.55
+  },
   "motion": {
-    "durationMs": { "fast": 150, "base": 200, "slow": 300 },
+    "durationMs": {
+      "fast": 150,
+      "base": 200,
+      "slow": 300
+    },
     "curve": "cubic-bezier(0.4, 0, 0.2, 1)",
     "pressScale": 0.97,
     "staggerListMs": 40,
     "reducedMotion": "suppress transforms; keep opacity fades <=150ms"
   },
-  "breakpoints": { "compact": 0, "medium": 600, "expanded": 1024 },
-  "iconSize": { "inline": 16, "nav": 21, "feature": 24 },
+  "breakpoints": {
+    "compact": 0,
+    "medium": 600,
+    "expanded": 1024
+  },
+  "iconSize": {
+    "inline": 16,
+    "nav": 21,
+    "feature": 24
+  },
   "component": {
-    "buttonHeight": { "primary": 52, "secondary": 48, "compact": 40 },
+    "buttonHeight": {
+      "primary": 52,
+      "secondary": 48,
+      "compact": 40
+    },
     "inputHeight": 48,
     "chipMinHeight": 36,
     "tapTargetMin": 44,
@@ -51,5 +181,11 @@
     "cardBorderWidth": 1.5,
     "phoneContentMaxWidth": 480
   },
-  "zOrder": { "content": 0, "stickyBar": 30, "sheet": 40, "dialog": 50, "toast": 60 }
+  "zOrder": {
+    "content": 0,
+    "stickyBar": 30,
+    "sheet": 40,
+    "dialog": 50,
+    "toast": 60
+  }
 }

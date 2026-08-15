@@ -187,22 +187,9 @@ class _StageCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BrandGradient(
-                use: GradientUse.stepMarker,
-                borderRadius: EjadahRadius.all(EjadahRadius.pill),
-                child: SizedBox(
-                  width: 28,
-                  height: 28,
-                  child: Center(
-                    child: LtrIsland(
-                      child: Text(
-                        '${stage.position}',
-                        style: context.type.caption(color: EjadahColors.onDark),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // A roadmap mirrors its destination's guide one step for one, so
+              // this list is as long as that pathway really is.
+              EjadahStepMarker(position: stage.position, total: total),
               const SizedBox(width: EjadahSpacing.sm),
               Expanded(
                 child: Text(

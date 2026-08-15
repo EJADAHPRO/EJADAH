@@ -3,6 +3,7 @@ import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/system/system.dart';
 import 'providers.dart';
 import 'router.dart';
 
@@ -53,7 +54,14 @@ class EjadahApp extends ConsumerWidget {
                     context,
                   ).clamp(minScaleFactor: 0.85, maxScaleFactor: 2.0),
                 ),
-                child: child ?? const SizedBox.shrink(),
+                // SY-08. Flutter's own answer to a widget that throws is a red
+                // box with a stack trace, which is right in development and
+                // indefensible in front of a dentist. One boundary at the root
+                // turns any build failure into a state that says what happened
+                // and routes to Home.
+                child: SystemErrorBoundary(
+                  child: child ?? const SizedBox.shrink(),
+                ),
               ),
             );
           },

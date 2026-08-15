@@ -193,7 +193,7 @@ class EjadahAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EjadahAppBar({
     required this.title,
     this.onBack,
-    this.backLabel = 'Back',
+    required this.backLabel,
     this.action,
     super.key,
   });
@@ -203,6 +203,8 @@ class EjadahAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Null hides the back affordance. Back is never the only way back — every
   /// screen also has an edge swipe and a route out of its content.
   final VoidCallback? onBack;
+  /// Required rather than defaulted to 'Back': an icon-only control with an
+  /// English default is a label nobody notices is wrong.
   final String backLabel;
   final Widget? action;
 
@@ -306,10 +308,11 @@ class SectionHeader extends StatelessWidget {
         ),
       ),
       if (actionLabel != null && onAction != null)
+        // 12sp plus 8 of padding is about 33. "See all" is a real destination
+        // and gets a real target.
         EjadahPressable(
           onTap: onAction,
           haptic: PressHaptic.selection,
-          enforceMinimumTarget: false,
           semanticLabel: actionLabel,
           child: Padding(
             padding: const EdgeInsets.all(EjadahSpacing.xs),

@@ -15,6 +15,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get account => 'ACCOUNT';
 
   @override
+  String get addCertificate => 'Add a certificate';
+
+  @override
   String get again => 'Again';
 
   @override
@@ -24,6 +27,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get alsoWorthLabel => 'ALSO WORTH CONSIDERING';
 
   @override
+  String get answerToContinue => 'Answer this question to continue.';
+
+  @override
   String get appName => 'Ejadah International Academy';
 
   @override
@@ -31,6 +37,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get applyToTeach => 'Apply to teach';
+
+  @override
+  String get availabilityLabel => 'AVAILABILITY';
 
   @override
   String get availableBalance => 'AVAILABLE BALANCE';
@@ -48,6 +57,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get backToCourse => 'Start the course';
 
   @override
+  String get backToSignIn => 'Back to sign in';
+
+  @override
   String get becomeBlurb =>
       'Apply as a tutor or mentor. You set your rate and hours; the 70/30 split is shown before you commit.';
 
@@ -56,6 +68,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get bestRoute => 'YOUR BEST ROUTE';
+
+  @override
+  String get bookNow => 'Book a session';
 
   @override
   String get bookSession => 'Book a session';
@@ -77,7 +92,16 @@ class EjadahStringsEn extends EjadahStrings {
   String get bookingsBlurb => 'Upcoming, past and cancelled sessions.';
 
   @override
+  String get bookingsCancelled => 'Cancelled';
+
+  @override
+  String get bookingsPast => 'Past';
+
+  @override
   String get bookingsTitle => 'My bookings';
+
+  @override
+  String get bookingsUpcoming => 'Upcoming';
 
   @override
   String get browseProgrammes => 'Browse programmes';
@@ -87,6 +111,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get buildRoute => 'Build my route';
+
+  @override
+  String get buyCourse => 'Buy this course';
 
   @override
   String get cairoTime => 'Cairo time';
@@ -99,7 +126,15 @@ class EjadahStringsEn extends EjadahStrings {
       'Nothing was charged. Your place is not held — the price may change if you come back later.';
 
   @override
+  String get cancelTermsLabel => 'CANCELLATION';
+
+  @override
   String get cancelTitle => 'Payment cancelled';
+
+  @override
+  String cardsDue(Object count) {
+    return '$count cards due';
+  }
 
   @override
   String get careerEyebrow => 'CAREER';
@@ -119,6 +154,9 @@ class EjadahStringsEn extends EjadahStrings {
       'Rotary & reciprocating endodontics · 11 lessons';
 
   @override
+  String get certificatesTitle => 'Certificates';
+
+  @override
   String get choosePlan => 'Choose';
 
   @override
@@ -126,6 +164,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get clearCache => 'Clear cache';
+
+  @override
+  String get clearField => 'Clear';
 
   @override
   String get clearFiltersAction => 'Clear filters';
@@ -229,6 +270,17 @@ class EjadahStringsEn extends EjadahStrings {
   String get daysLeft => 'days left';
 
   @override
+  String daysLeftCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deadlinesAction => 'Open the database';
 
   @override
@@ -245,11 +297,30 @@ class EjadahStringsEn extends EjadahStrings {
   String get deleteAccount => 'Delete my account';
 
   @override
+  String get deleteAccountBody =>
+      'You have 30 days to change your mind. Invoices are kept for tax.';
+
+  @override
+  String get deleteAccountTitle => 'Delete your account';
+
+  @override
+  String get departmentBusiness => 'Business & Paradental';
+
+  @override
+  String get departmentDigital => 'Digital';
+
+  @override
+  String get departmentOrtho => 'Orthodontics';
+
+  @override
   String get difficulty => 'difficulty';
 
   @override
   String get disclaimer =>
       'Always confirm fees, visa rules and registration requirements with the relevant authority before committing money.';
+
+  @override
+  String get documentsTab => 'Documents';
 
   @override
   String get done => 'Done';
@@ -271,6 +342,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get email => 'Email';
+
+  @override
+  String get emailRequired => 'Enter your email address.';
 
   @override
   String get emptyBookBody =>
@@ -324,6 +398,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get estCost => 'estimated cost';
+
+  @override
+  String get examFee => 'Exam fee';
 
   @override
   String get exploreLabel => 'EXPLORE';
@@ -386,6 +463,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get filterBy => 'FORMAT';
 
   @override
+  String get filterSheetTitle => 'Filter';
+
+  @override
   String get filters => 'Filters';
 
   @override
@@ -400,6 +480,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get flashcards => 'Flashcards';
+
+  @override
+  String get flipCard => 'Tap to flip';
 
   @override
   String get forgotBody =>
@@ -442,6 +525,9 @@ class EjadahStringsEn extends EjadahStrings {
       'A written summary and next-case checklist within 24 hours.';
 
   @override
+  String get goalLabel => 'What do you need from this session?';
+
+  @override
   String get gotIt => 'Got it';
 
   @override
@@ -463,6 +549,13 @@ class EjadahStringsEn extends EjadahStrings {
   String holdCountdown(Object time) {
     return 'Held for you $time';
   }
+
+  @override
+  String get holdExpiredBody =>
+      'That hold ran out and the time was released. Pick another — nothing was charged.';
+
+  @override
+  String get holdExpiredTitle => 'That hold ran out';
 
   @override
   String get homeGreetingEvening => 'Good evening';
@@ -490,6 +583,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get initials => 'YH';
+
+  @override
+  String get installEjadah => 'Get Ejadah';
 
   @override
   String get instructorBio =>
@@ -528,6 +624,12 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get lastSixMonths => 'LAST SIX MONTHS';
+
+  @override
+  String get learnEyebrow => 'LEARN';
+
+  @override
+  String get lessonOneFree => 'Lesson 1 is free';
 
   @override
   String get lessons => 'lessons';
@@ -592,6 +694,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get nextMentorSub => 'Mentors matched on this exact route.';
 
   @override
+  String get nextPage => 'Next page';
+
+  @override
   String get nextProgrammes => 'Postgraduate programmes';
 
   @override
@@ -625,10 +730,16 @@ class EjadahStringsEn extends EjadahStrings {
   }
 
   @override
+  String get noSlots => 'No open times this week.';
+
+  @override
+  String get notIncluded => 'Not included';
+
+  @override
   String get notListed => 'Not listed';
 
   @override
-  String get notVerified => 'Recognition not verified';
+  String get notVerified => 'Not verified';
 
   @override
   String get notesLabel => 'NOTES FOR THE TUTOR';
@@ -668,6 +779,12 @@ class EjadahStringsEn extends EjadahStrings {
   String get openRoadmap => 'Open roadmap';
 
   @override
+  String get orderPhysical => 'Order the physical card';
+
+  @override
+  String get ownedCourse => 'Yours for good';
+
+  @override
   String get pGoal => 'What are you aiming for?';
 
   @override
@@ -686,6 +803,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get pSpec => 'Which field interests you?';
+
+  @override
+  String get packagesLabel => 'PACKAGES';
 
   @override
   String get paidBody =>
@@ -723,17 +843,39 @@ class EjadahStringsEn extends EjadahStrings {
   String get pathsLabel => 'CHOOSE A DIRECTION';
 
   @override
+  String get patientDataWarning =>
+      'Please don\'t include patient names or identifying details.';
+
+  @override
   String get payCta => 'Pay on ejadah.com';
+
+  @override
+  String get payExternally => 'Continue to payment';
 
   @override
   String get payNote =>
       'Payments are completed securely on ejadah.com — the app never handles card details.';
 
   @override
+  String get payNoteExternal => 'Completed securely on ejadah.international';
+
+  @override
   String get pendingClearing => 'Pending clearance:';
 
   @override
   String get pendingSource => 'Pending source';
+
+  @override
+  String get peopleConsultingDoor => 'Consulting';
+
+  @override
+  String get peopleEyebrow => 'PEOPLE';
+
+  @override
+  String get peopleMentoringDoor => 'Mentoring';
+
+  @override
+  String get peopleTutoringDoor => 'Tutoring';
 
   @override
   String get perHour => '/ hour';
@@ -746,6 +888,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get photoSlot => 'profile photo';
+
+  @override
+  String get pickAnotherWeek => 'Try another week';
 
   @override
   String get pickDate => 'Pick a date and time';
@@ -768,6 +913,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get previewAvailable => 'Preview available';
+
+  @override
+  String get previousPage => 'Previous page';
 
   @override
   String get priorityLabel => 'WHAT MATTERS MOST';
@@ -824,7 +972,19 @@ class EjadahStringsEn extends EjadahStrings {
   String get q5 => 'Where and why';
 
   @override
+  String get qualificationsLabel => 'QUALIFICATIONS';
+
+  @override
   String get quiz => 'Quiz';
+
+  @override
+  String get quizOfferSession =>
+      'Below 60%. One session on this topic often fixes it.';
+
+  @override
+  String quizScore(Object correct, Object score, Object total) {
+    return '$score% — $correct of $total';
+  }
 
   @override
   String get rating => 'rating';
@@ -839,6 +999,11 @@ class EjadahStringsEn extends EjadahStrings {
   @override
   String get recognitionNotice =>
       'Recognition status not yet verified per country';
+
+  @override
+  String refundIfCancelled(Object amount, Object total) {
+    return 'You\'ll be refunded $amount of $total.';
+  }
 
   @override
   String get regionEurope => 'Europe';
@@ -869,9 +1034,18 @@ class EjadahStringsEn extends EjadahStrings {
   String get reschedule => 'Reschedule';
 
   @override
+  String get restorePurchases => 'Restore purchases';
+
+  @override
   String resultsCount(Object count) {
     return '$count programmes';
   }
+
+  @override
+  String get resumeLesson => 'Resume';
+
+  @override
+  String get retakeQuiz => 'Try the quiz again';
 
   @override
   String get retry => 'Try again';
@@ -880,8 +1054,16 @@ class EjadahStringsEn extends EjadahStrings {
   String get reviewBooking => 'Review your booking';
 
   @override
+  String get reviewBookingTitle => 'Review your booking';
+
+  @override
   String get reviewTimeline =>
       'We review applications within five working days and reply either way.';
+
+  @override
+  String reviewsCount(Object count) {
+    return '$count reviews';
+  }
 
   @override
   String get reviewsLabel => 'REVIEWS';
@@ -924,7 +1106,7 @@ class EjadahStringsEn extends EjadahStrings {
   String get rowCertificates => 'Certificates';
 
   @override
-  String get rowMembership => 'Membership';
+  String get rowMembership => 'Premium';
 
   @override
   String get rowNfc => 'NFC card';
@@ -939,7 +1121,7 @@ class EjadahStringsEn extends EjadahStrings {
   String get rowSettings => 'Settings';
 
   @override
-  String get rowShortlist => 'Saved programmes';
+  String get rowShortlist => 'My shortlist';
 
   @override
   String get save => 'Save';
@@ -999,6 +1181,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get share => 'Share card';
 
   @override
+  String get shareCard => 'Share my card';
+
+  @override
   String get shareVerify => 'Share verification';
 
   @override
@@ -1009,6 +1194,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get showExpired => 'Show expired';
+
+  @override
+  String get showResults => 'Show results';
 
   @override
   String showingRange(Object first, Object last, Object total) {
@@ -1029,6 +1217,10 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get skip => 'Skip';
+
+  @override
+  String get slotTakenBody =>
+      'Someone booked that time a moment ago. Here\'s what\'s still open.';
 
   @override
   String get slotTakenTitle => 'That time just went';
@@ -1083,6 +1275,15 @@ class EjadahStringsEn extends EjadahStrings {
   String get statedByTutor => 'Stated by the tutor';
 
   @override
+  String stepOfSteps(Object n, Object total) {
+    return 'Step $n of $total';
+  }
+
+  @override
+  String get storePurchaseNote =>
+      'Charged by the app store. Restore purchases any time.';
+
+  @override
   String get streak => '12-day streak';
 
   @override
@@ -1094,6 +1295,74 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get submitApplication => 'Submit application';
+
+  @override
+  String get sysCameraDeniedBody =>
+      'Scanning a card needs the camera. You can turn it on in Settings.';
+
+  @override
+  String get sysCameraDeniedTitle => 'Camera is off';
+
+  @override
+  String get sysContentUnavailableTitle => 'This is no longer available';
+
+  @override
+  String get sysErrorBoundaryBody =>
+      'This screen stopped working. Going back to Home is the quickest way on.';
+
+  @override
+  String get sysErrorBoundaryTitle => 'Something broke on this screen';
+
+  @override
+  String get sysForceUpdateBody =>
+      'This version can no longer talk to our servers.';
+
+  @override
+  String get sysForceUpdateTitle => 'Update to continue';
+
+  @override
+  String get sysMaintenanceBody =>
+      'We are back shortly. Nothing you saved is affected.';
+
+  @override
+  String get sysMaintenanceTitle => 'Ejadah is being updated';
+
+  @override
+  String get sysNotifDeniedBody =>
+      'Deadline warnings need permission. You can turn it on in Settings.';
+
+  @override
+  String get sysNotifDeniedTitle => 'Notifications are off';
+
+  @override
+  String get sysOfflineBody =>
+      'You\'re offline. We\'ll retry as soon as the connection is back.';
+
+  @override
+  String get sysOfflineTitle => 'You are offline';
+
+  @override
+  String get sysOpenSettings => 'Open Settings';
+
+  @override
+  String get sysRateLimitedBody =>
+      'Too many attempts. Try again in two minutes.';
+
+  @override
+  String get sysRateLimitedTitle => 'Take a short break';
+
+  @override
+  String get sysServerErrorTitle => 'Something went wrong on our side';
+
+  @override
+  String get sysSessionExpiredBody =>
+      'Sign in again and you\'ll come straight back to where you were.';
+
+  @override
+  String get sysSessionExpiredTitle => 'Please sign in again';
+
+  @override
+  String get sysUpdateAction => 'Update the app';
 
   @override
   String get tabCareer => 'Career';
@@ -1188,6 +1457,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get tutorsSub => 'Matched to endodontics, your saved specialty.';
 
   @override
+  String get typeDeleteToConfirm => 'Type DELETE to confirm';
+
+  @override
   String get typicalCost => 'typical cost';
 
   @override
@@ -1212,11 +1484,26 @@ class EjadahStringsEn extends EjadahStrings {
   String get verifiedTutor => 'Verified';
 
   @override
+  String get verifyNotFound => 'No certificate with that code';
+
+  @override
   String get verifyNote =>
       'Every certificate carries a public verification page a clinic or registrar can check without an account.';
 
   @override
+  String get verifyRevoked => 'This certificate was revoked';
+
+  @override
+  String get verifyTitle => 'Certificate check';
+
+  @override
+  String get verifyValid => 'This certificate is valid';
+
+  @override
   String get viewDetails => 'Details';
+
+  @override
+  String get viewProfile => 'View profile';
 
   @override
   String get visaRoute => 'VISA ROUTE';

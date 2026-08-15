@@ -150,7 +150,7 @@ class EjadahSearchField extends StatelessWidget {
     required this.hint,
     required this.onSubmitted,
     this.onChanged,
-    this.clearLabel = 'Clear',
+    required this.clearLabel,
     super.key,
   });
 
@@ -158,6 +158,9 @@ class EjadahSearchField extends StatelessWidget {
   final String hint;
   final ValueChanged<String> onSubmitted;
   final ValueChanged<String>? onChanged;
+  /// Required rather than defaulted: an English default silently announced
+  /// "Clear" to an Arabic screen-reader user for every call site that forgot to
+  /// pass one, and a default is exactly what makes forgetting invisible.
   final String clearLabel;
 
   @override

@@ -110,6 +110,12 @@ abstract class EjadahStrings {
   /// **'ACCOUNT'**
   String get account;
 
+  /// No description provided for @addCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a certificate'**
+  String get addCertificate;
+
   /// No description provided for @again.
   ///
   /// In en, this message translates to:
@@ -128,6 +134,12 @@ abstract class EjadahStrings {
   /// **'ALSO WORTH CONSIDERING'**
   String get alsoWorthLabel;
 
+  /// No description provided for @answerToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer this question to continue.'**
+  String get answerToContinue;
+
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
@@ -145,6 +157,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Apply to teach'**
   String get applyToTeach;
+
+  /// No description provided for @availabilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABILITY'**
+  String get availabilityLabel;
 
   /// No description provided for @availableBalance.
   ///
@@ -176,6 +194,12 @@ abstract class EjadahStrings {
   /// **'Start the course'**
   String get backToCourse;
 
+  /// No description provided for @backToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get backToSignIn;
+
   /// No description provided for @becomeBlurb.
   ///
   /// In en, this message translates to:
@@ -193,6 +217,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'YOUR BEST ROUTE'**
   String get bestRoute;
+
+  /// No description provided for @bookNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a session'**
+  String get bookNow;
 
   /// No description provided for @bookSession.
   ///
@@ -230,11 +260,29 @@ abstract class EjadahStrings {
   /// **'Upcoming, past and cancelled sessions.'**
   String get bookingsBlurb;
 
+  /// No description provided for @bookingsCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get bookingsCancelled;
+
+  /// No description provided for @bookingsPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get bookingsPast;
+
   /// No description provided for @bookingsTitle.
   ///
   /// In en, this message translates to:
   /// **'My bookings'**
   String get bookingsTitle;
+
+  /// No description provided for @bookingsUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get bookingsUpcoming;
 
   /// No description provided for @browseProgrammes.
   ///
@@ -254,6 +302,12 @@ abstract class EjadahStrings {
   /// **'Build my route'**
   String get buildRoute;
 
+  /// No description provided for @buyCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy this course'**
+  String get buyCourse;
+
   /// No description provided for @cairoTime.
   ///
   /// In en, this message translates to:
@@ -272,11 +326,23 @@ abstract class EjadahStrings {
   /// **'Nothing was charged. Your place is not held — the price may change if you come back later.'**
   String get cancelBody;
 
+  /// No description provided for @cancelTermsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CANCELLATION'**
+  String get cancelTermsLabel;
+
   /// No description provided for @cancelTitle.
   ///
   /// In en, this message translates to:
   /// **'Payment cancelled'**
   String get cancelTitle;
+
+  /// No description provided for @cardsDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards due'**
+  String cardsDue(Object count);
 
   /// No description provided for @careerEyebrow.
   ///
@@ -308,6 +374,12 @@ abstract class EjadahStrings {
   /// **'Rotary & reciprocating endodontics · 11 lessons'**
   String get certTitleSample;
 
+  /// No description provided for @certificatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get certificatesTitle;
+
   /// No description provided for @choosePlan.
   ///
   /// In en, this message translates to:
@@ -325,6 +397,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Clear cache'**
   String get clearCache;
+
+  /// No description provided for @clearField.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearField;
 
   /// No description provided for @clearFiltersAction.
   ///
@@ -518,6 +596,12 @@ abstract class EjadahStrings {
   /// **'days left'**
   String get daysLeft;
 
+  /// No description provided for @daysLeftCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day left} other{{count} days left}}'**
+  String daysLeftCount(num count);
+
   /// No description provided for @deadlinesAction.
   ///
   /// In en, this message translates to:
@@ -548,6 +632,36 @@ abstract class EjadahStrings {
   /// **'Delete my account'**
   String get deleteAccount;
 
+  /// No description provided for @deleteAccountBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have 30 days to change your mind. Invoices are kept for tax.'**
+  String get deleteAccountBody;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @departmentBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business & Paradental'**
+  String get departmentBusiness;
+
+  /// No description provided for @departmentDigital.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital'**
+  String get departmentDigital;
+
+  /// No description provided for @departmentOrtho.
+  ///
+  /// In en, this message translates to:
+  /// **'Orthodontics'**
+  String get departmentOrtho;
+
   /// No description provided for @difficulty.
   ///
   /// In en, this message translates to:
@@ -559,6 +673,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Always confirm fees, visa rules and registration requirements with the relevant authority before committing money.'**
   String get disclaimer;
+
+  /// No description provided for @documentsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get documentsTab;
 
   /// No description provided for @done.
   ///
@@ -601,6 +721,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Email'**
   String get email;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address.'**
+  String get emailRequired;
 
   /// No description provided for @emptyBookBody.
   ///
@@ -691,6 +817,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'estimated cost'**
   String get estCost;
+
+  /// No description provided for @examFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam fee'**
+  String get examFee;
 
   /// No description provided for @exploreLabel.
   ///
@@ -812,6 +944,12 @@ abstract class EjadahStrings {
   /// **'FORMAT'**
   String get filterBy;
 
+  /// No description provided for @filterSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filterSheetTitle;
+
   /// No description provided for @filters.
   ///
   /// In en, this message translates to:
@@ -841,6 +979,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Flashcards'**
   String get flashcards;
+
+  /// No description provided for @flipCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to flip'**
+  String get flipCard;
 
   /// No description provided for @forgotBody.
   ///
@@ -908,6 +1052,12 @@ abstract class EjadahStrings {
   /// **'A written summary and next-case checklist within 24 hours.'**
   String get getBullet3;
 
+  /// No description provided for @goalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you need from this session?'**
+  String get goalLabel;
+
   /// No description provided for @gotIt.
   ///
   /// In en, this message translates to:
@@ -949,6 +1099,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Held for you {time}'**
   String holdCountdown(Object time);
+
+  /// No description provided for @holdExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'That hold ran out and the time was released. Pick another — nothing was charged.'**
+  String get holdExpiredBody;
+
+  /// No description provided for @holdExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'That hold ran out'**
+  String get holdExpiredTitle;
 
   /// No description provided for @homeGreetingEvening.
   ///
@@ -1003,6 +1165,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'YH'**
   String get initials;
+
+  /// No description provided for @installEjadah.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Ejadah'**
+  String get installEjadah;
 
   /// No description provided for @instructorBio.
   ///
@@ -1075,6 +1243,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'LAST SIX MONTHS'**
   String get lastSixMonths;
+
+  /// No description provided for @learnEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'LEARN'**
+  String get learnEyebrow;
+
+  /// No description provided for @lessonOneFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson 1 is free'**
+  String get lessonOneFree;
 
   /// No description provided for @lessons.
   ///
@@ -1196,6 +1376,12 @@ abstract class EjadahStrings {
   /// **'Mentors matched on this exact route.'**
   String get nextMentorSub;
 
+  /// No description provided for @nextPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Next page'**
+  String get nextPage;
+
   /// No description provided for @nextProgrammes.
   ///
   /// In en, this message translates to:
@@ -1256,6 +1442,18 @@ abstract class EjadahStrings {
   /// **'Nothing matches those filters. Nearest match: {relaxation}.'**
   String noResultsNearest(Object relaxation);
 
+  /// No description provided for @noSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'No open times this week.'**
+  String get noSlots;
+
+  /// No description provided for @notIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not included'**
+  String get notIncluded;
+
   /// No description provided for @notListed.
   ///
   /// In en, this message translates to:
@@ -1265,7 +1463,7 @@ abstract class EjadahStrings {
   /// No description provided for @notVerified.
   ///
   /// In en, this message translates to:
-  /// **'Recognition not verified'**
+  /// **'Not verified'**
   String get notVerified;
 
   /// No description provided for @notesLabel.
@@ -1340,6 +1538,18 @@ abstract class EjadahStrings {
   /// **'Open roadmap'**
   String get openRoadmap;
 
+  /// No description provided for @orderPhysical.
+  ///
+  /// In en, this message translates to:
+  /// **'Order the physical card'**
+  String get orderPhysical;
+
+  /// No description provided for @ownedCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Yours for good'**
+  String get ownedCourse;
+
   /// No description provided for @pGoal.
   ///
   /// In en, this message translates to:
@@ -1375,6 +1585,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Which field interests you?'**
   String get pSpec;
+
+  /// No description provided for @packagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PACKAGES'**
+  String get packagesLabel;
 
   /// No description provided for @paidBody.
   ///
@@ -1442,17 +1658,35 @@ abstract class EjadahStrings {
   /// **'CHOOSE A DIRECTION'**
   String get pathsLabel;
 
+  /// No description provided for @patientDataWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please don\'t include patient names or identifying details.'**
+  String get patientDataWarning;
+
   /// No description provided for @payCta.
   ///
   /// In en, this message translates to:
   /// **'Pay on ejadah.com'**
   String get payCta;
 
+  /// No description provided for @payExternally.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to payment'**
+  String get payExternally;
+
   /// No description provided for @payNote.
   ///
   /// In en, this message translates to:
   /// **'Payments are completed securely on ejadah.com — the app never handles card details.'**
   String get payNote;
+
+  /// No description provided for @payNoteExternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed securely on ejadah.international'**
+  String get payNoteExternal;
 
   /// No description provided for @pendingClearing.
   ///
@@ -1465,6 +1699,30 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Pending source'**
   String get pendingSource;
+
+  /// No description provided for @peopleConsultingDoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Consulting'**
+  String get peopleConsultingDoor;
+
+  /// No description provided for @peopleEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'PEOPLE'**
+  String get peopleEyebrow;
+
+  /// No description provided for @peopleMentoringDoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Mentoring'**
+  String get peopleMentoringDoor;
+
+  /// No description provided for @peopleTutoringDoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutoring'**
+  String get peopleTutoringDoor;
 
   /// No description provided for @perHour.
   ///
@@ -1489,6 +1747,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'profile photo'**
   String get photoSlot;
+
+  /// No description provided for @pickAnotherWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another week'**
+  String get pickAnotherWeek;
 
   /// No description provided for @pickDate.
   ///
@@ -1531,6 +1795,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Preview available'**
   String get previewAvailable;
+
+  /// No description provided for @previousPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous page'**
+  String get previousPage;
 
   /// No description provided for @priorityLabel.
   ///
@@ -1634,11 +1904,29 @@ abstract class EjadahStrings {
   /// **'Where and why'**
   String get q5;
 
+  /// No description provided for @qualificationsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'QUALIFICATIONS'**
+  String get qualificationsLabel;
+
   /// No description provided for @quiz.
   ///
   /// In en, this message translates to:
   /// **'Quiz'**
   String get quiz;
+
+  /// No description provided for @quizOfferSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Below 60%. One session on this topic often fixes it.'**
+  String get quizOfferSession;
+
+  /// No description provided for @quizScore.
+  ///
+  /// In en, this message translates to:
+  /// **'{score}% — {correct} of {total}'**
+  String quizScore(Object correct, Object score, Object total);
 
   /// No description provided for @rating.
   ///
@@ -1663,6 +1951,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Recognition status not yet verified per country'**
   String get recognitionNotice;
+
+  /// No description provided for @refundIfCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll be refunded {amount} of {total}.'**
+  String refundIfCancelled(Object amount, Object total);
 
   /// No description provided for @regionEurope.
   ///
@@ -1718,11 +2012,29 @@ abstract class EjadahStrings {
   /// **'Reschedule'**
   String get reschedule;
 
+  /// No description provided for @restorePurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore purchases'**
+  String get restorePurchases;
+
   /// No description provided for @resultsCount.
   ///
   /// In en, this message translates to:
   /// **'{count} programmes'**
   String resultsCount(Object count);
+
+  /// No description provided for @resumeLesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get resumeLesson;
+
+  /// No description provided for @retakeQuiz.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the quiz again'**
+  String get retakeQuiz;
 
   /// No description provided for @retry.
   ///
@@ -1736,11 +2048,23 @@ abstract class EjadahStrings {
   /// **'Review your booking'**
   String get reviewBooking;
 
+  /// No description provided for @reviewBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your booking'**
+  String get reviewBookingTitle;
+
   /// No description provided for @reviewTimeline.
   ///
   /// In en, this message translates to:
   /// **'We review applications within five working days and reply either way.'**
   String get reviewTimeline;
+
+  /// No description provided for @reviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String reviewsCount(Object count);
 
   /// No description provided for @reviewsLabel.
   ///
@@ -1817,7 +2141,7 @@ abstract class EjadahStrings {
   /// No description provided for @rowMembership.
   ///
   /// In en, this message translates to:
-  /// **'Membership'**
+  /// **'Premium'**
   String get rowMembership;
 
   /// No description provided for @rowNfc.
@@ -1847,7 +2171,7 @@ abstract class EjadahStrings {
   /// No description provided for @rowShortlist.
   ///
   /// In en, this message translates to:
-  /// **'Saved programmes'**
+  /// **'My shortlist'**
   String get rowShortlist;
 
   /// No description provided for @save.
@@ -1964,6 +2288,12 @@ abstract class EjadahStrings {
   /// **'Share card'**
   String get share;
 
+  /// No description provided for @shareCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my card'**
+  String get shareCard;
+
   /// No description provided for @shareVerify.
   ///
   /// In en, this message translates to:
@@ -1987,6 +2317,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Show expired'**
   String get showExpired;
+
+  /// No description provided for @showResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get showResults;
 
   /// No description provided for @showingRange.
   ///
@@ -2023,6 +2359,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Skip'**
   String get skip;
+
+  /// No description provided for @slotTakenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone booked that time a moment ago. Here\'s what\'s still open.'**
+  String get slotTakenBody;
 
   /// No description provided for @slotTakenTitle.
   ///
@@ -2120,6 +2462,18 @@ abstract class EjadahStrings {
   /// **'Stated by the tutor'**
   String get statedByTutor;
 
+  /// No description provided for @stepOfSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n} of {total}'**
+  String stepOfSteps(Object n, Object total);
+
+  /// No description provided for @storePurchaseNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged by the app store. Restore purchases any time.'**
+  String get storePurchaseNote;
+
   /// No description provided for @streak.
   ///
   /// In en, this message translates to:
@@ -2143,6 +2497,126 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Submit application'**
   String get submitApplication;
+
+  /// No description provided for @sysCameraDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning a card needs the camera. You can turn it on in Settings.'**
+  String get sysCameraDeniedBody;
+
+  /// No description provided for @sysCameraDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera is off'**
+  String get sysCameraDeniedTitle;
+
+  /// No description provided for @sysContentUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is no longer available'**
+  String get sysContentUnavailableTitle;
+
+  /// No description provided for @sysErrorBoundaryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen stopped working. Going back to Home is the quickest way on.'**
+  String get sysErrorBoundaryBody;
+
+  /// No description provided for @sysErrorBoundaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something broke on this screen'**
+  String get sysErrorBoundaryTitle;
+
+  /// No description provided for @sysForceUpdateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This version can no longer talk to our servers.'**
+  String get sysForceUpdateBody;
+
+  /// No description provided for @sysForceUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to continue'**
+  String get sysForceUpdateTitle;
+
+  /// No description provided for @sysMaintenanceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We are back shortly. Nothing you saved is affected.'**
+  String get sysMaintenanceBody;
+
+  /// No description provided for @sysMaintenanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ejadah is being updated'**
+  String get sysMaintenanceTitle;
+
+  /// No description provided for @sysNotifDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline warnings need permission. You can turn it on in Settings.'**
+  String get sysNotifDeniedBody;
+
+  /// No description provided for @sysNotifDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off'**
+  String get sysNotifDeniedTitle;
+
+  /// No description provided for @sysOfflineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline. We\'ll retry as soon as the connection is back.'**
+  String get sysOfflineBody;
+
+  /// No description provided for @sysOfflineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline'**
+  String get sysOfflineTitle;
+
+  /// No description provided for @sysOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get sysOpenSettings;
+
+  /// No description provided for @sysRateLimitedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in two minutes.'**
+  String get sysRateLimitedBody;
+
+  /// No description provided for @sysRateLimitedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a short break'**
+  String get sysRateLimitedTitle;
+
+  /// No description provided for @sysServerErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong on our side'**
+  String get sysServerErrorTitle;
+
+  /// No description provided for @sysSessionExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again and you\'ll come straight back to where you were.'**
+  String get sysSessionExpiredBody;
+
+  /// No description provided for @sysSessionExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in again'**
+  String get sysSessionExpiredTitle;
+
+  /// No description provided for @sysUpdateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the app'**
+  String get sysUpdateAction;
 
   /// No description provided for @tabCareer.
   ///
@@ -2324,6 +2798,12 @@ abstract class EjadahStrings {
   /// **'Matched to endodontics, your saved specialty.'**
   String get tutorsSub;
 
+  /// No description provided for @typeDeleteToConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Type DELETE to confirm'**
+  String get typeDeleteToConfirm;
+
   /// No description provided for @typicalCost.
   ///
   /// In en, this message translates to:
@@ -2372,17 +2852,47 @@ abstract class EjadahStrings {
   /// **'Verified'**
   String get verifiedTutor;
 
+  /// No description provided for @verifyNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No certificate with that code'**
+  String get verifyNotFound;
+
   /// No description provided for @verifyNote.
   ///
   /// In en, this message translates to:
   /// **'Every certificate carries a public verification page a clinic or registrar can check without an account.'**
   String get verifyNote;
 
+  /// No description provided for @verifyRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'This certificate was revoked'**
+  String get verifyRevoked;
+
+  /// No description provided for @verifyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate check'**
+  String get verifyTitle;
+
+  /// No description provided for @verifyValid.
+  ///
+  /// In en, this message translates to:
+  /// **'This certificate is valid'**
+  String get verifyValid;
+
   /// No description provided for @viewDetails.
   ///
   /// In en, this message translates to:
   /// **'Details'**
   String get viewDetails;
+
+  /// No description provided for @viewProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'View profile'**
+  String get viewProfile;
 
   /// No description provided for @visaRoute.
   ///

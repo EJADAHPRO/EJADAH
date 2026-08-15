@@ -51,12 +51,21 @@ abstract final class EjadahColors {
   static const Color info = RawTokens.semanticInfo;
   static const Color danger = RawTokens.semanticDanger;
   static const Color warningText = RawTokens.semanticWarningText;
+  static const Color infoText = RawTokens.semanticInfoText;
   static const Color successText = RawTokens.semanticSuccessText;
   static const Color dangerText = RawTokens.semanticDangerText;
 
   /// A tint of [colour] over the app background, for chip and alert fills.
   static Color tint(Color colour, [double opacity = 0.08]) =>
       Color.alphaBlend(colour.withValues(alpha: opacity), background);
+
+  /// A lighter tint, for surfaces that carry text at the AA boundary.
+  ///
+  /// `orangeText` measures 4.83:1 on the plain background, so an 8% orange
+  /// tint under it drops to 4.46 and fails. The selected filter chip is the one
+  /// place that combination occurs, and lightening the surface is the fix that
+  /// keeps the canonical text colour intact.
+  static const double subtleTintOpacity = 0.05;
 }
 
 /// The spacing scale: 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64.
@@ -238,6 +247,9 @@ abstract final class EjadahSizes {
 
   /// Comfortable reading width for country guides.
   static const double readingMaxWidth = 720;
+
+  /// The numbered step marker on a stage list.
+  static const double stepMarkerSize = 28;
 }
 
 /// The six things the brand gradient is allowed to be.
@@ -259,6 +271,19 @@ enum GradientUse {
 /// always comes from the leading edge.
 abstract final class EjadahGradient {
   static const int maxPerScreen = RawTokens.gradientMaxPerScreen;
+
+  /// How many numbered step markers may carry the gradient at once.
+  ///
+  /// One under the screen budget, because a stage list always shares its screen
+  /// with at least one other permitted use — the primary button or the closing
+  /// CTA band. A list longer than this renders every marker in charcoal rather
+  /// than gradient-marking the first few and not the rest: Germany's guide has
+  /// seven steps, and a list where markers 1–5 glow and 6–7 do not reads as a
+  /// rendering bug, not as restraint.
+  static const int maxStepMarkers = maxPerScreen - 1;
+
+  /// Whether a stage list of [total] steps may use the gradient at all.
+  static bool allowsStepMarkers(int total) => total <= maxStepMarkers;
 
   static LinearGradient of(TextDirection direction) {
     final rtl = direction == TextDirection.rtl;

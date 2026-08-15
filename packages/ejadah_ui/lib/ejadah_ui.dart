@@ -13,6 +13,8 @@ export 'src/components/ejadah_inputs.dart';
 export 'src/components/ejadah_overlays.dart';
 export 'src/components/ejadah_shell.dart';
 export 'src/components/ejadah_states.dart';
+export 'src/components/ejadah_step_marker.dart';
+export 'src/components/ejadah_system_state.dart';
 export 'src/foundation/bidi_text.dart';
 export 'src/foundation/ejadah_icons.dart';
 export 'src/foundation/ejadah_pressable.dart';

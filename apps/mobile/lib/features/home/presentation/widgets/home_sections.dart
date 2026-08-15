@@ -4,6 +4,7 @@ import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../app/providers.dart';
 import '../../data/home_repository.dart';
@@ -265,7 +266,7 @@ class UpcomingSessionCard extends ConsumerWidget {
                 children: [
                   Text('${start.day}', style: context.type.h5()),
                   Text(
-                    _monthLabel(start.month),
+                    _monthLabel(context, start),
                     style: context.type.micro(color: EjadahColors.labelMuted),
                   ),
                 ],
@@ -318,12 +319,19 @@ class UpcomingSessionCard extends ConsumerWidget {
     );
   }
 
-  /// Three-letter month. Localized month names come from the string table where
-  /// the design shows them in full; the date block is deliberately terse.
-  static String _monthLabel(int month) => const [
-    'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-    'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
-  ][month - 1];
+  /// The abbreviated month, in the reader's language.
+  ///
+  /// A hard-coded English list put "AUG" in the middle of an Arabic screen. It
+  /// also uppercased, which Arabic has no notion of and the brand guide forbids
+  /// there. `intl` carries the month names for both locales, so this is the one
+  /// place that needs to know the date format at all.
+  static String _monthLabel(BuildContext context, DateTime at) {
+    final language = Localizations.localeOf(context).languageCode;
+    final label = DateFormat.MMM(language).format(at);
+    // English abbreviations are set in caps in the design; Arabic is left as
+    // authored.
+    return language == 'ar' ? label : label.toUpperCase();
+  }
 }
 
 /// Saved programmes with a live deadline, most urgent first.
@@ -401,8 +409,9 @@ class DeadlineStrip extends StatelessWidget {
             trailing: DeadlineBadge(
               status: programme.deadlineStatus,
               daysRemaining: programme.daysRemaining,
-              closingSoonLabel:
-                  '${programme.daysRemaining ?? 0} ${strings.daysLeft}',
+              closingSoonLabel: strings.daysLeftCount(
+                programme.daysRemaining ?? 0,
+              ),
               openLabel: strings.openNow,
               closedLabel: strings.closed,
             ),

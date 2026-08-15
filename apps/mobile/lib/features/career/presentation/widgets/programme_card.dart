@@ -99,9 +99,11 @@ class ProgrammeCard extends StatelessWidget {
                 status: programme.deadlineStatus,
                 daysRemaining: programme.daysRemaining,
                 // The count is substituted by the localization, never
-                // concatenated here.
-                closingSoonLabel:
-                    '${programme.daysRemaining ?? 0} ${strings.daysLeft}',
+                // concatenated here: Arabic has six plural forms and a
+                // concatenated fragment can only ever pick one of them.
+                closingSoonLabel: strings.daysLeftCount(
+                  programme.daysRemaining ?? 0,
+                ),
                 openLabel: strings.openNow,
                 closedLabel: strings.closed,
               ),

@@ -40,6 +40,44 @@ void main() {
         greaterThanOrEqualTo(4.5),
       );
     });
+
+    test('every tinted surface carries text that passes AA on it', () {
+      // The measurement that matters is against the *composited* surface, not
+      // the token's own background. Each of these pairs was in the product;
+      // `info` was reading its own base hue at 4.28:1 because the text member
+      // of its family had never been added.
+      final pairs = <String, (Color, Color, double)>{
+        'warning': (EjadahColors.warningText, EjadahColors.amber, 0.10),
+        'info': (EjadahColors.infoText, EjadahColors.info, 0.10),
+        'success': (EjadahColors.successText, EjadahColors.success, 0.10),
+        'danger': (EjadahColors.dangerText, EjadahColors.danger, 0.10),
+      };
+
+      pairs.forEach((name, pair) {
+        final (text, base, opacity) = pair;
+        expect(
+          _contrast(text, EjadahColors.tint(base, opacity)),
+          greaterThanOrEqualTo(4.5),
+          reason: '$name alert text on its own tint',
+        );
+      });
+    });
+
+    test('the selected filter chip passes AA on its own tint', () {
+      // `orangeText` sits at 4.83:1 on the plain surface, so the usual 8% tint
+      // under it drops to 4.46. The chip uses the lighter tint instead of a
+      // different text colour, because the text colour is canonical.
+      expect(
+        _contrast(
+          EjadahColors.orangeText,
+          EjadahColors.tint(
+            EjadahColors.orange,
+            EjadahColors.subtleTintOpacity,
+          ),
+        ),
+        greaterThanOrEqualTo(4.5),
+      );
+    });
   });
 
   group('gradient discipline', () {
@@ -47,6 +85,65 @@ void main() {
       expect(EjadahGradient.maxPerScreen, 6);
       expect(GradientUse.values, hasLength(6));
       expect(RawTokens.gradientPermittedUses, hasLength(6));
+    });
+
+    test('a step list longer than the budget drops the gradient entirely', () {
+      // Germany's guide has seven steps and a roadmap mirrors its destination's
+      // guide one for one, so this is a real list, not a hypothetical. Marking
+      // the first five and leaving the rest plain would read as a bug.
+      expect(EjadahGradient.allowsStepMarkers(5), isTrue);
+      expect(
+        EjadahGradient.allowsStepMarkers(EjadahGradient.maxStepMarkers),
+        isTrue,
+      );
+      expect(EjadahGradient.allowsStepMarkers(6), isFalse);
+      expect(EjadahGradient.allowsStepMarkers(7), isFalse);
+
+      // One under the screen budget: a stage list always shares its screen with
+      // at least one other permitted use.
+      expect(
+        EjadahGradient.maxStepMarkers,
+        lessThan(EjadahGradient.maxPerScreen),
+      );
+    });
+
+    testWidgets('seven step markers stay inside the screen budget', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _harness(
+          language: AppLanguage.en,
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              EjadahStepMarker(position: 1, total: 7),
+              EjadahStepMarker(position: 2, total: 7),
+              EjadahStepMarker(position: 3, total: 7),
+              EjadahStepMarker(position: 4, total: 7),
+              EjadahStepMarker(position: 5, total: 7),
+              EjadahStepMarker(position: 6, total: 7),
+              EjadahStepMarker(position: 7, total: 7),
+            ],
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // No gradient at all, and therefore no assertion: before this the seventh
+      // marker tripped the budget and crashed the debug build on Germany.
+      expect(find.byType(BrandGradient), findsNothing);
+      expect(find.text('7'), findsOneWidget);
+    });
+
+    testWidgets('a short step list keeps the gradient', (tester) async {
+      await tester.pumpWidget(
+        _harness(
+          language: AppLanguage.en,
+          child: const EjadahStepMarker(position: 1, total: 4),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(BrandGradient), findsOneWidget);
     });
 
     test('the angle mirrors with reading direction', () {
@@ -255,7 +352,13 @@ Widget _harness({required AppLanguage language, required Widget child}) =>
       locale: Locale(language.code),
       home: Directionality(
         textDirection: language.isRtl ? TextDirection.rtl : TextDirection.ltr,
-        child: Scaffold(body: Center(child: child)),
+        // A component under test is on a screen, and screens carry a gradient
+        // budget — so the harness carries one too, rather than the assertion
+        // that enforces it being something tests have to work around.
+        child: GradientBudget(
+          screenName: 'test',
+          child: Scaffold(body: Center(child: child)),
+        ),
       ),
     );
 

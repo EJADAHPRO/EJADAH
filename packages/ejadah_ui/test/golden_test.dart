@@ -81,14 +81,18 @@ class _Frame extends StatelessWidget {
     ),
     home: Directionality(
       textDirection: language.isRtl ? TextDirection.rtl : TextDirection.ltr,
-      child: Scaffold(
-        backgroundColor: EjadahColors.background,
-        body: Center(
-          child: SizedBox(
-            width: 360,
-            child: Padding(
-              padding: const EdgeInsets.all(EjadahSpacing.gutter),
-              child: child,
+      // Screens carry a gradient budget, so the harness does too.
+      child: GradientBudget(
+        screenName: 'golden',
+        child: Scaffold(
+          backgroundColor: EjadahColors.background,
+          body: Center(
+            child: SizedBox(
+              width: 360,
+              child: Padding(
+                padding: const EdgeInsets.all(EjadahSpacing.gutter),
+                child: child,
+              ),
             ),
           ),
         ),

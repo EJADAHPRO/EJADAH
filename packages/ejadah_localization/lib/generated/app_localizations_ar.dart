@@ -15,6 +15,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get account => 'الحساب';
 
   @override
+  String get addCertificate => 'أضف شهادة';
+
+  @override
   String get again => 'أعدها لاحقًا';
 
   @override
@@ -24,6 +27,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get alsoWorthLabel => 'خيارات أخرى تستحق النظر';
 
   @override
+  String get answerToContinue => 'أجب عن هذا السؤال للمتابعة.';
+
+  @override
   String get appName => 'أكاديمية إجادة الدولية';
 
   @override
@@ -31,6 +37,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get applyToTeach => 'تقدّم للتدريس';
+
+  @override
+  String get availabilityLabel => 'المواعيد المتاحة';
 
   @override
   String get availableBalance => 'الرصيد المتاح';
@@ -48,6 +57,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get backToCourse => 'ابدأ الدورة';
 
   @override
+  String get backToSignIn => 'العودة إلى تسجيل الدخول';
+
+  @override
   String get becomeBlurb =>
       'تقدّم كمدرّس أو مرشد. تحدد سعرك وساعاتك، ونسبة 70/30 معروضة قبل الموافقة.';
 
@@ -56,6 +68,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get bestRoute => 'أفضل مسار لك';
+
+  @override
+  String get bookNow => 'احجز جلسة';
 
   @override
   String get bookSession => 'احجز جلسة';
@@ -77,7 +92,16 @@ class EjadahStringsAr extends EjadahStrings {
   String get bookingsBlurb => 'الجلسات القادمة والسابقة والملغاة.';
 
   @override
+  String get bookingsCancelled => 'الملغاة';
+
+  @override
+  String get bookingsPast => 'السابقة';
+
+  @override
   String get bookingsTitle => 'حجوزاتي';
+
+  @override
+  String get bookingsUpcoming => 'القادمة';
 
   @override
   String get browseProgrammes => 'تصفح البرامج';
@@ -87,6 +111,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get buildRoute => 'ارسم مساري';
+
+  @override
+  String get buyCourse => 'اشترِ هذه الدورة';
 
   @override
   String get cairoTime => 'توقيت القاهرة';
@@ -99,7 +126,15 @@ class EjadahStringsAr extends EjadahStrings {
       'لم يُخصم أي مبلغ. مقعدك غير محجوز وقد يتغير السعر إن عدت لاحقًا.';
 
   @override
+  String get cancelTermsLabel => 'سياسة الإلغاء';
+
+  @override
   String get cancelTitle => 'أُلغيت عملية الدفع';
+
+  @override
+  String cardsDue(Object count) {
+    return '$count بطاقة مستحقة';
+  }
 
   @override
   String get careerEyebrow => 'المسار المهني';
@@ -118,6 +153,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get certTitleSample => 'المعالجة اللبية بالمبارد الدوّارة · 11 درسًا';
 
   @override
+  String get certificatesTitle => 'الشهادات';
+
+  @override
   String get choosePlan => 'اختر';
 
   @override
@@ -125,6 +163,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get clearCache => 'مسح الذاكرة المؤقتة';
+
+  @override
+  String get clearField => 'مسح';
 
   @override
   String get clearFiltersAction => 'امسح التصفية';
@@ -227,6 +268,21 @@ class EjadahStringsAr extends EjadahStrings {
   String get daysLeft => 'يومًا متبقيًا';
 
   @override
+  String daysLeftCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يوم متبقٍ',
+      many: '$count يومًا متبقيًا',
+      few: '$count أيام متبقية',
+      two: 'يومان متبقيان',
+      one: 'يوم واحد متبقٍ',
+      zero: 'لا أيام متبقية',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deadlinesAction => 'افتح قاعدة البرامج';
 
   @override
@@ -243,11 +299,30 @@ class EjadahStringsAr extends EjadahStrings {
   String get deleteAccount => 'حذف حسابي';
 
   @override
+  String get deleteAccountBody =>
+      'لديك 30 يومًا لتغيير رأيك. تُحفظ الفواتير لأغراض ضريبية.';
+
+  @override
+  String get deleteAccountTitle => 'حذف حسابك';
+
+  @override
+  String get departmentBusiness => 'الأعمال والمساندة';
+
+  @override
+  String get departmentDigital => 'الرقمي';
+
+  @override
+  String get departmentOrtho => 'التقويم';
+
+  @override
   String get difficulty => 'الصعوبة';
 
   @override
   String get disclaimer =>
       'تأكّد دائمًا من الرسوم وقواعد التأشيرة وشروط التسجيل من الجهة المختصة قبل دفع أي مبلغ.';
+
+  @override
+  String get documentsTab => 'المستندات';
 
   @override
   String get done => 'تم';
@@ -269,6 +344,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emailRequired => 'أدخل بريدك الإلكتروني.';
 
   @override
   String get emptyBookBody =>
@@ -319,6 +397,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get estCost => 'التكلفة المتوقعة';
+
+  @override
+  String get examFee => 'رسوم الامتحان';
 
   @override
   String get exploreLabel => 'استكشف';
@@ -381,6 +462,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get filterBy => 'الصيغة';
 
   @override
+  String get filterSheetTitle => 'التصفية';
+
+  @override
   String get filters => 'تصفية';
 
   @override
@@ -395,6 +479,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get flashcards => 'البطاقات';
+
+  @override
+  String get flipCard => 'اضغط للقلب';
 
   @override
   String get forgotBody => 'أدخل بريد حسابك وسنرسل لك رابط إعادة التعيين.';
@@ -436,6 +523,9 @@ class EjadahStringsAr extends EjadahStrings {
       'ملخص مكتوب وقائمة تحقّق للحالة القادمة خلال 24 ساعة.';
 
   @override
+  String get goalLabel => 'ما الذي تحتاجه من هذه الجلسة؟';
+
+  @override
   String get gotIt => 'أتقنتها';
 
   @override
@@ -457,6 +547,13 @@ class EjadahStringsAr extends EjadahStrings {
   String holdCountdown(Object time) {
     return 'محجوز لك $time';
   }
+
+  @override
+  String get holdExpiredBody =>
+      'انتهى الحجز المؤقت وتحرر الموعد. اختر آخر — لم يُخصم شيء.';
+
+  @override
+  String get holdExpiredTitle => 'انتهى الحجز المؤقت';
 
   @override
   String get homeGreetingEvening => 'مساء الخير';
@@ -484,6 +581,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get initials => 'ي ح';
+
+  @override
+  String get installEjadah => 'حمّل إجادة';
 
   @override
   String get instructorBio =>
@@ -522,6 +622,12 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get lastSixMonths => 'آخر ستة أشهر';
+
+  @override
+  String get learnEyebrow => 'التعلّم';
+
+  @override
+  String get lessonOneFree => 'الدرس الأول مجاني';
 
   @override
   String get lessons => 'درسًا';
@@ -586,6 +692,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get nextMentorSub => 'مرشدون على هذا المسار تحديدًا.';
 
   @override
+  String get nextPage => 'الصفحة التالية';
+
+  @override
   String get nextProgrammes => 'برامج الدراسات العليا';
 
   @override
@@ -619,10 +728,16 @@ class EjadahStringsAr extends EjadahStrings {
   }
 
   @override
+  String get noSlots => 'لا مواعيد متاحة هذا الأسبوع.';
+
+  @override
+  String get notIncluded => 'غير مشمول';
+
+  @override
   String get notListed => 'غير مذكور';
 
   @override
-  String get notVerified => 'الاعتماد غير مُتحقَّق';
+  String get notVerified => 'غير موثّق';
 
   @override
   String get notesLabel => 'ملاحظات للمدرّس';
@@ -662,6 +777,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get openRoadmap => 'افتح الخارطة';
 
   @override
+  String get orderPhysical => 'اطلب البطاقة';
+
+  @override
+  String get ownedCourse => 'ملكك للأبد';
+
+  @override
   String get pGoal => 'ما هدفك؟';
 
   @override
@@ -679,6 +800,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get pSpec => 'أي مجال يهمك؟';
+
+  @override
+  String get packagesLabel => 'الباقات';
 
   @override
   String get paidBody =>
@@ -716,17 +840,38 @@ class EjadahStringsAr extends EjadahStrings {
   String get pathsLabel => 'اختر اتجاهًا';
 
   @override
+  String get patientDataWarning => 'لا تُدرج أسماء المرضى أو بيانات تعريفية.';
+
+  @override
   String get payCta => 'الدفع على ejadah.com';
+
+  @override
+  String get payExternally => 'المتابعة للدفع';
 
   @override
   String get payNote =>
       'تتم عمليات الدفع بأمان على ejadah.com — التطبيق لا يتعامل مع بيانات البطاقات.';
 
   @override
+  String get payNoteExternal => 'يتم الدفع بأمان على ejadah.international';
+
+  @override
   String get pendingClearing => 'قيد التحصيل:';
 
   @override
   String get pendingSource => 'بانتظار المصدر';
+
+  @override
+  String get peopleConsultingDoor => 'الاستشارات';
+
+  @override
+  String get peopleEyebrow => 'الأشخاص';
+
+  @override
+  String get peopleMentoringDoor => 'الإرشاد';
+
+  @override
+  String get peopleTutoringDoor => 'التدريس';
 
   @override
   String get perHour => '/ الساعة';
@@ -739,6 +884,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get photoSlot => 'صورة الملف';
+
+  @override
+  String get pickAnotherWeek => 'جرّب أسبوعًا آخر';
 
   @override
   String get pickDate => 'اختر اليوم والوقت';
@@ -760,6 +908,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get previewAvailable => 'معاينة متاحة';
+
+  @override
+  String get previousPage => 'الصفحة السابقة';
 
   @override
   String get priorityLabel => 'الأهم لك';
@@ -816,7 +967,19 @@ class EjadahStringsAr extends EjadahStrings {
   String get q5 => 'أين ولماذا';
 
   @override
+  String get qualificationsLabel => 'المؤهلات';
+
+  @override
   String get quiz => 'الاختبار';
+
+  @override
+  String get quizOfferSession =>
+      'أقل من 60%. جلسة واحدة في هذا الموضوع غالبًا ما تحل الأمر.';
+
+  @override
+  String quizScore(Object correct, Object score, Object total) {
+    return '$score% — $correct من $total';
+  }
 
   @override
   String get rating => 'التقييم';
@@ -830,6 +993,11 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get recognitionNotice => 'لم يتم التحقق من حالة الاعتماد لكل دولة بعد';
+
+  @override
+  String refundIfCancelled(Object amount, Object total) {
+    return 'سيُعاد إليك $amount من $total.';
+  }
 
   @override
   String get regionEurope => 'أوروبا';
@@ -859,9 +1027,18 @@ class EjadahStringsAr extends EjadahStrings {
   String get reschedule => 'تغيير الموعد';
 
   @override
+  String get restorePurchases => 'استعادة المشتريات';
+
+  @override
   String resultsCount(Object count) {
     return '$count برنامجًا';
   }
+
+  @override
+  String get resumeLesson => 'متابعة';
+
+  @override
+  String get retakeQuiz => 'أعد الاختبار';
 
   @override
   String get retry => 'حاول مرة أخرى';
@@ -870,8 +1047,16 @@ class EjadahStringsAr extends EjadahStrings {
   String get reviewBooking => 'راجع حجزك';
 
   @override
+  String get reviewBookingTitle => 'راجع حجزك';
+
+  @override
   String get reviewTimeline =>
       'نراجع الطلبات خلال خمسة أيام عمل ونرد في كل الأحوال.';
+
+  @override
+  String reviewsCount(Object count) {
+    return '$count تقييمًا';
+  }
 
   @override
   String get reviewsLabel => 'التقييمات';
@@ -914,7 +1099,7 @@ class EjadahStringsAr extends EjadahStrings {
   String get rowCertificates => 'الشهادات';
 
   @override
-  String get rowMembership => 'العضوية';
+  String get rowMembership => 'بريميوم';
 
   @override
   String get rowNfc => 'بطاقة NFC';
@@ -929,7 +1114,7 @@ class EjadahStringsAr extends EjadahStrings {
   String get rowSettings => 'الإعدادات';
 
   @override
-  String get rowShortlist => 'البرامج المحفوظة';
+  String get rowShortlist => 'قائمتي المختارة';
 
   @override
   String get save => 'حفظ';
@@ -989,6 +1174,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get share => 'شارك البطاقة';
 
   @override
+  String get shareCard => 'شارك بطاقتي';
+
+  @override
   String get shareVerify => 'مشاركة التحقق';
 
   @override
@@ -999,6 +1187,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get showExpired => 'أظهر المنتهية';
+
+  @override
+  String get showResults => 'اعرض النتائج';
 
   @override
   String showingRange(Object first, Object last, Object total) {
@@ -1019,6 +1210,10 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get skip => 'تخطّي';
+
+  @override
+  String get slotTakenBody =>
+      'حُجز هذا الموعد قبل لحظات. هذه المواعيد المتاحة.';
 
   @override
   String get slotTakenTitle => 'حُجز هذا الموعد للتو';
@@ -1073,6 +1268,15 @@ class EjadahStringsAr extends EjadahStrings {
   String get statedByTutor => 'مُقدَّم من المدرّس';
 
   @override
+  String stepOfSteps(Object n, Object total) {
+    return 'الخطوة $n من $total';
+  }
+
+  @override
+  String get storePurchaseNote =>
+      'يتم الخصم عبر متجر التطبيقات. يمكنك استعادة مشترياتك في أي وقت.';
+
+  @override
   String get streak => '12 يومًا متواصلة';
 
   @override
@@ -1084,6 +1288,72 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get submitApplication => 'إرسال الطلب';
+
+  @override
+  String get sysCameraDeniedBody =>
+      'يحتاج مسح البطاقة إلى الكاميرا. يمكنك تفعيلها من الإعدادات.';
+
+  @override
+  String get sysCameraDeniedTitle => 'الكاميرا مغلقة';
+
+  @override
+  String get sysContentUnavailableTitle => 'لم يعد هذا متاحًا';
+
+  @override
+  String get sysErrorBoundaryBody =>
+      'توقفت هذه الشاشة عن العمل. العودة إلى الرئيسية أسرع طريق للمتابعة.';
+
+  @override
+  String get sysErrorBoundaryTitle => 'حدث خطأ في هذه الشاشة';
+
+  @override
+  String get sysForceUpdateBody =>
+      'لم تعد هذه النسخة قادرة على الاتصال بخوادمنا.';
+
+  @override
+  String get sysForceUpdateTitle => 'حدّث للمتابعة';
+
+  @override
+  String get sysMaintenanceBody => 'سنعود قريبًا. لم يتأثر ما حفظته.';
+
+  @override
+  String get sysMaintenanceTitle => 'يجري تحديث إجادة';
+
+  @override
+  String get sysNotifDeniedBody =>
+      'تحتاج تنبيهات المواعيد إلى إذن. يمكنك تفعيله من الإعدادات.';
+
+  @override
+  String get sysNotifDeniedTitle => 'الإشعارات مغلقة';
+
+  @override
+  String get sysOfflineBody =>
+      'أنت غير متصل. سنحاول مرة أخرى فور عودة الاتصال.';
+
+  @override
+  String get sysOfflineTitle => 'لا يوجد اتصال';
+
+  @override
+  String get sysOpenSettings => 'افتح الإعدادات';
+
+  @override
+  String get sysRateLimitedBody => 'محاولات كثيرة. حاول مرة أخرى بعد دقيقتين.';
+
+  @override
+  String get sysRateLimitedTitle => 'خذ وقتًا قصيرًا';
+
+  @override
+  String get sysServerErrorTitle => 'حدث خطأ لدينا';
+
+  @override
+  String get sysSessionExpiredBody =>
+      'سجّل الدخول مرة أخرى وستعود إلى حيث كنت.';
+
+  @override
+  String get sysSessionExpiredTitle => 'سجّل الدخول مجددًا';
+
+  @override
+  String get sysUpdateAction => 'حدّث التطبيق';
 
   @override
   String get tabCareer => 'المسار';
@@ -1178,6 +1448,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get tutorsSub => 'مطابقون لتخصص علاج الجذور المحفوظ في ملفك.';
 
   @override
+  String get typeDeleteToConfirm => 'اكتب DELETE للتأكيد';
+
+  @override
   String get typicalCost => 'التكلفة المعتادة';
 
   @override
@@ -1202,11 +1475,26 @@ class EjadahStringsAr extends EjadahStrings {
   String get verifiedTutor => 'موثّق';
 
   @override
+  String get verifyNotFound => 'لا توجد شهادة بهذا الرمز';
+
+  @override
   String get verifyNote =>
       'كل شهادة لها صفحة تحقق عامة يمكن لأي عيادة أو جهة تسجيل مراجعتها دون حساب.';
 
   @override
+  String get verifyRevoked => 'تم إلغاء هذه الشهادة';
+
+  @override
+  String get verifyTitle => 'التحقق من الشهادة';
+
+  @override
+  String get verifyValid => 'هذه الشهادة صحيحة';
+
+  @override
   String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get viewProfile => 'عرض الملف';
 
   @override
   String get visaRoute => 'مسار التأشيرة';

@@ -109,6 +109,15 @@ class _BrandGradientState extends State<BrandGradient> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final budget = GradientBudget._of(context)?.state;
+    // A gradient outside a budget is unbudgeted, and the rule the budget exists
+    // to enforce silently stops applying to that screen. Routes install one by
+    // construction; anything rendered outside a route has to say so.
+    assert(
+      budget != null,
+      'BrandGradient(${widget.use.name}) has no GradientBudget above it, so '
+      'the six-per-screen limit is not being enforced here. Wrap the screen '
+      'in a GradientBudget — routes get one automatically.',
+    );
     if (budget != _budget) {
       _budget?._unregister(_token);
       _budget = budget;

@@ -52,6 +52,10 @@ abstract final class EjadahIcons {
   static const IconData locked = Icons.lock_outline;
   static const IconData offline = Icons.wifi_off_outlined;
   static const IconData warning = Icons.warning_amber_outlined;
+
+  /// Neutral note. Distinct from [verified], which is a claim about the data
+  /// and must never appear on a section that merely failed to load.
+  static const IconData info = Icons.info_outline;
   static const IconData externalLink = Icons.open_in_new;
   static const IconData star = Icons.star;
   static const IconData starOutline = Icons.star_border;

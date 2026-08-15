@@ -84,8 +84,9 @@ class _Body extends ConsumerWidget {
           DeadlineBadge(
             status: summary.deadlineStatus,
             daysRemaining: summary.daysRemaining,
-            closingSoonLabel:
-                '${summary.daysRemaining ?? 0} ${strings.daysLeft}',
+            closingSoonLabel: strings.daysLeftCount(
+              summary.daysRemaining ?? 0,
+            ),
             openLabel: strings.openNow,
             closedLabel: strings.closed,
           ),

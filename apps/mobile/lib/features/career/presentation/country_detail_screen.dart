@@ -77,7 +77,7 @@ class _CountryDetailState extends ConsumerState<CountryDetailScreen>
                 labelStyle: context.type.caption(),
                 tabs: [
                   Tab(text: strings.licensingRoute),
-                  Tab(text: strings.handouts),
+                  Tab(text: strings.documentsTab),
                   Tab(text: strings.estCost),
                   Tab(text: strings.recognitionLabel),
                 ],
@@ -148,7 +148,7 @@ class _PathwayTab extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      context.type.eyebrowText(context.strings.sessionFee),
+                      context.type.eyebrowText(context.strings.examFee),
                       style: context.type.eyebrow(
                         color: EjadahColors.labelMuted,
                       ),
@@ -183,24 +183,9 @@ class _StepCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // The numbered step marker is one of the six permitted gradient uses.
-          BrandGradient(
-            use: GradientUse.stepMarker,
-            borderRadius: EjadahRadius.all(EjadahRadius.pill),
-            child: SizedBox(
-              width: 28,
-              height: 28,
-              child: Center(
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Text(
-                    '${step.position}',
-                    style: context.type.caption(color: EjadahColors.onDark),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // The marker decides its own treatment from the length of the list:
+          // Germany's guide has seven steps and the screen budget is six.
+          EjadahStepMarker(position: step.position, total: total),
           const SizedBox(width: EjadahSpacing.sm),
           Expanded(
             child: Column(

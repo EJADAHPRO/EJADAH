@@ -255,8 +255,12 @@ class InlineAlert extends StatelessWidget {
       ),
       AlertTone.info => (
         EjadahColors.info,
-        EjadahColors.info,
-        EjadahIcons.verified,
+        // Not the base hue: #496FA8 measures 4.28:1 on its own tint, below AA.
+        EjadahColors.infoText,
+        // Not the verified tick — an info alert marks a note, and on Home it
+        // marks a section that failed to load. A confirmation glyph there
+        // reads as the opposite of what happened.
+        EjadahIcons.info,
       ),
       AlertTone.success => (
         EjadahColors.success,

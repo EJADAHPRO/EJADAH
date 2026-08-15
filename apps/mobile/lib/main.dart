@@ -2,13 +2,26 @@ import 'package:ejadah_core/ejadah_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'app/app.dart';
 import 'app/providers.dart';
 import 'features/auth/auth_controller.dart';
+import 'features/system/system.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Release builds swap Flutter's red error box for a silent widget that
+  // reports to the nearest boundary. Debug builds keep the red box: hiding a
+  // crash from the engineer who caused it trades a visible bug for an
+  // invisible one.
+  SystemErrorBoundary.install();
+
+  // Month and weekday names for both languages. GlobalMaterialLocalizations
+  // loads these too, but only once its locale resolves — a date formatted
+  // before that would fall back to English inside an Arabic screen.
+  await initializeDateFormatting();
 
   final container = ProviderContainer();
 

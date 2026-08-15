@@ -35,6 +35,7 @@ abstract final class RawTokens {
   static const Color semanticInfo = Color(0xFF496FA8);
   static const Color semanticDanger = Color(0xFFFF2D32);
   static const Color semanticWarningText = Color(0xFF8A5C00);
+  static const Color semanticInfoText = Color(0xFF3E5F8F);
   static const Color semanticSuccessText = Color(0xFF1B6B47);
   static const Color semanticDangerText = Color(0xFFC41419);
 
@@ -42,23 +43,12 @@ abstract final class RawTokens {
   static const Color bannedMutedLabel = Color(0xFF8E8A83);
 
   // --- Brand gradient ---
-  static const List<Color> gradientStops = <Color>[
-    Color(0xFFFF2D32),
-    Color(0xFFFF6B1A),
-    Color(0xFFFFC62E),
-  ];
+  static const List<Color> gradientStops = <Color>[Color(0xFFFF2D32), Color(0xFFFF6B1A), Color(0xFFFFC62E)];
   static const List<double> gradientPositions = <double>[0.0, 0.5, 1.0];
   static const double gradientAngleLtr = 135;
   static const double gradientAngleRtl = 225;
   static const int gradientMaxPerScreen = 6;
-  static const List<String> gradientPermittedUses = <String>[
-    'primaryButton',
-    'logoTile',
-    'stepMarker',
-    'headingEmphasisPhrase',
-    'closingCtaBand',
-    'activeTabIndicator',
-  ];
+  static const List<String> gradientPermittedUses = <String>['primaryButton', 'logoTile', 'stepMarker', 'headingEmphasisPhrase', 'closingCtaBand', 'activeTabIndicator'];
 
   // --- Typography ---
   static const String fontDisplayEn = 'Playfair Display';
@@ -92,25 +82,13 @@ abstract final class RawTokens {
   static const int weightSemibold = 600;
   static const int weightBold = 700;
   static const int weightExtrabold = 800;
-
   /// Arabic headings shrink by this fraction above
   /// [arHeadingThresholdChars] characters.
   static const double arHeadingReducePct = 0.12;
   static const int arHeadingThresholdChars = 28;
 
   // --- Spacing scale ---
-  static const List<double> space = <double>[
-    4.0,
-    8.0,
-    12.0,
-    16.0,
-    20.0,
-    24.0,
-    32.0,
-    40.0,
-    48.0,
-    64.0,
-  ];
+  static const List<double> space = <double>[4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 32.0, 40.0, 48.0, 64.0];
 
   // --- Radius ---
   static const double radiusXs = 4.0;

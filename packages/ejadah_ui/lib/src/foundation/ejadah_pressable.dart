@@ -96,12 +96,17 @@ class _EjadahPressableState extends State<EjadahPressable> {
     );
 
     if (widget.enforceMinimumTarget) {
+      // Centring keeps the visual size the design asked for while the box
+      // around it reaches 44 in both dimensions. Without it a 36-high chip or
+      // a 12sp "See all" would be stretched to 44 instead of merely being
+      // easier to hit, and the two rules would be in conflict — so a component
+      // would keep opting out, which is how the 44 gets lost.
       result = ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: EjadahSizes.tapTargetMin,
           minHeight: EjadahSizes.tapTargetMin,
         ),
-        child: result,
+        child: Center(widthFactor: 1, heightFactor: 1, child: result),
       );
     }
 

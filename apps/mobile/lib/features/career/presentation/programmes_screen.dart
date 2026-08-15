@@ -63,6 +63,7 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
                       EjadahSearchField(
                         controller: _search,
                         hint: strings.searchPlaceholder,
+                        clearLabel: strings.clearField,
                         onSubmitted: (value) => ref
                             .read(programmesControllerProvider.notifier)
                             .search(value),
@@ -367,7 +368,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(strings.filterBy, style: context.type.h5()),
+        Text(strings.filterSheetTitle, style: context.type.h5()),
         const SizedBox(height: EjadahSpacing.md),
         Flexible(
           child: SingleChildScrollView(
@@ -418,7 +419,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
         ),
         const SizedBox(height: EjadahSpacing.md),
         EjadahPrimaryButton(
-          label: strings.apply,
+          label: strings.showResults,
           onPressed: () => Navigator.of(context).pop(_draft),
         ),
       ],

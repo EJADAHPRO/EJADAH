@@ -80,7 +80,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                 const SizedBox(height: EjadahSpacing.md),
                 EjadahGhostButton(
                   label: strings.forgotPassword,
-                  onPressed: () {},
+                  onPressed: () => context.push('/forgot-password'),
                 ),
                 const SizedBox(height: EjadahSpacing.section),
               ],
