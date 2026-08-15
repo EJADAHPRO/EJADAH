@@ -43,6 +43,7 @@ class JobRunner {
                ),
              ),
              DeliverNotificationsJob(NotificationScheduler(database)),
+             MatureEarningsJob(database),
            ];
 
   final Database _database;
@@ -178,5 +179,50 @@ class DeliverNotificationsJob implements Job {
   Future<String> run() async {
     final delivered = await _scheduler.deliverDue(now: DateTime.now().toUtc());
     return 'delivered $delivered notifications';
+  }
+}
+
+/// Moves a tutor's earnings from `pending` to `available` once the work is done.
+///
+/// "Done" means every session on the booking has ended and the booking was not
+/// cancelled. Paying before the session would mean clawing money back from
+/// someone who has already spent it; the wait is short and the rule is stated
+/// on the earnings screen rather than left to be inferred from a balance that
+/// does not move.
+///
+/// Hourly is enough: nothing here is time-critical to the minute, and a tutor
+/// reading the screen sees `pending` with the session date beside it either way.
+class MatureEarningsJob implements Job {
+  const MatureEarningsJob(this._database);
+
+  final Database _database;
+
+  @override
+  String get name => 'mature_earnings';
+
+  @override
+  Duration get interval => const Duration(hours: 1);
+
+  @override
+  Future<String> run() async {
+    final result = await _database.run(
+      (session) => session.execute("""
+        UPDATE earnings e
+        SET status = 'available'
+        WHERE e.status = 'pending'
+          -- Every session on the booking is over.
+          AND NOT EXISTS (
+            SELECT 1 FROM booking_sessions s
+            WHERE s.booking_id = e.booking_id AND s.ends_at > now()
+          )
+          -- And it is a booking that actually happened.
+          AND EXISTS (
+            SELECT 1 FROM bookings b
+            WHERE b.id = e.booking_id
+              AND b.status IN ('confirmed', 'completed')
+          )
+        """),
+    );
+    return 'matured ${result.affectedRows} earnings';
   }
 }

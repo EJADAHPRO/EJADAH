@@ -836,11 +836,101 @@ abstract class EjadahStrings {
   /// **'SESSION LENGTH'**
   String get durationLabel;
 
+  /// No description provided for @earningsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available now'**
+  String get earningsAvailable;
+
+  /// No description provided for @earningsColumnFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Ejadah {percent}%'**
+  String earningsColumnFee(Object percent);
+
+  /// No description provided for @earningsColumnGross.
+  ///
+  /// In en, this message translates to:
+  /// **'Session'**
+  String get earningsColumnGross;
+
+  /// No description provided for @earningsColumnNet.
+  ///
+  /// In en, this message translates to:
+  /// **'Yours'**
+  String get earningsColumnNet;
+
+  /// No description provided for @earningsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet. Your first booking shows up here the moment it is confirmed.'**
+  String get earningsEmpty;
+
+  /// No description provided for @earningsLifetime.
+  ///
+  /// In en, this message translates to:
+  /// **'SINCE YOU STARTED'**
+  String get earningsLifetime;
+
+  /// No description provided for @earningsLifetimeRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{gross} earned, {fee} to Ejadah, {net} yours.'**
+  String earningsLifetimeRow(Object fee, Object gross, Object net);
+
   /// No description provided for @earningsLink.
   ///
   /// In en, this message translates to:
   /// **'Earnings'**
   String get earningsLink;
+
+  /// No description provided for @earningsPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid out'**
+  String get earningsPaid;
+
+  /// No description provided for @earningsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'After the sessions'**
+  String get earningsPending;
+
+  /// No description provided for @earningsPendingWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'A session becomes payable once it is over.'**
+  String get earningsPendingWhy;
+
+  /// No description provided for @earningsRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'On its way'**
+  String get earningsRequested;
+
+  /// No description provided for @earningsReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — nothing earned'**
+  String get earningsReversed;
+
+  /// No description provided for @earningsRowsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY SESSION'**
+  String get earningsRowsTitle;
+
+  /// No description provided for @earningsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings'**
+  String get earningsTitle;
+
+  /// No description provided for @earningsWith.
+  ///
+  /// In en, this message translates to:
+  /// **'With {name}'**
+  String earningsWith(Object name);
 
   /// No description provided for @editAndResend.
   ///
@@ -1982,6 +2072,42 @@ abstract class EjadahStrings {
   /// **'Completed securely on ejadah.international'**
   String get payNoteExternal;
 
+  /// No description provided for @payoutApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get payoutApproved;
+
+  /// No description provided for @payoutOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested. We\'ll email you when it lands.'**
+  String get payoutOpened;
+
+  /// No description provided for @payoutPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get payoutPaid;
+
+  /// No description provided for @payoutRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get payoutRejected;
+
+  /// No description provided for @payoutRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get payoutRequested;
+
+  /// No description provided for @payoutsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYOUTS'**
+  String get payoutsTitle;
+
   /// No description provided for @pendingClearing.
   ///
   /// In en, this message translates to:
@@ -2377,6 +2503,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Replace'**
   String get replaceFile;
+
+  /// No description provided for @requestPayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Request payout'**
+  String get requestPayout;
 
   /// No description provided for @requestsLink.
   ///

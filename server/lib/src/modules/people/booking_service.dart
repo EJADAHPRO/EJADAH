@@ -200,6 +200,17 @@ class BookingService {
         session: tx,
       );
 
+      // The professional's side of the same money, in the same transaction. A
+      // confirmed session that never reached the ledger is a tutor who worked
+      // for nothing and has no row to point at.
+      await _repository.insertEarning(
+        professionalId: professionalId,
+        bookingId: bookingId,
+        grossEgp: pricing.totalEgp,
+        platformFeeEgp: pricing.platformFeeEgp,
+        session: tx,
+      );
+
       _logger.info('booking created', {
         'booking': bookingId,
         'professional': professionalId,
@@ -327,6 +338,10 @@ class BookingService {
     );
     // The slots go back on the calendar.
     await _repository.releaseReservationsForBooking(bookingId, session: tx);
+
+    // And the ledger row goes with them. Reversed, not deleted: a tutor asking
+    // why an amount vanished deserves a row that says what happened to it.
+    await _repository.reverseEarning(bookingId: bookingId, session: tx);
 
     if (refund > 0) {
       await _payments.refund(bookingId: bookingId, amountEgp: refund);

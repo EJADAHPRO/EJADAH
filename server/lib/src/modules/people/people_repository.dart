@@ -421,6 +421,55 @@ class PeopleRepository {
     session,
   );
 
+  /// Opens the professional's ledger row for a booking.
+  ///
+  /// Written in the same transaction as the booking and the payment, so a
+  /// confirmed session and the money it earned cannot exist without each other.
+  /// `pending` at this point and not `available`: the session has not happened
+  /// and the cancellation window has not closed, so this is money owed rather
+  /// than money earned.
+  ///
+  /// `ON CONFLICT DO NOTHING` against the unique booking id, so a retry after a
+  /// partial failure cannot pay a tutor twice for one session.
+  Future<void> insertEarning({
+    required int professionalId,
+    required String bookingId,
+    required int grossEgp,
+    required int platformFeeEgp,
+    required Session session,
+  }) => _execute(
+    '''
+    INSERT INTO earnings (
+      professional_id, booking_id, gross_egp, platform_fee_egp, status
+    ) VALUES (
+      @professional_id, @booking_id, @gross_egp, @platform_fee_egp, 'pending'
+    )
+    ON CONFLICT (booking_id) DO NOTHING
+    ''',
+    {
+      'professional_id': professionalId,
+      'booking_id': bookingId,
+      'gross_egp': grossEgp,
+      'platform_fee_egp': platformFeeEgp,
+    },
+    session,
+  );
+
+  /// Reverses the ledger row for a cancelled booking.
+  ///
+  /// Reversed rather than deleted: a ledger that forgets is not a ledger, and a
+  /// tutor asking why an amount disappeared deserves a row that says so. Only
+  /// what has not been paid out can be reversed.
+  Future<void> reverseEarning({
+    required String bookingId,
+    required Session session,
+  }) => _execute(
+    "UPDATE earnings SET status = 'reversed' "
+    "WHERE booking_id = @booking_id AND status <> 'paid'",
+    {'booking_id': bookingId},
+    session,
+  );
+
   Future<bool> ownsBooking({
     required String userId,
     required String bookingId,

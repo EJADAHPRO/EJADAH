@@ -410,7 +410,59 @@ class EjadahStringsEn extends EjadahStrings {
   String get durationLabel => 'SESSION LENGTH';
 
   @override
+  String get earningsAvailable => 'Available now';
+
+  @override
+  String earningsColumnFee(Object percent) {
+    return 'Ejadah $percent%';
+  }
+
+  @override
+  String get earningsColumnGross => 'Session';
+
+  @override
+  String get earningsColumnNet => 'Yours';
+
+  @override
+  String get earningsEmpty =>
+      'No sessions yet. Your first booking shows up here the moment it is confirmed.';
+
+  @override
+  String get earningsLifetime => 'SINCE YOU STARTED';
+
+  @override
+  String earningsLifetimeRow(Object fee, Object gross, Object net) {
+    return '$gross earned, $fee to Ejadah, $net yours.';
+  }
+
+  @override
   String get earningsLink => 'Earnings';
+
+  @override
+  String get earningsPaid => 'Paid out';
+
+  @override
+  String get earningsPending => 'After the sessions';
+
+  @override
+  String get earningsPendingWhy => 'A session becomes payable once it is over.';
+
+  @override
+  String get earningsRequested => 'On its way';
+
+  @override
+  String get earningsReversed => 'Cancelled — nothing earned';
+
+  @override
+  String get earningsRowsTitle => 'EVERY SESSION';
+
+  @override
+  String get earningsTitle => 'Earnings';
+
+  @override
+  String earningsWith(Object name) {
+    return 'With $name';
+  }
 
   @override
   String get editAndResend => 'Edit and send again';
@@ -1028,6 +1080,24 @@ class EjadahStringsEn extends EjadahStrings {
   String get payNoteExternal => 'Completed securely on ejadah.international';
 
   @override
+  String get payoutApproved => 'Approved';
+
+  @override
+  String get payoutOpened => 'Requested. We\'ll email you when it lands.';
+
+  @override
+  String get payoutPaid => 'Paid';
+
+  @override
+  String get payoutRejected => 'Not approved';
+
+  @override
+  String get payoutRequested => 'Requested';
+
+  @override
+  String get payoutsTitle => 'PAYOUTS';
+
+  @override
   String get pendingClearing => 'Pending clearance:';
 
   @override
@@ -1249,6 +1319,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get replaceFile => 'Replace';
+
+  @override
+  String get requestPayout => 'Request payout';
 
   @override
   String get requestsLink => 'Requests';

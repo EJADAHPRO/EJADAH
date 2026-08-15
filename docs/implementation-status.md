@@ -97,7 +97,7 @@ against the handoff; what each is missing is named.
 | Multi-session plans | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — one booking, one row per real time, all-or-nothing |
 | Tutor onboarding (6 steps + playbook) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-10/11/12. Every step draft-saved, blocked submit names every missing item, the 70/30 split is read from config so the pitch and the ledger cannot disagree |
 | Tutor dashboard / availability editor | — | — | ✅ | — | — | — | NOT STARTED — PE-13, PE-14. The application's availability step writes rules; there is no editor afterwards |
-| Tutor earnings (70/30 itemised) | — | — | ✅ | — | — | — | NOT STARTED — PE-15. Tables exist; no service, routes or UI |
+| Tutor earnings (70/30 itemised) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-15. Every row is the whole subtraction in a tabular LTR island; the payout floor states the shortfall in figures; two simultaneous requests produce one payout |
 | File uploads (certificate, photo, CV) | ✅ | ✅ | n/a | ✅ | ✅ | ✅ | COMPLETE — type decided by the bytes not the request, owner-only reads answering 404 to a stranger, 8 MB cap checked before decode |
 | My bookings | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Learn** |
@@ -160,7 +160,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **602 keys** in each language, up from the 374 they arrived
+The tables now hold **624 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -182,6 +182,11 @@ copy. They are grouped so a reviewer can find them:
   playbook's three actions. The 70/30 split is **not** among them: it is
   rendered through a placeholder fed from `PLATFORM_FEE_PERCENT`, so the number
   on the public pitch cannot drift from the number in the ledger.
+* 22 for the earnings ledger (PE-15): the four money states and why pending
+  money is not payable yet, the three column headings, the lifetime line, and
+  the payout labels. The fee percentage is a placeholder fed from config, and
+  the payout shortfall is composed server-side in both languages so the figure
+  the tutor is told they need is the figure the check uses.
 * 1 — `nextStep` ("Next" / «التالي»). The application's step button had been
   reaching for `continueLabel`, which is «أكمل ما بدأته» — a resume CTA, wrong
   on a form.
@@ -200,13 +205,13 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 219 |
-| `apps/mobile` (`flutter test`) | 127 |
+| `server` (`dart test`, real PostgreSQL) | 232 |
+| `apps/mobile` (`flutter test`) | 135 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The
-application is **61,106 lines of Dart across 226 files**; there is no JavaScript,
+application is **63,232 lines of Dart across 233 files**; there is no JavaScript,
 TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
 `apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
 under `reference/` and `uploads/` are the preserved design prototypes, read as
@@ -237,6 +242,11 @@ specification and never ported.
 * **A tutor cannot edit their availability after approval.** The application's
   step 5 writes the rules once; PE-14, the editor, is not built, so changing
   them today means the roster is edited server-side.
+* **A payout request is not a transfer.** `POST /earnings/payouts` moves the
+  ledger rows to `requested` and stops there. Nothing in this repository marks
+  one `paid` — that is the admin panel's job, and until it exists a request is
+  a message nobody reads. The states are honest about it: a tutor is never told
+  they were paid on the day they asked.
 * **Refresh tokens are in `localStorage` on Flutter Web**, which any XSS could
   read. Native builds use secure storage. Either move the web refresh token to
   an HttpOnly cookie or treat web as a preview surface.

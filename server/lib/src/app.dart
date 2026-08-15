@@ -20,6 +20,8 @@ import 'modules/learn/learn_service.dart';
 import 'modules/notifications/notification_routes.dart';
 import 'modules/notifications/notification_scheduler.dart';
 import 'modules/people/booking_service.dart';
+import 'modules/people/earnings_routes.dart';
+import 'modules/people/earnings_service.dart';
 import 'modules/people/people_repository.dart';
 import 'modules/people/people_routes.dart';
 import 'modules/people/people_service.dart';
@@ -152,6 +154,7 @@ class EjadahApp {
           TutorApplicationService(database, config),
         ).call,
       )
+      ..mount('/earnings', earningsRoutes(EarningsService(database, config)).call)
       ..mount('/profile', profileRoutes(profileService).call)
       ..mount('/uploads', uploadRoutes(LocalFileStore(config)).call);
 

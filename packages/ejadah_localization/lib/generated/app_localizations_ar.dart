@@ -412,7 +412,58 @@ class EjadahStringsAr extends EjadahStrings {
   String get durationLabel => 'مدة الجلسة';
 
   @override
+  String get earningsAvailable => 'متاح الآن';
+
+  @override
+  String earningsColumnFee(Object percent) {
+    return 'إجادة $percent%';
+  }
+
+  @override
+  String get earningsColumnGross => 'الجلسة';
+
+  @override
+  String get earningsColumnNet => 'لك';
+
+  @override
+  String get earningsEmpty => 'لا جلسات بعد. سيظهر أول حجز هنا فور تأكيده.';
+
+  @override
+  String get earningsLifetime => 'منذ بدايتك';
+
+  @override
+  String earningsLifetimeRow(Object fee, Object gross, Object net) {
+    return '$gross محصّلة، و$fee لإجادة، و$net لك.';
+  }
+
+  @override
   String get earningsLink => 'أرباحي';
+
+  @override
+  String get earningsPaid => 'تم صرفه';
+
+  @override
+  String get earningsPending => 'بعد انعقاد الجلسات';
+
+  @override
+  String get earningsPendingWhy => 'تصبح الجلسة قابلة للصرف بعد انتهائها.';
+
+  @override
+  String get earningsRequested => 'قيد التحويل';
+
+  @override
+  String get earningsReversed => 'ملغاة — لم تُحتسب';
+
+  @override
+  String get earningsRowsTitle => 'كل جلسة';
+
+  @override
+  String get earningsTitle => 'الأرباح';
+
+  @override
+  String earningsWith(Object name) {
+    return 'مع $name';
+  }
 
   @override
   String get editAndResend => 'عدّل وأعد الإرسال';
@@ -1028,6 +1079,24 @@ class EjadahStringsAr extends EjadahStrings {
   String get payNoteExternal => 'يتم الدفع بأمان على ejadah.international';
 
   @override
+  String get payoutApproved => 'معتمد';
+
+  @override
+  String get payoutOpened => 'تم إرسال الطلب. سنراسلك عند وصوله.';
+
+  @override
+  String get payoutPaid => 'مدفوع';
+
+  @override
+  String get payoutRejected => 'غير معتمد';
+
+  @override
+  String get payoutRequested => 'مطلوب';
+
+  @override
+  String get payoutsTitle => 'طلبات الصرف';
+
+  @override
   String get pendingClearing => 'قيد التحصيل:';
 
   @override
@@ -1245,6 +1314,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get replaceFile => 'استبدال';
+
+  @override
+  String get requestPayout => 'اطلب الصرف';
 
   @override
   String get requestsLink => 'الطلبات';

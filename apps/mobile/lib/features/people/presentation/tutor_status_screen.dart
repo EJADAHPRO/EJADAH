@@ -155,6 +155,14 @@ class _Status extends ConsumerWidget {
               ],
 
               if (isApproved) ...[
+                const SizedBox(height: EjadahSpacing.lg),
+                // The ledger is only reachable once there is one. Offering it
+                // to someone still under review would promise a screen that
+                // has nothing to show.
+                EjadahSecondaryButton(
+                  label: strings.earningsLink,
+                  onPressed: () => context.push('/teach/earnings'),
+                ),
                 const SizedBox(height: EjadahSpacing.xl),
                 _PlaybookSection(
                   minimumWeeklyHours: minimumWeeklyHours,

@@ -479,45 +479,102 @@ class Booking extends ValueObject {
   List<Object?> get props => [id, status, sessions, totalEgp, refundableEgp];
 }
 
+/// Where one session's money stands.
+enum EarningStatus {
+  /// Booked and paid for; the session has not happened yet.
+  pending('pending'),
+
+  /// The session is over and the money can be asked for.
+  available('available'),
+
+  /// Claimed by an open payout request — asked for, not yet received.
+  requested('requested'),
+
+  /// Transferred.
+  paid('paid'),
+
+  /// The booking was cancelled. Kept as a row rather than deleted, because a
+  /// ledger that forgets is not a ledger.
+  reversed('reversed');
+
+  const EarningStatus(this.wire);
+
+  final String wire;
+
+  static EarningStatus fromWire(String? value) => values.firstWhere(
+    (status) => status.wire == value,
+    orElse: () => EarningStatus.pending,
+  );
+}
+
 /// An itemised earnings row for the supply side: gross − fee = net.
 ///
 /// The 70/30 split is shown in application step 1 and itemised in every
-/// estimate — a tutor should never be surprised by the deal.
+/// estimate — a tutor should never be surprised by the deal. All three figures
+/// travel together and the screen never shows one without the others: a lone
+/// "your share" is the number a tutor cannot check.
 class EarningRow extends ValueObject {
   const EarningRow({
+    required this.id,
     required this.bookingId,
     required this.occurredAt,
     required this.description,
     required this.grossEgp,
     required this.platformFeeEgp,
-  });
+    required this.status,
+    this.subject = '',
+    int? netEgp,
+  }) : _netEgp = netEgp;
 
+  final String id;
   final String bookingId;
   final DateTime occurredAt;
+
+  /// Who the session was with. Never the goal the student wrote — that is
+  /// clinical free text given in confidence and it stays on the booking.
   final LocalizedText description;
+
   final int grossEgp;
   final int platformFeeEgp;
+  final EarningStatus status;
+  final String subject;
 
-  int get netEgp => grossEgp - platformFeeEgp;
+  final int? _netEgp;
+
+  /// What the tutor keeps.
+  ///
+  /// Prefers the server's own figure when one was sent, so the number on the
+  /// screen and the number in the ledger cannot disagree by a rounding rule the
+  /// client invented. The subtraction is the fallback, not the source.
+  int get netEgp => _netEgp ?? (grossEgp - platformFeeEgp);
 
   factory EarningRow.fromJson(Map<String, dynamic> json) => EarningRow(
+    id: json['id'] as String? ?? '',
     bookingId: jsonRequire<String>(json, 'booking_id'),
     occurredAt: jsonDate(json['occurred_at'])!,
     description:
-        LocalizedText.fromJson(json['description']) ??
+        LocalizedText.fromJson(json['student_name'] ?? json['description']) ??
         const LocalizedText.same(''),
     grossEgp: jsonInt(json['gross_egp']) ?? 0,
     platformFeeEgp: jsonInt(json['platform_fee_egp']) ?? 0,
+    status: EarningStatus.fromWire(json['status'] as String?),
+    subject: json['subject'] as String? ?? '',
+    netEgp: jsonInt(json['net_egp']),
   );
 
   Map<String, dynamic> toJson() => {
+    'id': id,
     'booking_id': bookingId,
     'occurred_at': occurredAt.toIso8601String(),
-    'description': description.toJson(),
+    'student_name': description.toJson(),
     'gross_egp': grossEgp,
     'platform_fee_egp': platformFeeEgp,
+    // Sent rather than left to the client to subtract.
+    'net_egp': netEgp,
+    'status': status.wire,
+    'subject': subject,
   };
 
   @override
-  List<Object?> get props => [bookingId, grossEgp, platformFeeEgp];
+  List<Object?> get props => [id, bookingId, grossEgp, platformFeeEgp, status];
 }
