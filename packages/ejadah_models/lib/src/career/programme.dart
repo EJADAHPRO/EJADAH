@@ -172,6 +172,8 @@ class Programme extends ValueObject {
     required this.rating,
     required this.sourceDeadlineText,
     required this.dataQualityNote,
+    this.regulator,
+    this.regulatorUpdatedLabel,
   });
 
   final ProgrammeSummary summary;
@@ -204,6 +206,8 @@ class Programme extends ValueObject {
     rating: rating,
     sourceDeadlineText: sourceDeadlineText,
     dataQualityNote: dataQualityNote,
+    regulator: regulator,
+    regulatorUpdatedLabel: regulatorUpdatedLabel,
   );
 
   final String studyType;
@@ -230,6 +234,16 @@ class Programme extends ValueObject {
   final String sourceDeadlineText;
   final String dataQualityNote;
 
+  /// The licensing regulator for this programme's country.
+  ///
+  /// Null where the country has no guide in the dataset. The sources block then
+  /// names no regulator rather than inventing one — recognition and licensing
+  /// facts are exactly what this product refuses to manufacture.
+  final LocalizedText? regulator;
+
+  /// When the regulator's own figures were last read, e.g. "Jul 2026".
+  final String? regulatorUpdatedLabel;
+
   int get id => summary.id;
 
   factory Programme.fromJson(Map<String, dynamic> json) => Programme(
@@ -255,10 +269,14 @@ class Programme extends ValueObject {
     rating: jsonDouble(json['rating']),
     sourceDeadlineText: (json['source_deadline_text'] ?? '') as String,
     dataQualityNote: (json['data_quality_note'] ?? '') as String,
+    regulator: LocalizedText.fromJson(json['regulator']),
+    regulatorUpdatedLabel: json['regulator_updated_label'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
     ...summary.toJson(),
+    'regulator': regulator?.toJson(),
+    'regulator_updated_label': regulatorUpdatedLabel,
     'study_type': studyType,
     'intake_month': intakeMonth,
     'cohort_size': cohortSize,

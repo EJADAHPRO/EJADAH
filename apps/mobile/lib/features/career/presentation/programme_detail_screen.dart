@@ -159,10 +159,50 @@ class _Body extends ConsumerWidget {
             message: strings.recognitionBody,
             tone: AlertTone.info,
           ),
-          const SizedBox(height: EjadahSpacing.md),
-          Text(
-            programme.sourceDeadlineText,
-            style: context.type.micro(color: EjadahColors.labelMuted),
+          // Story E2-02: the sources block. Every figure above is somebody
+          // else's fact, and this says whose and when it was read. Where the
+          // country has no guide there is no regulator to name, and the block
+          // says only what it knows.
+          const SizedBox(height: EjadahSpacing.lg),
+          SectionHeader(title: strings.sourcesLabel),
+          const SizedBox(height: EjadahSpacing.xs),
+          EjadahCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (programme.regulator != null)
+                  SourceLine(
+                    sourceName: programme.regulator!(context),
+                    verifiedOnLabel:
+                        programme.regulatorUpdatedLabel ?? strings.pendingSource,
+                  ),
+                if (programme.sourceDeadlineText.isNotEmpty) ...[
+                  if (programme.regulator != null)
+                    const SizedBox(height: EjadahSpacing.xxs),
+                  Text(
+                    programme.sourceDeadlineText,
+                    style: context.type.micro(color: EjadahColors.labelMuted),
+                  ),
+                ],
+                if (programme.dataQualityNote.isNotEmpty) ...[
+                  const SizedBox(height: EjadahSpacing.xxs),
+                  Text(
+                    programme.dataQualityNote,
+                    style: context.type.micro(color: EjadahColors.labelMuted),
+                  ),
+                ],
+                if (programme.regulator == null) ...[
+                  const SizedBox(height: EjadahSpacing.xxs),
+                  // Not a gap to fill silently: this product has 23 country
+                  // guides and 199 programmes, and the difference is visible.
+                  Text(
+                    strings.notVerified,
+                    style: context.type.micro(color: EjadahColors.labelMuted),
+                  ),
+                ],
+              ],
+            ),
           ),
           const SizedBox(height: EjadahSpacing.lg),
           EjadahPrimaryButton(

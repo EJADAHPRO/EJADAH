@@ -227,6 +227,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get continueLabel => 'CONTINUE';
 
   @override
+  String get copyLink => 'Copy link';
+
+  @override
   String get countriesBlurb =>
       'Exam, regulator, visa route and real costs for 23 countries.';
 
@@ -660,6 +663,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get licensingRoute => 'LICENSING ROUTE';
 
   @override
+  String get linkCopied => 'Link copied';
+
+  @override
   String get linksLabel => 'Links';
 
   @override
@@ -934,6 +940,11 @@ class EjadahStringsEn extends EjadahStrings {
   String get platformFee => 'Ejadah fee (30%)';
 
   @override
+  String premiumRenews(Object date) {
+    return 'Renews $date';
+  }
+
+  @override
   String get previewAvailable => 'Preview available';
 
   @override
@@ -1206,6 +1217,14 @@ class EjadahStringsEn extends EjadahStrings {
   String get shareCard => 'Share my card';
 
   @override
+  String get shareRoadmap => 'Share my route';
+
+  @override
+  String shareRoadmapMessage(Object destination) {
+    return 'My route to $destination, mapped on Ejadah.';
+  }
+
+  @override
   String get shareVerify => 'Share verification';
 
   @override
@@ -1253,6 +1272,9 @@ class EjadahStringsEn extends EjadahStrings {
   @override
   String get sourceMissing =>
       'No official source URL in this record — verify before applying.';
+
+  @override
+  String get sourcesLabel => 'Sources';
 
   @override
   String get specAll => 'All specialties';

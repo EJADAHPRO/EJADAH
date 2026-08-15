@@ -225,6 +225,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get continueLabel => 'أكمل ما بدأته';
 
   @override
+  String get copyLink => 'انسخ الرابط';
+
+  @override
   String get countriesBlurb =>
       'الامتحان والجهة المنظّمة ومسار التأشيرة والتكاليف الحقيقية لـ 23 دولة.';
 
@@ -658,6 +661,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get licensingRoute => 'مسار الترخيص';
 
   @override
+  String get linkCopied => 'تم نسخ الرابط';
+
+  @override
   String get linksLabel => 'الروابط';
 
   @override
@@ -927,6 +933,11 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get platformFee => 'عمولة إجادة (30%)';
+
+  @override
+  String premiumRenews(Object date) {
+    return 'يُجدَّد في $date';
+  }
 
   @override
   String get previewAvailable => 'معاينة متاحة';
@@ -1199,6 +1210,14 @@ class EjadahStringsAr extends EjadahStrings {
   String get shareCard => 'شارك بطاقتي';
 
   @override
+  String get shareRoadmap => 'شارك مساري';
+
+  @override
+  String shareRoadmapMessage(Object destination) {
+    return 'مساري إلى $destination، مرسوم على إجادة.';
+  }
+
+  @override
   String get shareVerify => 'مشاركة التحقق';
 
   @override
@@ -1246,6 +1265,9 @@ class EjadahStringsAr extends EjadahStrings {
   @override
   String get sourceMissing =>
       'لا يوجد رابط رسمي في هذا السجل — تحقّق قبل التقديم.';
+
+  @override
+  String get sourcesLabel => 'المصادر';
 
   @override
   String get specAll => 'كل التخصصات';

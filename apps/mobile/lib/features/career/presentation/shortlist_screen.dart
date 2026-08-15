@@ -9,10 +9,38 @@ import 'package:go_router/go_router.dart';
 import '../data/career_repository.dart';
 import 'widgets/programme_card.dart';
 
+typedef ShortlistData = ({List<ProgrammeSummary> items, int openCount});
+
 final shortlistProvider =
-    FutureProvider<({List<ProgrammeSummary> items, int openCount})>(
-      (ref) => ref.watch(careerRepositoryProvider).shortlist(),
+    AsyncNotifierProvider<ShortlistController, ShortlistData>(
+      ShortlistController.new,
     );
+
+/// The shortlist, with a removal the screen can show before the server has
+/// agreed to it.
+class ShortlistController extends AsyncNotifier<ShortlistData> {
+  @override
+  Future<ShortlistData> build() =>
+      ref.watch(careerRepositoryProvider).shortlist();
+
+  /// Drops a row immediately, and puts it back if the request fails.
+  ///
+  /// The list version of this action has always been optimistic; this one
+  /// awaited the network and then invalidated, so the same gesture felt
+  /// different depending on which screen it was made from.
+  void removeLocally(int programmeId) {
+    final current = state.valueOrNull;
+    if (current == null) return;
+    state = AsyncData((
+      items: current.items.where((item) => item.id != programmeId).toList(),
+      openCount: current.openCount,
+    ));
+  }
+
+  void restore(ShortlistData previous) => state = AsyncData(previous);
+
+  ShortlistData? get snapshot => state.valueOrNull;
+}
 
 /// The shortlist, urgency first.
 ///
@@ -84,9 +112,14 @@ class ShortlistScreen extends ConsumerWidget {
     ProgrammeSummary programme,
   ) async {
     final repository = ref.read(careerRepositoryProvider);
+    final controller = ref.read(shortlistProvider.notifier);
+    final previous = controller.snapshot;
+
+    // The row goes now; the network catches up.
+    controller.removeLocally(programme.id);
+
     try {
       await repository.unsave(programme.id);
-      ref.invalidate(shortlistProvider);
       if (!context.mounted) return;
 
       showEjadahToast(
@@ -94,11 +127,15 @@ class ShortlistScreen extends ConsumerWidget {
         message: context.strings.undoRemove,
         undoLabel: context.strings.undo,
         onUndo: () async {
+          // Put it back on screen first, then tell the server.
+          if (previous != null) controller.restore(previous);
           await repository.save(programme.id);
           ref.invalidate(shortlistProvider);
         },
       );
     } on Failure catch (failure) {
+      // The row comes back: the shortlist still holds it.
+      if (previous != null) controller.restore(previous);
       if (!context.mounted) return;
       showEjadahToast(context, message: failure.message(context));
     }

@@ -512,6 +512,12 @@ abstract class EjadahStrings {
   /// **'CONTINUE'**
   String get continueLabel;
 
+  /// No description provided for @copyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get copyLink;
+
   /// No description provided for @countriesBlurb.
   ///
   /// In en, this message translates to:
@@ -1310,6 +1316,12 @@ abstract class EjadahStrings {
   /// **'LICENSING ROUTE'**
   String get licensingRoute;
 
+  /// No description provided for @linkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied'**
+  String get linkCopied;
+
   /// No description provided for @linksLabel.
   ///
   /// In en, this message translates to:
@@ -1832,6 +1844,12 @@ abstract class EjadahStrings {
   /// **'Ejadah fee (30%)'**
   String get platformFee;
 
+  /// No description provided for @premiumRenews.
+  ///
+  /// In en, this message translates to:
+  /// **'Renews {date}'**
+  String premiumRenews(Object date);
+
   /// No description provided for @previewAvailable.
   ///
   /// In en, this message translates to:
@@ -2336,6 +2354,18 @@ abstract class EjadahStrings {
   /// **'Share my card'**
   String get shareCard;
 
+  /// No description provided for @shareRoadmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my route'**
+  String get shareRoadmap;
+
+  /// No description provided for @shareRoadmapMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'My route to {destination}, mapped on Ejadah.'**
+  String shareRoadmapMessage(Object destination);
+
   /// No description provided for @shareVerify.
   ///
   /// In en, this message translates to:
@@ -2425,6 +2455,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'No official source URL in this record — verify before applying.'**
   String get sourceMissing;
+
+  /// No description provided for @sourcesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get sourcesLabel;
 
   /// No description provided for @specAll.
   ///

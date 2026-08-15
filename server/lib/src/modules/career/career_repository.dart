@@ -67,8 +67,13 @@ class CareerRepository {
     final rows = await _query(
       '''
       SELECT p.*,
-             ${userId == null ? 'false' : 's.user_id IS NOT NULL'} AS is_saved
+             ${userId == null ? 'false' : 's.user_id IS NOT NULL'} AS is_saved,
+             -- The regulator for this country, where a guide exists. A
+             -- programme in a country we have no guide for carries no
+             -- regulator, and the detail screen says so rather than naming one.
+             c.authority_en, c.authority_ar, c.updated_label
       FROM programmes p
+      LEFT JOIN countries c ON c.iso = p.country_iso
       ${userId == null ? '' : 'LEFT JOIN saved_programmes s ON s.programme_id = p.id AND s.user_id = @saved_user'}
       WHERE p.id = @id
       ''',
@@ -548,6 +553,14 @@ class CareerRepository {
     rating: row.doubleOrNull('rating'),
     sourceDeadlineText: row.str('source_deadline_text'),
     dataQualityNote: row.str('data_quality_note'),
+    // Present only on the detail query, which joins the country guide.
+    regulator: row.containsKey('authority_en')
+        ? LocalizedText.orNull(
+            en: row.strOrNull('authority_en'),
+            ar: row.strOrNull('authority_ar'),
+          )
+        : null,
+    regulatorUpdatedLabel: row.strOrNull('updated_label'),
   );
 
   CountryGuideSummary _toCountrySummary(Map<String, dynamic> row) =>

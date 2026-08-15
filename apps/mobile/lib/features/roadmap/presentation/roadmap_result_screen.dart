@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/providers.dart';
 import '../data/roadmap_repository.dart';
+import 'widgets/share_row.dart';
 
 final roadmapProvider = FutureProvider.family<RoadmapView, String>(
   (ref, id) => ref.watch(roadmapRepositoryProvider).roadmap(id),
@@ -141,6 +142,18 @@ class _Result extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: EjadahSpacing.cardGap),
               child: _StageCard(stage: stage, total: view.totalStageCount),
             ),
+          // The growth loop, and never gated: a guest who has just met the
+          // sign-up wall on stage three can still show a colleague what they
+          // got. Placed before the gate for exactly that reason.
+          const SizedBox(height: EjadahSpacing.md),
+          ShareRow(
+            objectType: 'roadmap',
+            message: strings.shareRoadmapMessage(
+              roadmap.destinationName(context),
+            ),
+            url: 'https://ejadah.international/roadmap/${roadmap.id}',
+          ),
+
           if (view.isGated) _Gate(view: view),
           if (roadmap.alternatives.isNotEmpty) ...[
             const SizedBox(height: EjadahSpacing.lg),

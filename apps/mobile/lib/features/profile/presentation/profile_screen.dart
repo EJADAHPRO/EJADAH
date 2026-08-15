@@ -85,6 +85,22 @@ class ProfileScreen extends ConsumerWidget {
                               0.16,
                             ),
                           ),
+                          const SizedBox(height: EjadahSpacing.xxs),
+                          // The scope names the renewal date, not just the
+                          // status: "Premium status (read-only) — status and
+                          // renewal date, never prices". A badge alone left the
+                          // date the user actually needs off the screen.
+                          Text(
+                            strings.premiumRenews(
+                              formatCertificateDate(
+                                user.premiumRenewsOn!,
+                                language,
+                              ),
+                            ),
+                            style: context.type.small(
+                              color: EjadahColors.textSecondary,
+                            ),
+                          ),
                         ],
                       ],
                     ),
