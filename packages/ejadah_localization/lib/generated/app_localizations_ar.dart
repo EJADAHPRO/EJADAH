@@ -21,6 +21,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get again => 'أعدها لاحقًا';
 
   @override
+  String get allowNotifications => 'فعّل التذكيرات';
+
+  @override
   String get alsoWorth => 'خيارات أخرى تستحق النظر';
 
   @override
@@ -372,6 +375,13 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get emptyMastersTitle => 'لا نتائج لهذه التصفية';
+
+  @override
+  String get emptyNotifBody =>
+      'تصل هنا تنبيهات المواعيد وتذكيرات الجلسات. احفظ برنامجًا وسيصلك أولها.';
+
+  @override
+  String get emptyNotifTitle => 'لا شيء بانتظارك';
 
   @override
   String get emptySavedBody =>

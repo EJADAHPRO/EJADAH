@@ -122,6 +122,12 @@ abstract class EjadahStrings {
   /// **'Again'**
   String get again;
 
+  /// No description provided for @allowNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn reminders on'**
+  String get allowNotifications;
+
   /// No description provided for @alsoWorth.
   ///
   /// In en, this message translates to:
@@ -775,6 +781,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Nothing matches those filters'**
   String get emptyMastersTitle;
+
+  /// No description provided for @emptyNotifBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline warnings and session reminders land here. Save a programme and the first one is on its way.'**
+  String get emptyNotifBody;
+
+  /// No description provided for @emptyNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing waiting'**
+  String get emptyNotifTitle;
 
   /// No description provided for @emptySavedBody.
   ///

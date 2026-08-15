@@ -21,6 +21,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get again => 'Again';
 
   @override
+  String get allowNotifications => 'Turn reminders on';
+
+  @override
   String get alsoWorth => 'ALSO WORTH CONSIDERING';
 
   @override
@@ -371,6 +374,13 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get emptyMastersTitle => 'Nothing matches those filters';
+
+  @override
+  String get emptyNotifBody =>
+      'Deadline warnings and session reminders land here. Save a programme and the first one is on its way.';
+
+  @override
+  String get emptyNotifTitle => 'Nothing waiting';
 
   @override
   String get emptySavedBody =>

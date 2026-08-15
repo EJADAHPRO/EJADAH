@@ -38,7 +38,7 @@ against the handoff; what each is missing is named.
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 493 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 502 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
@@ -69,10 +69,10 @@ against the handoff; what each is missing is named.
 | Programme database (199, paginated) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Filters, search, sort (server-side) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Zero-result relaxation | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| Programme detail | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — no sources block (story E2-02) |
-| Shortlist + optimistic save/undo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — remove is not optimistic on the shortlist screen |
+| Programme detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — sources block names the regulator, or says Not verified |
+| Shortlist + optimistic save/undo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | 23 country guides (4 tabs) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — no jump-pills, no FAQ accordion, none of the three crossings |
-| Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — no share buttons (the growth loop), no SourceLine list |
+| Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — share row is in and ungated; no per-stage SourceLine list |
 | Roadmap funnel (guest-capable) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Guest → account migration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | What-if scenarios | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — server done and ownership-tested, no chip grid |
@@ -118,11 +118,11 @@ against the handoff; what each is missing is named.
 | **Home** |
 | Feed (greeting, roadmap CTA, tiles) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six states, per-persona CTA, partial-data treatment |
 | Deadline strip | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| Notification centre | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — server and routes done, no screen |
+| Notification centre | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — HM-02, with the unread count on Home |
 | Activation checklist | — | — | — | — | — | — | NOT STARTED |
 | **Platform** |
-| Notifications (3 categories) | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — scheduling, quiet hours and the daily cap are enforced server-side; no priming sheet or HM-02 |
-| Premium status (read-only) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — the badge is there; the renewal date the scope names is not shown, and there is no PR-09 |
+| Notifications (3 categories) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — scheduling, quiet hours, the daily cap and the centre are all in; no OS permission priming sheet, and no push transport |
+| Premium status (read-only) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — status and renewal date, never prices |
 | System states (10) | ✅ | ✅ | — | ✅ | ✅ | ✅ | COMPLETE — one template, ten screens, a failure registry and a root error boundary |
 | Admin panel (Flutter Web) | — | — | ✅ | — | — | — | NOT STARTED |
 
@@ -158,7 +158,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **493 keys** in each language, up from the 374 they arrived
+The tables now hold **502 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -188,7 +188,7 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 183 |
+| `server` (`dart test`, real PostgreSQL) | 185 |
 | `apps/mobile` (`flutter test`) | 118 |
 | `packages/ejadah_ui` | 48 |
 | `packages/ejadah_localization` | 8 |

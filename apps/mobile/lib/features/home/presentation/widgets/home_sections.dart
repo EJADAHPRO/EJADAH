@@ -7,7 +7,65 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../app/providers.dart';
+import '../../../notifications/presentation/notifications_screen.dart';
 import '../../data/home_repository.dart';
+
+/// The way into the notification centre, with what is waiting.
+///
+/// The count is the point: push can be declined, missed or swiped away by the
+/// OS, and none of that should lose a deadline warning. A user with nothing
+/// waiting still gets the bell, because the centre is also where they go to
+/// find what they already read.
+class _NotificationBell extends ConsumerWidget {
+  const _NotificationBell();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final unread = ref.watch(notificationCentreProvider).valueOrNull?.unread ?? 0;
+
+    return EjadahPressable(
+      onTap: () => context.push('/notifications'),
+      semanticLabel: context.strings.notifications,
+      child: Padding(
+        padding: const EdgeInsets.all(EjadahSpacing.xs),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const Icon(
+              EjadahIcons.bell,
+              size: EjadahIconSize.nav,
+              color: EjadahColors.textPrimary,
+            ),
+            if (unread > 0)
+              PositionedDirectional(
+                top: -2,
+                end: -2,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: EjadahSpacing.xxs,
+                  ),
+                  constraints: const BoxConstraints(minWidth: 16),
+                  decoration: BoxDecoration(
+                    color: EjadahColors.orange,
+                    borderRadius: EjadahRadius.all(EjadahRadius.pill),
+                  ),
+                  child: LtrIsland(
+                    child: Text(
+                      // The cap is the product's own daily cap plus what has
+                      // accumulated; a three-digit badge would be a bug.
+                      unread > 99 ? '99+' : '$unread',
+                      textAlign: TextAlign.center,
+                      style: context.type.micro(color: EjadahColors.onDark),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// The greeting. Time-of-day plus the user's own name, nothing more.
 class HomeGreeting extends ConsumerWidget {
@@ -47,6 +105,7 @@ class HomeGreeting extends ConsumerWidget {
             ],
           ),
         ),
+        const _NotificationBell(),
         EjadahGhostButton(
           label: language == AppLanguage.ar ? 'English' : 'العربية',
           onPressed: () => ref

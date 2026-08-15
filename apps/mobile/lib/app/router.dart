@@ -20,6 +20,7 @@ import '../features/home/presentation/home_screen.dart';
 import '../features/learn/presentation/course_detail_screen.dart';
 import '../features/learn/presentation/course_list_screen.dart';
 import '../features/learn/presentation/learn_screen.dart';
+import '../features/notifications/presentation/notifications_screen.dart';
 import '../features/people/presentation/my_bookings_screen.dart';
 import '../features/people/presentation/people_screen.dart';
 import '../features/people/presentation/professional_list_screen.dart';
@@ -89,7 +90,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Everything else — browsing, the roadmap funnel, public profiles — is
       // open. The gates live in the screens that need them, not here, because a
       // guest must be able to reach and complete the funnel.
-      const gated = {'/shortlist', '/bookings', '/profile'};
+      const gated = {
+        '/shortlist',
+        '/bookings',
+        '/profile',
+        '/notifications',
+      };
       final needsAccount = gated.any(state.matchedLocation.startsWith);
       if (needsAccount && !auth.isAuthenticated) {
         // Carries where the user was headed, so sign-in returns them there.
@@ -197,6 +203,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/shortlist',
         builder: (context, state) =>
             _screen('shortlist', const ShortlistScreen()),
+      ),
+
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) =>
+            _screen('notifications', const NotificationsScreen()),
       ),
 
       // --- Learn: the catalogue and a course ---------------------------------
