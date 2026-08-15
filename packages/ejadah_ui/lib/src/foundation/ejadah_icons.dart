@@ -75,12 +75,16 @@ abstract final class EjadahIcons {
 
   /// Compared by code point because [IconData] overrides equality, which rules
   /// it out as a constant set element.
-  static const Set<int> _mirroredCodePoints = {
-    0xe5cc, // chevronForward
-    0xe5cb, // chevronBack
-    0xe5c8, // arrowForward
-    0xe5c4, // back
-    0xe163, // send
+  ///
+  /// Derived from the icon constants above rather than written out as literal
+  /// code points, so swapping a glyph cannot silently detach it from the
+  /// mirror list.
+  static final Set<int> _mirroredCodePoints = {
+    chevronForward.codePoint,
+    chevronBack.codePoint,
+    arrowForward.codePoint,
+    back.codePoint,
+    send.codePoint,
   };
 }
 

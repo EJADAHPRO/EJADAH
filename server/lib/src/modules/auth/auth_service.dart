@@ -332,7 +332,7 @@ class AuthService {
     );
   }
 
-  String _newFamilyId() => _tokens.issueOpaqueToken().substring(0, 22);
+  String _newFamilyId() => _tokens.issueUuid();
 
   /// A real Argon2id hash of a value no one uses, so the unknown-address path
   /// performs the same work as a wrong-password path.

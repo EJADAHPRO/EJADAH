@@ -89,6 +89,9 @@ abstract final class RoadmapConstants {
 
   /// Room left in the user's budget, worth up to this much, on the same
   /// reasoning as [speedBonusMax].
+  ///
+  /// Credited only when the destination's cost floor is complete: an unknown
+  /// total is not evidence of affordability.
   static const int headroomBonusMax = 7;
 
   /// A hard ceiling for any destination the user cannot afford.
@@ -380,7 +383,14 @@ class RoadmapEngine {
       score +=
           ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.speedBonusMax).round();
     }
-    if (overBudgetBy == 0 && floorCost != null && answers.budgetUsd > 0) {
+    // Budget headroom is only credited when the cost floor is complete. A
+    // guide with unsourced rows has an artificially low floor — crediting it
+    // would let missing data read as affordability, which is the opposite of
+    // what the product claims about its own numbers.
+    if (overBudgetBy == 0 &&
+        floorCost != null &&
+        candidate.floorCostComplete &&
+        answers.budgetUsd > 0) {
       final used = floorCost / answers.budgetUsd;
       score +=
           ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.headroomBonusMax)

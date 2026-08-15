@@ -1,0 +1,33 @@
+# Local development infrastructure.
+#
+#   docker compose up -d
+#   dart run tool/import_data.dart
+#   dart run tool/seed.dart
+#
+# Only PostgreSQL is here: this is a modular monolith with no broker, no cache
+# tier and no service mesh, because nothing measured in this product justifies
+# them.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ejadah-postgres
+    environment:
+      POSTGRES_USER: ejadah
+      POSTGRES_PASSWORD: ejadah_dev
+      POSTGRES_DB: ejadah_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - ejadah-postgres:/var/lib/postgresql/data
+      # Creates the test database alongside the development one, so the suites
+      # never run against development data.
+      - ./tool/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ejadah -d ejadah_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ejadah-postgres:
