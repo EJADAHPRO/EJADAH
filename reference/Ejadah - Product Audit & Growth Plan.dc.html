@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FFF9EF;-webkit-font-smoothing:antialiased;color:#1B1B1B;font-family:Inter,sans-serif}
+  a{color:#FF6B1A;text-decoration:none}
+  a:hover{color:#FF2D32}
+</style>
+</helmet>
+
+<div style="max-width:980px;margin:0 auto;padding:56px 32px 80px">
+
+  <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FF6B1A;margin-bottom:14px">EJADAH INTERNATIONAL ACADEMY · 30 JULY 2026</div>
+  <h1 style="font:700 40px/1.2 'Playfair Display',serif;margin:0 0 14px">Product audit &amp; growth plan</h1>
+  <p style="font:400 15px/1.75 Inter,sans-serif;color:#716D67;max-width:760px;margin:0 0 10px">Eight phases, run in one pass. Scope note stated up front: I have the <strong>mobile app build</strong> (95 screens, both languages) in full, and the <strong>website</strong> only through the ~30 pages you exported to me. Where a finding applies to only one surface, it says so. Placeholder content ignored throughout, as instructed.</p>
+  <p style="font:400 13px/1.7 Inter,sans-serif;color:#716D67;max-width:760px;margin:0 0 40px">Business model as of this week: account is free ("Premium" for everyone, renewal 30 Jan 2027, +1 month per referral). Revenue = courses (one-off, in-app purchase), sessions (tutoring / mentoring / consulting, web checkout), physical NFC card (web checkout).</p>
+
+  <!-- ══════════ PHASE 1 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 1</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Inventory — every feature, its stage, its exits</div>
+  </div>
+
+  <p style="font:400 13.5px/1.75 Inter,sans-serif;color:#1B1B1B;max-width:760px;margin:0 0 18px">Stage key: <span style="color:#496FA8;font-weight:700">Discovery</span> · <span style="color:#FF6B1A;font-weight:700">Consideration</span> · <span style="color:#FFAA18;font-weight:700">Activation</span> · <span style="color:#2D9B68;font-weight:700">Habit</span> · <span style="color:#FF2D32;font-weight:700">Payment</span> · <span style="color:#716D67;font-weight:700">Advocacy</span>. A static pass over all 95 app screens found <strong>zero dead ends</strong> — every screen exits somewhere useful (this was fixed during the build; the last one was the share sheet). The website pages you exported were not all crawlable for links, so website dead ends are an open question, flagged at the end.</p>
+
+  <table style="width:100%;border-collapse:collapse;font:400 12.5px/1.6 Inter,sans-serif;margin-bottom:14px">
+    <thead><tr>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">CAREER (THE PRODUCT'S CORE)</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FOR</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">STAGE</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FEEDS IN → OUT</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Roadmap generator (4 steps + result + what-if)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Everyone; the activation moment</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FFAA18;font-weight:700">Activation</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Home CTA / guest teaser → country guide, plan, programmes</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Programme database (199, paginated, filters, compare, shortlist)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Grad → specialist</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FF6B1A;font-weight:700">Consideration</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Roadmap, Home deadlines → detail, tracker, alerts, compare</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Country guides (23, deep) + compare</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Anyone going abroad</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FF6B1A;font-weight:700">Consideration</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Roadmap result, Career tab → programmes, compare</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Application tracker + document checklists</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Actively applying</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#2D9B68;font-weight:700">Habit</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Shortlist → mentors (interview stage)</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Eligibility match · My plan · Affordability model · Saved-filter alerts</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Applicants</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#2D9B68;font-weight:700">Habit</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Match gap → mentor cross-sell (built); alerts = only feature that works while app is closed</td></tr>
+    </tbody>
+  </table>
+
+  <table style="width:100%;border-collapse:collapse;font:400 12.5px/1.6 Inter,sans-serif;margin-bottom:14px">
+    <thead><tr>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">MARKETPLACES (REVENUE)</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FOR</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">STAGE</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FEEDS IN → OUT</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Tutoring (profiles, packages, custom plans, week-by-week scheduling)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Students, exam preppers</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FF2D32;font-weight:700">Payment</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Home matches, thread → booking → web checkout → bookings</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Mentoring (matched by destination) · Consulting (clinic owners)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Movers · owners</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FF2D32;font-weight:700">Payment</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Match-gap CTA, country guides → booking; free 15-min intro call de-risks</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Tutor onboarding (6 steps) · earnings (70/30) · instructor dashboard</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Supply side</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#716D67;font-weight:700">Advocacy</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Connect tab → application → review → dashboard</td></tr>
+    </tbody>
+  </table>
+
+  <table style="width:100%;border-collapse:collapse;font:400 12.5px/1.6 Inter,sans-serif;margin-bottom:14px">
+    <thead><tr>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">LEARNING (REVENUE) &amp; IDENTITY (RETENTION + ADVOCACY)</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FOR</th>
+      <th style="text-align:start;padding:10px 12px;border-bottom:2px solid #E7E2DA;background:#F5F2EC;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">STAGE</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">FEEDS IN → OUT</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Courses (dept hubs, detail, player, quizzes) — one-off purchases, lesson 1 free</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">All clinicians</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#FF2D32;font-weight:700">Payment</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Tracks, Home continue → certificate → CV → public profile</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Flashcards + daily review queue (streak)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Course owners</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#2D9B68;font-weight:700">Habit</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Home "Today" card → review → streak; the daily-open driver</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Certificates + public verification · CPD ledger · CV (build or upload)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">All</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#2D9B68;font-weight:700">Habit</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Course complete → certificate → CV → public profile</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">NFC card + public profile (socials, no inbox) + private analytics + physical card order</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">All; strangers who tap it</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#716D67;font-weight:700">Advocacy</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Profile → card → stranger's phone → "Create your own Ejadah card" — <strong>the built-in growth loop</strong></td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">First-run (language → carousel → guest roadmap → gated result → signup → Premium status) · referral (+1 month) · system screens (10) · notifications</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">All</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;color:#496FA8;font-weight:700">Discovery→Activation</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Store listing → value before signup wall → personalised Home</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:rgba(255,45,50,.06);border:1.5px solid rgba(255,45,50,.25);border-radius:14px;padding:16px 18px;font:400 13px/1.7 Inter,sans-serif;margin-bottom:44px">
+    <strong style="color:#FF2D32">Things built that should not exist, or are risks:</strong> ① The website exports show <strong>membership tier pages with prices</strong> — the app dropped tiers this week; the website contradicting the app on pricing is the single most confusing thing a user can meet. Align or remove. ② Website "Exams" section (question banks, mocks) is out of Phase 1 scope but still navigable in exports — either ship it or unlink it; a half-dead section reads as abandonment. ③ 81 routes with demo data indexed by Google before launch would poison your SEO start — noindex until real.
+  </div>
+
+  <!-- ══════════ PHASE 2 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 2</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Journey maps — six real user types</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">1 · Dental student</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">First touch: a tutor's shared card or a colleague's referral link → free tests don't exist any more (cut), so the hook is the <strong>guest roadmap</strong> → signup → tutoring is the natural first payment. <strong>Smooth.</strong> Stall: nothing addresses "I have an exam in my faculty next week" — tutoring subjects are there but no urgency entry point on Home for students specifically.</div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">2 · Fresh graduate (intern)</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">Roadmap → country guide → "start attestation now" plan tasks. <strong>Smooth to habit.</strong> Stall: payment. A fresh grad has the least money; the free intro call and the EGP 900 starter course are the right first asks, but nothing routes them there from the roadmap result. Missing next step: result → "cheapest useful next move".</div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">3 · GP dentist (the core persona)</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">Roadmap → shortlist → deadline alerts → tracker → mentor at interview stage → sessions. <strong>This is the best journey in the product</strong> — every step feeds the next and the alerts bring them back. Referral ask lands after roadmap save (right moment).</div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">4 · Specialist</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">Comes for the database, stays for CPD ledger + certificates + card. Stall: the database's specialist filters are strong but <strong>nothing recognises seniority</strong> — a specialist sees the same Home as a student until they set persona. Their natural payments are consulting (giving, not buying) and the physical card.</div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">5 · Tutor / instructor (supply)</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">Onboarding (6 steps, drafts) → review → dashboard → earnings. <strong>Smooth.</strong> Stall after approval: an approved tutor with no bookings has no "get your first student" playbook — share-your-profile prompt, first-week visibility boost, intro-call default ON. That gap is churn on the supply side, which is harder to replace than demand.</div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:700 15px/1.4 Inter,sans-serif;margin-bottom:8px">6 · Clinic owner (consulting demand)</div>
+      <div style="font:400 12.5px/1.75 Inter,sans-serif;color:#716D67">Thinnest journey. Consulting list exists, but nothing upstream captures them — no content about pricing, staffing, or buying equipment leads in, and the Business &amp; Paradental course track doesn't cross-sell a consultant. Lowest volume, highest ticket; fix late, but fix.</div>
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 3 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 3</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Interconnection — exists vs should exist</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:44px">
+    <div style="background:rgba(45,155,104,.06);border:1.5px solid rgba(45,155,104,.3);border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#2D9B68;margin-bottom:12px">ALREADY CONNECTED (BUILT THIS MONTH)</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.9 Inter,sans-serif">
+        <li>Roadmap result → country guide → programmes there</li>
+        <li>Eligibility gap → "find a mentor from this programme"</li>
+        <li>Saved programme → Home deadline strip → tracker → docs</li>
+        <li>Course complete → certificate → CV → public profile → card</li>
+        <li>Session end → tutor's practice list → book session N+1</li>
+        <li>Quiz → flashcards → daily review → Home "Today" card</li>
+        <li>Card tapped by a stranger → "create your own card" loop</li>
+      </ul>
+    </div>
+    <div style="background:rgba(255,45,50,.05);border:1.5px solid rgba(255,45,50,.25);border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#FF2D32;margin-bottom:12px">SHOULD CONNECT AND DON'T (TARGET STATE)</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.9 Inter,sans-serif">
+        <li><strong>Programme detail → tutor for its entry exam</strong> ("This programme needs IELTS 7.0 — 4 tutors prep it") — the highest-intent cross-sell in the product</li>
+        <li><strong>Country guide → mentors who made that exact move</strong> (guide names the route; a person who did it is the proof)</li>
+        <li><strong>Quiz failed → tutor for that topic</strong> (moment of felt need)</li>
+        <li><strong>Roadmap stage reached → the course for that stage</strong> ("Stage 3 is ORE Part 1 — this course covers its syllabus")</li>
+        <li><strong>Tutor approval → first-student playbook</strong> (supply side)</li>
+        <li>Website ↔ app: course bought on web should deep-link open in app; roadmap shared from app should render as a web landing page</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 4 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 4</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Monetisation — trigger → offer, mapped to the moment</div>
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;font:400 12.5px/1.6 Inter,sans-serif;margin-bottom:16px">
+    <thead><tr>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">TRIGGER (WHAT THEY JUST DID)</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">OFFER</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">WHY THIS MOMENT</th>
+      <th style="text-align:start;padding:10px 12px;background:#F5F2EC;border-bottom:2px solid #E7E2DA;font-weight:800;font-size:10.5px;letter-spacing:.08em;color:#716D67">IMPACT / EFFORT</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Saved 3rd programme needing IELTS</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">IELTS tutor package</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">The requirement is now THEIR problem, in writing, three times</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#2D9B68">H / L</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Roadmap stage flips to "in progress"</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">The course mapped to that stage</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">They just committed to the stage; the course is the shortcut</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#2D9B68">H / M</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Tracker reaches "Interview"</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Mock interview with a mentor from that programme</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Highest-stakes week of their whole application</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#2D9B68">H / L (copy exists in tracker already)</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Quiz score under 60%</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">One session on that topic (not a package)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Felt need; small ask converts, package upsell comes later via tiers</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#FFAA18">M / L</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Free intro call ends</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Custom plan with 10+ session discount visible</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Trust just got built for free; volume ladder makes commitment rational</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#2D9B68">H / done — wire the handoff</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Certificate earned</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Physical NFC card (EGP 299)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Pride moment; the card is how they show the credential</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#FFAA18">M / L</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">6-month renewal approaches (Dec 2026)</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">The future paid tier — grandfathered founder price</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">Loss aversion on a product they now use weekly; referral months soften it</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:700;color:#2D9B68">H / policy decision now, build later</td></tr>
+    </tbody>
+  </table>
+  <p style="font:400 12.5px/1.7 Inter,sans-serif;color:#716D67;margin:0 0 44px">Rule that keeps all of this from feeling greedy, already followed in the app: <strong>gate output and scale, never access to truth.</strong> Fees, deadlines and recognition data stay free forever — that's the trust moat. Sell the work done on top of it.</p>
+
+  <!-- ══════════ PHASE 5 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 5</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">SEO &amp; SEM — website only</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#716D67;margin-bottom:12px">TARGET URL ARCHITECTURE</div>
+      <div style="font:500 12.5px/2 'Inter',sans-serif;direction:ltr;text-align:left">
+        /guides/<span style="color:#FF6B1A">{country}</span> — 23 pages, your deep guides verbatim<br>
+        /guides/<span style="color:#FF6B1A">{country}</span>/costs · /salary · /exam — long-tail splits<br>
+        /programmes/<span style="color:#FF6B1A">{country}</span>/<span style="color:#FF6B1A">{specialty}</span> — filtered index pages<br>
+        /programmes/<span style="color:#FF6B1A">{university-slug}</span>-<span style="color:#FF6B1A">{degree}</span> — 199 detail pages<br>
+        /compare/<span style="color:#FF6B1A">{a}</span>-vs-<span style="color:#FF6B1A">{b}</span> — country pairs (uk-vs-germany…)<br>
+        /exams/<span style="color:#FF6B1A">{ore|adc|ndeb|sdle|dha|qchp}</span> — exam hubs<br>
+        /tutors/<span style="color:#FF6B1A">{specialty}</span> · /mentors/<span style="color:#FF6B1A">{country}</span><br>
+        /verify/<span style="color:#FF6B1A">{certificate-code}</span> — already the trust page<br>
+        /dr/<span style="color:#FF6B1A">{slug}</span> — public profiles (one per card = free backlinks)
+      </div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#716D67;margin-bottom:12px">WHAT'S STRUCTURALLY MISSING</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.9 Inter,sans-serif">
+        <li><strong>Arabic URLs.</strong> Your users search "معادلة طب أسنان بريطانيا" — bilingual pages with hreflang are the single biggest capture opportunity; almost nobody in this niche does Arabic SEO properly.</li>
+        <li><strong>Comparison pages don't exist</strong> — "UK vs Germany for Egyptian dentists" is exactly what people type, and you already hold both datasets.</li>
+        <li><strong>Exam hub pages</strong> — "ORE Part 1 fees 2026" queries; your data answers them with sourced numbers.</li>
+        <li>Schema: Course, FAQPage (guide FAQs), Person (tutors), EducationalOrganization. None visible in exports.</li>
+        <li><strong>SEM-ready pages:</strong> country guides + tutoring lists (single intent, single CTA) — good landing pages. The homepage and the 81-route sprawl would burn spend; don't send paid traffic there.</li>
+        <li><strong>Pre-launch:</strong> noindex everything with demo data. Ranking with fake tutors is worse than not ranking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 6 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin:44px 0 22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 6</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Maturity gaps — the v2 of each thing</div>
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;font:400 12.5px/1.6 Inter,sans-serif;margin-bottom:44px">
+    <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600;width:220px">Roadmap</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = it updates itself: deadline moved → stage dates shift → one notification. Built as static snapshots today.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Programme database</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = freshness pipeline: every record carries "verified on {date}" with a 6-month re-check rota, and the 11 "Pending source" fees get sourced. Data trust is the product.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Marketplaces</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = reviews only from completed bookings, response-time badges, and a supply-side "first student" playbook. Also: monitored in-session messaging exists as policy — build the actual thread.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Courses</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = cohort starts (a start date creates urgency free content can't) and track bundles priced below the sum of parts.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">NFC / public profile</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = the profile is a landing page with an app-install CTA and its own analytics-driven prompts ("18 people viewed your CV this month — update it?").</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA;font-weight:600">Notifications</td><td style="padding:10px 12px;border-bottom:1px solid #E7E2DA">v2 = the taxonomy in handoff/analytics-events.md wired (4 of ~35 events exist). Until then you cannot measure activation, so every growth decision is a guess.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ PHASE 7 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 7</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Action plan</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:44px">
+    <div style="background:rgba(45,155,104,.06);border:1.5px solid rgba(45,155,104,.3);border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#2D9B68;margin-bottom:12px">QUICK WINS · THIS WEEK</div>
+      <ol style="margin:0;padding-inline-start:18px;font:400 12.5px/1.85 Inter,sans-serif">
+        <li>Align website pricing pages with the new model (or unlink them) — the contradiction blocks trust</li>
+        <li>Noindex all demo-data routes</li>
+        <li>Programme detail → exam-tutor cross-sell module (app + web)</li>
+        <li>Country guide → "mentors who made this move" strip</li>
+        <li>Unlink the out-of-scope Exams section on the web</li>
+      </ol>
+    </div>
+    <div style="background:rgba(255,170,24,.07);border:1.5px solid rgba(255,170,24,.4);border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#B07500;margin-bottom:12px">CORE FIXES · THIS MONTH</div>
+      <ol style="margin:0;padding-inline-start:18px;font:400 12.5px/1.85 Inter,sans-serif">
+        <li>Analytics events wired end-to-end; measure the 3-minute activation claim with 5 real Cairo dentists</li>
+        <li>Real rosters + Arabic terminology review (blocks any external demo)</li>
+        <li>Source the 11 pending regulator fees</li>
+        <li>Roadmap stage → course mapping (the H/M revenue trigger)</li>
+        <li>Tutor "first student" playbook after approval</li>
+      </ol>
+    </div>
+    <div style="background:rgba(73,111,168,.06);border:1.5px solid rgba(73,111,168,.35);border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#496FA8;margin-bottom:12px">GROWTH BUILDS · NEXT QUARTER</div>
+      <ol style="margin:0;padding-inline-start:18px;font:400 12.5px/1.85 Inter,sans-serif">
+        <li>Arabic + English SEO page factory: 23 guides × splits, 199 programme pages, comparison pages, exam hubs</li>
+        <li>Self-updating roadmaps (data pipeline + notifications)</li>
+        <li>Post-January pricing: founder-grandfathered tier, decided in October, announced in November</li>
+        <li>Course cohorts + track bundles</li>
+        <li>Public profiles as install-CTA landing pages</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 8 ══════════ -->
+  <div style="background:#1B1B1B;border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;color:#FFC62E;margin-bottom:8px">PHASE 8</div>
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Execute — what's already done, what's specced</div>
+  </div>
+
+  <p style="font:400 13.5px/1.75 Inter,sans-serif;max-width:760px;margin:0 0 16px">Honest status: most of Phase 8 <strong>was executed over the past month in the app prototype</strong> — the connective tissue this audit calls for exists there and is testable in "Ejadah App — Home &amp; Career": every empty state routes to action, every flow ends in a next step, the upsell moments (intro call → custom plan → volume ladder; match gap → mentor; certificate → card) are designed in place, and 10 system screens cover the failure states. What remains is (a) the five cross-sell modules in Phase 3's red column, specced below for either surface, and (b) porting the same patterns to the website, which I can only spec since I don't have its code.</p>
+
+  <div style="display:grid;gap:10px;margin-bottom:44px">
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:14px;padding:16px 18px;font:400 12.5px/1.7 Inter,sans-serif"><strong>Module A — "Prep the requirement":</strong> on programme detail, under Entry requirements: chip per gateable requirement (IELTS 7.0 · ORE) → 2–3 tutor cards filtered to that subject → book. Place after requirements, before costs — the moment the number lands.</div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:14px;padding:16px 18px;font:400 12.5px/1.7 Inter,sans-serif"><strong>Module B — "People who made this move":</strong> on country detail, after the pathway tab: 2 mentor cards matched on destination + "15-minute free intro call". The guide is the map; the mentor is the proof it's walkable.</div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:14px;padding:16px 18px;font:400 12.5px/1.7 Inter,sans-serif"><strong>Module C — "Stage course":</strong> on My plan, each stage card gets an optional course row ("Covers this stage's syllabus · EGP 1,400") shown only when a mapped course exists. Never on done stages.</div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:14px;padding:16px 18px;font:400 12.5px/1.7 Inter,sans-serif"><strong>Module D — quiz-fail rescue:</strong> score &lt; 60% → below the review-answers button: "One session on {topic} with {tutor} — EGP 650". Single session, never a package, never blocking the retry.</div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:14px;padding:16px 18px;font:400 12.5px/1.7 Inter,sans-serif"><strong>Module E — tutor first-student playbook:</strong> approval screen gains 3 checkboxed actions: share profile to WhatsApp, switch intro calls ON, add 5+ weekly hours. "Tutors who do all three get their first booking 4× faster."</div>
+  </div>
+
+  <!-- ══════════ FINISH ══════════ -->
+  <div style="background:linear-gradient(135deg,#FF2D32 0%,#FF6B1A 50%,#FFC62E 100%);border-radius:20px;padding:26px 30px;margin-bottom:22px">
+    <div style="font:700 24px/1.3 'Playfair Display',serif;color:#fff">Assumptions made, disagreements, open questions</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#716D67;margin-bottom:12px">ASSUMED ON YOUR BEHALF</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.85 Inter,sans-serif">
+        <li>The app's new model (free account, one-off courses, paid sessions) is the company model — the website must follow it, not vice versa</li>
+        <li>Post-January pricing will gate scale/output, never data access</li>
+        <li>Arabic-first SEO is worth more to you than English head terms</li>
+        <li>Brand tokens are the current set (#FF2D32/#FF6B1A/#FFC62E on #FFF9EF) — your prompt cited the older website palette (#E23016…); I kept the current one</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:800 11px/1 Inter,sans-serif;letter-spacing:.1em;color:#716D67;margin-bottom:12px">WOULD HAVE BUILT DIFFERENTLY · OPEN QUESTIONS</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.85 Inter,sans-serif">
+        <li>81 website routes is ~3× what launch needs; I'd have shipped guides + database + tutoring and let search data dictate the rest</li>
+        <li><strong>Q1:</strong> Which of the 81 routes are actually linked in the live nav? (Dead-end audit for web needs a crawl or repo access)</li>
+        <li><strong>Q2:</strong> What's the January price point and does the founder cohort keep anything for free, forever?</li>
+        <li><strong>Q3:</strong> Who re-verifies programme data every 6 months — staff, or the mentors themselves for credit?</li>
+        <li><strong>Q4:</strong> Is in-session messaging being built for launch (policy references it, product doesn't have it)?</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

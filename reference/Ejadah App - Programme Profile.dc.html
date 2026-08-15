@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE9E1;-webkit-font-smoothing:antialiased}
+  a{color:#FF6B1A;text-decoration:none}
+  a:hover{color:#FF2D32}
+</style>
+</helmet>
+
+<div style="display:flex;gap:40px;align-items:flex-start;padding:40px;min-height:100vh;box-sizing:border-box">
+
+  <div style="width:280px;flex:none;position:sticky;top:40px">
+    <div style="font:600 11px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FF6B1A;margin-bottom:10px">Masters · deep profile</div>
+    <h1 style="font:700 25px/1.2 'Playfair Display',serif;color:#1B1B1B;margin:0 0 10px">King's College London — MSc Endodontology</h1>
+    <p style="font:400 13px/1.7 Inter,sans-serif;color:#716D67;margin:0 0 20px">Nine sections, built from the reference pages you sent, now fully bilingual. Every figure comes from that source — nothing invented.</p>
+
+    <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:10px">Language</div>
+    <div style="display:flex;gap:8px;margin-bottom:22px">
+      <button onClick="{{ setEn }}" style="flex:1;height:40px;border-radius:12px;cursor:pointer;border:1.5px solid {{ enBorder }};background:{{ enBg }};color:{{ enFg }};font:700 13px/1 Inter,sans-serif">EN</button>
+      <button onClick="{{ setAr }}" style="flex:1;height:40px;border-radius:12px;cursor:pointer;border:1.5px solid {{ arBorder }};background:{{ arBg }};color:{{ arFg }};font:700 13px/1 'IBM Plex Sans Arabic',sans-serif;letter-spacing:0">عربي</button>
+    </div>
+
+    <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:10px">Jump to section</div>
+    <div style="display:grid;gap:6px">
+      <sc-for list="{{ navItems }}" as="s" hint-placeholder-count="9">
+        <button onClick="{{ s.go }}" style="text-align:start;height:38px;padding:0 12px;border-radius:10px;cursor:pointer;background:{{ s.railBg }};color:{{ s.railFg }};border:1.5px solid {{ s.railBorder }};font:600 12.5px/1 Inter,sans-serif">{{ s.railLabel }}</button>
+      </sc-for>
+    </div>
+
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:16px;margin-top:20px">
+      <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:10px">Arabic draft — please review</div>
+      <div style="font:400 12px/1.7 Inter,sans-serif;color:#1B1B1B">Modern Standard Arabic, Western numerals throughout, and every exam code, software name, university name and currency figure kept in Latin and bidi-isolated. Have a native reviewer check the specialist terms before launch — particularly <span style="direction:rtl;unicode-bidi:isolate">إعادة المعالجة</span>, <span style="direction:rtl;unicode-bidi:isolate">الحشو اللبي</span> and the Syndicate step names.</div>
+    </div>
+  </div>
+
+  <div style="flex:none">
+    <div style="width:390px;height:844px;border-radius:44px;background:#1B1B1B;padding:10px;box-shadow:0 30px 70px rgba(0,0,0,.3);box-sizing:border-box">
+      <div dir="{{ dir }}" style="width:370px;height:824px;border-radius:35px;overflow:hidden;background:#FFF9EF;display:flex;flex-direction:column;font-family:{{ ff }};letter-spacing:{{ ls }}">
+
+        <div style="background:#1B1B1B;padding:12px 20px 0;flex:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:600;color:rgba(255,255,255,.55)">
+            <span>9:41</span>
+            <span style="display:flex;gap:5px;align-items:center"><span style="width:16px;height:8px;border:1px solid rgba(255,255,255,.5);border-radius:2px;display:inline-block"></span><span style="width:22px;height:8px;background:rgba(255,255,255,.5);border-radius:2px;display:inline-block"></span></span>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin">
+
+          <div style="background:linear-gradient(180deg,rgba(27,27,27,.72),rgba(27,27,27,.96)), #1B1B1B center/cover no-repeat url(https://picsum.photos/seed/ejadah-kings-guys/760/520);padding:8px 14px 26px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <button aria-label="{{ t.back }}" style="width:44px;height:44px;background:none;border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX({{ flip }})"><path d="M15 5l-7 7 7 7"></path></svg>
+              </button>
+              <button onClick="{{ toggleSave }}" aria-label="{{ t.saveProg }}" style="width:44px;height:44px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="{{ savedFill }}" stroke="{{ savedStroke }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.5 12 20 12 20z"></path></svg>
+              </button>
+            </div>
+            <div style="padding:6px 6px 0">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                <img src="https://flagcdn.com/w80/gb.png" alt="United Kingdom" style="width:40px;height:28px;border-radius:5px;object-fit:cover;border:1px solid rgba(255,255,255,.25)">
+                <div style="font-size:11.5px;font-weight:500;color:rgba(255,255,255,.6);line-height:1.5">{{ t.hospital }}</div>
+              </div>
+              <div style="font-size:12.5px;font-weight:600;color:#FFC62E;margin-bottom:6px;direction:ltr;unicode-bidi:isolate;text-align:start">King's College London</div>
+              <div style="font-family:{{ ffDisp }};font-weight:700;font-size:28px;line-height:{{ lhTight }};color:#fff;margin-bottom:6px"><span style="direction:ltr;unicode-bidi:isolate;display:inline-block">MSc Endodontology</span></div>
+              <div style="font-size:12.5px;font-weight:400;line-height:{{ lhSnug }};color:rgba(255,255,255,.6);margin-bottom:16px">{{ t.faculty }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px">
+                <span style="font-size:10.5px;font-weight:700;color:#1B1B1B;background:#FFC62E;padding:5px 9px;border-radius:999px;line-height:1.4">{{ t.badgeScholarships }}</span>
+                <span style="font-size:10.5px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.08);padding:5px 9px;border-radius:999px;line-height:1.4">{{ t.badgeMicroscope }}</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px">
+                  <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:1.3;color:#fff;direction:ltr;unicode-bidi:isolate;text-align:start">£26,000</div>
+                  <div style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5">{{ t.statTuition }}</div>
+                </div>
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px">
+                  <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:1.3;color:#fff">{{ t.statOneYear }}</div>
+                  <div style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5">{{ t.statMode }}</div>
+                </div>
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px">
+                  <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:1.3;color:#fff;direction:ltr;unicode-bidi:isolate;text-align:start">~15%</div>
+                  <div style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5">{{ t.statAcceptance }}</div>
+                </div>
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px">
+                  <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:1.3;color:#fff;direction:ltr;unicode-bidi:isolate;text-align:start">8–12</div>
+                  <div style="font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5">{{ t.statCohort }}</div>
+                </div>
+              </div>
+              <div style="font-size:11.5px;font-weight:500;color:rgba(255,255,255,.55);line-height:{{ lhBody }}">{{ t.keyLine }}</div>
+            </div>
+          </div>
+
+          <div style="position:sticky;top:0;z-index:5;background:#FFF9EF;border-bottom:1px solid #E7E2DA;padding:12px 0 10px">
+            <div style="display:flex;gap:8px;overflow-x:auto;padding:0 20px;scrollbar-width:thin">
+              <sc-for list="{{ navItems }}" as="s" hint-placeholder-count="9">
+                <button onClick="{{ s.go }}" style="flex:none;border-radius:999px;padding:9px 13px;cursor:pointer;background:{{ s.bg }};color:{{ s.fg }};border:1.5px solid {{ s.border }};font-size:12.5px;font-weight:600;white-space:nowrap;font-family:{{ ff }};letter-spacing:{{ ls }}">{{ s.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:12px;line-height:1.4">{{ t.aboutLabel }}</div>
+              <p style="font-size:14px;font-weight:400;line-height:{{ lhBody }};color:#1B1B1B;margin:0 0 12px">{{ t.about1 }}</p>
+              <p style="font-size:14px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 26px">{{ t.about2 }}</p>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:12px;line-height:1.4">{{ t.whyLabel }}</div>
+              <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:6px 16px;margin-bottom:26px">
+                <sc-for list="{{ differentiators }}" as="d" hint-placeholder-count="7">
+                  <div style="padding:13px 0;border-bottom:1px solid #E7E2DA;font-size:13px;font-weight:400;line-height:{{ lhBody }};color:#1B1B1B">{{ d.text }}</div>
+                </sc-for>
+              </div>
+
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCurriculum }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.modulesLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 16px">{{ t.modulesIntro }}</p>
+              <div style="display:grid;gap:10px;margin-bottom:26px">
+                <sc-for list="{{ modules }}" as="m" hint-placeholder-count="8">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+                      <span style="font-size:10.5px;font-weight:600;color:#716D67;background:#F5F2EC;padding:4px 8px;border-radius:999px;line-height:1.4">{{ m.weeks }}</span>
+                      <span style="font-size:10.5px;font-weight:700;color:#496FA8;background:rgba(73,111,168,.1);padding:4px 8px;border-radius:999px;line-height:1.4">{{ m.credits }}</span>
+                    </div>
+                    <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:5px">{{ m.title }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ m.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.assessLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 16px">{{ t.assessIntro }}</p>
+              <div style="display:grid;gap:10px">
+                <sc-for list="{{ assessments }}" as="a" hint-placeholder-count="5">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px">
+                      <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B">{{ a.title }}</div>
+                      <div style="flex:none;font-family:{{ ffDisp }};font-weight:700;font-size:17px;color:#FF6B1A;direction:ltr;unicode-bidi:isolate">{{ a.weight }}</div>
+                    </div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ a.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRequirements }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:16px;line-height:1.4">{{ t.reqLabel }}</div>
+              <div style="display:grid;gap:10px;margin-bottom:20px">
+                <sc-for list="{{ requirements }}" as="r" hint-placeholder-count="8">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px">
+                      <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B">{{ r.title }}</div>
+                      <span style="flex:none;font-size:10px;font-weight:700;color:{{ r.tagFg }};background:{{ r.tagBg }};padding:4px 8px;border-radius:999px;line-height:1.4">{{ r.tag }}</span>
+                    </div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ r.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:rgba(255,45,50,.08);border:1.5px solid rgba(255,45,50,.28);border-radius:16px;padding:15px">
+                <div style="font-size:13px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:5px">{{ t.verifyTitle }}</div>
+                <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ t.verifyBody }} <span style="direction:ltr;unicode-bidi:isolate">dentaladmissions@kcl.ac.uk · +44 20 7848 3040</span></div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isApplication }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.statementLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.statementIntro }}</p>
+              <div style="display:grid;gap:8px;margin-bottom:26px">
+                <sc-for list="{{ statementPoints }}" as="p" hint-placeholder-count="5">
+                  <div style="display:flex;gap:12px;background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:14px">
+                    <div style="flex:none;width:24px;height:24px;border-radius:8px;background:#F5F2EC;color:#1B1B1B;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ p.n }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#1B1B1B">{{ p.text }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.portfolioLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.portfolioIntro }}</p>
+              <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:6px 16px;margin-bottom:26px">
+                <sc-for list="{{ portfolioPoints }}" as="p" hint-placeholder-count="5">
+                  <div style="padding:13px 0;border-bottom:1px solid #E7E2DA;font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#1B1B1B">{{ p.text }}</div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.interviewLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.interviewIntro }}</p>
+              <div style="display:grid;gap:10px;margin-bottom:26px">
+                <sc-for list="{{ interviewQs }}" as="q" hint-placeholder-count="6">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="font-size:13px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:7px">{{ q.q }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ q.a }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="background:#1B1B1B;border-radius:20px;padding:20px">
+                <div style="font-size:10.5px;font-weight:600;color:#FFC62E;margin-bottom:14px;line-height:1.4">{{ t.rejectLabel }}</div>
+                <div style="display:grid;gap:11px">
+                  <sc-for list="{{ rejections }}" as="r" hint-placeholder-count="6">
+                    <div style="display:flex;gap:10px;font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:rgba(255,255,255,.78)">
+                      <span style="flex:none;color:#FF8A8A;font-weight:700">{{ r.n }}</span>{{ r.text }}
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isScholarships }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.fundingLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 16px">{{ t.fundingIntro }}</p>
+              <div style="display:grid;gap:12px">
+                <sc-for list="{{ scholarships }}" as="s" hint-placeholder-count="5">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:16px">
+                    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px">
+                      <span style="font-size:10px;font-weight:700;color:#716D67;background:#F5F2EC;padding:4px 8px;border-radius:999px;line-height:1.4">{{ s.kind }}</span>
+                      <span style="font-size:10px;font-weight:700;color:{{ s.tagFg }};background:{{ s.tagBg }};padding:4px 8px;border-radius:999px;line-height:1.4">{{ s.tag }}</span>
+                    </div>
+                    <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:6px">{{ s.name }}</div>
+                    <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:12px">{{ s.amount }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin-bottom:12px">{{ s.eligibility }}</div>
+                    <div style="background:#F5F2EC;border-radius:12px;padding:12px;margin-bottom:10px">
+                      <div style="font-size:10px;font-weight:700;color:#FF6B1A;margin-bottom:5px;line-height:1.4">{{ t.tipLabel }}</div>
+                      <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#1B1B1B">{{ s.tip }}</div>
+                    </div>
+                    <div style="font-size:11.5px;font-weight:600;line-height:{{ lhBody }};color:#716D67">{{ s.deadline }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAfter }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.salaryLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 16px">{{ t.salaryIntro }}</p>
+              <div style="display:grid;gap:12px;margin-bottom:26px">
+                <sc-for list="{{ salaries }}" as="s" hint-placeholder-count="3">
+                  <div style="background:#1B1B1B;border-radius:20px;padding:18px">
+                    <div style="font-size:10.5px;font-weight:600;color:#FFC62E;margin-bottom:10px;line-height:1.4">{{ s.place }}</div>
+                    <div style="font-family:{{ ffDisp }};font-weight:700;font-size:20px;line-height:{{ lhSnug }};color:#fff;margin-bottom:10px;direction:ltr;unicode-bidi:isolate;text-align:start">{{ s.range }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:rgba(255,255,255,.7);margin-bottom:12px">{{ s.detail }}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <span style="font-size:10.5px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.08);padding:5px 9px;border-radius:999px;line-height:1.5">{{ s.timeline }}</span>
+                      <span style="font-size:10.5px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.08);padding:5px 9px;border-radius:999px;line-height:1.5">{{ s.tax }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.gdcLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.gdcIntro }}</p>
+              <div style="display:grid;gap:10px;margin-bottom:14px">
+                <sc-for list="{{ gdcRoutes }}" as="r" hint-placeholder-count="2">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:6px">{{ r.title }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin-bottom:10px">{{ r.desc }}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <span style="font-size:10.5px;font-weight:600;color:#716D67;background:#F5F2EC;padding:5px 9px;border-radius:999px;line-height:1.5">{{ r.a }}</span>
+                      <span style="font-size:10.5px;font-weight:700;color:#FF2D32;background:rgba(255,45,50,.08);padding:5px 9px;border-radius:999px;line-height:1.5">{{ r.b }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:rgba(45,155,104,.1);border:1.5px solid rgba(45,155,104,.3);border-radius:16px;padding:15px;margin-bottom:26px">
+                <div style="font-size:12.5px;font-weight:500;line-height:{{ lhBody }};color:#1B1B1B">{{ t.gulfNote }}</div>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:14px;line-height:1.4">{{ t.syndicateLabel }}</div>
+              <div style="display:grid;gap:10px;margin-bottom:26px">
+                <sc-for list="{{ syndicate }}" as="s" hint-placeholder-count="6">
+                  <div style="display:flex;gap:12px;background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="flex:none;width:26px;height:26px;border-radius:8px;background:{{ grad }};color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ s.n }}</div>
+                    <div style="min-width:0">
+                      <div style="font-size:13px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:5px">{{ s.title }}</div>
+                      <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ s.desc }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:14px;line-height:1.4">{{ t.pathsLabel }}</div>
+              <div style="display:grid;gap:10px">
+                <sc-for list="{{ paths }}" as="p" hint-placeholder-count="5">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px">
+                      <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B">{{ p.title }}</div>
+                      <span style="flex:none;font-size:10px;font-weight:700;color:#716D67;background:#F5F2EC;padding:4px 8px;border-radius:999px;line-height:1.4">{{ p.when }}</span>
+                    </div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ p.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ never }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:16px;line-height:1.4">{{ t.recognitionLabel }}</div>
+              <div style="display:grid;gap:12px;margin-bottom:16px">
+                <sc-for list="{{ recognition }}" as="r" hint-placeholder-count="4">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:16px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                      <span style="flex:none;font-size:26px;line-height:1">{{ r.flag }}</span>
+                      <div style="font-size:14px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B">{{ r.country }}</div>
+                      <span style="margin-inline-start:auto;font-size:10px;font-weight:700;color:#2D9B68;background:rgba(45,155,104,.1);padding:4px 8px;border-radius:999px;line-height:1.4">{{ t.recognised }}</span>
+                    </div>
+                    <div style="font-size:11.5px;font-weight:600;line-height:{{ lhSnug }};color:#496FA8;margin-bottom:8px">{{ r.body }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ r.detail }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:rgba(255,45,50,.08);border:1.5px solid rgba(255,45,50,.28);border-radius:16px;padding:15px">
+                <div style="font-size:12.5px;font-weight:500;line-height:{{ lhBody }};color:#1B1B1B">{{ t.recognitionWarning }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isLiving }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.costsLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.costsIntro }}</p>
+              <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:6px 16px;margin-bottom:26px">
+                <sc-for list="{{ costs }}" as="c" hint-placeholder-count="7">
+                  <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #E7E2DA">
+                    <span style="font-size:12.5px;font-weight:400;line-height:{{ lhSnug }};color:#716D67">{{ c.label }}</span>
+                    <span style="flex:none;font-size:13px;font-weight:600;color:#1B1B1B;display:flex;gap:3px;align-items:baseline"><span style="direction:ltr;unicode-bidi:isolate">{{ c.value }}</span><span style="font-weight:500;color:#716D67;font-size:11.5px">{{ unitMonth }}</span></span>
+                  </div>
+                </sc-for>
+                <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 0">
+                  <span style="font-size:13px;font-weight:700;color:#1B1B1B">{{ t.totalEstimate }}</span>
+                  <span style="flex:none;font-family:{{ ffDisp }};font-weight:700;font-size:18px;color:#FF6B1A;display:flex;gap:4px;align-items:baseline"><span style="direction:ltr;unicode-bidi:isolate">{{ totalValue }}</span><span style="font-family:{{ ff }};font-size:12px;font-weight:600">{{ unitMonth }}</span></span>
+                </div>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:8px;line-height:1.4">{{ t.areasLabel }}</div>
+              <p style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67;margin:0 0 14px">{{ t.areasIntro }}</p>
+              <div style="display:grid;gap:10px;margin-bottom:26px">
+                <sc-for list="{{ areas }}" as="a" hint-placeholder-count="5">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px">
+                      <div style="font-size:13.5px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;direction:ltr;unicode-bidi:isolate;text-align:start">{{ a.name }}</div>
+                      <div style="flex:none;font-size:12.5px;font-weight:700;color:#1B1B1B;display:flex;gap:3px;align-items:baseline"><span style="direction:ltr;unicode-bidi:isolate">{{ a.rent }}</span><span style="font-weight:500;color:#716D67;font-size:11px">{{ unitMonth }}</span></div>
+                    </div>
+                    <div style="font-size:11.5px;font-weight:600;line-height:{{ lhSnug }};color:#496FA8;margin-bottom:6px">{{ a.commute }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ a.note }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:14px;line-height:1.4">{{ t.setupLabel }}</div>
+              <div style="display:grid;gap:10px;margin-bottom:26px">
+                <sc-for list="{{ setup }}" as="s" hint-placeholder-count="6">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="font-size:13px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:5px">{{ s.title }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ s.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:14px;line-height:1.4">{{ t.visaLabel }}</div>
+              <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:6px 16px">
+                <sc-for list="{{ visa }}" as="v" hint-placeholder-count="7">
+                  <div style="padding:12px 0;border-bottom:1px solid #E7E2DA">
+                    <div style="font-size:11.5px;font-weight:600;color:#716D67;margin-bottom:4px;line-height:1.5">{{ v.label }}</div>
+                    <div style="font-size:12.5px;font-weight:500;line-height:{{ lhBody }};color:#1B1B1B">{{ v.value }}</div>
+                  </div>
+                </sc-for>
+                <div style="padding:14px 0;font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ t.casNote }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:22px 20px 30px">
+              <div style="font-size:11px;font-weight:600;color:#FF6B1A;margin-bottom:16px;line-height:1.4">{{ t.faqLabel }}</div>
+              <div style="display:grid;gap:10px;margin-bottom:20px">
+                <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+                  <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:15px">
+                    <div style="font-size:13px;font-weight:600;line-height:{{ lhSnug }};color:#1B1B1B;margin-bottom:7px">{{ f.q }}</div>
+                    <div style="font-size:12.5px;font-weight:400;line-height:{{ lhBody }};color:#716D67">{{ f.a }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:#1B1B1B;border-radius:20px;padding:20px">
+                <div style="font-size:10.5px;font-weight:600;color:#FFC62E;margin-bottom:10px;line-height:1.4">{{ t.notCoveredLabel }}</div>
+                <div style="font-size:13px;font-weight:400;line-height:{{ lhBody }};color:rgba(255,255,255,.72);margin-bottom:16px">{{ t.notCoveredBody }}</div>
+                <button style="width:100%;height:48px;border:none;border-radius:14px;background:#fff;color:#1B1B1B;font-size:13.5px;font-weight:700;cursor:pointer;font-family:{{ ff }};letter-spacing:{{ ls }}">{{ t.bookConsult }}</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="padding:0 20px 26px">
+            <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:16px">
+              <div style="font-size:10.5px;font-weight:700;color:#716D67;margin-bottom:8px;line-height:1.4">{{ t.admissionsLabel }}</div>
+              <div style="font-size:12.5px;font-weight:500;line-height:{{ lhBody }};color:#1B1B1B;direction:ltr;unicode-bidi:isolate;text-align:start">dentaladmissions@kcl.ac.uk<br>+44 20 7848 3040</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:none;background:#fff;border-top:1.5px solid #E7E2DA;padding:12px 16px 20px;display:flex;gap:10px;align-items:center">
+          <div style="min-width:0;flex:1">
+            <div style="font-family:{{ ffDisp }};font-weight:700;font-size:17px;line-height:1.3;color:#1B1B1B;display:flex;gap:4px;align-items:baseline"><span style="direction:ltr;unicode-bidi:isolate">£26,000</span><span style="font-family:{{ ff }};font-size:11px;font-weight:500;color:#716D67">{{ unitYear }}</span></div>
+            <div style="font-size:10.5px;font-weight:600;color:#FF2D32;margin-top:4px;line-height:1.4">{{ t.deadlineLine }}</div>
+          </div>
+          <button style="flex:none;height:48px;padding:0 14px;border-radius:14px;border:1.5px solid #E7E2DA;background:#fff;color:#1B1B1B;font-size:12.5px;font-weight:700;cursor:pointer;font-family:{{ ff }};letter-spacing:{{ ls }}">{{ t.getHelp }}</button>
+          <button style="flex:none;height:48px;padding:0 18px;border:none;border-radius:14px;background:{{ grad }};box-shadow:0 4px 20px rgba(255,107,26,.28);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:{{ ff }};letter-spacing:{{ ls }}">{{ t.applyShort }}</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="width:280px;flex:none;position:sticky;top:40px">
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px;margin-bottom:16px">
+      <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:12px">Programme facts</div>
+      <div style="font:400 12.5px/1.9 Inter,sans-serif;color:#1B1B1B">
+        <div>QS ranking · #8 Dentistry</div>
+        <div>Format · clinical + academic</div>
+        <div>Duration · 1 yr FT / 2 yr PT</div>
+        <div>Tuition · £26,000/year</div>
+        <div>All-in (FT) · ~£78,000–£95,000</div>
+        <div>Living · £1,530–£2,220/mo</div>
+        <div>IELTS · 7.0 overall</div>
+        <div>Cohort · 8–12 students</div>
+        <div>Acceptance · ~15%</div>
+        <div>Cases required · 150</div>
+        <div>Interview · required</div>
+        <div>Thesis + viva · required</div>
+        <div>Intake · September 2026</div>
+        <div>Deadline · 31 January 2026</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #E7E2DA;border-radius:16px;padding:18px">
+      <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:12px">Notes</div>
+      <ul style="margin:0;padding-inline-start:18px;font:400 12.5px/1.8 Inter,sans-serif;color:#1B1B1B">
+        <li>Real flags on the recognition cards, as you asked — overriding the no-emoji rule for flags only.</li>
+        <li>Nine web sections become a sticky chip strip, not a desktop tab row.</li>
+        <li>Apply and Get help pinned to a sticky bottom bar.</li>
+        <li>Payment stays on the web: Get help opens consultation booking, never a card form.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;previewLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;ar&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;\&quot;en\&quot; | \&quot;ar\&quot;&quot;,&quot;section&quot;:&quot;Preview&quot;}}">
+const S = {
+  en: {
+    back: "Back", saveProg: "Save programme",
+    hospital: "Guy's Hospital · London, United Kingdom",
+    faculty: "Faculty of Dentistry, Oral & Craniofacial Sciences",
+    badgeQs: "#8 QS WORLD DENTISTRY", badgeRecognised: "RECOGNISED · EG AE SA QA",
+    badgeScholarships: "5 SCHOLARSHIPS", badgeMicroscope: "MICROSCOPE EVERY SESSION",
+    statTuition: "tuition / year", statOneYear: "1 year", statMode: "full-time · 2 yrs PT",
+    statAcceptance: "acceptance rate", statCohort: "students per cohort",
+    keyLine: "150 supervised clinical cases · thesis + viva · next intake September 2026",
+    aboutLabel: "ABOUT THE PROGRAMME",
+    about1: "One of Europe's most respected postgraduate endodontic programmes, delivered entirely at Guy's Hospital. The department handles over 4,000 complex referral cases a year — a case volume and complexity most specialist training programmes cannot match.",
+    about2: "Supervision comes from GDC-registered Consultant Endodontists who all hold active specialist practice alongside their academic roles, so teaching is grounded in current practice rather than theory. Graduates go into specialist referral practices, Gulf hospitals and Egyptian academic posts.",
+    whyLabel: "WHY KING'S — THE REAL DIFFERENTIATORS",
+    equipLabel: "EQUIPMENT YOU WILL USE",
+    equipIntro: "From week one, not after graduation. This is the practical training most Egyptian graduates never get at home.",
+    weekLabel: "A WEEK IN THE LIFE — FULL-TIME",
+    modulesLabel: "MODULES & TEACHING SCHEDULE",
+    modulesIntro: "8 core modules. Full-time students complete all taught modules in year 1 with the dissertation running concurrently; part-time spreads them across two years with three clinical days a week.",
+    assessLabel: "ASSESSMENT BREAKDOWN",
+    assessIntro: "Multi-modal: clinical performance, written knowledge, case presentation and research quality. There is no single final exam.",
+    reqLabel: "ADMISSION REQUIREMENTS",
+    verifyTitle: "Requirements change annually — always verify",
+    verifyBody: "Contact King's admissions directly before applying:",
+    statementLabel: "PERSONAL STATEMENT — WHAT KING'S ACTUALLY WANTS",
+    statementIntro: "This is the document that gets you shortlisted. Generic statements are rejected at the first sift.",
+    portfolioLabel: "CASE PORTFOLIO — HOW TO BUILD A STRONG ONE",
+    portfolioIntro: "Twenty cases means nothing if poorly documented.",
+    interviewLabel: "INTERVIEW — THE QUESTIONS THAT COME UP",
+    interviewIntro: "30–45 minutes online with the Programme Director and one faculty member.",
+    rejectLabel: "THE 6 REASONS APPLICATIONS ARE REJECTED",
+    fundingLabel: "5 FUNDING OPTIONS FOR EGYPTIAN APPLICANTS",
+    fundingIntro: "Two are automatic. Three need separate applications, and the deadlines differ — read each carefully and act early.",
+    tipLabel: "EJADAH TIP",
+    salaryLabel: "SALARY REALITY",
+    salaryIntro: "Real market ranges, not aspirational figures. Yours depends on how fast you build a specialist reputation and where you practise.",
+    gdcLabel: "WHAT THE MSc ALONE DOES NOT GIVE YOU",
+    gdcIntro: "The MSc is a postgraduate academic qualification. It does not by itself place you on the GDC Specialist List in Endodontics. Two pathways do:",
+    gulfNote: "For Gulf practice the MSc is sufficient for DHA / DOH / SCHS specialist category — no GDC listing required. This is why many King's graduates move to the UAE or KSA directly after graduating.",
+    syndicateLabel: "EGYPTIAN SYNDICATE REGISTRATION — 6 STEPS",
+    pathsLabel: "5 CAREER PATHS AFTER KING'S",
+    recognitionLabel: "RECOGNITION", recognised: "RECOGNISED",
+    recognitionWarning: "Recognition status can change. Always verify with the relevant health authority before committing — Ejadah's consulting team can advise on current status for Egyptian applicants.",
+    costsLabel: "MONTHLY LIVING COSTS — LONDON NEAR GUY'S",
+    costsIntro: "Based on shared accommodation in Zone 2–3. Budget toward the higher end.",
+    totalEstimate: "Total estimate",
+    areasLabel: "WHERE TO LIVE", areasIntro: "Guy's Hospital is in London Bridge (SE1).",
+    setupLabel: "FIRST TWO WEEKS", visaLabel: "UK STUDENT VISA",
+    casNote: "You receive your CAS number from King's after accepting the offer and paying the £1,000 deposit. Apply no earlier than six months before the programme start date.",
+    faqLabel: "FREQUENTLY ASKED", notCoveredLabel: "QUESTION NOT COVERED?",
+    notCoveredBody: "Book a free 20-minute consultation with our postgraduate advisory team — Egyptian dentists who have been through this process.",
+    bookConsult: "Book free consultation", admissionsLabel: "KING'S ADMISSIONS",
+    deadlineLine: "Deadline 31 Jan 2026", getHelp: "Get help", applyShort: "Apply",
+  },
+  ar: {
+    back: "رجوع", saveProg: "حفظ البرنامج",
+    hospital: "مستشفى Guy's · لندن، المملكة المتحدة",
+    faculty: "كلية طب الأسنان وعلوم الفم والوجه والقحف",
+    badgeQs: "المرتبة 8 عالميًا في طب الأسنان — QS", badgeRecognised: "معتمد · مصر والإمارات والسعودية وقطر",
+    badgeScholarships: "5 جهات تمويل", badgeMicroscope: "مجهر في كل جلسة",
+    statTuition: "الرسوم / السنة", statOneYear: "سنة واحدة", statMode: "دوام كامل · سنتان جزئي",
+    statAcceptance: "نسبة القبول", statCohort: "طالبًا في الدفعة",
+    keyLine: "150 حالة إكليينيكية تحت إشراف · رسالة ومناقشة · الدفعة القادمة سبتمبر 2026",
+    aboutLabel: "عن البرنامج",
+    about1: "أحد أعرق برامج الدراسات العليا في علاج الجذور في أوروبا، ويُدرَّس بالكامل في مستشفى Guy's. يستقبل القسم أكثر من 4,000 حالة محوّلة معقّدة سنويًا — حجم ودرجة تعقيد لا يتوفران في معظم برامج التخصص.",
+    about2: "الإشراف على يد استشاريي علاج جذور مسجّلين في GDC، وكلهم يمارسون التخصص فعليًا إلى جانب عملهم الأكاديمي، فالتعليم مبني على الممارسة الحالية لا على النظريات. يعمل الخريجون في عيادات تحويلية متخصصة ومستشفيات الخليج ووظائف أكاديمية في مصر.",
+    whyLabel: "لماذا King's — الفروق الحقيقية",
+    equipLabel: "الأجهزة التي ستستخدمها",
+    equipIntro: "من الأسبوع الأول، لا بعد التخرج. هذا هو التدريب العملي الذي لا يحصل عليه معظم الخريجين المصريين في بلدهم.",
+    weekLabel: "أسبوع في حياة طالب الدوام الكامل",
+    modulesLabel: "المقررات وجدول التدريس",
+    modulesIntro: "8 مقررات أساسية. طلاب الدوام الكامل يُكملون كل المقررات في السنة الأولى مع الرسالة بالتوازي، أما الدوام الجزئي فيوزّعها على سنتين بثلاثة أيام إكليينيكية أسبوعيًا.",
+    assessLabel: "توزيع التقييم",
+    assessIntro: "التقييم متعدد الأوجه: الأداء الإكليني، والمعرفة النظرية، وعرض الحالات، وجودة البحث. لا يوجد امتحان نهائي واحد.",
+    reqLabel: "شروط القبول",
+    verifyTitle: "الشروط تتغير سنويًا — تحقّق دائمًا",
+    verifyBody: "تواصل مع قسم القبول في King's قبل التقديم:",
+    statementLabel: "خطاب الدافع — ما يبحث عنه King's فعلًا",
+    statementIntro: "هذا هو المستند الذي يضعك في قائمة المقابلات. الخطابات العامة تُرفض من الفرز الأول.",
+    portfolioLabel: "ملف الحالات — كيف تبنيه بقوة",
+    portfolioIntro: "عشرون حالة لا تعني شيئًا إذا كان التوثيق ضعيفًا.",
+    interviewLabel: "المقابلة — الأسئلة المتكررة",
+    interviewIntro: "من 30 إلى 45 دقيقة عبر الإنترنت مع مدير البرنامج وعضو هيئة تدريس آخر.",
+    rejectLabel: "الأسباب الستة لرفض الطلبات",
+    fundingLabel: "5 جهات تمويل للمتقدمين المصريين",
+    fundingIntro: "اثنتان تلقائيتان، وثلاث تتطلب تقديمًا منفصلًا، والمواعيد مختلفة — اقرأ كل واحدة بعناية وابدأ مبكرًا.",
+    tipLabel: "نصيحة إجادة",
+    salaryLabel: "حقيقة الرواتب",
+    salaryIntro: "نطاقات سوقية حقيقية لا أرقامًا تطلعية. راتبك يعتمد على سرعة بنائك سمعة تخصصية وعلى مكان الممارسة.",
+    gdcLabel: "ما لا تمنحه الماجستير وحدها",
+    gdcIntro: "الماجستير مؤهل أكاديمي، ولا تضعك وحدها في قائمة أخصائيي علاج الجذور لدى GDC. هناك مساران لذلك:",
+    gulfNote: "للممارسة في الخليج، الماجستير كافية لتصنيف الأخصائي في DHA و DOH و SCHS دون الحاجة لقائمة GDC. لهذا ينتقل كثير من خريجي King's إلى الإمارات أو السعودية مباشرة بعد التخرج.",
+    syndicateLabel: "التسجيل في النقابة المصرية — 6 خطوات",
+    pathsLabel: "5 مسارات مهنية بعد King's",
+    recognitionLabel: "الاعتماد", recognised: "معتمد",
+    recognitionWarning: "حالة الاعتماد قابلة للتغيّر. تحقّق دائمًا من الجهة الصحية المختصة قبل الالتزام — وفريق الاستشارات في إجادة يمكنه إفادتك بالحالة الحالية للمتقدمين المصريين.",
+    costsLabel: "تكاليف المعيشة الشهرية — لندن قرب Guy's",
+    costsIntro: "على أساس سكن مشترك في المنطقتين 2 و3. ضع ميزانيتك عند الحد الأعلى.",
+    totalEstimate: "الإجمالي المتوقع",
+    areasLabel: "أين تسكن", areasIntro: "مستشفى Guy's في London Bridge (SE1).",
+    setupLabel: "أول أسبوعين", visaLabel: "تأشيرة الدراسة البريطانية",
+    casNote: "تحصل على رقم CAS من King's بعد قبول العرض ودفع عربون 1,000 جنيه إسترليني. لا تتقدّم للتأشيرة قبل ستة أشهر من بداية البرنامج.",
+    faqLabel: "أسئلة متكررة", notCoveredLabel: "سؤالك غير مذكور؟",
+    notCoveredBody: "احجز استشارة مجانية 20 دقيقة مع فريق الدراسات العليا — أطباء مصريون خاضوا هذا الطريق بأنفسهم.",
+    bookConsult: "احجز استشارة مجانية", admissionsLabel: "قسم القبول في King's",
+    deadlineLine: "آخر موعد 31 يناير 2026", getHelp: "مساعدة", applyShort: "تقديم",
+  },
+};
+
+const DIFFERENTIATORS = [
+  { en: "4,000+ complex referral cases handled annually at Guy's — one of the highest volumes in Europe.",
+    ar: "أكثر من 4,000 حالة محوّلة معقّدة سنويًا في Guy's — من أعلى الأعداد في أوروبا." },
+  { en: "Operating microscopes in every bay (Zeiss OPMI, KAPS). Microscope use is embedded, not optional.",
+    ar: "مجاهر جراحية في كل وحدة علاج (Zeiss OPMI و KAPS). استخدام المجهر أساسي لا اختياري." },
+  { en: "On-site CBCT (Carestream CS9300) for all programme cases, with supervised interpretation.",
+    ar: "أشعة مقطعية مخروطية CBCT داخل المستشفى (Carestream CS9300) لكل حالات البرنامج، مع قراءة تحت إشراف." },
+  { en: "Cohort of 8–12 means direct consultant supervision rather than a large-group rotation.",
+    ar: "دفعة من 8 إلى 12 طالبًا تعني إشرافًا مباشرًا من الاستشاري لا تدويرًا في مجموعات كبيرة." },
+  { en: "King's BRC affiliation — lab research access and collaborative publications.",
+    ar: "الانتساب لمركز البحوث الطبية الحيوية BRC — وصول لمعامل البحث ونشر مشترك." },
+  { en: "Egyptian alumni network currently practising in Cairo, Dubai, Riyadh and Abu Dhabi.",
+    ar: "شبكة خريجين مصريين يمارسون حاليًا في القاهرة ودبي والرياض وأبوظبي." },
+  { en: "Supervisors on the GDC specialist list — direct mentorship for post-MSc career planning.",
+    ar: "مشرفون مسجّلون في قائمة أخصائيي GDC — إرشاد مباشر لتخطيط مسارك بعد الماجستير." },
+];
+
+const EQUIPMENT = [
+  { kind: { en: "MICROSCOPY", ar: "المجاهر" }, name: "Zeiss OPMI pico + KAPS 900",
+    desc: { en: "Clinical-grade microscopes in every treatment bay — all root canal treatment performed under magnification from day one.",
+      ar: "مجاهر بمواصفات إكليينيكية في كل وحدة علاج — كل معالجات الجذور تُجرى تحت التكبير من اليوم الأول." } },
+  { kind: { en: "IMAGING", ar: "التصوير" }, name: "Carestream CS9300 CBCT",
+    desc: { en: "Students take, interpret and present CBCT for their own cases as part of clinical assessment.",
+      ar: "يأخذ الطلاب صور CBCT ويقرأونها ويعرضونها لحالاتهم كجزء من التقييم الإكليني." } },
+  { kind: { en: "INSTRUMENTATION", ar: "التحضير الآلي" }, name: "VDW Gold Reciproc & RECIPROC Blue",
+    desc: { en: "Reciprocating single-file systems for primary treatment, plus WaveOne, ProTaper Ultimate and HyFlex EDM.",
+      ar: "أنظمة المبرد الواحد المتبادل للمعالجة الأولية، إضافة إلى WaveOne و ProTaper Ultimate و HyFlex EDM." } },
+  { kind: { en: "MICROSURGERY", ar: "الجراحة المجهرية" }, name: "Satelec P5 Newtron XS ultrasonic",
+    desc: { en: "Root-end preparation in endodontic surgery — technique practised on extracted teeth before clinical cases.",
+      ar: "تحضير نهاية الجذر في جراحة اللب — يُتدرَّب على التقنية على أسنان مخلوعة قبل الحالات الحقيقية." } },
+  { kind: { en: "RADIOGRAPHY", ar: "الأشعة" }, name: "Dentsply Sirona Schick 33 sensors",
+    desc: { en: "All intraoral radiography is digital: periapical paralleling, working length confirmation, outcome films.",
+      ar: "كل الأشعة داخل الفم رقمية: تقنية التوازي، وتأكيد الطول العامل، وصور النتيجة." } },
+  { kind: { en: "MATERIALS", ar: "المواد" }, name: "ProRoot MTA + Biodentine",
+    desc: { en: "Bioceramic sealers (AH Plus, BioRoot RCS) and repair protocols, with handling practicals before patient use.",
+      ar: "حاشيات حيوية خزفية (AH Plus و BioRoot RCS) وبروتوكولات الإصلاح، مع تدريب عملي قبل استخدامها مع المرضى." } },
+];
+
+const WEEK = [
+  { day: { en: "MON", ar: "الإثنين" },
+    text: { en: "08:30 clinical at Guy's Endodontic Unit — 3–4 complex root canal cases under microscope supervision, case notes and CBCT review with the consultant.",
+      ar: "8:30 عمل إكليني في وحدة علاج الجذور — 3 إلى 4 حالات معقّدة تحت المجهر بإشراف، مع مراجعة الملفات وصور CBCT مع الاستشاري." } },
+  { day: { en: "TUE", ar: "الثلاثاء" },
+    text: { en: "09:00 academic seminar: journal club and guest lectures from GDC-listed specialists. Afternoon for case presentation prep and dissertation research.",
+      ar: "9:00 حلقة أكاديمية: نادي المجلات ومحاضرات لأخصائيين مسجّلين في GDC. وبعد الظهر إعداد عروض الحالات والبحث." } },
+  { day: { en: "WED", ar: "الأربعاء" },
+    text: { en: "Library and research day: supervised dissertation work, systematic review sessions, biostatistics tutorials, online module for international students.",
+      ar: "يوم المكتبة والبحث: عمل على الرسالة بإشراف، وجلسات المراجعات المنهجية، ودروس الإحصاء الحيوي، ومقرر إلكتروني للطلاب الدوليين." } },
+  { day: { en: "THU", ar: "الخميس" },
+    text: { en: "08:30 clinical — apicectomy cases, microsurgical technique practice, irrigation protocol practical. Peer case review at 16:00.",
+      ar: "8:30 عمل إكليني — حالات قطع الذروة، وتدريب على الجراحة المجهرية، وتطبيق بروتوكولات الغسل. ومراجعة حالات مع الزملاء 16:00." } },
+  { day: { en: "FRI", ar: "الجمعة" },
+    text: { en: "Self-directed: portfolio case write-up, radiograph analysis, reading list, optional research lab. Many students use this day for part-time clinical work.",
+      ar: "دراسة ذاتية: كتابة حالات الملف، وتحليل الأشعة، وقائمة القراءة، ومعمل بحث اختياري. يستغل كثيرون هذا اليوم لعمل إكليني جزئي." } },
+];
+
+const MODULES = [
+  { weeks: { en: "Weeks 1–6", ar: "الأسابيع 1–6" }, credits: { en: "15 credits", ar: "15 ساعة معتمدة" },
+    title: { en: "Endodontic Biology & Pathology", ar: "أحياء وأمراض اللب" },
+    desc: { en: "Pulpal and periapical disease — diagnosis, classification, microbiology and histopathology of endodontic infections. Assessed by written MCQ.",
+      ar: "أمراض اللب وما حول الذروة — التشخيص والتصنيف والأحياء الدقيقة والتشريح المرضي لعدوى اللب. التقييم: امتحان اختيار من متعدد." } },
+  { weeks: { en: "Weeks 7–16", ar: "الأسابيع 7–16" }, credits: { en: "20 credits", ar: "20 ساعة معتمدة" },
+    title: { en: "Advanced Root Canal Treatment", ar: "المعالجة اللبية المتقدمة" },
+    desc: { en: "Rotary and reciprocating instrumentation, irrigation protocols, the NaOCl concentration evidence base, obturation and magnification-assisted treatment. Heavily clinical.",
+      ar: "التحضير الدوّار والمتبادل، وبروتوكولات الغسل، وقاعدة الأدلة لتركيز هيبوكلوريت الصوديوم، وتقنيات الحشو، والعلاج تحت التكبير. مقرر إكليني بامتياز." } },
+  { weeks: { en: "Weeks 17–22", ar: "الأسابيع 17–22" }, credits: { en: "15 credits", ar: "15 ساعة معتمدة" },
+    title: { en: "Endodontic Surgery", ar: "جراحة اللب" },
+    desc: { en: "Apicectomy, root-end preparation and filling, microsurgical technique, guided bone regeneration adjacent to endodontic lesions. Phantom head before patients.",
+      ar: "قطع الذروة، وتحضير وحشو نهاية الجذر، والتقنية الجراحية المجهرية، وتجديد العظم الموجّه حول الآفات اللبية. تدريب على المجسّم قبل المرضى." } },
+  { weeks: { en: "Weeks 23–26", ar: "الأسابيع 23–26" }, credits: { en: "10 credits", ar: "10 ساعات معتمدة" },
+    title: { en: "Dental Traumatology", ar: "رضوح الأسنان" },
+    desc: { en: "Crown and root fractures, avulsion and replantation, luxation injuries — protocols based on current IADT guidelines. Case-based seminars.",
+      ar: "كسور التاج والجذر، والقلع الرضحي وإعادة الزرع، وإصابات الخلع — بروتوكولات مبنية على إرشادات IADT الحالية. حلقات قائمة على الحالات." } },
+  { weeks: { en: "Weeks 27–32", ar: "الأسابيع 27–32" }, credits: { en: "10 credits", ar: "10 ساعات معتمدة" },
+    title: { en: "Regenerative Endodontics", ar: "المعالجة اللبية التجديدية" },
+    desc: { en: "Stem cell biology, revascularisation and revitalisation protocols, bioceramic materials, MTA in immature teeth.",
+      ar: "أحياء الخلايا الجذعية، وبروتوكولات إعادة التوعية والإحياء، والمواد الحيوية الخزفية، واستخدام MTA في الأسنان غير الناضجة." } },
+  { weeks: { en: "Weeks 33–36", ar: "الأسابيع 33–36" }, credits: { en: "10 credits", ar: "10 ساعات معتمدة" },
+    title: { en: "Digital Endodontics & CBCT", ar: "المعالجة اللبية الرقمية و CBCT" },
+    desc: { en: "CBCT interpretation and case selection criteria, 3D-printed endodontic guides, software-assisted treatment planning.",
+      ar: "قراءة CBCT ومعايير اختيار الحالات، والأدلة اللبية المطبوعة ثلاثية الأبعاد، والتخطيط العلاجي بمساعدة البرمجيات." } },
+  { weeks: { en: "Throughout year 1", ar: "على مدار السنة الأولى" }, credits: { en: "10 credits", ar: "10 ساعات معتمدة" },
+    title: { en: "Research Methods & Biostatistics", ar: "مناهج البحث والإحصاء الحيوي" },
+    desc: { en: "Study design, systematic reviews, meta-analysis, statistical analysis in SPSS or R, and dissertation proposal preparation.",
+      ar: "تصميم الدراسات، والمراجعات المنهجية، والتحليل البعدي، والتحليل الإحصائي بـ SPSS أو R، وإعداد مقترح الرسالة." } },
+  { weeks: { en: "Year 1 · PT year 2", ar: "السنة الأولى · الجزئي: الثانية" }, credits: { en: "60 credits", ar: "60 ساعة معتمدة" },
+    title: { en: "MSc Dissertation", ar: "رسالة الماجستير" },
+    desc: { en: "Original research project of 15,000–20,000 words, supervised by a faculty member, submitted and examined by viva voce with an external examiner.",
+      ar: "مشروع بحثي أصلي من 15,000 إلى 20,000 كلمة بإشراف عضو هيئة تدريس، يُقدَّم ويُناقَش شفويًا أمام ممتحن خارجي." } },
+];
+
+const ASSESSMENTS = [
+  { weight: { en: "Pass / fail", ar: "نجاح / رسوب" }, title: { en: "Clinical portfolio", ar: "ملف الحالات الإكليني" },
+    desc: { en: "150 documented endodontic cases with pre and post radiographs, treatment notes and outcome assessments, signed off by the supervising consultant.",
+      ar: "150 حالة موثّقة بأشعة قبل وبعد، وملاحظات علاجية، وتقييم للنتيجة، معتمدة بتوقيع الاستشاري المشرف." } },
+  { weight: { en: "40%", ar: "40%" }, title: { en: "Written examinations", ar: "الامتحانات التحريرية" },
+    desc: { en: "Two written papers per year, MCQ and short answer, covering all taught modules. Minimum 50% in each.",
+      ar: "ورقتان سنويًا، اختيار من متعدد وأسئلة قصيرة، تغطيان كل المقررات. الحد الأدنى 50% في كل ورقة." } },
+  { weight: { en: "20%", ar: "20%" }, title: { en: "Case presentations", ar: "عروض الحالات" },
+    desc: { en: "Formal presentation of three complex cases to a faculty panel — diagnosis, planning, execution and outcome analysis.",
+      ar: "عرض رسمي لثلاث حالات معقّدة أمام لجنة من هيئة التدريس — التشخيص والتخطيط والتنفيذ وتحليل النتيجة." } },
+  { weight: { en: "10%", ar: "10%" }, title: { en: "Seminar participation", ar: "المشاركة في الحلقات" },
+    desc: { en: "Journal clubs, guest lecture Q&A and peer case review — formative but tracked.",
+      ar: "نوادي المجلات، وأسئلة المحاضرات، ومراجعة الحالات مع الزملاء — تكويني لكنه متابَع." } },
+  { weight: { en: "30%", ar: "30%" }, title: { en: "MSc dissertation", ar: "رسالة الماجستير" },
+    desc: { en: "15,000–20,000 word original research thesis with viva voce before internal and external examiners.",
+      ar: "رسالة بحثية أصلية من 15,000 إلى 20,000 كلمة مع مناقشة شفوية أمام ممتحن داخلي وخارجي." } },
+];
+
+const REQUIREMENTS = [
+  { mand: true, title: { en: "BDS or equivalent dental degree", ar: "بكالوريوس طب وجراحة الفم والأسنان أو ما يعادله" },
+    desc: { en: "Minimum upper second-class honours (2:1) equivalent from a recognised university. A 2:2 may be considered with exceptional clinical experience.",
+      ar: "بتقدير لا يقل عن جيد جدًا (ما يعادل 2:1) من جامعة معترف بها. قد يُنظر في التقدير الأقل مع خبرة إكليينيكية استثنائية." } },
+  { mand: true, title: { en: "2+ years post-qualification experience", ar: "خبرة إكليينيكية سنتان بعد التخرج" },
+    desc: { en: "Post-BDS clinical work in general practice or a specialist referral setting. King's want evidence you handle complex cases, not just routine dentistry.",
+      ar: "عمل إكليني بعد البكالوريوس في العيادة العامة أو في مركز تحويلي متخصص. يريد King's دليلًا على تعاملك مع حالات معقّدة لا روتينية فقط." } },
+  { mand: true, title: { en: "IELTS 7.0 overall / OET grade B", ar: "آيلتس 7.0 أو OET بدرجة B" },
+    desc: { en: "No individual IELTS band below 6.5. For OET, grade B in all four components. Results valid for two years.",
+      ar: "لا تقل أي مهارة في الآيلتس عن 6.5، ولـ OET درجة B في المهارات الأربع. النتيجة صالحة سنتين." } },
+  { mand: true, title: { en: "Personal statement — 1,000 words", ar: "خطاب دافع من 1,000 كلمة" },
+    desc: { en: "Your strongest document: why endodontics specifically, two or three clinical cases that shaped the decision, specific career goals, and why King's over other programmes.",
+      ar: "أقوى مستنداتك: لماذا علاج الجذور تحديدًا، وحالتان أو ثلاث شكّلت قرارك، وأهداف مهنية محددة، ولماذا King's بالذات." } },
+  { mand: true, title: { en: "Portfolio of 20+ endodontic cases", ar: "ملف من 20 حالة لبية أو أكثر" },
+    desc: { en: "Not a list — each case needs pre and post radiographs, a treatment summary and an outcome comment. Difficult cases (calcified canals, retreatment, trauma) score higher than routine molars.",
+      ar: "ليست قائمة — كل حالة تحتاج أشعة قبل وبعد، وملخصًا علاجيًا، وتعليقًا على النتيجة. الحالات الصعبة (قنوات متكلّسة، إعادة معالجة، رضوح) تُحسب أعلى من الأرحاء الروتينية." } },
+  { mand: true, title: { en: "Two references", ar: "توصيتان" },
+    desc: { en: "At least one from a specialist clinician who has seen your endodontic work. Academic references alone are weak; a GDC-listed endodontist carries significant weight.",
+      ar: "واحدة على الأقل من طبيب أخصائي رأى عملك في علاج الجذور. التوصيات الأكاديمية وحدها ضعيفة، وتوصية أخصائي مسجّل في GDC لها وزن كبير." } },
+  { mand: true, title: { en: "Online interview with the programme team", ar: "مقابلة إلكترونية مع فريق البرنامج" },
+    desc: { en: "30–45 minutes with the Programme Director and one other faculty member: clinical reasoning, motivation, career goals and a brief case discussion.",
+      ar: "من 30 إلى 45 دقيقة مع مدير البرنامج وعضو هيئة تدريس آخر: التفكير الإكليني، والدافع، والأهداف المهنية، ومناقشة حالة قصيرة." } },
+  { mand: false, title: { en: "Current dental registration", ar: "ترخيص مهني ساري" },
+    desc: { en: "A valid dental licence in your country of practice at the time of application. GDC registration is not required at application stage.",
+      ar: "ترخيص ممارسة ساري في بلدك وقت التقديم. التسجيل في GDC غير مطلوب في مرحلة التقديم." } },
+];
+
+const STATEMENT = [
+  { en: "Open with a specific clinical case that crystallised your interest in endodontics — not a general statement about dentistry.",
+    ar: "ابدأ بحالة إكليينيكية محددة بلورت اهتمامك بعلاج الجذور — لا بعبارة عامة عن طب الأسنان." },
+  { en: "Name the microscope work, complex retreatments or traumatology cases you have handled: they want to see you already think like a specialist.",
+    ar: "اذكر عملك تحت المجهر، وحالات إعادة المعالجة المعقّدة أو الرضوح التي تعاملت معها: يريدون أن يروا أنك تفكر كأخصائي بالفعل." },
+  { en: "Be explicit about the career goal. Returning to Egypt to establish a specialist endodontic referral practice beats wanting to help patients.",
+    ar: "كن صريحًا في هدفك المهني. «أعتزم العودة إلى مصر وتأسيس عيادة تحويلية متخصصة في علاج الجذور» أقوى من «أريد مساعدة المرضى»." },
+  { en: "Address why King's specifically — Guy's referral volume, the microscope-first approach, and a named faculty member's research if it is relevant to you.",
+    ar: "اشرح لماذا King's تحديدًا — حجم الحالات المحوّلة في Guy's، ونهج المجهر أولًا، وباحث معيّن من هيئة التدريس إن كان بحثه يخصك." },
+  { en: "Close with how the MSc fits your five-year plan. The panel is looking for strategic thinking.",
+    ar: "اختم بموضع الماجستير في خطتك للسنوات الخمس المقبلة. اللجنة تبحث عن تفكير استراتيجي." },
+];
+
+const PORTFOLIO = [
+  { en: "20 cases minimum — aim for 30+ if you have them. Quality over quantity after 25.",
+    ar: "20 حالة كحد أدنى — واستهدف 30 أو أكثر إن توفرت. بعد 25 حالة تصبح الجودة أهم من العدد." },
+  { en: "Include at least 3 retreatments, 2 calcified canal cases, 1 trauma case and 1 requiring CBCT.",
+    ar: "ضمّن ثلاث حالات إعادة معالجة على الأقل، وحالتي قنوات متكلّسة، وحالة رضح، وحالة احتاجت CBCT." },
+  { en: "Every case: pre-treatment radiograph, working length film, post-obturation film, and 6-month recall where available.",
+    ar: "لكل حالة: أشعة قبل المعالجة، وصورة الطول العامل، وصورة بعد الحشو، ومتابعة بعد ستة أشهر إن توفرت." },
+  { en: "Write 3–4 lines per case: complaint, diagnosis, challenge, technique, outcome.",
+    ar: "اكتب 3 إلى 4 أسطر لكل حالة: الشكوى، والتشخيص، والصعوبة، والتقنية، والنتيجة." },
+  { en: "Order cases chronologically to show progression — the most recent should be the most confident.",
+    ar: "رتّب الحالات زمنيًا لتُظهر التطور — يجب أن تكون الأحدث هي الأكثر إتقانًا." },
+];
+
+const INTERVIEW = [
+  { q: { en: "Why endodontics, and why now?", ar: "لماذا علاج الجذور، ولماذا الآن؟" },
+    a: { en: "Have a specific turning point. Mention a case you could not resolve or that fascinated you — enjoying precision work without a story behind it lands badly.",
+      ar: "احضر نقطة تحوّل محددة. اذكر حالة لم تستطع حلها أو أثارت اهتمامك — «أحب العمل الدقيق» بلا قصة خلفها لا تُقنع." } },
+  { q: { en: "Walk me through a difficult case you have managed.", ar: "حدّثني عن حالة صعبة تعاملت معها." },
+    a: { en: "Prepare two thoroughly: one retreatment, one traumatology. Know your working lengths, instruments, sealer and recall outcome — they will probe the detail.",
+      ar: "جهّز حالتين بعناية: إعادة معالجة ورضح. اعرف الأطوال العاملة والأدوات والحاشية ونتيجة المتابعة — سيسألون في التفاصيل." } },
+  { q: { en: "What do you know about regenerative endodontics?", ar: "ماذا تعرف عن المعالجة اللبية التجديدية؟" },
+    a: { en: "They want evidence you read current literature. Cite a specific paper or trial; the AAE position statement on regeneration is the minimum baseline.",
+      ar: "يريدون دليلًا أنك تقرأ الأدبيات الحديثة. اذكر بحثًا أو تجربة بعينها؛ بيان AAE عن التجديد هو الحد الأدنى." } },
+  { q: { en: "Where do you see yourself five years after graduating?", ar: "أين ترى نفسك بعد خمس سنوات من التخرج؟" },
+    a: { en: "Be specific: returning to Egypt to set up an endodontic referral practice in Cairo with Syndicate specialist registration is the right level of detail.",
+      ar: "كن محددًا. «العودة إلى مصر وتأسيس عيادة تحويلية لعلاج الجذور في القاهرة مع تسجيل أخصائي في النقابة» هو المستوى المطلوب من التحديد." } },
+  { q: { en: "Why King's over Sheffield or Birmingham?", ar: "لماذا King's وليس Sheffield أو Birmingham؟" },
+    a: { en: "Guy's referral volume of 4,000+ cases a year, the microscope-integrated approach, and the faculty's research strengths if you have researched them.",
+      ar: "حجم الحالات المحوّلة في Guy's وهو أكثر من 4,000 سنويًا، ونهج دمج المجهر، ونقاط قوة هيئة التدريس البحثية إن كنت بحثت عنها." } },
+  { q: { en: "What is your research interest for the dissertation?", ar: "ما موضوع بحثك المقترح للرسالة؟" },
+    a: { en: "Have two or three ideas ready. They need not be refined — they are testing intellectual curiosity and awareness of current gaps.",
+      ar: "احضر فكرتين أو ثلاثًا، ولا يلزم أن تكون مكتملة — هم يختبرون الفضول العلمي والوعي بالفجوات البحثية الحالية." } },
+];
+
+const REJECTIONS = [
+  { en: "Personal statement is generic — no clinical specificity, and could have been written for any MSc.",
+    ar: "خطاب الدافع عام ولا يحمل تفاصيل إكليينيكية، ويمكن أن يكون لأي ماجستير آخر." },
+  { en: "Portfolio has fewer than 20 cases, or cases are undocumented: no radiographs, no outcome data.",
+    ar: "الملف أقل من 20 حالة، أو الحالات غير موثّقة: لا أشعة ولا بيانات نتائج." },
+  { en: "Reference from a general practitioner only, with no specialist or academic endorsement of clinical skill.",
+    ar: "توصية من طبيب عام فقط، دون تزكية أخصائي أو أكاديمي لمهارتك الإكليينيكية." },
+  { en: "IELTS below threshold — even 6.5 overall with 6.0 in speaking disqualifies the application.",
+    ar: "درجة آيلتس أقل من الحد — حتى 6.5 عامة مع 6.0 في المحادثة تستبعد الطلب." },
+  { en: "Application submitted in the final week: references not received in time, portal incomplete.",
+    ar: "التقديم في الأسبوع الأخير: التوصيات لا تصل في الوقت، والملف الإلكتروني ناقص." },
+  { en: "No career narrative. Wanting to learn more is not a plan — they want to know what you will do with the degree.",
+    ar: "لا توجد قصة مهنية. «أريد أن أتعلم أكثر» ليست خطة — يريدون معرفة ما ستفعله بالشهادة." },
+];
+
+const SCHOLARSHIPS = [
+  { auto: true, amount: "£5,000",
+    name: { en: "King's College London International Scholarship", ar: "منحة King's College London الدولية" },
+    kind: { en: "TUITION REDUCTION", ar: "خصم من الرسوم" }, tag: { en: "AUTO-ASSESSED", ar: "تلقائية" },
+    eligibility: { en: "International (non-UK) students with a first-class or distinction equivalent undergraduate degree. No separate application — assessed automatically at offer stage. Around 30% of international offers receive it.",
+      ar: "الطلاب الدوليون (غير البريطانيين) الحاملون تقدير امتياز أو ما يعادله في البكالوريوس. لا تقديم منفصل — تُقيَّم تلقائيًا مع العرض، ويحصل عليها نحو 30% من العروض الدولية." },
+    tip: { en: "Make sure your transcript shows the exact GPA or classification. Good standing is not enough for this to be assessed correctly.",
+      ar: "تأكد أن كشف درجاتك يوضح المعدل أو التقدير بدقة. عبارة «في وضع جيد» لا تكفي لتقييم المنحة بشكل صحيح." },
+    deadline: { en: "Deadline: automatic — assessed when the offer is made", ar: "الموعد: تلقائي — يُقيَّم عند إصدار العرض" } },
+  { auto: true, amount: "£3,000",
+    name: { en: "Faculty of Dentistry Dean's Excellence Award", ar: "جائزة العميد للتميّز — كلية طب الأسنان" },
+    kind: { en: "TUITION REDUCTION", ar: "خصم من الرسوم" }, tag: { en: "COMPETITIVE", ar: "تنافسية" },
+    eligibility: { en: "Applicants with an exceptional academic and clinical track record, assessed by the interview panel. Maximum two awards per cohort of 8–12.",
+      ar: "المتقدمون بسجل أكاديمي وإكليني استثنائي، وتقيّمها لجنة المقابلة. جائزتان كحد أقصى لكل دفعة من 8 إلى 12 طالبًا." },
+    tip: { en: "Your interview performance decides this award. Prepare the case portfolio and clinical CV to the highest standard.",
+      ar: "أداؤك في المقابلة هو ما يحدد هذه الجائزة. جهّز ملف الحالات والسيرة الإكليينيكية بأعلى مستوى." },
+    deadline: { en: "Deadline: awarded at interview stage — no separate application", ar: "الموعد: تُمنح في مرحلة المقابلة — دون تقديم منفصل" } },
+  { auto: false, amount: "£3,000",
+    name: { en: "FGDP(UK) Endodontic Scholarship", ar: "منحة FGDP(UK) لعلاج الجذور" },
+    kind: { en: "CASH AWARD", ar: "مكافأة نقدية" }, tag: { en: "SEPARATE APPLICATION", ar: "تقديم منفصل" },
+    eligibility: { en: "Associate or full members of the Faculty of General Dental Practitioners (UK). Requires a separate application including a 500-word research proposal.",
+      ar: "الأعضاء المنتسبون أو الكاملون في كلية أطباء الأسنان العامين ببريطانيا. تتطلب تقديمًا منفصلًا يشمل مقترح بحث في 500 كلمة." },
+    tip: { en: "Join FGDP as an overseas associate member (£90/year) before applying — membership is a condition of eligibility.",
+      ar: "انضم إلى FGDP كعضو منتسب من الخارج (90 جنيهًا سنويًا) قبل التقديم — العضوية شرط للأهلية." },
+    deadline: { en: "Deadline: 31 March annually — apply after receiving your King's offer", ar: "الموعد: 31 مارس سنويًا — تقدّم بعد حصولك على عرض King's" } },
+  { auto: false, amount: { en: "Full tuition + £1,100/mo stipend", ar: "رسوم كاملة + £1,100 شهريًا" },
+    name: { en: "Egyptian Cultural & Educational Bureau (ECEB)", ar: "المكتب الثقافي المصري (ECEB)" },
+    kind: { en: "EGYPTIAN GOVERNMENT", ar: "بعثة حكومية مصرية" }, tag: { en: "VERY COMPETITIVE", ar: "تنافسية جدًا" },
+    eligibility: { en: "Egyptian nationals affiliated with an Egyptian university faculty — an academic post is required. Research plan and institutional nomination needed. Typically 12–18 months from application to funding confirmation.",
+      ar: "المصريون العاملون في هيئة تدريس بجامعة مصرية — الوظيفة الأكاديمية شرط. مطلوب خطة بحث وترشيح من الجهة. عادة من 12 إلى 18 شهرًا من التقديم إلى تأكيد التمويل." },
+    tip: { en: "You must be a teaching assistant (Mu'id) or above at an Egyptian dental faculty. If you are not in academia, this route is closed to you.",
+      ar: "يجب أن تكون معيدًا أو أعلى في كلية طب أسنان مصرية. إن لم تكن في السلك الأكاديمي فهذا الطريق مغلق أمامك." },
+    deadline: { en: "Deadline: varies — check eceb.org.uk. Apply alongside King's; placement is conditional on a confirmed offer",
+      ar: "الموعد: متغيّر — راجع eceb.org.uk. تقدّم بالتوازي مع King's، فالترشيح مشروط بعرض مؤكد" } },
+  { auto: false, amount: { en: "Full tuition + living allowance", ar: "رسوم كاملة + بدل معيشة" },
+    name: { en: "Islamic Development Bank Merit Scholarship", ar: "منحة التفوق من البنك الإسلامي للتنمية" },
+    kind: { en: "MULTILATERAL", ar: "تمويل متعدد الأطراف" }, tag: { en: "HIGHLY COMPETITIVE", ar: "تنافسية للغاية" },
+    eligibility: { en: "Citizens of IsDB member countries including Egypt, KSA, UAE and Jordan. Must be 35 or under at application, with institutional endorsement from your home-country employer.",
+      ar: "مواطنو الدول الأعضاء في البنك ومنها مصر والسعودية والإمارات والأردن. ألا يزيد العمر على 35 عند التقديم، مع تزكية من جهة عملك في بلدك." },
+    tip: { en: "A strong research background materially improves your chances — published papers or conference presentations are the differentiator.",
+      ar: "الخلفية البحثية القوية ترفع فرصك كثيرًا — الأبحاث المنشورة أو المشاركات في المؤتمرات هي الفارق." },
+    deadline: { en: "Deadline: January annually — requires a confirmed King's offer first", ar: "الموعد: يناير سنويًا — ويشترط عرضًا مؤكدًا من King's أولًا" } },
+];
+
+const SALARIES = [
+  { range: "£80,000 – £150,000 / year",
+    place: { en: "UK — specialist endodontist", ar: "المملكة المتحدة — أخصائي علاج جذور" },
+    detail: { en: "Private specialist referral practice. An NHS hospital specialist post pays £55,000–£80,000. Most King's graduates enter private referral practice within two to three years of GDC listing.",
+      ar: "في العيادات التحويلية الخاصة. الوظيفة الاستشارية في مستشفى NHS تدفع من 55,000 إلى 80,000 جنيه. معظم خريجي King's ينتقلون للعيادات الخاصة التحويلية خلال سنتين إلى ثلاث من التسجيل في GDC." },
+    timeline: { en: "2–4 years after MSc (CCT or CESR first)", ar: "بعد سنتين إلى أربع من الماجستير (يلزم CCT أو CESR أولًا)" },
+    tax: { en: "Net £48,000–£90,000 after ~40% tax", ar: "الصافي £48,000–£90,000 بعد ضريبة نحو 40%" } },
+  { range: "AED 30,000–55,000 / mo · SAR 25,000–45,000 / mo",
+    place: { en: "Gulf — endodontist", ar: "الخليج — أخصائي علاج جذور" },
+    detail: { en: "Tax free. Most positions include a housing allowance of AED 3,000–5,000/mo, two flights home a year and health insurance. The King's degree opens the DHA and DOH specialist category directly.",
+      ar: "معفى من الضرائب. أغلب الوظائف تشمل بدل سكن من 3,000 إلى 5,000 درهم شهريًا، وتذكرتي سفر سنويًا، وتأمينًا صحيًا. شهادة King's تفتح تصنيف الأخصائي في DHA و DOH مباشرة." },
+    timeline: { en: "Immediately after the MSc — no further qualifying exam", ar: "فورًا بعد الماجستير — دون امتحان تأهيلي إضافي" },
+    tax: { en: "Tax-free", ar: "بلا ضرائب" } },
+  { range: "EGP 60,000–200,000 / month",
+    place: { en: "Egypt — specialist referral practice", ar: "مصر — عيادة تحويلية متخصصة" },
+    detail: { en: "Highly variable by location, reputation and volume. A King's MSc plus UK experience commands a strong premium in Cairo's private sector. Syndicate specialist registration is required.",
+      ar: "متغيّر كثيرًا حسب الموقع والسمعة وحجم العمل. ماجستير King's مع خبرة بريطانية يمنح علاوة قوية في القطاع الخاص بالقاهرة. ويلزم تسجيل أخصائي في النقابة." },
+    timeline: { en: "6–12 months after returning (Syndicate process)", ar: "من 6 إلى 12 شهرًا بعد العودة (إجراءات النقابة)" },
+    tax: { en: "Egyptian income tax applies", ar: "تخضع لضريبة الدخل المصرية" } },
+];
+
+const GDC_ROUTES = [
+  { title: { en: "CCST via an NHS training number", ar: "شهادة إتمام التدريب التخصصي CCST عبر رقم تدريب NHS" },
+    desc: { en: "Apply for an NHS specialty training post in endodontics (ST1–ST4). The MSc strengthens the application considerably. Four years, ending in a CCST and GDC listing.",
+      ar: "التقديم على وظيفة تدريب تخصصي في علاج الجذور (ST1–ST4). الماجستير تقوّي الطلب كثيرًا. أربع سنوات تنتهي بشهادة CCST والتسجيل في قائمة GDC." },
+    a: { en: "4 years post-MSc", ar: "أربع سنوات بعد الماجستير" },
+    b: { en: "~12 posts nationally per year", ar: "نحو 12 وظيفة سنويًا في بريطانيا" } },
+  { title: { en: "CESR — the portfolio route", ar: "CESR — مسار الملف المهني" },
+    desc: { en: "For training completed outside the UK or in non-NHS settings: 200+ complex cases, peer review, teaching and research evidence, assessed by the GDC Specialist Advisory Committee.",
+      ar: "لمن أكمل تدريبه خارج بريطانيا أو في غير مؤسسات NHS: أكثر من 200 حالة معقّدة، ومراجعة الأقران، وأدلة على التعليم والبحث، تُقيّمها اللجنة الاستشارية للتخصصات في GDC." },
+    a: { en: "Portfolio 1–2 yrs · assessment 6–12 mo", ar: "إعداد الملف سنة إلى سنتين · التقييم 6 إلى 12 شهرًا" },
+    b: { en: "Many need 2+ attempts", ar: "كثيرون يحتاجون محاولتين أو أكثر" } },
+];
+
+const SYNDICATE = [
+  { title: { en: "Apostille on the King's degree certificate", ar: "تصديق الأبوستيل على شهادة King's" },
+    desc: { en: "Send the original MSc certificate to the FCDO in the UK. £30, two to three days by registered post. The apostille confirms the document is genuine for use abroad.",
+      ar: "أرسل شهادة الماجستير الأصلية إلى وزارة الخارجية البريطانية FCDO. التكلفة 30 جنيهًا، والمدة يومان إلى ثلاثة بالبريد المسجّل. الأبوستيل يثبت أن المستند أصلي للاستخدام خارج بريطانيا." } },
+  { title: { en: "GDC certificate of good standing", ar: "شهادة حسن سير وسلوك من GDC" },
+    desc: { en: "Apply to the General Dental Council — it confirms you were registered with no fitness-to-practise proceedings. £75, five to ten working days.",
+      ar: "اطلبها من المجلس العام لطب الأسنان — تثبت أنك كنت مسجّلًا دون أي إجراءات تأديبية. التكلفة 75 جنيهًا، والمدة 5 إلى 10 أيام عمل." } },
+  { title: { en: "Certified Arabic translation", ar: "ترجمة عربية معتمدة" },
+    desc: { en: "Certificate and transcripts translated by an Egyptian Ministry of Justice certified translator. £150–300, available through the Egyptian consulate in London.",
+      ar: "ترجمة الشهادة وكشوف الدرجات لدى مترجم معتمد من وزارة العدل المصرية. التكلفة من 150 إلى 300 جنيه إسترليني، ومتاحة عبر القنصلية المصرية في لندن." } },
+  { title: { en: "Submit to the Egyptian Dental Syndicate", ar: "التقديم لنقابة أطباء الأسنان" },
+    desc: { en: "Apostilled degree, Arabic translation, good standing certificate, original Egyptian BDS and passport, submitted in person in Cairo or via an authorised representative.",
+      ar: "الشهادة المصدّقة والترجمة العربية وشهادة حسن السير والبكالوريوس المصري الأصلي وجواز السفر، تُقدَّم شخصيًا في القاهرة أو عبر وكيل مفوّض." } },
+  { title: { en: "Syndicate review and specialist registration", ar: "مراجعة النقابة وتسجيل الأخصائي" },
+    desc: { en: "The Syndicate reviews the qualification — King's is well known and accepted. Three to six months, ending in a Specialist Certificate in Endodontics.",
+      ar: "تراجع النقابة المؤهل — و King's معروفة ومقبولة. المدة من ثلاثة إلى ستة أشهر، وتنتهي بشهادة أخصائي في علاج الجذور." } },
+  { title: { en: "Ministry of Health notification", ar: "إخطار وزارة الصحة" },
+    desc: { en: "Required only if you will work in a government or university setting. Private practice does not require MoH registration.",
+      ar: "مطلوب فقط إذا كنت ستعمل في جهة حكومية أو جامعية. الممارسة الخاصة لا تحتاج تسجيلًا في الوزارة." } },
+];
+
+const CAREER_PATHS = [
+  { title: { en: "UK specialist referral practice", ar: "عيادة تحويلية متخصصة في بريطانيا" }, when: { en: "4–6 yrs post-MSc", ar: "بعد 4 إلى 6 سنوات" },
+    desc: { en: "After CCST or CESR, open or join an endodontic referral practice. High earning potential; requires GDC specialist listing.",
+      ar: "بعد CCST أو CESR، افتح عيادة تحويلية لعلاج الجذور أو انضم إليها. عائد مرتفع، ويشترط التسجيل في قائمة أخصائيي GDC." } },
+  { title: { en: "Gulf specialist practice — direct", ar: "ممارسة تخصصية في الخليج — مباشرة" }, when: { en: "Immediately", ar: "فورًا" },
+    desc: { en: "The MSc alone qualifies for DHA, DOH and SCHS specialist category. No waiting period, high tax-free salaries straight after graduating.",
+      ar: "الماجستير وحدها تؤهل لتصنيف الأخصائي في DHA و DOH و SCHS. بلا فترة انتظار، وبرواتب مرتفعة معفاة من الضريبة بعد التخرج مباشرة." } },
+  { title: { en: "Egyptian Syndicate specialist", ar: "أخصائي مسجّل في النقابة المصرية" }, when: { en: "6–12 months", ar: "6 إلى 12 شهرًا" },
+    desc: { en: "Degree plus apostille and GDC good standing to the Syndicate. Enables specialist-only referral practice in Egypt.",
+      ar: "الشهادة مع الأبوستيل وحسن السير إلى النقابة، وتمكّنك من ممارسة تحويلية تخصصية في مصر." } },
+  { title: { en: "Academic / lecturer route", ar: "المسار الأكاديمي والتدريس" }, when: { en: "Concurrent or after", ar: "بالتوازي أو بعدها" },
+    desc: { en: "The MSc and dissertation open PhD applications or a dental school lectureship at Egyptian universities. A strong research profile is essential.",
+      ar: "الماجستير والرسالة تفتحان التقديم للدكتوراه أو وظيفة مدرّس في كليات طب الأسنان المصرية. السجل البحثي القوي ضروري." } },
+  { title: { en: "PhD / research career", ar: "الدكتوراه والمسار البحثي" }, when: { en: "1–2 yrs post-MSc", ar: "سنة إلى سنتين" },
+    desc: { en: "The King's dissertation can be the foundation of a funded PhD; graduates have continued to King's and UCL programmes in endodontic biology.",
+      ar: "يمكن أن تكون رسالة King's أساسًا لدكتوراه ممولة؛ وقد أكمل خريجون برامج دكتوراه في King's و UCL في أحياء اللب." } },
+];
+
+const RECOGNITION = [
+  { flag: "🇪🇬", country: { en: "Egypt", ar: "مصر" },
+    body: { en: "Egyptian Dental Syndicate (Niqabat Al-Asnan)", ar: "نقابة أطباء الأسنان المصرية" },
+    detail: { en: "MSc degrees from QS top-10 dentistry institutions are well established in Syndicate practice and King's is highly regarded. Expect three to six months processing, registered as a Specialist in Endodontics.",
+      ar: "شهادات الماجستير من مؤسسات ضمن أفضل 10 عالميًا في طب الأسنان راسخة في ممارسة النقابة، و King's تحظى بتقدير عال. توقّع مدة من ثلاثة إلى ستة أشهر، وتُسجَّل أخصائيًا في علاج الجذور." } },
+  { flag: "🇦🇪", country: { en: "United Arab Emirates", ar: "الإمارات العربية المتحدة" },
+    body: { en: "Dubai Health Authority (DHA) / Department of Health Abu Dhabi (DOH)", ar: "هيئة الصحة بدبي (DHA) ودائرة الصحة بأبوظبي (DOH)" },
+    detail: { en: "The MSc is on the DHA and DOH specialist approved qualification list. Apply for the specialist licence rather than general dentist — the higher base salary bracket of AED 30,000–55,000/month.",
+      ar: "الماجستير مدرجة في قائمة المؤهلات المعتمدة للأخصائي في DHA و DOH. تقدّم لترخيص أخصائي لا طبيب عام — وهو شريحة الرواتب الأعلى من 30,000 إلى 55,000 درهم شهريًا." } },
+  { flag: "🇸🇦", country: { en: "Saudi Arabia", ar: "المملكة العربية السعودية" },
+    body: { en: "Saudi Commission for Health Specialties (SCHS)", ar: "الهيئة السعودية للتخصصات الصحية (SCHS)" },
+    detail: { en: "Graduates typically receive SCHS grade 10–11 specialist classification. DataFlow verification and the SCHS exam are required, but the specialist track is significantly faster than the standard dentist pathway.",
+      ar: "يحصل الخريجون عادة على تصنيف أخصائي بالدرجة 10 أو 11. مطلوب تحقق DataFlow واختبار الهيئة، لكن مسار الأخصائي أسرع كثيرًا من مسار طبيب الأسنان العام." } },
+  { flag: "🇶🇦", country: { en: "Qatar", ar: "قطر" },
+    body: { en: "Qatar Council for Healthcare Practitioners (QCHP)", ar: "مجلس قطر للتخصصات الصحية (QCHP)" },
+    detail: { en: "Recognised for a QCHP specialist licence in endodontics. DataFlow verification and QCHP assessment apply, but the specialist category bypasses the standard Prometric exam route.",
+      ar: "معتمدة لترخيص أخصائي علاج جذور. مطلوب تحقق DataFlow وتقييم المجلس، لكن فئة الأخصائي تتجاوز مسار امتحان Prometric المعتاد." } },
+];
+
+const COSTS = [
+  { value: "£900–£1,400/mo", label: { en: "Accommodation — Zone 2/3 shared flat", ar: "السكن — شقة مشتركة في المنطقة 2 أو 3" } },
+  { value: "£1,200–£1,800/mo", label: { en: "Accommodation — Zone 1/2 near Guy's", ar: "السكن — المنطقة 1 أو 2 قرب Guy's" } },
+  { value: "£250–£400/mo", label: { en: "Food & groceries", ar: "الطعام والبقالة" } },
+  { value: "£165–£200/mo", label: { en: "Transport — Zone 1–3 Travelcard", ar: "المواصلات — تذكرة المناطق 1–3" } },
+  { value: "£0–£120/mo", label: { en: "Utilities (included in most HMOs)", ar: "المرافق (مشمولة في معظم السكن المشترك)" } },
+  { value: "£10–£25/mo", label: { en: "Mobile phone, SIM only", ar: "الهاتف المحمول — خط فقط" } },
+  { value: "£150–£300/mo", label: { en: "Social & miscellaneous", ar: "الترفيه والنفقات المتنوعة" } },
+];
+
+const AREAS = [
+  { name: "Bermondsey / Borough", rent: "£1,100–£1,500/mo",
+    commute: { en: "5–10 min walk to Guy's", ar: "5 إلى 10 دقائق سيرًا إلى Guy's" },
+    note: { en: "Closest to the hospital. Food market, good cafes. Best for full-time students who want zero commute stress.",
+      ar: "الأقرب للمستشفى. سوق طعام ومقاهٍ جيدة. الأفضل لطلاب الدوام الكامل الذين لا يريدون عناء المواصلات." } },
+  { name: "Elephant & Castle", rent: "£900–£1,200/mo",
+    commute: { en: "10 min walk or 5 min bus", ar: "10 دقائق سيرًا أو 5 بالباص" },
+    note: { en: "More affordable and improving fast. Direct Northern Line to Euston and King's Cross. Popular with international students.",
+      ar: "أقل تكلفة ويتطور سريعًا. خط Northern المباشر إلى Euston و King's Cross. محبوب من الطلاب الدوليين." } },
+  { name: "Peckham / Nunhead", rent: "£800–£1,100/mo",
+    commute: { en: "20 min bus or 15 min overground", ar: "20 دقيقة بالباص أو 15 بالقطار" },
+    note: { en: "Best value in inner south-east London. Vibrant food scene and a large African-Arabic community — many Egyptian students choose here.",
+      ar: "أفضل قيمة في جنوب شرق لندن الداخلي. مشهد طعام حيوي ومجتمع عربي وأفريقي كبير — يختاره كثير من الطلاب المصريين." } },
+  { name: "London Bridge / Southwark", rent: "£1,300–£1,900/mo",
+    commute: { en: "8–12 min walk", ar: "8 إلى 12 دقيقة سيرًا" },
+    note: { en: "Premium location with excellent transport. More expensive, maximum convenience — walk to Guy's, walk to the City.",
+      ar: "موقع متميّز ومواصلات ممتازة. أعلى تكلفة وأقصى راحة — تسير إلى Guy's وإلى وسط المدينة." } },
+  { name: "New Cross / Deptford", rent: "£750–£1,000/mo",
+    commute: { en: "20 min bus or overground", ar: "20 دقيقة بالباص أو القطار" },
+    note: { en: "Budget-friendly with a large student population. Three overground stops to London Bridge.",
+      ar: "اقتصادي وبه كثافة طلابية كبيرة. ثلاث محطات بالقطار إلى London Bridge." } },
+];
+
+const SETUP = [
+  { title: { en: "Bank account", ar: "الحساب البنكي" },
+    desc: { en: "Open Monzo or Starling online before you arrive — they accept Egyptian passport holders with a CAS letter as proof of address. Avoids weeks waiting on a traditional bank.",
+      ar: "افتح حساب Monzo أو Starling إلكترونيًا قبل الوصول — يقبلان جواز السفر المصري مع خطاب CAS كإثبات عنوان، وتوفّر أسابيع انتظار البنوك التقليدية." } },
+  { title: { en: "SIM card", ar: "خط الهاتف" },
+    desc: { en: "Three UK or giffgaff give the best value unlimited data (£15–25/mo). Pick one up at Heathrow or any supermarket on arrival.",
+      ar: "Three UK أو giffgaff أفضل قيمة للبيانات غير المحدودة (من 15 إلى 25 جنيهًا شهريًا). تجد الخط في مطار هيثرو أو أي سوبرماركت." } },
+  { title: { en: "NHS registration", ar: "التسجيل في NHS" },
+    desc: { en: "Register with a GP surgery near your accommodation on arrival. As a student you are entitled to free NHS primary care; King's student services can recommend one.",
+      ar: "سجّل في عيادة طبيب عام قريبة من سكنك عند الوصول. كطالب لك حق الرعاية الأولية مجانًا، وخدمات الطلاب في King's ترشّح لك عيادة." } },
+  { title: { en: "Biometric Residence Permit", ar: "تصريح الإقامة البيومتري BRP" },
+    desc: { en: "Collect your BRP from the Post Office branch named in your visa approval letter, usually within 10 days of arriving. You need it for banking and most admin.",
+      ar: "استلمه من مكتب البريد المذكور في خطاب الموافقة على التأشيرة، عادة خلال 10 أيام من الوصول. تحتاجه للبنك ومعظم الإجراءات." } },
+  { title: { en: "Egyptian consulate registration", ar: "التسجيل في القنصلية المصرية" },
+    desc: { en: "Register at 2 Lowndes St, Knightsbridge. Essential for passport renewal, notarisation and emergency assistance. Takes about 30 minutes.",
+      ar: "العنوان 2 Lowndes St في Knightsbridge. ضروري لتجديد جواز السفر والتوثيق والمساعدة الطارئة، ويستغرق نحو 30 دقيقة." } },
+  { title: { en: "Council tax exemption", ar: "الإعفاء من ضريبة المجلس" },
+    desc: { en: "Full-time students are fully exempt. Request an exemption certificate from King's Student Records and submit it to Southwark Council.",
+      ar: "طلاب الدوام الكامل معفون تمامًا. اطلب شهادة إعفاء من سجلات الطلاب في King's وقدّمها لمجلس Southwark." } },
+];
+
+const VISA = [
+  { label: { en: "Visa type", ar: "نوع التأشيرة" }, value: { en: "UK Student Visa (formerly Tier 4)", ar: "تأشيرة الطالب البريطانية (Tier 4 سابقًا)" } },
+  { label: { en: "Processing time from Egypt", ar: "مدة الإجراءات من مصر" }, value: { en: "3–4 weeks online via VFS Global in Cairo", ar: "من 3 إلى 4 أسابيع إلكترونيًا عبر VFS Global في القاهرة" } },
+  { label: { en: "Application fee", ar: "الرسوم" }, value: { en: "£490 visa fee + £776/year Immigration Health Surcharge", ar: "£490 رسم التأشيرة + £776 سنويًا رسم الصحة للمهاجرين" } },
+  { label: { en: "Immigration Health Surcharge", ar: "رسم الصحة للمهاجرين" }, value: { en: "£776 for one year full-time, £1,552 for two years part-time — paid upfront at application", ar: "£776 لسنة دوام كامل، و£1,552 لسنتين دوام جزئي — تُدفع مقدمًا مع الطلب" } },
+  { label: { en: "Biometrics", ar: "البصمة" }, value: { en: "VFS Global Cairo (Heliopolis) or Alexandria. Book four to six weeks in advance.", ar: "مراكز VFS Global في القاهرة (مصر الجديدة) أو الإسكندرية. احجز قبل 4 إلى 6 أسابيع." } },
+  { label: { en: "Financial proof", ar: "الإثبات المالي" }, value: { en: "First-year tuition (£26,000) plus nine months of London living costs (£13,050) — at least £39,050 held for 28 consecutive days before applying", ar: "رسوم السنة الأولى (£26,000) مع تكاليف معيشة تسعة أشهر في لندن (£13,050) — أي £39,050 على الأقل في الحساب لمدة 28 يومًا متصلة قبل التقديم" } },
+  { label: { en: "VFS locations in Egypt", ar: "مراكز VFS في مصر" }, value: { en: "Cairo: VFS Global Maadi, 11 Road 253, Digla. Alexandria: VFS Global Smouha. Appointments book out fast in June–August.", ar: "القاهرة: VFS Global المعادي، 11 شارع 253، دجلة. الإسكندرية: VFS Global سموحة. المواعيد تنفد سريعًا من يونيو إلى أغسطس." } },
+];
+
+const FAQS = [
+  { q: { en: "Can I do the part-time route while based outside the UK?", ar: "هل يمكنني الدوام الجزئي وأنا مقيم خارج بريطانيا؟" },
+    a: { en: "No. The part-time route still requires three clinical days a week at Guy's across two years — it is designed for dentists already living in or moving to London, not for remote study.",
+      ar: "لا. الدوام الجزئي يتطلب ثلاثة أيام إكليينيكية أسبوعيًا في Guy's على مدى سنتين — وهو مخصص لمن يقيم في لندن أو ينتقل إليها، لا للدراسة عن بُعد." } },
+  { q: { en: "Does the MSc alone get me on the GDC Specialist List?", ar: "هل تضعني الماجستير وحدها في قائمة أخصائيي GDC؟" },
+    a: { en: "No. The MSc is an academic qualification. GDC listing requires either a CCST through an NHS training number (four years, around 12 posts nationally each year) or the CESR portfolio route with 200+ complex cases.",
+      ar: "لا. الماجستير مؤهل أكاديمي. التسجيل يتطلب إما CCST عبر رقم تدريب في NHS (أربع سنوات، ونحو 12 وظيفة سنويًا) أو مسار CESR بملف يضم أكثر من 200 حالة معقّدة." } },
+  { q: { en: "Can the Egyptian government scholarship (ECEB) cover this degree?", ar: "هل تغطي بعثة المكتب الثقافي المصري هذه الدرجة؟" },
+    a: { en: "Yes, but only if you hold an academic post — teaching assistant (Mu'id) or above — at an Egyptian dental faculty, with institutional nomination and a research plan. Allow 12–18 months from application to confirmation.",
+      ar: "نعم، لكن فقط إذا كنت تشغل وظيفة أكاديمية — معيدًا أو أعلى — في كلية طب أسنان مصرية، مع ترشيح من الجهة وخطة بحث. واحسب من 12 إلى 18 شهرًا حتى تأكيد التمويل." } },
+  { q: { en: "What is the exact Egyptian Syndicate process after returning?", ar: "ما إجراءات النقابة المصرية بالتفصيل بعد العودة؟" },
+    a: { en: "Six steps: FCDO apostille (£30), GDC certificate of good standing (£75), certified Arabic translation (£150–300), in-person submission in Cairo, Syndicate review of three to six months, then Ministry of Health notification only if you work in a government or university setting.",
+      ar: "ست خطوات: تصديق FCDO بـ 30 جنيهًا، وشهادة حسن سير من GDC بـ 75 جنيهًا، وترجمة عربية معتمدة من 150 إلى 300 جنيه، والتقديم شخصيًا في القاهرة، ومراجعة النقابة من ثلاثة إلى ستة أشهر، ثم إخطار وزارة الصحة إن كنت ستعمل في جهة حكومية أو جامعية." } },
+  { q: { en: "What IELTS score do I actually need — is 6.5 overall accepted?", ar: "ما درجة الآيلتس المطلوبة فعلًا — هل تُقبل 6.5؟" },
+    a: { en: "No. 7.0 overall with no band below 6.5, or OET grade B in all four components. Even 6.5 overall with 6.0 in speaking disqualifies the application, and results must be under two years old.",
+      ar: "لا. المطلوب 7.0 عامة دون أي مهارة أقل من 6.5، أو OET بدرجة B في المهارات الأربع. حتى 6.5 عامة مع 6.0 في المحادثة تستبعد الطلب، والنتيجة يجب أن تكون أحدث من سنتين." } },
+  { q: { en: "How competitive is the application really?", ar: "ما مدى تنافسية التقديم حقًا؟" },
+    a: { en: "Around 15% acceptance for a cohort of 8–12. The differentiators are a documented case portfolio beyond the 20-case minimum, a specialist reference, and a personal statement with real clinical specificity.",
+      ar: "نسبة القبول نحو 15% لدفعة من 8 إلى 12 طالبًا. الفارق يصنعه ملف حالات موثّق يتجاوز الحد الأدنى، وتوصية من أخصائي، وخطاب دافع بتفاصيل إكليينيكية حقيقية." } },
+  { q: { en: "Can I work part-time during the full-time programme?", ar: "هل أستطيع العمل جزئيًا خلال الدوام الكامل؟" },
+    a: { en: "Friday is self-directed, and many full-time students use it for part-time clinical work. Monday to Thursday is clinic, seminars and research — treat it as a full working week.",
+      ar: "الجمعة يوم دراسة ذاتية، ويستغله كثير من طلاب الدوام الكامل لعمل إكليني جزئي. أما الإثنين إلى الخميس فعيادة وحلقات وبحث — تعامل معه كأسبوع عمل كامل." } },
+  { q: { en: "What if I'm rejected — can I reapply next year?", ar: "وإن رُفضت — أستطيع إعادة التقديم العام المقبل؟" },
+    a: { en: "Yes, and reapplication is common. Use the year to add retreatment, calcified canal and trauma cases to your portfolio, secure a specialist reference, and rewrite the statement around a specific career plan.",
+      ar: "نعم، وإعادة التقديم شائعة. استغل السنة في إضافة حالات إعادة معالجة وقنوات متكلّسة ورضوح إلى ملفك، وتأمين توصية من أخصائي، وإعادة كتابة الخطاب حول خطة مهنية محددة." } },
+];
+
+const SECTIONS = [
+  ["overview", "Overview", "نظرة عامة"],
+  ["curriculum", "Curriculum", "المحتوى الدراسي"],
+  ["requirements", "Requirements", "الشروط"],
+  ["application", "Application guide", "دليل التقديم"],
+  ["scholarships", "Scholarships", "التمويل"],
+  ["after", "After the MSc", "بعد الماجستير"],
+  ["living", "Living & visa", "المعيشة والتأشيرة"],
+  ["faq", "FAQs", "أسئلة متكررة"],
+];
+
+class Component extends DCLogic {
+  state = { section: "overview", saved: false, lang: null };
+
+  get lang() { return this.state.lang ?? this.props.previewLang ?? "en"; }
+
+  pick(o) {
+    const l = this.lang, out = {};
+    for (const k in o) {
+      const v = o[k];
+      out[k] = v && typeof v === "object" && !Array.isArray(v) && ("en" in v || "ar" in v) ? (v[l] ?? v.en) : v;
+    }
+    return out;
+  }
+
+  renderVals() {
+    const lang = this.lang, ar = lang === "ar", cur = this.state.section;
+    const grad = ar
+      ? "linear-gradient(225deg,#FF2D32 0%,#FF6B1A 50%,#FFC62E 100%)"
+      : "linear-gradient(135deg,#FF2D32 0%,#FF6B1A 50%,#FFC62E 100%)";
+    const p = (o) => this.pick(o);
+    const tag = (strong) => strong
+      ? { tagBg: "rgba(255,45,50,.08)", tagFg: "#FF2D32" }
+      : { tagBg: "#F5F2EC", tagFg: "#716D67" };
+
+    return {
+      t: S[lang], grad,
+      dir: ar ? "rtl" : "ltr",
+      ff: ar ? "'IBM Plex Sans Arabic',sans-serif" : "Inter,sans-serif",
+      ffDisp: ar ? "Amiri,serif" : "'Playfair Display',serif",
+      ls: ar ? "0" : "normal",
+      lhTight: ar ? "1.45" : "1.25",
+      lhSnug: ar ? "1.65" : "1.45",
+      lhBody: ar ? "1.85" : "1.7",
+      flip: ar ? "-1" : "1",
+
+      enBorder: ar ? "#E7E2DA" : "#FF6B1A", enBg: ar ? "#fff" : "rgba(255,107,26,.08)", enFg: ar ? "#716D67" : "#1B1B1B",
+      arBorder: ar ? "#FF6B1A" : "#E7E2DA", arBg: ar ? "rgba(255,107,26,.08)" : "#fff", arFg: ar ? "#1B1B1B" : "#716D67",
+      setEn: () => this.setState({ lang: "en" }),
+      setAr: () => this.setState({ lang: "ar" }),
+
+      navItems: SECTIONS.map(([id, en, arLabel]) => {
+        const on = cur === id;
+        return {
+          id, label: ar ? arLabel : en, railLabel: ar ? arLabel : en,
+          bg: on ? grad : "#fff", fg: on ? "#fff" : "#716D67", border: on ? "transparent" : "#E7E2DA",
+          railBg: on ? "rgba(255,107,26,.08)" : "#fff", railFg: on ? "#1B1B1B" : "#716D67",
+          railBorder: on ? "#FF6B1A" : "#E7E2DA",
+          go: () => this.setState({ section: id }),
+        };
+      }),
+      isOverview: cur === "overview", isCurriculum: cur === "curriculum", isRequirements: cur === "requirements",
+      isApplication: cur === "application", isScholarships: cur === "scholarships", isAfter: cur === "after",
+      never: false, isLiving: cur === "living", isFaq: cur === "faq",
+
+      savedFill: this.state.saved ? "#FF2D32" : "none",
+      savedStroke: this.state.saved ? "#FF2D32" : "#FFFFFF",
+      toggleSave: () => this.setState({ saved: !this.state.saved }),
+
+      differentiators: DIFFERENTIATORS.map((d) => ({ text: ar ? d.ar : d.en })),
+      equipment: EQUIPMENT.map(p),
+      week: WEEK.map(p),
+      modules: MODULES.map(p),
+      assessments: ASSESSMENTS.map(p),
+      requirements: REQUIREMENTS.map((r) => ({
+        ...p(r), tag: r.mand ? (ar ? "إلزامي" : "MANDATORY") : (ar ? "مطلوب" : "REQUIRED"), ...tag(r.mand),
+      })),
+      statementPoints: STATEMENT.map((s, i) => ({ n: i + 1, text: ar ? s.ar : s.en })),
+      portfolioPoints: PORTFOLIO.map((s) => ({ text: ar ? s.ar : s.en })),
+      interviewQs: INTERVIEW.map(p),
+      rejections: REJECTIONS.map((r, i) => ({ n: i + 1, text: ar ? r.ar : r.en })),
+      scholarships: SCHOLARSHIPS.map((s) => ({ ...p(s), ...tag(!s.auto) })),
+      salaries: SALARIES.map(p),
+      gdcRoutes: GDC_ROUTES.map(p),
+      syndicate: SYNDICATE.map((s, i) => ({ ...p(s), n: i + 1 })),
+      paths: CAREER_PATHS.map(p),
+      recognition: RECOGNITION.map(p),
+      unitMonth: ar ? "شهريًا" : "/mo",
+      unitYear: ar ? "سنويًا" : "/yr",
+      totalValue: "£1,530–£2,220",
+      costs: COSTS.map((c) => { const v = p(c); return { ...v, value: v.value.replace("/mo", "") }; }),
+      areas: AREAS.map((a) => { const v = p(a); return { ...v, rent: v.rent.replace("/mo", "") }; }),
+      setup: SETUP.map(p),
+      visa: VISA.map(p),
+      faqs: FAQS.map(p),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

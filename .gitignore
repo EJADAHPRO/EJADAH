@@ -1,0 +1,33 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+!server/pubspec.lock
+.pub-cache/
+.pub/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment — never commit real secrets
+.env
+.env.local
+.env.*.local
+
+# Local storage (dev file uploads)
+server/.storage/
+/storage/
+
+# Test artifacts
+coverage/
+test/**/failures/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

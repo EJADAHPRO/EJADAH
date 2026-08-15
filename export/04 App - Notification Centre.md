@@ -1,0 +1,94 @@
+# 04 App — Notification Centre
+
+Grouped Today / This week / Earlier, swipe to dismiss, mark all read.
+
+**Source file:** `Ejadah - Notifications.dc.html`  
+**Exported:** 2 August 2026  
+**Size:** 9,094 characters · template 73 lines · logic 0 lines
+
+> This is a Design Component. It is one self-contained HTML file that opens directly in a browser.
+> The **template** is the markup between `<x-dc>` and `</x-dc>`. The **logic** is a `class Component extends DCLogic`
+> whose `renderVals()` returns the values the template's `{{ }}` holes read. `{{ }}` holes are dotted lookups only —
+> never expressions. To reassemble a working file: document shell → `<x-dc>` + template + `</x-dc>` → `<script data-dc-script>` + logic + `</script>`.
+
+## Template
+
+```html
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#EDE9E1;-webkit-font-smoothing:antialiased} a{color:#FF6B1A;text-decoration:none} a:hover{color:#FF2D32}</style>
+</helmet>
+<div style="padding:40px;max-width:1180px;margin:0 auto">
+  <div style="font:600 11px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#FF6B1A;margin-bottom:10px">Phase 1 · push notifications</div>
+  <h1 style="font:700 26px/1.2 'Playfair Display',serif;color:#1B1B1B;margin:0 0 8px">Notification set — default trigger rules</h1>
+  <p style="font:400 13px/1.7 Inter,sans-serif;color:#716D67;margin:0 0 28px;max-width:640px">Four launch notifications, both languages. Rules are my proposed defaults — veto anything. Icon is always the gradient app tile; no images, no emoji.</p>
+  <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+    <div style="width:380px;border-radius:36px;background:linear-gradient(160deg,#2a2c31,#151619);padding:26px 14px;box-shadow:0 24px 60px rgba(0,0,0,.35)">
+      <div style="text-align:center;color:rgba(255,255,255,.9);font:300 54px/1 Inter,sans-serif;margin:14px 0 2px">9:41</div>
+      <div style="text-align:center;color:rgba(255,255,255,.55);font:500 13px/1 Inter,sans-serif;margin-bottom:22px">Tuesday, July 29</div>
+      <div style="display:grid;gap:8px">
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.4 Inter,sans-serif;color:#111">Session in 1 hour</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">now</span></div>
+          <div style="font:400 12px/1.5 Inter,sans-serif;color:#333">Dr. Amira Soliman · 7:00 pm · tap to join from My bookings.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.4 Inter,sans-serif;color:#111">3 saved programmes close within 60 days</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">9:00</span></div>
+          <div style="font:400 12px/1.5 Inter,sans-serif;color:#333">Lisbon closes first — 3 Aug. Review your shortlist.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.4 Inter,sans-serif;color:#111">21 cards due today</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">18:30</span></div>
+          <div style="font:400 12px/1.5 Inter,sans-serif;color:#333">Endodontic anatomy — 10 minutes keeps your 12-day streak.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.4 Inter,sans-serif;color:#111">Payout processed</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">Mon</span></div>
+          <div style="font:400 12px/1.5 Inter,sans-serif;color:#333">EGP 8,400 is on its way to your account — details on ejadah.com.</div></div>
+        </div>
+      </div>
+    </div>
+    <div dir="rtl" style="width:380px;border-radius:36px;background:linear-gradient(160deg,#2a2c31,#151619);padding:26px 14px;box-shadow:0 24px 60px rgba(0,0,0,.35)">
+      <div style="text-align:center;color:rgba(255,255,255,.9);font:300 54px/1 Inter,sans-serif;margin:14px 0 2px">9:41</div>
+      <div style="text-align:center;color:rgba(255,255,255,.55);font:500 13px/1 'IBM Plex Sans Arabic',sans-serif">الثلاثاء، 29 يوليو</div>
+      <div style="display:grid;gap:8px;margin-top:22px">
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(225deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.5 'IBM Plex Sans Arabic',sans-serif;color:#111">جلستك بعد ساعة</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">الآن</span></div>
+          <div style="font:400 12px/1.7 'IBM Plex Sans Arabic',sans-serif;color:#333">د. أميرة سليمان · 7:00 مساءً · اضغط للانضمام من حجوزاتي.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(225deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.5 'IBM Plex Sans Arabic',sans-serif;color:#111">3 برامج محفوظة تُغلق خلال 60 يومًا</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">9:00</span></div>
+          <div style="font:400 12px/1.7 'IBM Plex Sans Arabic',sans-serif;color:#333">لشبونة تُغلق أولًا — 3 أغسطس. راجع قائمتك.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(225deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.5 'IBM Plex Sans Arabic',sans-serif;color:#111">21 بطاقة مستحقة اليوم</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">18:30</span></div>
+          <div style="font:400 12px/1.7 'IBM Plex Sans Arabic',sans-serif;color:#333">تشريح الجذور — 10 دقائق تحفظ سلسلتك ذات 12 يومًا.</div></div>
+        </div>
+        <div style="background:rgba(250,250,250,.92);border-radius:18px;padding:12px 14px;display:flex;gap:11px">
+          <div style="flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(225deg,#FF2D32,#FF6B1A,#FFC62E)"></div>
+          <div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font:700 12.5px/1.5 'IBM Plex Sans Arabic',sans-serif;color:#111">تم تحويل أرباحك</span><span style="font:400 10.5px/1.6 Inter,sans-serif;color:#666">الإثنين</span></div>
+          <div style="font:400 12px/1.7 'IBM Plex Sans Arabic',sans-serif;color:#333">8,400 جنيه في طريقها إلى حسابك — التفاصيل على ejadah.com.</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:300px;background:#fff;border:1.5px solid #E7E2DA;border-radius:20px;padding:22px">
+      <div style="font:600 10.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#716D67;margin-bottom:14px">Default trigger rules — veto anything</div>
+      <div style="font:400 13px/1.9 Inter,sans-serif;color:#1B1B1B">
+        <div><strong>Session reminder</strong> — 24h and 1h before; 1h version is time-sensitive (breaks Focus). Tap → My bookings.</div>
+        <div style="margin-top:10px"><strong>Deadline digest</strong> — weekly (Tue 9:00), only if a saved programme closes ≤60 days; never more than 1/week. Tap → Shortlist.</div>
+        <div style="margin-top:10px"><strong>Cards due</strong> — daily at the user's usual study hour (default 18:30); suppressed if reviewed today or due=0. Tap → Flashcards.</div>
+        <div style="margin-top:10px"><strong>Payout processed</strong> — transactional, tutors only. Tap → Earnings.</div>
+        <div style="margin-top:14px;color:#716D67;font-size:12px">All respect the Settings toggles (study reminders / deadlines / product). Max 2 non-transactional pushes per day, none 22:00–08:00 Cairo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## Logic
+
+_Template-only component — no logic class._
