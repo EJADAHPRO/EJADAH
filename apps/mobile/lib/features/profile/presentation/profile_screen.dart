@@ -108,6 +108,37 @@ class ProfileScreen extends ConsumerWidget {
                 ],
               ),
 
+              // An unconfirmed address is worth one line and a way to fix it —
+              // not a wall. Nothing in Phase 1 is gated on it, so this is a
+              // prompt rather than a block.
+              if (!user.emailVerified) ...[
+                const SizedBox(height: EjadahSpacing.md),
+                EjadahCard(
+                  onTap: () => context.push('/verify-email'),
+                  semanticLabel: strings.verifyEmailTitle,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        EjadahIcons.warning,
+                        size: EjadahIconSize.inline,
+                        color: EjadahColors.warningText,
+                      ),
+                      const SizedBox(width: EjadahSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          strings.verifyEmailTitle,
+                          style: context.type.bodyStrong(),
+                        ),
+                      ),
+                      const DirectionalIcon(
+                        EjadahIcons.chevronForward,
+                        color: EjadahColors.labelMuted,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+
               // Premium: status and renewal date, never a price.
               if (user.isPremium && user.premiumRenewsOn != null) ...[
                 const SizedBox(height: EjadahSpacing.md),

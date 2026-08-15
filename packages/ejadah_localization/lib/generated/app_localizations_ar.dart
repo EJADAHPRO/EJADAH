@@ -21,6 +21,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get again => 'أعدها لاحقًا';
 
   @override
+  String get alertsOff => 'التنبيهات موقوفة';
+
+  @override
+  String get alertsOn => 'التنبيهات مفعّلة';
+
+  @override
   String get allowNotifications => 'فعّل التذكيرات';
 
   @override
@@ -185,6 +191,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get cmpEmptyTitle => 'لم تحدد شيئًا بعد';
+
+  @override
+  String get codeRequired => 'أدخل الرمز الوارد في بريدك.';
 
   @override
   String get communityLabel => 'من المجتمع';
@@ -1116,6 +1125,14 @@ class EjadahStringsAr extends EjadahStrings {
   String get reschedule => 'تغيير الموعد';
 
   @override
+  String get resendCode => 'أرسله مرة أخرى';
+
+  @override
+  String resendIn(Object seconds) {
+    return 'أرسله مرة أخرى بعد $seconds ث';
+  }
+
+  @override
   String get restorePurchases => 'استعادة المشتريات';
 
   @override
@@ -1221,7 +1238,24 @@ class EjadahStringsAr extends EjadahStrings {
   String get saveProg => 'حفظ';
 
   @override
+  String get saveSearch => 'احفظ هذا البحث';
+
+  @override
+  String get saveSearchName => 'سمِّه';
+
+  @override
   String get savedProg => 'محفوظ';
+
+  @override
+  String get savedSearchDone => 'حُفظ. سنخبرك عند ظهور برامج جديدة مطابقة.';
+
+  @override
+  String savedSearchLimit(Object count) {
+    return 'يمكنك متابعة حتى $count عمليات بحث.';
+  }
+
+  @override
+  String get savedSearches => 'عمليات البحث المحفوظة';
 
   @override
   String get savedToast => 'أُضيف إلى قائمتك';
@@ -1572,6 +1606,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get userName => 'صباح الخير، ياسمين';
 
   @override
+  String get verificationCode => 'رمز التحقق';
+
+  @override
   String get verified => 'شهادة موثّقة';
 
   @override
@@ -1579,6 +1616,23 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get verifiedTutor => 'موثّق';
+
+  @override
+  String get verifyEmailAction => 'تأكيد';
+
+  @override
+  String verifyEmailBody(Object email) {
+    return 'أرسلنا رمزًا إلى $email. أدخله لإكمال إعداد حسابك.';
+  }
+
+  @override
+  String get verifyEmailDone => 'تم تأكيد البريد';
+
+  @override
+  String get verifyEmailTitle => 'أكّد بريدك الإلكتروني';
+
+  @override
+  String get verifyLater => 'لاحقًا';
 
   @override
   String get verifyNotFound => 'لا توجد شهادة بهذا الرمز';

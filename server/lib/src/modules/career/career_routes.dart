@@ -48,6 +48,44 @@ Router careerRoutes(CareerService service) {
 
   // --- Shortlist ------------------------------------------------------------
 
+  // --- Saved searches (auth) -------------------------------------------------
+
+  router.get('/saved-filters', (Request request) async {
+    final filters = await service.savedFilters(request.ctx.requireUser());
+    return Json.ok({
+      'items': filters.map((filter) => filter.toJson()).toList(),
+      'max_items': CareerService.maxSavedFilters,
+    });
+  });
+
+  router.post('/saved-filters', (Request request) async {
+    final userId = request.ctx.requireUser();
+    final body = await readJsonBody(request);
+    final filter = await service.saveFilter(
+      userId: userId,
+      label: (body['label'] as String? ?? ''),
+      query: ProgrammeQuery.fromJson(
+        Map<String, dynamic>.from(body['query'] as Map? ?? const {}),
+      ),
+    );
+    return Json.created(filter.toJson());
+  });
+
+  router.delete('/saved-filters/<id>', (Request request, String id) async {
+    await service.deleteFilter(parsePathUuid(id), request.ctx.requireUser());
+    return Json.noContent();
+  });
+
+  router.put('/saved-filters/<id>/alerts', (Request request, String id) async {
+    final body = await readJsonBody(request);
+    await service.setFilterAlerts(
+      id: parsePathUuid(id),
+      userId: request.ctx.requireUser(),
+      alertsOn: body['alerts_on'] == true,
+    );
+    return Json.noContent();
+  });
+
   router.get('/shortlist', (Request request) async {
     final saved = await service.shortlist(request.ctx.requireUser());
     return Json.ok({

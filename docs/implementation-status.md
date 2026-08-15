@@ -32,13 +32,13 @@ against the handoff; what each is missing is named.
 |---|---|---|
 | Flutter workspace + packages | COMPLETE | apps/mobile, ejadah_ui, ejadah_core, ejadah_models, ejadah_localization |
 | Dart backend (Shelf, layered) | COMPLETE | route → service → domain → repository → SQL |
-| PostgreSQL schema | COMPLETE | 7 migrations, constraint-enforced product rules |
+| PostgreSQL schema | COMPLETE | 8 migrations, constraint-enforced product rules |
 | Design tokens | COMPLETE | generated from `DESIGN_TOKENS.json`; raw values are defects |
 | Ejadah component family | COMPLETE | buttons, cards, badges, inputs, sheets, states, bottom nav |
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 513 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 529 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
@@ -78,12 +78,12 @@ against the handoff; what each is missing is named.
 | What-if scenarios | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six presets, each a new roadmap linked to the original |
 | Compare programmes (≤3) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — selection survives paging and filtering |
 | Compare countries (≤3) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — long-press to pick, so the tap still opens the guide |
-| Saved-filter alerts | — | — | ✅ | — | — | — | NOT STARTED |
+| Saved-filter alerts | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — up to 5 watched searches, one alert per search per day |
 | Career-scoped search screen | — | ✅ | ✅ | — | — | — | IN PROGRESS |
 | **Identity** |
 | Register / sign in / sign out | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Refresh, rotation, revocation | ✅ | ✅ | ✅ | — | — | ✅ | COMPLETE |
-| Email verification (60s cooldown) | — | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS — server done, no UI |
+| Email verification (60s cooldown) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — skippable, because nothing in Phase 1 is gated on it |
 | Forgot password | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — reset itself is on the website, by design |
 | Authorization (roles) | ✅ | ✅ | ✅ | — | — | ✅ | COMPLETE |
 | Account deletion (2-step) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
@@ -158,7 +158,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **513 keys** in each language, up from the 374 they arrived
+The tables now hold **529 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -188,7 +188,7 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 186 |
+| `server` (`dart test`, real PostgreSQL) | 190 |
 | `apps/mobile` (`flutter test`) | 118 |
 | `packages/ejadah_ui` | 48 |
 | `packages/ejadah_localization` | 8 |

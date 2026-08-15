@@ -2,6 +2,7 @@ import 'package:ejadah_models/ejadah_models.dart';
 import 'package:postgres/postgres.dart';
 
 import '../../db/database.dart';
+import '../career/career_repository.dart';
 import 'cairo_clock.dart';
 
 /// A notification the scheduler wants to queue.
@@ -38,9 +39,14 @@ class PendingNotification {
 /// queued for it — the preference is checked when scheduling, not merely when
 /// sending, so a disabled category leaves no trace in the queue at all.
 class NotificationScheduler {
-  const NotificationScheduler(this._database);
+  const NotificationScheduler(this._database, {CareerRepository? career})
+    : _career = career;
 
   final Database _database;
+
+  /// Present only where saved-filter alerts are wanted, so the notification
+  /// module does not hard-depend on Career to schedule a session reminder.
+  final CareerRepository? _career;
 
   /// The deadline windows the product promises: 30, 14 and 7 days out.
   static const List<int> deadlineWindows = [30, 14, 7];
@@ -92,6 +98,7 @@ class NotificationScheduler {
     final due = [
       ...await dueDeadlineAlerts(now: now),
       ...await dueSessionReminders(now: now),
+      ...await dueFilterAlerts(now: now),
     ];
 
     var queued = 0;
@@ -164,6 +171,60 @@ class NotificationScheduler {
 
     return result;
   }
+
+  /// Saved searches that have picked up new matches.
+  ///
+  /// One notification per filter per day at most, naming the count rather than
+  /// each programme — 150 of 199 intakes are expired at any moment, and a
+  /// reopening batch would otherwise be a dozen separate pushes.
+  ///
+  /// Marking the filter is what makes "new" mean anything, so it happens
+  /// whether or not the count was zero: a filter that quietly stopped moving
+  /// its own goalpost would re-announce the same programmes forever.
+  Future<List<PendingNotification>> dueFilterAlerts({
+    required DateTime now,
+  }) async {
+    final career = _career;
+    if (career == null) return const [];
+
+    final result = <PendingNotification>[];
+    for (final filter in await career.filtersWatching()) {
+      final since = filter.lastAlertedAt ?? filter.createdAt;
+      final count = await career.countNewMatches(filter.query, since);
+      await career.markFilterAlerted(filter.id, now);
+      if (count == 0) continue;
+
+      result.add(
+        PendingNotification(
+          userId: filter.userId,
+          category: NotificationCategory.deadline,
+          // Per filter per day: the sweep runs hourly and the count moves.
+          dedupeKey: 'filter:${filter.id}:${CairoClock.dayKey(now)}',
+          sendAfter: now,
+          title: LocalizedText(
+            en: count == 1
+                ? '1 new programme matches "${filter.label}"'
+                : '$count new programmes match "${filter.label}"',
+            ar: _arabicMatchesPhrase(count, filter.label),
+          ),
+          body: const LocalizedText(
+            en: 'Open your saved search to see them.',
+            ar: 'افتح بحثك المحفوظ لرؤيتها.',
+          ),
+          deepLink: '/programmes',
+        ),
+      );
+    }
+    return result;
+  }
+
+  /// Arabic counts: 1 singular, 2 dual, 3–10 plural, 11+ accusative singular.
+  static String _arabicMatchesPhrase(int count, String label) => switch (count) {
+    1 => 'برنامج جديد واحد يطابق «$label»',
+    2 => 'برنامجان جديدان يطابقان «$label»',
+    >= 3 && <= 10 => '$count برامج جديدة تطابق «$label»',
+    _ => '$count برنامجًا جديدًا يطابق «$label»',
+  };
 
   /// Session reminders at T-24h and T-1h for confirmed bookings.
   Future<List<PendingNotification>> dueSessionReminders({

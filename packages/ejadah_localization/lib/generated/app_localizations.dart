@@ -122,6 +122,18 @@ abstract class EjadahStrings {
   /// **'Again'**
   String get again;
 
+  /// No description provided for @alertsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts off'**
+  String get alertsOff;
+
+  /// No description provided for @alertsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts on'**
+  String get alertsOn;
+
   /// No description provided for @allowNotifications.
   ///
   /// In en, this message translates to:
@@ -439,6 +451,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Nothing selected yet'**
   String get cmpEmptyTitle;
+
+  /// No description provided for @codeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code from your email.'**
+  String get codeRequired;
 
   /// No description provided for @communityLabel.
   ///
@@ -2150,6 +2168,18 @@ abstract class EjadahStrings {
   /// **'Reschedule'**
   String get reschedule;
 
+  /// No description provided for @resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send it again'**
+  String get resendCode;
+
+  /// No description provided for @resendIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Send again in {seconds}s'**
+  String resendIn(Object seconds);
+
   /// No description provided for @restorePurchases.
   ///
   /// In en, this message translates to:
@@ -2342,11 +2372,41 @@ abstract class EjadahStrings {
   /// **'Save'**
   String get saveProg;
 
+  /// No description provided for @saveSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this search'**
+  String get saveSearch;
+
+  /// No description provided for @saveSearchName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name it'**
+  String get saveSearchName;
+
   /// No description provided for @savedProg.
   ///
   /// In en, this message translates to:
   /// **'Saved'**
   String get savedProg;
+
+  /// No description provided for @savedSearchDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. We\'ll tell you when new programmes match.'**
+  String get savedSearchDone;
+
+  /// No description provided for @savedSearchLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You can watch up to {count} searches.'**
+  String savedSearchLimit(Object count);
+
+  /// No description provided for @savedSearches.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved searches'**
+  String get savedSearches;
 
   /// No description provided for @savedToast.
   ///
@@ -3002,6 +3062,12 @@ abstract class EjadahStrings {
   /// **'Good morning, Yasmine'**
   String get userName;
 
+  /// No description provided for @verificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get verificationCode;
+
   /// No description provided for @verified.
   ///
   /// In en, this message translates to:
@@ -3019,6 +3085,36 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Verified'**
   String get verifiedTutor;
+
+  /// No description provided for @verifyEmailAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get verifyEmailAction;
+
+  /// No description provided for @verifyEmailBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a code to {email}. Enter it to finish setting up your account.'**
+  String verifyEmailBody(Object email);
+
+  /// No description provided for @verifyEmailDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Email confirmed'**
+  String get verifyEmailDone;
+
+  /// No description provided for @verifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your email'**
+  String get verifyEmailTitle;
+
+  /// No description provided for @verifyLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Do this later'**
+  String get verifyLater;
 
   /// No description provided for @verifyNotFound.
   ///

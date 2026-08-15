@@ -1,4 +1,5 @@
 import 'package:ejadah_models/ejadah_models.dart';
+import 'package:ejadah_server/src/modules/career/career_repository.dart';
 import 'package:ejadah_server/src/modules/notifications/cairo_clock.dart';
 import 'package:ejadah_server/src/modules/notifications/notification_scheduler.dart';
 import 'package:test/test.dart';
@@ -32,7 +33,10 @@ void main() {
   setUp(() async {
     await db.reset();
     await db.resetReferenceData();
-    scheduler = NotificationScheduler(db.database);
+    scheduler = NotificationScheduler(
+      db.database,
+      career: CareerRepository(db.database),
+    );
     userId = await _createUser(db, 'sara@ejadah.test');
   });
 
@@ -297,6 +301,126 @@ void main() {
       expect(due.single.body.ar, '15:00 بتوقيت القاهرة.');
       expect(due.single.title.en, contains('Dr. Mona Adel'));
       expect(due.single.title.ar, contains('د. منى عادل'));
+    });
+  });
+
+  group('saved-search alerts', () {
+    test('a new match is announced once a day, and only once', () async {
+      final now = _cairoMorning();
+      await _enableAll(db, userId);
+      final career = CareerRepository(db.database);
+
+      // Saved now, so the programmes already in it are not "new".
+      final filter = await career.insertSavedFilter(
+        userId: userId,
+        label: 'Endodontics in Europe',
+        query: const ProgrammeQuery(),
+      );
+      await career.markFilterAlerted(filter.id, now);
+      expect(await scheduler.sweep(now: now), 0);
+
+      // A programme lands after the search was saved.
+      await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 90)),
+        updatedAt: now.add(const Duration(minutes: 30)),
+      );
+
+      expect(await scheduler.sweep(now: now.add(const Duration(hours: 1))), 1);
+      // The sweep runs hourly; the same day must not announce again.
+      expect(await scheduler.sweep(now: now.add(const Duration(hours: 2))), 0);
+
+      final queued = await db.execute(
+        "SELECT dedupe_key FROM scheduled_notifications "
+        "WHERE user_id = @u AND dedupe_key LIKE 'filter:%'",
+        {'u': userId},
+      );
+      expect(queued.length, 1);
+      expect(queued.first[0], startsWith('filter:${filter.id}:'));
+    });
+
+    test('the count reads as Arabic at one, two and several', () async {
+      final now = _cairoMorning();
+      await _enableAll(db, userId);
+      final career = CareerRepository(db.database);
+      final watched = await career.insertSavedFilter(
+        userId: userId,
+        label: 'Europe',
+        query: const ProgrammeQuery(),
+      );
+      await career.markFilterAlerted(watched.id, now);
+
+      await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 90)),
+        updatedAt: now.add(const Duration(minutes: 30)),
+      );
+      var due = await scheduler.dueFilterAlerts(
+        now: now.add(const Duration(hours: 1)),
+      );
+      expect(due.single.title.en, contains('1 new programme matches'));
+      // Singular, not "1 برامج".
+      expect(due.single.title.ar, contains('برنامج جديد واحد'));
+
+      for (var i = 0; i < 3; i++) {
+        await _createProgramme(
+          db,
+          deadline: CairoClock.local(now).add(const Duration(days: 90)),
+          updatedAt: now.add(const Duration(hours: 1, minutes: 30)),
+        );
+      }
+      due = await scheduler.dueFilterAlerts(
+        now: now.add(const Duration(hours: 2)),
+      );
+      // 3–10 take the plural.
+      expect(due.single.title.ar, contains('3 برامج جديدة'));
+    });
+
+    test('a switched-off filter is never swept', () async {
+      final now = _cairoMorning();
+      await _enableAll(db, userId);
+      final career = CareerRepository(db.database);
+      final filter = await career.insertSavedFilter(
+        userId: userId,
+        label: 'Quiet',
+        query: const ProgrammeQuery(),
+      );
+      await career.setSavedFilterAlerts(
+        id: filter.id,
+        userId: userId,
+        alertsOn: false,
+      );
+
+      await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 90)),
+        updatedAt: now.add(const Duration(minutes: 30)),
+      );
+      expect(
+        await scheduler.sweep(now: now.add(const Duration(hours: 1))),
+        0,
+      );
+    });
+
+    test('a stranger cannot delete or mute a filter', () async {
+      final other = await _createUser(db, 'omar@ejadah.test');
+      final career = CareerRepository(db.database);
+      final filter = await career.insertSavedFilter(
+        userId: userId,
+        label: 'Mine',
+        query: const ProgrammeQuery(),
+      );
+
+      await career.deleteSavedFilter(filter.id, other);
+      await career.setSavedFilterAlerts(
+        id: filter.id,
+        userId: other,
+        alertsOn: false,
+      );
+
+      final mine = await career.savedFilters(userId);
+      expect(mine.single.id, filter.id);
+      expect(mine.single.alertsOn, isTrue);
     });
   });
 
@@ -580,21 +704,32 @@ Future<int> _createProgramme(
   TestDatabase db, {
   required DateTime deadline,
   String? countryIso,
+  DateTime? updatedAt,
+  String status = 'open',
 }) async {
   final id = _nextProgrammeId++;
   await db.execute(
     '''
     INSERT INTO programmes (
-      id, region, country, country_iso, university, programme_name, deadline
+      id, region, country, country_iso, university, programme_name, deadline,
+      deadline_status, created_at, updated_at
     ) VALUES (
       @id, 'Europe', 'United Kingdom', @iso, 'King''s College London',
-      'MSc Endodontics', @deadline::date
+      'MSc Endodontics', @deadline::date,
+      -- Set by the importer in production and defaulted to 'expired'; a
+      -- fixture that leaves it is invisible to every default query.
+      @status::deadline_status,
+      coalesce(@updated_at, now()), coalesce(@updated_at, now())
     )
     ''',
     {
       'id': id,
       'iso': countryIso,
       'deadline': DateTime.utc(deadline.year, deadline.month, deadline.day),
+      'status': status,
+      // These suites run on a simulated clock; a row stamped with the real one
+      // would sit before every simulated instant and never look new.
+      'updated_at': updatedAt,
     },
   );
   return id;

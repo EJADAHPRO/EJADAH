@@ -228,6 +228,75 @@ class _ResultCount extends StatelessWidget {
   );
 }
 
+/// The user's saved searches. Empty for a guest, who has nowhere to save one.
+final savedFiltersProvider =
+    FutureProvider<({List<SavedFilter> items, int maxItems})>((ref) async {
+      if (!ref.watch(authControllerProvider).isAuthenticated) {
+        return (items: const <SavedFilter>[], maxItems: 5);
+      }
+      return ref.watch(careerRepositoryProvider).savedFilters();
+    });
+
+/// Names and saves the current filter set.
+///
+/// Named by the user rather than rendered from the query: "Endodontics in
+/// Europe" is what they will recognise three weeks later, and a generated
+/// summary of six facets is not.
+Future<void> _saveSearch(
+  BuildContext context,
+  WidgetRef ref,
+  ProgrammeQuery query,
+) async {
+  final strings = context.strings;
+
+  if (!ref.read(authControllerProvider).isAuthenticated) {
+    // Watching a search is one of the five gates: it needs somewhere to send
+    // the alert.
+    await context.push('/sign-up?intent=save');
+    return;
+  }
+
+  final controller = TextEditingController();
+  final label = await showEjadahSheet<String>(
+    context: context,
+    builder: (context) => Padding(
+      padding: const EdgeInsets.all(EjadahSpacing.gutter),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(strings.saveSearch, style: context.type.h5()),
+          const SizedBox(height: EjadahSpacing.md),
+          EjadahInput(
+            label: strings.saveSearchName,
+            controller: controller,
+            onSubmitted: (value) => Navigator.of(context).pop(value.trim()),
+          ),
+          const SizedBox(height: EjadahSpacing.md),
+          EjadahPrimaryButton(
+            label: strings.saveProg,
+            onPressed: () =>
+                Navigator.of(context).pop(controller.text.trim()),
+          ),
+        ],
+      ),
+    ),
+  );
+  controller.dispose();
+  if (label == null || label.isEmpty || !context.mounted) return;
+
+  try {
+    await ref.read(careerRepositoryProvider).saveFilter(label, query);
+    ref.invalidate(savedFiltersProvider);
+    if (!context.mounted) return;
+    // Says what saving actually does, rather than only that it happened.
+    showEjadahToast(context, message: strings.savedSearchDone);
+  } on Failure catch (failure) {
+    if (!context.mounted) return;
+    showEjadahToast(context, message: failure.message(context));
+  }
+}
+
 class _FilterBar extends ConsumerWidget {
   const _FilterBar({required this.state});
 
@@ -266,7 +335,30 @@ class _FilterBar extends ConsumerWidget {
               query.copyWith(showExpired: !query.showExpired),
             ),
           ),
+          // Saved searches, so a filter set worth returning to is one tap
+          // away rather than something to rebuild each visit.
+          ...ref
+              .watch(savedFiltersProvider)
+              .maybeWhen(
+                data: (data) => [
+                  for (final filter in data.items) ...[
+                    const SizedBox(width: EjadahSpacing.xs),
+                    EjadahFilterChip(
+                      label: filter.label,
+                      isSelected: false,
+                      onTap: () => controller.applyFilters(filter.query),
+                    ),
+                  ],
+                ],
+                orElse: () => const <Widget>[],
+              ),
           if (query.hasActiveFilters) ...[
+            const SizedBox(width: EjadahSpacing.xs),
+            // Only worth saving once there is something to save.
+            EjadahGhostButton(
+              label: strings.saveSearch,
+              onPressed: () => _saveSearch(context, ref, query),
+            ),
             const SizedBox(width: EjadahSpacing.xs),
             EjadahGhostButton(
               label: strings.clearAll,

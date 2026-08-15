@@ -97,7 +97,12 @@ class EjadahApp {
       logger: log.child('home'),
     );
 
-    final notifications = NotificationScheduler(database);
+    // The scheduler is given Career so it can sweep saved searches; every
+    // other reminder it schedules needs nothing from that module.
+    final notifications = NotificationScheduler(
+      database,
+      career: careerRepository,
+    );
 
     // The simulator is the only provider built here, and AppConfig refuses to
     // boot with it in production — so a real provider landing later replaces

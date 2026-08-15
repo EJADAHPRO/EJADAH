@@ -9,6 +9,7 @@ import '../features/auth/auth_controller.dart';
 import '../features/auth/presentation/forgot_password_screen.dart';
 import '../features/auth/presentation/language_screen.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
+import '../features/auth/presentation/verify_email_screen.dart';
 import '../features/auth/presentation/sign_up_screen.dart';
 import '../features/career/presentation/career_hub_screen.dart';
 import '../features/career/presentation/compare_countries_screen.dart';
@@ -136,6 +137,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           'sign-in',
           SignInScreen(next: state.uri.queryParameters['next']),
         ),
+      ),
+      GoRoute(
+        path: '/verify-email',
+        builder: (context, state) =>
+            _screen('verify-email', const VerifyEmailScreen()),
       ),
       GoRoute(
         path: '/forgot-password',

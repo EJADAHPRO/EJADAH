@@ -4,6 +4,7 @@ import 'package:postgres/postgres.dart';
 
 import '../config/config.dart';
 import '../db/database.dart';
+import '../modules/career/career_repository.dart';
 import '../modules/notifications/notification_scheduler.dart';
 import '../observability/logger.dart';
 
@@ -35,7 +36,12 @@ class JobRunner {
            jobs ??
            [
              ExpireHoldsJob(database),
-             ScheduleRemindersJob(NotificationScheduler(database)),
+             ScheduleRemindersJob(
+               NotificationScheduler(
+                 database,
+                 career: CareerRepository(database),
+               ),
+             ),
              DeliverNotificationsJob(NotificationScheduler(database)),
            ];
 

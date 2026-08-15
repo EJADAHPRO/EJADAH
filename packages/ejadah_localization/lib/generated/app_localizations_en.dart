@@ -21,6 +21,12 @@ class EjadahStringsEn extends EjadahStrings {
   String get again => 'Again';
 
   @override
+  String get alertsOff => 'Alerts off';
+
+  @override
+  String get alertsOn => 'Alerts on';
+
+  @override
   String get allowNotifications => 'Turn reminders on';
 
   @override
@@ -186,6 +192,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get cmpEmptyTitle => 'Nothing selected yet';
+
+  @override
+  String get codeRequired => 'Enter the code from your email.';
 
   @override
   String get communityLabel => 'FROM THE COMMUNITY';
@@ -1119,6 +1128,14 @@ class EjadahStringsEn extends EjadahStrings {
   String get reschedule => 'Reschedule';
 
   @override
+  String get resendCode => 'Send it again';
+
+  @override
+  String resendIn(Object seconds) {
+    return 'Send again in ${seconds}s';
+  }
+
+  @override
   String get restorePurchases => 'Restore purchases';
 
   @override
@@ -1224,7 +1241,25 @@ class EjadahStringsEn extends EjadahStrings {
   String get saveProg => 'Save';
 
   @override
+  String get saveSearch => 'Save this search';
+
+  @override
+  String get saveSearchName => 'Name it';
+
+  @override
   String get savedProg => 'Saved';
+
+  @override
+  String get savedSearchDone =>
+      'Saved. We\'ll tell you when new programmes match.';
+
+  @override
+  String savedSearchLimit(Object count) {
+    return 'You can watch up to $count searches.';
+  }
+
+  @override
+  String get savedSearches => 'Saved searches';
 
   @override
   String get savedToast => 'Saved to your shortlist';
@@ -1577,6 +1612,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get userName => 'Good morning, Yasmine';
 
   @override
+  String get verificationCode => 'Verification code';
+
+  @override
   String get verified => 'VERIFIED CERTIFICATE';
 
   @override
@@ -1584,6 +1622,23 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get verifiedTutor => 'Verified';
+
+  @override
+  String get verifyEmailAction => 'Confirm';
+
+  @override
+  String verifyEmailBody(Object email) {
+    return 'We sent a code to $email. Enter it to finish setting up your account.';
+  }
+
+  @override
+  String get verifyEmailDone => 'Email confirmed';
+
+  @override
+  String get verifyEmailTitle => 'Confirm your email';
+
+  @override
+  String get verifyLater => 'Do this later';
 
   @override
   String get verifyNotFound => 'No certificate with that code';

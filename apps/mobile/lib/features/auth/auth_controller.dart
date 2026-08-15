@@ -106,6 +106,16 @@ class AuthRepository {
 
   Future<void> requestPasswordReset(String email) =>
       _client.postVoid('/auth/forgot-password', body: {'email': email});
+
+  Future<void> verifyEmail(String code) =>
+      _client.postVoid('/auth/verify-email', body: {'code': code});
+
+  /// Asks for a new code. Returns the remaining cooldown in seconds, which is
+  /// zero when one was actually sent.
+  Future<int> resendVerification() => _client.post(
+    '/auth/verify-email/resend',
+    parse: (json) => jsonInt(json['cooldown_seconds']) ?? 0,
+  );
 }
 
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
@@ -188,6 +198,19 @@ class AuthController extends Notifier<AuthState> {
 
     state = const Guest();
     await ref.read(analyticsProvider).setUser(userId: null, persona: null);
+  }
+
+  /// Re-reads the user after their email is confirmed, so every screen that
+  /// keys off `emailVerified` updates at once.
+  Future<void> refreshUser() async {
+    try {
+      state = Authenticated(
+        await ref.read(authRepositoryProvider).currentUser(),
+      );
+    } on Failure {
+      // The confirmation itself succeeded; a failed re-read is not worth
+      // signing the user out over.
+    }
   }
 
   /// Called when a refresh finally fails.

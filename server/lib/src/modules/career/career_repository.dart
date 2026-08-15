@@ -1,4 +1,6 @@
 import 'package:ejadah_models/ejadah_models.dart';
+import 'dart:convert';
+
 import 'package:postgres/postgres.dart';
 
 import '../../db/database.dart';
@@ -426,6 +428,105 @@ class CareerRepository {
   );
 
   // --- Query building -------------------------------------------------------
+
+  // --- Saved filters ---------------------------------------------------------
+
+  Future<List<SavedFilter>> savedFilters(String userId) async {
+    final rows = await _query(
+      'SELECT * FROM saved_filters WHERE user_id = @user_id '
+      'ORDER BY created_at DESC',
+      {'user_id': userId},
+      null,
+    );
+    return rows.map(_toSavedFilter).toList();
+  }
+
+  Future<SavedFilter> insertSavedFilter({
+    required String userId,
+    required String label,
+    required ProgrammeQuery query,
+  }) async {
+    final rows = await _query(
+      '''
+      INSERT INTO saved_filters (user_id, label, query, last_alerted_at)
+      -- Stamped now rather than left null, so saving a search does not
+      -- immediately announce programmes that were already in it.
+      VALUES (@user_id, @label, @query::jsonb, now())
+      RETURNING *
+      ''',
+      {
+        'user_id': userId,
+        'label': label,
+        'query': jsonEncode(query.toJson()),
+      },
+      null,
+    );
+    return _toSavedFilter(rows.first);
+  }
+
+  /// Ownership is a `WHERE` clause here as everywhere.
+  Future<void> deleteSavedFilter(String id, String userId) => _execute(
+    'DELETE FROM saved_filters WHERE id = @id AND user_id = @user_id',
+    {'id': id, 'user_id': userId},
+    null,
+  );
+
+  Future<void> setSavedFilterAlerts({
+    required String id,
+    required String userId,
+    required bool alertsOn,
+  }) => _execute(
+    'UPDATE saved_filters SET alerts_on = @alerts_on '
+    'WHERE id = @id AND user_id = @user_id',
+    {'id': id, 'user_id': userId, 'alerts_on': alertsOn},
+    null,
+  );
+
+  /// Every filter that is watching, for a live user.
+  Future<List<SavedFilter>> filtersWatching() async {
+    final rows = await _query(
+      'SELECT f.* FROM saved_filters f '
+      'JOIN users u ON u.id = f.user_id '
+      'WHERE f.alerts_on = true AND u.deleted_at IS NULL',
+      const {},
+      null,
+    );
+    return rows.map(_toSavedFilter).toList();
+  }
+
+  /// How many programmes have entered this filter's results since [since].
+  ///
+  /// "Entered" means the row is new or was updated — a programme whose intake
+  /// reopened with a fresh deadline is as much a new opportunity as one that
+  /// was never in the dataset.
+  Future<int> countNewMatches(ProgrammeQuery query, DateTime since) async {
+    final where = _buildWhere(query);
+    final rows = await _query(
+      'SELECT count(*) AS total FROM programmes p ${where.sql}'
+      '${where.sql.isEmpty ? ' WHERE' : ' AND'} p.updated_at > @since',
+      {...where.parameters, 'since': since},
+      null,
+    );
+    return rows.first.intAt('total');
+  }
+
+  Future<void> markFilterAlerted(String id, DateTime at) => _execute(
+    'UPDATE saved_filters SET last_alerted_at = @at WHERE id = @id',
+    {'id': id, 'at': at},
+    null,
+  );
+
+  SavedFilter _toSavedFilter(Map<String, dynamic> row) => SavedFilter(
+    id: row.str('id'),
+    userId: row.str('user_id'),
+    label: row.str('label'),
+    query: ProgrammeQuery.fromJson(
+      Map<String, dynamic>.from(row['query'] as Map),
+    ),
+    alertsOn: row.boolAt('alerts_on'),
+    createdAt: row.dateAt('created_at'),
+    lastAlertedAt: row.dateOrNull('last_alerted_at'),
+  );
 
   _WhereClause _buildWhere(ProgrammeQuery query) {
     final conditions = <String>[];

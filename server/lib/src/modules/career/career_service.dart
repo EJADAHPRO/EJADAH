@@ -29,6 +29,54 @@ class CareerService {
   /// being readable on a phone.
   static const int maxComparisonItems = 3;
 
+  /// How many searches one account may watch.
+  ///
+  /// Each one costs a query on every sweep and can produce a notification, and
+  /// the daily cap means a user watching twenty searches would simply never see
+  /// most of them. Five is what a person actually tracks.
+  static const int maxSavedFilters = 5;
+
+  Future<List<SavedFilter>> savedFilters(String userId) =>
+      _repository.savedFilters(userId);
+
+  Future<SavedFilter> saveFilter({
+    required String userId,
+    required String label,
+    required ProgrammeQuery query,
+  }) async {
+    final trimmed = label.trim();
+    if (trimmed.isEmpty) {
+      throw ApiException(
+        ApiErrorCode.validation,
+        details: 'A saved search needs a name.',
+      );
+    }
+    if ((await _repository.savedFilters(userId)).length >= maxSavedFilters) {
+      throw ApiException(
+        ApiErrorCode.validation,
+        details: 'You can watch up to $maxSavedFilters searches.',
+      );
+    }
+    return _repository.insertSavedFilter(
+      userId: userId,
+      label: trimmed,
+      query: query,
+    );
+  }
+
+  Future<void> deleteFilter(String id, String userId) =>
+      _repository.deleteSavedFilter(id, userId);
+
+  Future<void> setFilterAlerts({
+    required String id,
+    required String userId,
+    required bool alertsOn,
+  }) => _repository.setSavedFilterAlerts(
+    id: id,
+    userId: userId,
+    alertsOn: alertsOn,
+  );
+
   Future<ProgrammeSearchResult> searchProgrammes(
     ProgrammeQuery query, {
     String? userId,

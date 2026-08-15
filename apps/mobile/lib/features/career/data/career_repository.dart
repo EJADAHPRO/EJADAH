@@ -114,6 +114,36 @@ class CareerRepository {
   /// Fetched together rather than as three calls so the comparison arrives in
   /// one state — a table that fills in column by column is a table that keeps
   /// moving under the reader.
+  // --- Saved searches --------------------------------------------------------
+
+  Future<({List<SavedFilter> items, int maxItems})> savedFilters() =>
+      _client.get(
+        '/career/saved-filters',
+        parse: (json) => (
+          items: [
+            for (final item in json['items'] as List<dynamic>? ?? const [])
+              SavedFilter.fromJson(Map<String, dynamic>.from(item as Map)),
+          ],
+          maxItems: jsonInt(json['max_items']) ?? 5,
+        ),
+      );
+
+  Future<SavedFilter> saveFilter(String label, ProgrammeQuery query) =>
+      _client.post(
+        '/career/saved-filters',
+        body: {'label': label, 'query': query.toJson()},
+        parse: SavedFilter.fromJson,
+      );
+
+  Future<void> deleteFilter(String id) =>
+      _client.delete("/career/saved-filters/$id");
+
+  Future<void> setFilterAlerts(String id, {required bool alertsOn}) =>
+      _client.putVoid(
+        '/career/saved-filters/$id/alerts',
+        body: {'alerts_on': alertsOn},
+      );
+
   Future<List<CountryGuide>> compareCountries(List<String> isos) => _client.get(
     '/career/countries/compare',
     query: {'iso': isos.join(',')},

@@ -549,3 +549,60 @@ class FilterRelaxation extends ValueObject {
   @override
   List<Object?> get props => [field, resultCount];
 }
+
+/// A search the user asked to be told about.
+///
+/// The retention loop the scope names: 150 of 199 intakes are expired at any
+/// moment, and the ones that reopen are exactly what a saved search is for.
+class SavedFilter extends ValueObject {
+  const SavedFilter({
+    required this.id,
+    required this.userId,
+    required this.label,
+    required this.query,
+    required this.alertsOn,
+    required this.createdAt,
+    this.lastAlertedAt,
+  });
+
+  final String id;
+
+  /// Who owns it. Carried on the model because the alert sweep reads every
+  /// watching filter across all users at once.
+  final String userId;
+
+  /// What the user called it. Their words, not a rendering of the query.
+  final String label;
+  final ProgrammeQuery query;
+  final bool alertsOn;
+  final DateTime createdAt;
+
+  /// When this filter last announced something. Null only if it never has;
+  /// stamped at creation so saving a search does not immediately alert about
+  /// programmes that were already in it.
+  final DateTime? lastAlertedAt;
+
+  factory SavedFilter.fromJson(Map<String, dynamic> json) => SavedFilter(
+    id: jsonRequire<String>(json, 'id'),
+    userId: (json['user_id'] ?? '') as String,
+    label: (json['label'] ?? '') as String,
+    query: ProgrammeQuery.fromJson(
+      Map<String, dynamic>.from(json['query'] as Map? ?? const {}),
+    ),
+    alertsOn: jsonBool(json['alerts_on']) ?? true,
+    createdAt: jsonDate(json['created_at']) ?? DateTime.now().toUtc(),
+    lastAlertedAt: jsonDate(json['last_alerted_at']),
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'label': label,
+    'query': query.toJson(),
+    'alerts_on': alertsOn,
+    'created_at': createdAt.toIso8601String(),
+    'last_alerted_at': lastAlertedAt?.toIso8601String(),
+  };
+
+  @override
+  List<Object?> get props => [id, label, alertsOn];
+}
