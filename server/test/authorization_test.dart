@@ -197,6 +197,34 @@ void main() {
     });
   });
 
+  group('generating without an owner', () {
+    test('is a validation error, not a constraint violation', () async {
+      // A guest generates against their device token. With neither that nor a
+      // user, the row cannot be read back afterwards — and the caller used to
+      // get a 500 from `roadmaps_has_owner` for what is a missing header.
+      await expectLater(
+        service.generate(
+          answers: const RoadmapAnswers(
+            path: RoadmapPath.generalPractice,
+            stage: CareerStage.generalDentist,
+            yearsQualified: 4,
+            budgetUsd: 8000,
+            monthsAvailable: 18,
+            regions: [RoadmapRegion.gulf],
+            languages: ['ar', 'en'],
+          ),
+        ),
+        throwsA(
+          isA<ApiException>().having(
+            (error) => error.code,
+            'code',
+            ApiErrorCode.validation,
+          ),
+        ),
+      );
+    });
+  });
+
   group('the rate limiter key', () {
     test('X-Forwarded-For is ignored unless a proxy of ours is declared', () {
       // Rotating this header was enough to defeat the limiter entirely: 30

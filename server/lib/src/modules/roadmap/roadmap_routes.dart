@@ -53,6 +53,12 @@ Router roadmapRoutes(RoadmapService service) {
     return Json.created(view.toJson());
   });
 
+  router.get('/what-if-presets', (Request request) async {
+    // Public: the presets describe the feature, and a guest deciding whether
+    // to finish the funnel is allowed to see what it offers.
+    return Json.ok({'items': RoadmapService.whatIfPresets});
+  });
+
   router.get('/mine', (Request request) async {
     final roadmaps = await service.myRoadmaps(request.ctx.requireUser());
     return Json.ok({

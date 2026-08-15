@@ -84,6 +84,18 @@ class RoadmapService {
         details: 'The funnel must be complete before generating.',
       );
     }
+    if (userId == null && (deviceToken == null || deviceToken.isEmpty)) {
+      // The same guard `saveDraft` carries, and for the same reason: a roadmap
+      // with no owner could never be read back. Without it the row reaches the
+      // `roadmaps_has_owner` constraint and the caller gets a 500 for what is
+      // really a missing header.
+      throw ApiException(
+        ApiErrorCode.validation,
+        details:
+            'Generating needs either a signed-in user or a device token. '
+            'Send x-device-token.',
+      );
+    }
 
     final candidates = await _repository.loadCandidates();
     final version = await _repository.referenceDataVersion();
@@ -248,6 +260,16 @@ class RoadmapService {
       totalStageCount: roadmap.stages.length,
     );
   }
+
+  /// The six presets and the labels a scenario will be stored under.
+  ///
+  /// Served rather than duplicated in the string tables: the chip the user taps
+  /// and the label the scenario is saved with are then the same words by
+  /// construction, and there is one place to change them.
+  static List<Map<String, dynamic>> get whatIfPresets => [
+    for (final preset in WhatIfPreset.values)
+      {'preset': preset.wire, 'label': _scenarioLabel(preset).toJson()},
+  ];
 
   static LocalizedText _scenarioLabel(WhatIfPreset preset) => switch (preset) {
     WhatIfPreset.budgetPlus50 => const LocalizedText(

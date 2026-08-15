@@ -75,7 +75,7 @@ against the handoff; what each is missing is named.
 | Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — share row is in and ungated; no per-stage SourceLine list |
 | Roadmap funnel (guest-capable) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Guest → account migration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| What-if scenarios | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — server done and ownership-tested, no chip grid |
+| What-if scenarios | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six presets, each a new roadmap linked to the original |
 | Compare programmes (≤3) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
 | Compare countries (≤3) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
 | Saved-filter alerts | — | — | ✅ | — | — | — | NOT STARTED |
@@ -188,7 +188,7 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 185 |
+| `server` (`dart test`, real PostgreSQL) | 186 |
 | `apps/mobile` (`flutter test`) | 118 |
 | `packages/ejadah_ui` | 48 |
 | `packages/ejadah_localization` | 8 |

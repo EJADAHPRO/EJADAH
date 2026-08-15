@@ -14,6 +14,12 @@ final roadmapProvider = FutureProvider.family<RoadmapView, String>(
   (ref, id) => ref.watch(roadmapRepositoryProvider).roadmap(id),
 );
 
+/// The presets and their labels, fetched once.
+final whatIfPresetsProvider =
+    FutureProvider<List<({WhatIfPreset preset, LocalizedText label})>>(
+      (ref) => ref.watch(roadmapRepositoryProvider).whatIfPresets(),
+    );
+
 /// The generated roadmap.
 ///
 /// A guest reads the first two stages and then meets the gate. The remaining
@@ -155,6 +161,13 @@ class _Result extends ConsumerWidget {
           ),
 
           if (view.isGated) _Gate(view: view),
+
+          // What-if. Behind the gate on purpose: a scenario is a new saved
+          // roadmap, and saving is one of the five gates.
+          if (!view.isGated) ...[
+            const SizedBox(height: EjadahSpacing.lg),
+            _WhatIfGrid(roadmapId: roadmap.id),
+          ],
           if (roadmap.alternatives.isNotEmpty) ...[
             const SizedBox(height: EjadahSpacing.lg),
             SectionHeader(title: strings.alsoWorthLabel),
@@ -180,6 +193,89 @@ class _Result extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+/// The what-if presets, as a grid of chips.
+///
+/// Each one changes exactly one variable and produces a **new** roadmap linked
+/// to this one. The original is never overwritten, because the comparison is
+/// the whole value of the feature — a user who asks "what if I had another
+/// year" wants both answers side by side, not the second one replacing the
+/// first.
+class _WhatIfGrid extends ConsumerStatefulWidget {
+  const _WhatIfGrid({required this.roadmapId});
+
+  final String roadmapId;
+
+  @override
+  ConsumerState<_WhatIfGrid> createState() => _WhatIfGridState();
+}
+
+class _WhatIfGridState extends ConsumerState<_WhatIfGrid> {
+  WhatIfPreset? _running;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = context.strings;
+    final presets = ref.watch(whatIfPresetsProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          context.type.eyebrowText(strings.whatIf),
+          style: context.type.eyebrow(color: EjadahColors.orangeText),
+        ),
+        const SizedBox(height: EjadahSpacing.xxs),
+        Text(
+          strings.whatIfSub,
+          style: context.type.small(color: EjadahColors.textSecondary),
+        ),
+        const SizedBox(height: EjadahSpacing.sm),
+        presets.when(
+          // A rail of chips that has not arrived is not worth a skeleton; the
+          // section simply is not there yet.
+          loading: () => const SizedBox.shrink(),
+          error: (_, _) => const SizedBox.shrink(),
+          data: (items) => Wrap(
+            spacing: EjadahSpacing.xs,
+            runSpacing: EjadahSpacing.xs,
+            children: [
+              for (final item in items)
+                EjadahFilterChip(
+                  label: item.label(context),
+                  // Selected while its scenario is generating, so the tap has
+                  // an immediate answer on a slow connection.
+                  isSelected: _running == item.preset,
+                  onTap: _running != null
+                      ? () {}
+                      : () => _run(item.preset),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _run(WhatIfPreset preset) async {
+    setState(() => _running = preset);
+    try {
+      final scenario = await ref
+          .read(roadmapRepositoryProvider)
+          .whatIf(widget.roadmapId, preset);
+      if (!mounted) return;
+      // Pushed, not replaced: back returns to the original, which is the
+      // comparison this feature exists to make.
+      context.push('/roadmap/${scenario.roadmap.id}');
+    } on Failure catch (failure) {
+      if (!mounted) return;
+      showEjadahToast(context, message: failure.message(context));
+    } finally {
+      if (mounted) setState(() => _running = null);
+    }
   }
 }
 
