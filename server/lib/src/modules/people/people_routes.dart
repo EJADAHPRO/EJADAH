@@ -74,6 +74,33 @@ Router peopleRoutes(PeopleService service, BookingService booking) {
     return Json.created(service.withLiveRefund(confirmed).toJson());
   });
 
+  router.post('/bookings/<id>/checkout', (Request request, String id) async {
+    // The provider decides the URL and the amount comes from the stored
+    // booking, so the client neither constructs the redirect nor names a price.
+    final checkout = await booking.checkoutFor(
+      userId: request.ctx.requireUser(),
+      bookingId: id,
+    );
+    return Json.ok({
+      'checkout_url': checkout.checkoutUrl,
+      'external_ref': checkout.externalRef,
+    });
+  });
+
+  router.post('/bookings/<id>/payment-failed', (
+    Request request,
+    String id,
+  ) async {
+    // Not a cancellation: cancelling would run the refund path over money that
+    // never moved. The session stays held so a retry does not have to win the
+    // slot back.
+    final failed = await booking.markPaymentFailed(
+      userId: request.ctx.requireUser(),
+      bookingId: id,
+    );
+    return Json.ok(service.withLiveRefund(failed).toJson());
+  });
+
   router.post('/bookings/<id>/cancel', (Request request, String id) async {
     final cancelled = await booking.cancelBooking(
       userId: request.ctx.requireUser(),

@@ -3,6 +3,7 @@ import 'package:ejadah_models/ejadah_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
+import '../home/data/home_repository.dart';
 
 /// Who is using the app right now.
 ///
@@ -177,6 +178,14 @@ class AuthController extends Notifier<AuthState> {
 
   Future<void> logout() async {
     await ref.read(authRepositoryProvider).logout();
+
+    // The offline cache holds this account's feed. Leaving it behind would show
+    // one person's shortlist and sessions to whoever signs in next on the same
+    // device.
+    await ref
+        .read(localStoreProvider)
+        .clearCachedResponses(const [HomeRepository.cacheKey]);
+
     state = const Guest();
     await ref.read(analyticsProvider).setUser(userId: null, persona: null);
   }

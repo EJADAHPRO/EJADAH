@@ -82,4 +82,39 @@ class LocalStore {
       _preferences.remove(_peopleFiltersKey(door));
 
   static String _peopleFiltersKey(String door) => 'ejadah.people_filters.$door';
+
+  // --- Offline content cache -------------------------------------------------
+  //
+  // Story E6-01: saved work and the roadmap stay readable offline. The app used
+  // to hold the last feed in a plain field, which survived a dropped connection
+  // but not a relaunch — so killing the app while offline turned real content
+  // into a full-page error.
+  //
+  // Only server responses the user has already been shown are kept, and they
+  // are keyed per user so signing in as someone else never surfaces the
+  // previous account's shortlist.
+
+  Future<Map<String, dynamic>?> cachedResponse(String key) async {
+    final raw = await _preferences.getString(_cacheKey(key));
+    if (raw == null) return null;
+    try {
+      final decoded = jsonDecode(raw);
+      return decoded is Map<String, dynamic> ? decoded : null;
+    } on FormatException {
+      // A cache that cannot be read is a cache miss, never a crash.
+      return null;
+    }
+  }
+
+  Future<void> cacheResponse(String key, Map<String, dynamic> value) =>
+      _preferences.setString(_cacheKey(key), jsonEncode(value));
+
+  /// Drops every cached response. Called on sign-out.
+  Future<void> clearCachedResponses(Iterable<String> keys) async {
+    for (final key in keys) {
+      await _preferences.remove(_cacheKey(key));
+    }
+  }
+
+  static String _cacheKey(String key) => 'ejadah.cache.$key';
 }

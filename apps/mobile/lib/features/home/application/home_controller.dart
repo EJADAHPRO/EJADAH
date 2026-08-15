@@ -64,17 +64,22 @@ class HomeController extends Notifier<HomeState> {
       return;
     }
 
+    final repository = ref.read(homeRepositoryProvider);
     final cached = _cached;
     if (cached == null) state = const HomeLoading();
 
     try {
-      final feed = await ref.read(homeRepositoryProvider).feed();
+      final feed = await repository.feed();
       _cached = feed;
       state = HomeReady(feed);
     } on NetworkFailure {
       // Offline is a condition, not an error: saved content is still readable.
-      state = cached != null
-          ? HomeReady(cached, isOffline: true)
+      // On a cold start there is nothing in memory, so the copy's promise — the
+      // user's saved work is on the device — is only true if we go and read it.
+      final fallback = cached ?? await repository.cachedFeed();
+      if (fallback != null) _cached = fallback;
+      state = fallback != null
+          ? HomeReady(fallback, isOffline: true)
           : const HomeFailed(NetworkFailure());
     } on Failure catch (failure) {
       state = cached != null ? HomeReady(cached) : HomeFailed(failure);

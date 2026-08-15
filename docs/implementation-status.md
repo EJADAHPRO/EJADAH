@@ -3,7 +3,8 @@
 Honest state of the build against the locked Phase 1 scope
 (`handoff-flutter/01-product/PRODUCT_CORE.md` §2, 28 features).
 
-Legend: **COMPLETE** · **IN PROGRESS** · **NOT STARTED** · **BLOCKED** ·
+Legend: **COMPLETE** · **PARTIAL** (reachable, but missing named elements of
+its screen spec) · **IN PROGRESS** · **NOT STARTED** · **BLOCKED** ·
 **FUTURE** (out of Phase 1 scope — must not be built).
 
 Last updated: 15 August 2026.
@@ -12,17 +13,16 @@ Last updated: 15 August 2026.
 
 ## Summary
 
-The **foundation and the Career vertical are complete end to end**: Flutter UI →
-Riverpod controller → typed client → Dart server → PostgreSQL → back, in both
-languages, with persistence proven across connection restarts. The **roadmap
-engine and the booking engine are complete and tested**, including the two
-guarantees the brief singles out as mandatory — determinism and
-concurrency-safety.
+All five tabs are built and every module is mounted: Flutter UI → Riverpod
+controller → typed client → Dart server → PostgreSQL → back, in both languages.
+The two guarantees the brief singles out as mandatory — roadmap determinism and
+booking concurrency-safety — are implemented and proven by test against real
+PostgreSQL.
 
-**Learn, People's discovery surface, and most of Profile have server foundations
-but no screens yet.** Those tabs render the handoff's own "next in the build
-order" treatment rather than a broken or empty screen. What follows says exactly
-which is which.
+Rows below say COMPLETE only where the screen matches its entry in
+`04-screens/SCREENS.md`, not merely where something renders. Six rows that
+previously read COMPLETE are corrected to PARTIAL after a conformance audit
+against the handoff; what each is missing is named.
 
 ---
 
@@ -38,16 +38,16 @@ which is which.
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 374 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 493 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
 | Error architecture | COMPLETE | ten typed failures carrying the approved bilingual copy |
 | Analytics abstraction | COMPLETE | canonical event names, required properties stamped, privacy list enforced |
 | Storage abstraction | IN PROGRESS | interface and `stored_files` table exist; upload routes not built |
-| Background jobs | IN PROGRESS | runner + hold expiry shipped; deadline/session reminders not scheduled yet |
-| Responsive layout | COMPLETE | fluid breakpoints, per-window gutters, grid/tile column rules |
-| Reduced motion | COMPLETE | applied centrally through `EjadahMotion.durationFor` |
+| Background jobs | COMPLETE | hold expiry, reminder scheduling (30/14/7 · T-24h · T-1h), delivery |
+| Responsive layout | COMPLETE | fluid breakpoints, per-window gutters; programme and country lists go 1 → 2 → 3 columns |
+| Reduced motion | COMPLETE | followed from the platform dispatcher, so a mid-session change takes effect |
 | Dev environment | COMPLETE | `./tool/dev.sh setup`, docker-compose, seeds, demo accounts |
 
 ## Data
@@ -58,7 +58,7 @@ which is which.
 | 23 country guides | COMPLETE | bilingual, 108 steps, 28 exams, 92 cost rows |
 | "Pending source" facts | COMPLETE | 7 exam fees + 7 cost rows stored as pending, never estimated |
 | EN/AR strings | COMPLETE | imported to ARB, key-identical |
-| Courses, decks, quizzes | NOT STARTED | schema exists; no content imported (none exists in the handoff) |
+| Courses, decks, quizzes | SEEDED | 3 authored bilingual courses, 15 lessons, 6 handouts, 20 flashcards, 13 questions — development seed, not owner content |
 | Professional roster | BLOCKED | owner decision #30 — every photo is an unlicensed placeholder |
 
 ## Features
@@ -69,13 +69,13 @@ which is which.
 | Programme database (199, paginated) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Filters, search, sort (server-side) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Zero-result relaxation | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| Programme detail | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| Shortlist + optimistic save/undo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| 23 country guides (4 tabs) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| Programme detail | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — no sources block (story E2-02) |
+| Shortlist + optimistic save/undo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — remove is not optimistic on the shortlist screen |
+| 23 country guides (4 tabs) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — no jump-pills, no FAQ accordion, none of the three crossings |
+| Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — no share buttons (the growth loop), no SourceLine list |
 | Roadmap funnel (guest-capable) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Guest → account migration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| What-if scenarios | — | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS — server done, no UI |
+| What-if scenarios | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — server done and ownership-tested, no chip grid |
 | Compare programmes (≤3) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
 | Compare countries (≤3) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
 | Saved-filter alerts | — | — | ✅ | — | — | — | NOT STARTED |
@@ -84,45 +84,46 @@ which is which.
 | Register / sign in / sign out | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Refresh, rotation, revocation | ✅ | ✅ | ✅ | — | — | ✅ | COMPLETE |
 | Email verification (60s cooldown) | — | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS — server done, no UI |
-| Forgot / reset password | — | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS — server done, no UI |
+| Forgot password | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — reset itself is on the website, by design |
 | Authorization (roles) | ✅ | ✅ | ✅ | — | — | ✅ | COMPLETE |
-| Account deletion (2-step) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
+| Account deletion (2-step) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
 | **People** |
-| Booking hold + countdown | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — engine done, no UI |
+| Booking hold + countdown | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Concurrency safety | — | ✅ | ✅ | — | — | ✅ | COMPLETE |
-| Availability from schedule | — | ✅ | ✅ | — | — | — | IN PROGRESS — engine done, no UI |
-| Cancellation tiers + refund | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — engine done, no UI |
-| Payment abstraction + simulator | — | ✅ | ✅ | — | — | — | IN PROGRESS — no UI |
-| Professional discovery (3 kinds) | — | — | ✅ | — | — | — | NOT STARTED |
-| Multi-session plans | — | — | ✅ | — | — | — | NOT STARTED |
-| Tutor onboarding (6 steps) | — | — | ✅ | — | — | — | NOT STARTED |
+| Availability from schedule | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| Cancellation tiers + refund | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — the tier is projected live, so it shows before the button |
+| Payment abstraction + simulator | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — checkout URL comes from the provider, never assembled client-side |
+| Professional discovery (3 kinds) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| Multi-session plans | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — one booking, one row per real time, all-or-nothing |
+| Tutor onboarding (6 steps) | — | — | ✅ | — | — | — | NOT STARTED — supply-side screens PE-10..PE-16 |
 | Tutor earnings (70/30 itemised) | — | — | ✅ | — | — | — | NOT STARTED |
-| My bookings | — | ✅ | ✅ | — | — | — | IN PROGRESS |
+| My bookings | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Learn** |
-| Course hub / list / detail | — | — | ✅ | — | — | — | NOT STARTED |
-| Player + resume position | — | — | ✅ | — | — | — | NOT STARTED |
-| Handouts | — | — | ✅ | — | — | — | NOT STARTED |
-| Flashcards (spaced repetition) | — | — | ✅ | — | — | — | NOT STARTED |
-| Quizzes + explanations | — | — | ✅ | — | — | — | NOT STARTED |
-| IAP purchase | — | — | ✅ | — | — | — | NOT STARTED |
+| Course hub / list / detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| Player + resume position | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — position, checkpointing and resume are real; playback is a surface until a media dependency lands |
+| Handouts | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — fetched and confirmed; not written to disk, so LN-11 Downloads is not built |
+| Flashcards (spaced repetition) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — SM-2 shape, pure scheduler |
+| Quizzes + explanations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — graded server-side; the answer key never reaches the client |
+| IAP purchase | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — flow and restore work; store receipt verification is not implemented, and the path fails rather than granting on an unverified receipt |
 | **Profile** |
-| Profile home | ✅ | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS |
+| Profile home | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Language switch (instant) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| NFC card + editor | — | — | ✅ | — | — | — | NOT STARTED |
-| Public profile `/dr/{slug}` | route | — | ✅ | — | — | — | NOT STARTED |
-| Certificates (verified vs stated) | — | — | ✅ | — | — | — | NOT STARTED |
-| Public verification `/verify/{code}` | route | — | ✅ | — | — | — | NOT STARTED |
-| CV builder, CPD ledger | — | — | ✅ | — | — | — | NOT STARTED |
-| Settings, notification prefs | — | ✅ | ✅ | — | — | — | IN PROGRESS |
+| NFC card + editor | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — QR is a real encoder, validated against a reference implementation |
+| Public profile `/dr/{slug}` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — public, no auth, no private field emitted |
+| Certificates (verified vs stated) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — two CHECK constraints make a forged verification impossible |
+| Public verification `/verify/{code}` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| CPD ledger | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| CV builder (PR-07) | — | — | ✅ | — | — | — | NOT STARTED |
+| Settings, notification prefs | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Home** |
-| Feed (greeting, roadmap CTA, tiles) | ✅ | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS |
-| Deadline strip | — | ✅ | ✅ | — | — | — | IN PROGRESS — query done, no UI |
-| Notification centre | — | — | ✅ | — | — | — | NOT STARTED |
+| Feed (greeting, roadmap CTA, tiles) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six states, per-persona CTA, partial-data treatment |
+| Deadline strip | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
+| Notification centre | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — server and routes done, no screen |
 | Activation checklist | — | — | — | — | — | — | NOT STARTED |
 | **Platform** |
-| Notifications (3 categories) | — | ✅ | ✅ | ✅ | ✅ | — | IN PROGRESS |
-| Premium status (read-only) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
-| System states (10) | partial | ✅ | — | ✅ | ✅ | ✅ | IN PROGRESS — offline, error, empty, not-found done |
+| Notifications (3 categories) | — | ✅ | ✅ | ✅ | ✅ | ✅ | IN PROGRESS — scheduling, quiet hours and the daily cap are enforced server-side; no priming sheet or HM-02 |
+| Premium status (read-only) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — the badge is there; the renewal date the scope names is not shown, and there is no PR-09 |
+| System states (10) | ✅ | ✅ | — | ✅ | ✅ | ✅ | COMPLETE — one template, ten screens, a failure registry and a root error boundary |
 | Admin panel (Flutter Web) | — | — | ✅ | — | — | — | NOT STARTED |
 
 ## Out of scope — must not be built
@@ -147,37 +148,81 @@ conflict register and the handoff checklist.
 2. **Real rosters and photographs** (todo #30). Every tutor image in the handoff
    is a placeholder and unlicensed for production. The app shows initials on the
    inset surface — never a broken image, never an unlicensed portrait.
-3. **11 pending regulator fees** (todo #32). Implemented as a first-class data
-   state, not a gap to fill. The import found **14** unsourced facts in the
-   current dataset — 7 exam fees and 7 cost rows — rather than the 11 the
-   checklist records. Worth reconciling; either way each prints "Pending
-   source".
+3. **14 pending regulator facts** (todo #32). Implemented as a first-class data
+   state, not a gap to fill: 7 exam fees (`bh`, `ie`, `nl`, `se`, `ch`, `sg`,
+   `za`) and 7 cost rows. The checklist's original 11 counted exam fees only;
+   the owner confirmed 14 on 15 August 2026 and confirmed the dataset wins over
+   the documentation wherever they disagree. Each prints "Pending source".
 4. **Arabic clinical-terminology review** (todo #31). Strings ship exactly as
    authored in `strings.ar.json`. No machine translation was introduced.
 
 ## Additions made to the canonical string tables
 
-`CONTENT.md` states its copy "already exists (or belongs)" in the string tables.
-Thirty-seven keys it specifies verbatim were absent and have been added, with
-the wording taken from the handoff rather than invented: `pendingSource`,
-`verifiedByEjadah`, `statedByTutor`, `myShortlist`, `tabLearn`, `tabPeople`, the
-four funnel path labels, the five region labels, the five career-stage labels,
-the empty/error/undo copy, and the pagination and gate strings.
+The tables now hold **493 keys** in each language, up from the 374 they arrived
+with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
+where a screen the handoff specifies had no key for copy the handoff itself
+names, the key was added with the handoff's own wording rather than invented
+copy. They are grouped so a reviewer can find them:
+
+* 37 from `CONTENT.md` itself — the pending-source and verification wording,
+  the funnel path, region and career-stage labels, empty/error/undo copy, and
+  the pagination and gate strings.
+* 66 for the Home feed, People, Learn and Profile screens.
+* 19 for the ten system states, password recovery, the two tab eyebrows the
+  prototype still called "Courses" and "Connect", and the ICU-plural day count.
+* 10 the feature agents worked around rather than invent — a taken slot's
+  label, the goal-too-short error, the mentor destination facet, the CPD title
+  and total, and the settings rows.
+
+Three keys were **corrected** rather than added, because they contradicted the
+glossary: `notVerified` ("Recognition not verified" → "Not verified", a data
+state and not a judgement), `rowMembership` ("Membership" → "Premium"), and
+`rowShortlist`, which named the same destination as `myShortlist` differently.
 
 The `continue` key generates an invalid Dart identifier and is renamed to
 `continueAction` by the ARB generator; the table itself is unchanged.
 
+## Verification
+
+Counts as of this commit, all run from a clean tree:
+
+| Suite | Count |
+|---|---|
+| `server` (`dart test`, real PostgreSQL) | 183 |
+| `apps/mobile` (`flutter test`) | 118 |
+| `packages/ejadah_ui` | 48 |
+| `packages/ejadah_localization` | 8 |
+
+`dart analyze` and `flutter analyze` are clean across every package. The
+application is **54,790 lines of Dart across 213 files**; there is no JavaScript,
+TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
+`apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
+under `reference/` and `uploads/` are the preserved design prototypes, read as
+specification and never ported.
+
 ## Known gaps in what is built
 
-* **`Booking.refundableEgp` is populated only after cancellation.** The
-  cancellation tier is computed correctly by `BookingService.refundFor`, but the
-  booking list does not yet project it for an active booking — the UI that needs
-  it does not exist yet. It must be wired before the cancel screen ships, since
-  the tier has to be shown *before* the button.
-* **HTTP routes for People, Learn and Profile are not mounted.** The services
-  and repositories exist and are tested directly; `app.dart` mounts only
-  `/auth`, `/career` and `/roadmap`.
-* **No integration tests** driving the Flutter app against a live server.
+* **Cairo time is a fixed +02:00 offset**, matching what the copy states
+  ("Times shown in Cairo time (GMT+2)"). It lives in one class, `CairoClock`,
+  so a DST-aware definition is a single change — but if Egypt's summer time
+  applies, session reminders and displayed times are an hour out during it.
+  Worth an owner decision on what the copy should say.
+* **Video playback is a surface.** Position, five-second checkpointing, the
+  ten-second resume rule and completion are all real and server-backed; the
+  player advances a playhead on a timer until a media dependency is added.
+* **Handouts fetch but do not save**, so LN-11 Downloads does not exist.
+* **In-app purchase is not verified against the store.** The path exists and
+  deliberately fails rather than granting entitlement on an unverified receipt.
+* **Refresh tokens are in `localStorage` on Flutter Web**, which any XSS could
+  read. Native builds use secure storage. Either move the web refresh token to
+  an HttpOnly cookie or treat web as a preview surface.
 * **The rate limiter is per-process**, which is correct for one instance only.
+  `TRUSTED_PROXY_COUNT` must be set to the number of proxies in front of it, or
+  `X-Forwarded-For` is ignored entirely — which is the safe default, not a bug.
+* **No integration tests** driving the Flutter app against a live server. The
+  flows in this document were exercised by hand against one.
 * **Android and iOS release builds are unverified here** — no Android SDK or
   macOS toolchain in this environment. Flutter Web release builds successfully.
+* **Two test processes cannot share `ejadah_test`.** They truncate between
+  tests, so a second concurrent run wipes the first's fixtures. Set
+  `TEST_DATABASE_URL` for the second one.

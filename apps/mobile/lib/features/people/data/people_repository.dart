@@ -348,6 +348,25 @@ class PeopleRepository {
         .toList(),
   );
 
+  /// The provider's own checkout URL for a booking.
+  ///
+  /// Asked for rather than assembled: a URL built from a host constant and a
+  /// booking id happens to work against the simulator and would become a
+  /// broken redirect the day a real provider lands.
+  Future<String> checkoutUrl(String bookingId) => _client.post<String>(
+    '/people/bookings/$bookingId/checkout',
+    parse: (json) => json['checkout_url'] as String,
+  );
+
+  /// Tells the server the checkout did not complete.
+  ///
+  /// The booking is not cancelled — cancelling would run the refund path over
+  /// money that never moved — so the slot stays held for a retry.
+  Future<Booking> paymentFailed(String bookingId) => _client.post(
+    '/people/bookings/$bookingId/payment-failed',
+    parse: Booking.fromJson,
+  );
+
   Future<CancellationOutcome> cancel(String bookingId) => _client.post(
     '/people/bookings/$bookingId/cancel',
     parse: CancellationOutcome.fromJson,

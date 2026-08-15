@@ -68,7 +68,9 @@ void main() {
       });
     }
 
-    testWidgets('every state announces itself as a live region', (tester) async {
+    testWidgets('every state announces itself as a live region', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
 
       for (final testCase in _cases) {
@@ -280,7 +282,10 @@ void main() {
     testWidgets('a widget crash shows SY-08 instead of a red screen', (
       tester,
     ) async {
-      await _pumpState(tester, screen: const SystemErrorBoundary(child: _Bomb()));
+      await _pumpState(
+        tester,
+        screen: const SystemErrorBoundary(child: _Bomb()),
+      );
 
       expect(tester.takeException(), isStateError);
       await tester.pumpAndSettle();
@@ -353,30 +358,36 @@ void main() {
     );
 
     for (final language in AppLanguage.values) {
-      test('no system-state string shouts, codes or emotes (${language.code})', () {
-        for (final entry in _systemCopy(stringsFor(language), language).entries) {
-          expect(
-            entry.value,
-            isNot(matches(statusCode)),
-            reason: '${entry.key} carries what looks like a status code',
-          );
-          expect(
-            entry.value,
-            isNot(matches(shouting)),
-            reason: '${entry.key} carries an exclamation mark',
-          );
-          expect(
-            entry.value,
-            isNot(matches(emoji)),
-            reason: '${entry.key} carries an emoji',
-          );
-          expect(
-            entry.value,
-            isNot(matches(selfTalk)),
-            reason: '${entry.key} speaks to the developer, not the user',
-          );
-        }
-      });
+      test(
+        'no system-state string shouts, codes or emotes (${language.code})',
+        () {
+          for (final entry in _systemCopy(
+            stringsFor(language),
+            language,
+          ).entries) {
+            expect(
+              entry.value,
+              isNot(matches(statusCode)),
+              reason: '${entry.key} carries what looks like a status code',
+            );
+            expect(
+              entry.value,
+              isNot(matches(shouting)),
+              reason: '${entry.key} carries an exclamation mark',
+            );
+            expect(
+              entry.value,
+              isNot(matches(emoji)),
+              reason: '${entry.key} carries an emoji',
+            );
+            expect(
+              entry.value,
+              isNot(matches(selfTalk)),
+              reason: '${entry.key} speaks to the developer, not the user',
+            );
+          }
+        },
+      );
     }
 
     test('every state says what survived', () {
@@ -476,9 +487,6 @@ final List<_StateCase> _cases = [
     route: null,
   ),
 ];
-
-AppLanguage _languageOf(EjadahStrings strings) =>
-    AppLanguage.fromCode(strings.localeName);
 
 /// Every string the ten states can show, keyed for a readable failure message.
 Map<String, String> _systemCopy(EjadahStrings s, AppLanguage language) => {

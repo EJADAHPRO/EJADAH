@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../application/booking_controller.dart';
+import '../data/people_repository.dart';
 import 'payment_returned_screen.dart';
 import 'widgets/cairo_time.dart';
 import 'widgets/slot_grid.dart';
@@ -191,8 +192,25 @@ class _BookingFlowScreenState extends ConsumerState<BookingFlowScreen> {
 
     // Sessions are human services and are paid on the website — never through
     // in-app purchase. That split is law, not architecture.
-    final uri = Uri.https(checkoutHost, '/checkout/${booking.id}');
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    //
+    // The URL comes from the payment provider through our own API; the client
+    // never assembles one.
+    final String checkoutUrl;
+    try {
+      checkoutUrl = await ref
+          .read(peopleRepositoryProvider)
+          .checkoutUrl(booking.id);
+    } on Failure catch (failure) {
+      if (!mounted) return;
+      showEjadahToast(context, message: failure.message(context));
+      return;
+    }
+    if (!mounted) return;
+
+    await launchUrl(
+      Uri.parse(checkoutUrl),
+      mode: LaunchMode.externalApplication,
+    );
     if (!mounted) return;
 
     final succeeded = await Navigator.of(context).push<bool>(
@@ -201,15 +219,26 @@ class _BookingFlowScreenState extends ConsumerState<BookingFlowScreen> {
       ),
     );
     if (!mounted) return;
+
+    if (succeeded != true) {
+      // Recorded server-side so the booking reads payment_failed rather than
+      // sitting in pending_payment forever.
+      try {
+        await ref.read(peopleRepositoryProvider).paymentFailed(booking.id);
+      } on Failure {
+        // The retry path is still open either way; nothing was charged.
+      }
+      if (!mounted) return;
+    }
     _controller.completePayment(succeeded: succeeded ?? false);
   }
 }
 
-/// The host the redirect sheet names and the checkout runs on.
+/// The host the redirect sheet names.
 ///
 /// Matches the approved copy — "Completed securely on ejadah.international".
-/// When the payment provider starts returning a real checkout URL through the
-/// API, this constant is what it replaces.
+/// The checkout URL itself comes from the provider through the API; this is
+/// only what the sheet tells the user before they leave.
 const String checkoutHost = 'ejadah.international';
 
 /// The body of the current step.

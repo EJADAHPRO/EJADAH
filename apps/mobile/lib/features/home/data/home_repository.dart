@@ -106,17 +106,45 @@ class HomeFeed {
 }
 
 final homeRepositoryProvider = Provider<HomeRepository>(
-  (ref) => HomeRepository(ref.watch(apiClientProvider)),
+  (ref) =>
+      HomeRepository(ref.watch(apiClientProvider), ref.watch(localStoreProvider)),
 );
 
 class HomeRepository {
-  const HomeRepository(this._client);
+  const HomeRepository(this._client, this._store);
 
   final ApiClient _client;
+  final LocalStore _store;
+
+  /// The cache slot this repository owns.
+  static const String cacheKey = 'home_feed';
 
   /// One request for the whole feed.
   ///
   /// Seven parallel requests on a cold start on a mid-range Android phone is
   /// exactly what this avoids.
-  Future<HomeFeed> feed() => _client.get('/home/', parse: HomeFeed.fromJson);
+  ///
+  /// Every successful response is written to the device, because the offline
+  /// state promises the user their saved work is still readable and an
+  /// in-memory copy does not survive the app being killed.
+  Future<HomeFeed> feed() async {
+    final json = await _client.get<Map<String, dynamic>>(
+      '/home/',
+      parse: (json) => json,
+    );
+    await _store.cacheResponse(cacheKey, json);
+    return HomeFeed.fromJson(json);
+  }
+
+  /// The last feed this device saw, or null if it has never seen one.
+  Future<HomeFeed?> cachedFeed() async {
+    final json = await _store.cachedResponse(cacheKey);
+    if (json == null) return null;
+    try {
+      return HomeFeed.fromJson(json);
+    } catch (_) {
+      // A cache written by an older build is a cache miss, not a crash.
+      return null;
+    }
+  }
 }

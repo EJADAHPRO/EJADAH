@@ -66,6 +66,10 @@ void main() {
       );
       expect(queued.length, 1);
       expect(queued.first[0], 'deadline:$programmeId:30');
+
+      // Arabic counts: 11–99 take the accusative singular.
+      final due = await scheduler.dueDeadlineAlerts(now: now);
+      expect(due.single.title.ar, contains('30 يومًا'));
     });
 
     test('a switched-off category is never queued at all', () async {
@@ -106,6 +110,73 @@ void main() {
       await _enableAll(db, userId);
 
       expect(await scheduler.sweep(now: now), 0);
+    });
+
+    test('the seven-day window reads as Arabic, not as a template', () async {
+      final now = _cairoMorning();
+      final programmeId = await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 7)),
+      );
+      await _save(db, userId, programmeId);
+      await _enableAll(db, userId);
+
+      final due = await scheduler.dueDeadlineAlerts(now: now);
+      // 3–10 take the plural (أيام), not the 11–99 accusative singular. A
+      // single template would have produced "7 يومًا", which is wrong.
+      expect(due.single.title.ar, contains('7 أيام'));
+      expect(due.single.title.ar, isNot(contains('7 يومًا')));
+      expect(due.single.title.en, contains('closes in 7 days'));
+    });
+
+    test('a country with a guide is named in Arabic', () async {
+      final now = _cairoMorning();
+      await db.execute(
+        '''
+        INSERT INTO countries (
+          iso, name_en, name_ar, region, exam_code, exam_full_en, exam_full_ar,
+          pathway_class, pathway_class_en, pathway_class_ar, months_label,
+          min_months, max_months, difficulty_en, difficulty_ar,
+          market_en, market_ar, authority_en, authority_ar, updated_label
+        ) VALUES (
+          'uk', 'United Kingdom', 'المملكة المتحدة', 'europe', 'ORE',
+          'Overseas Registration Exam', 'امتحان التسجيل للخارج',
+          'exam', 'Exam heavy', 'كثيف الامتحانات', '12–24', 12, 24,
+          'Hard', 'صعب', 'Competitive', 'تنافسي',
+          'General Dental Council', 'المجلس العام لطب الأسنان', 'Aug 2026'
+        )
+        ON CONFLICT (iso) DO NOTHING
+        ''',
+      );
+      final programmeId = await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 30)),
+        countryIso: 'uk',
+      );
+      await _save(db, userId, programmeId);
+      await _enableAll(db, userId);
+
+      final due = await scheduler.dueDeadlineAlerts(now: now);
+      // An English country name inside Arabic copy is the defect this closes.
+      expect(due.single.body.ar, contains('المملكة المتحدة'));
+      expect(due.single.body.ar, isNot(contains('United Kingdom')));
+      expect(due.single.body.en, contains('United Kingdom'));
+    });
+
+    test('a country with no guide keeps its English name', () async {
+      final now = _cairoMorning();
+      final programmeId = await _createProgramme(
+        db,
+        deadline: CairoClock.local(now).add(const Duration(days: 14)),
+      );
+      await _save(db, userId, programmeId);
+      await _enableAll(db, userId);
+
+      // Only 23 of the countries in the programme set have guides. Inventing an
+      // Arabic name for the rest would be manufacturing data; falling back to
+      // the English one is the honest option.
+      final due = await scheduler.dueDeadlineAlerts(now: now);
+      expect(due.single.body.ar, contains('United Kingdom'));
     });
 
     test('a sweep that missed a day still catches the window', () async {
@@ -508,19 +579,21 @@ var _nextProgrammeId = 9000;
 Future<int> _createProgramme(
   TestDatabase db, {
   required DateTime deadline,
+  String? countryIso,
 }) async {
   final id = _nextProgrammeId++;
   await db.execute(
     '''
     INSERT INTO programmes (
-      id, region, country, university, programme_name, deadline
+      id, region, country, country_iso, university, programme_name, deadline
     ) VALUES (
-      @id, 'Europe', 'United Kingdom', 'King''s College London',
+      @id, 'Europe', 'United Kingdom', @iso, 'King''s College London',
       'MSc Endodontics', @deadline::date
     )
     ''',
     {
       'id': id,
+      'iso': countryIso,
       'deadline': DateTime.utc(deadline.year, deadline.month, deadline.day),
     },
   );

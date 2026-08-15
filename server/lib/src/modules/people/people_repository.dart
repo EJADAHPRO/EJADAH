@@ -434,6 +434,19 @@ class PeopleRepository {
     return rows.isNotEmpty;
   }
 
+  /// Moves a booking to another status, without touching cancellation or
+  /// refund fields — those belong to [cancelBooking] and mean money moved.
+  Future<void> setBookingStatus({
+    required String bookingId,
+    required BookingStatus status,
+    Session? session,
+  }) => _execute(
+    'UPDATE bookings SET status = @status::booking_status, updated_at = now() '
+    'WHERE id = @id',
+    {'id': bookingId, 'status': status.wire},
+    session,
+  );
+
   Future<void> cancelBooking({
     required String bookingId,
     required bool cancelledByProfessional,

@@ -38,6 +38,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  # The in-memory async preferences double, so the offline-cache tests exercise
+  # LocalStore's real encode/decode rather than a stub of it.
+  shared_preferences_platform_interface: ^2.4.1
 
 flutter:
   uses-material-design: true

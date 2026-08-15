@@ -115,9 +115,13 @@ class NotificationScheduler {
       final rows = await _query(
         '''
         SELECT s.user_id, p.id AS programme_id, p.university, p.country,
-               p.deadline
+               -- The Arabic country name where a guide exists for it. A
+               -- programme in a country we have no guide for keeps the English
+               -- name rather than getting an invented Arabic one.
+               c.name_ar AS country_ar, p.deadline
         FROM saved_programmes s
         JOIN programmes p ON p.id = s.programme_id
+        LEFT JOIN countries c ON c.iso = p.country_iso
         JOIN notification_preferences np ON np.user_id = s.user_id
         JOIN users u ON u.id = s.user_id
         WHERE np.deadline_alerts = true
@@ -134,6 +138,7 @@ class NotificationScheduler {
 
       for (final row in rows) {
         final university = row.str('university');
+        final country = row.strOrNull('country_ar') ?? row.str('country');
         result.add(
           PendingNotification(
             userId: row.str('user_id'),
@@ -145,11 +150,11 @@ class NotificationScheduler {
             // named, and the number is Western in both languages.
             title: LocalizedText(
               en: '$university closes in $daysOut days',
-              ar: '$university يُغلق بعد $daysOut يومًا',
+              ar: '$university ${_arabicDaysPhrase(daysOut)}',
             ),
             body: LocalizedText(
               en: 'Your saved programme in ${row.str('country')}.',
-              ar: 'برنامجك المحفوظ في ${row.str('country')}.',
+              ar: 'برنامجك المحفوظ في $country.',
             ),
             deepLink: '/programme/${row.intAt('programme_id')}',
           ),
@@ -399,6 +404,20 @@ class NotificationScheduler {
     );
     return preferences;
   }
+
+  /// "closes in N days", in Arabic, for the three windows this product uses.
+  ///
+  /// Arabic has six plural forms and the count decides which: 3–10 take the
+  /// plural (أيام), 11–99 the accusative singular (يومًا). Written out for the
+  /// three real windows rather than generalised, because these are the only
+  /// three that exist and a general rule here would be untested code.
+  static String _arabicDaysPhrase(int days) => switch (days) {
+    7 => 'يُغلق بعد 7 أيام',
+    14 => 'يُغلق بعد 14 يومًا',
+    30 => 'يُغلق بعد 30 يومًا',
+    // Unreachable while deadlineWindows holds those three; correct for 11–99.
+    _ => 'يُغلق بعد $days يومًا',
+  };
 
   static String _encodePayload(PendingNotification notification) =>
       '{"title_en":${_json(notification.title.en)},'

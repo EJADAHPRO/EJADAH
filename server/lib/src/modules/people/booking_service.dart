@@ -243,6 +243,57 @@ class BookingService {
   Future<List<Booking>> myBookings(String userId) =>
       _repository.bookingsForUser(userId);
 
+  /// Opens a checkout for a booking the caller owns.
+  ///
+  /// The provider decides the URL. Constructing one from a base host and a
+  /// booking id happens to work against the simulator and would silently
+  /// become a broken redirect the day a real provider lands, so the client is
+  /// never given the pieces to assemble it itself.
+  ///
+  /// The amount comes from the stored booking, not from the request: this is
+  /// the second place a client could otherwise name its own price.
+  Future<CheckoutSession> checkoutFor({
+    required String userId,
+    required String bookingId,
+  }) async {
+    final booking = await _repository.findBooking(bookingId);
+    if (booking == null) throw ApiException.notFound();
+    if (!await _repository.ownsBooking(userId: userId, bookingId: bookingId)) {
+      // Not-found rather than forbidden, so an id cannot be probed.
+      throw ApiException.notFound();
+    }
+    if (booking.status != BookingStatus.pendingPayment) {
+      // Paying twice for the same session is not a state to leave reachable.
+      throw ApiException.conflict();
+    }
+
+    return _payments.createCheckout(
+      bookingId: bookingId,
+      amountEgp: booking.totalEgp,
+      returnUrl: '${_config.publicBaseUrl}/bookings/$bookingId',
+    );
+  }
+
+  /// Records that a checkout did not complete.
+  ///
+  /// The booking stays `payment_failed` rather than being cancelled: cancelling
+  /// would run the refund path over money that never moved. The slot stays held
+  /// by its session reservation so a retry does not have to win it back, and
+  /// the hold-expiry job releases it if the retry never comes.
+  Future<Booking> markPaymentFailed({
+    required String userId,
+    required String bookingId,
+  }) async {
+    if (!await _repository.ownsBooking(userId: userId, bookingId: bookingId)) {
+      throw ApiException.notFound();
+    }
+    await _repository.setBookingStatus(
+      bookingId: bookingId,
+      status: BookingStatus.paymentFailed,
+    );
+    return (await _repository.findBooking(bookingId))!;
+  }
+
   /// Cancels a booking, refunding by the stated tier.
   ///
   /// The refund is computed before the confirmation is shown and again here, so
