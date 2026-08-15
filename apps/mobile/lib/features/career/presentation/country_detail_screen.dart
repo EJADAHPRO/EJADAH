@@ -54,13 +54,28 @@ class _CountryDetailState extends ConsumerState<CountryDetailScreen>
       body: SafeArea(
         child: guide.when(
           loading: () => const Center(child: CardSkeleton()),
-          error: (error, _) => EjadahErrorState(
-            title: FailureCopy.errorTitle(context),
-            body: error is Failure
-                ? error.message(context)
-                : FailureCopy.server(context),
-            retryLabel: strings.retry,
-            onRetry: () => ref.invalidate(countryGuideProvider(widget.iso)),
+          // The app bar is built in every branch, not only the loaded one:
+          // back is never the only way back, and an error state with no chrome
+          // leaves an edge swipe as the sole way out.
+          error: (error, _) => Column(
+            children: [
+              EjadahAppBar(
+                title: strings.tileCountries,
+                onBack: () => context.pop(),
+                backLabel: strings.back,
+              ),
+              Expanded(
+                child: EjadahErrorState(
+                  title: FailureCopy.errorTitle(context),
+                  body: error is Failure
+                      ? error.message(context)
+                      : FailureCopy.server(context),
+                  retryLabel: strings.retry,
+                  onRetry: () =>
+                      ref.invalidate(countryGuideProvider(widget.iso)),
+                ),
+              ),
+            ],
           ),
           data: (data) => Column(
             children: [
@@ -69,17 +84,13 @@ class _CountryDetailState extends ConsumerState<CountryDetailScreen>
                 onBack: () => context.pop(),
                 backLabel: strings.back,
               ),
-              TabBar(
+              EjadahTabs(
                 controller: _tabs,
-                labelColor: EjadahColors.textPrimary,
-                unselectedLabelColor: EjadahColors.labelMuted,
-                indicatorColor: EjadahColors.orange,
-                labelStyle: context.type.caption(),
-                tabs: [
-                  Tab(text: strings.licensingRoute),
-                  Tab(text: strings.documentsTab),
-                  Tab(text: strings.estCost),
-                  Tab(text: strings.recognitionLabel),
+                labels: [
+                  strings.licensingRoute,
+                  strings.documentsTab,
+                  strings.estCost,
+                  strings.recognitionLabel,
                 ],
               ),
               Expanded(

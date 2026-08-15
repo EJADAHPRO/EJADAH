@@ -35,7 +35,7 @@ class EjadahBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: EjadahIconSize.inline - 4, color: foreground),
+          Icon(icon, size: EjadahIconSize.badge, color: foreground),
           const SizedBox(width: EjadahSpacing.xxs),
         ],
         Text(label, style: context.type.micro(color: foreground)),
@@ -219,7 +219,7 @@ class SourceLine extends StatelessWidget {
           const SizedBox(width: EjadahSpacing.xxs),
           const Icon(
             EjadahIcons.externalLink,
-            size: EjadahIconSize.inline - 4,
+            size: EjadahIconSize.badge,
             color: EjadahColors.labelMuted,
           ),
         ],

@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/providers.dart';
 import '../application/funnel_controller.dart';
+import '../../career/presentation/countries_screen.dart';
 import '../data/roadmap_repository.dart';
 
 /// The four-question roadmap funnel.
@@ -294,42 +295,67 @@ class _LimitsStep extends ConsumerWidget {
           style: context.type.small(color: EjadahColors.textSecondary),
         ),
         const SizedBox(height: EjadahSpacing.lg),
-        CurrencyText(
-          amount: draft.budgetUsd,
-          currency: 'USD',
-          style: context.type.h3(),
-        ),
-        Slider(
-          value: draft.budgetUsd.toDouble(),
+
+        // The honest band hints FLOWS §1 asks for, counted from the 23 real
+        // guides. A country whose cost rows are unsourced is not counted as
+        // affordable — the same rule the engine applies to its cost floor.
+        EjadahValueSlider(
+          label: strings.budgetLabel,
+          value: draft.budgetUsd,
           min: 500,
           max: 60000,
           divisions: 119,
-          activeColor: EjadahColors.orange,
-          onChanged: (value) => controller.setBudget(value.round()),
+          onChanged: controller.setBudget,
+          valueLabel: CurrencyText(
+            amount: draft.budgetUsd,
+            currency: 'USD',
+            style: context.type.h3(),
+          ),
+          bandHint: ref
+              .watch(countriesProvider)
+              .maybeWhen(
+                data: (guides) => strings.budgetBand(
+                  guides
+                      .where(
+                        (guide) =>
+                            guide.floorCostUsd != null &&
+                            guide.floorCostUsd! <= draft.budgetUsd,
+                      )
+                      .length,
+                  guides.length,
+                ),
+                // Silent until the guides arrive, rather than a zero that
+                // would read as "nothing is affordable".
+                orElse: () => null,
+              ),
         ),
         const SizedBox(height: EjadahSpacing.md),
-        Row(
-          children: [
-            Text(
-              context.type.eyebrowText(strings.timeLabel),
-              style: context.type.eyebrow(color: EjadahColors.labelMuted),
-            ),
-            const Spacer(),
-            RangeText(
-              from: draft.monthsAvailable,
-              to: draft.monthsAvailable,
-              suffix: strings.monthsTypical,
-              style: context.type.tabular(),
-            ),
-          ],
-        ),
-        Slider(
-          value: draft.monthsAvailable.toDouble(),
+        EjadahValueSlider(
+          label: strings.timeLabel,
+          value: draft.monthsAvailable,
           min: 3,
           max: 60,
           divisions: 57,
-          activeColor: EjadahColors.orange,
-          onChanged: (value) => controller.setMonths(value.round()),
+          onChanged: controller.setMonths,
+          valueLabel: RangeText(
+            from: draft.monthsAvailable,
+            to: draft.monthsAvailable,
+            suffix: strings.monthsTypical,
+            style: context.type.tabular(),
+          ),
+          bandHint: ref
+              .watch(countriesProvider)
+              .maybeWhen(
+                data: (guides) => strings.timeBand(
+                  guides
+                      .where(
+                        (guide) => guide.minMonths <= draft.monthsAvailable,
+                      )
+                      .length,
+                  guides.length,
+                ),
+                orElse: () => null,
+              ),
         ),
       ],
     );

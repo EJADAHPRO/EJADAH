@@ -119,6 +119,11 @@ class EjadahStringsEn extends EjadahStrings {
   String get browseProgrammes => 'Browse programmes';
 
   @override
+  String budgetBand(Object count, Object total) {
+    return '$count of $total destinations have a documented cost at or under this.';
+  }
+
+  @override
   String get budgetLabel => 'BUDGET';
 
   @override
@@ -1557,6 +1562,11 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get tileShortlistMeta => '4 programmes saved';
+
+  @override
+  String timeBand(Object count, Object total) {
+    return '$count of $total destinations take this long or less.';
+  }
 
   @override
   String get timeLabel => 'STUDY TIME';

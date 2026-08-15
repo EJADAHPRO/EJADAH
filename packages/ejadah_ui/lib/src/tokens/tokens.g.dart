@@ -7,7 +7,7 @@
 // a value in this file. A raw colour, radius, duration or size
 // written anywhere else in the codebase is a defect.
 
-import 'dart:ui';
+import 'package:flutter/painting.dart';
 
 /// The canonical Ejadah design tokens.
 abstract final class RawTokens {
@@ -118,6 +118,8 @@ abstract final class RawTokens {
 
   // --- Icon sizes ---
   static const double iconSizeInline = 16.0;
+  static const double iconSizeBadge = 12.0;
+  static const double iconSizeAdornment = 14.0;
   static const double iconSizeNav = 21.0;
   static const double iconSizeFeature = 24.0;
 
@@ -131,6 +133,13 @@ abstract final class RawTokens {
   static const double bottomNavHeight = 72.0;
   static const double cardBorderWidth = 1.5;
   static const double phoneContentMaxWidth = 480.0;
+
+  // --- Elevation ---
+  static const List<BoxShadow> elevationCard = [BoxShadow(color: Color(0x0D000000), offset: Offset(0.0, 1.0), blurRadius: 3.0)];
+  static const List<BoxShadow> elevationRaised = [BoxShadow(color: Color(0x1A000000), offset: Offset(0.0, 8.0), blurRadius: 28.0)];
+  static const List<BoxShadow> elevationOverlay = [BoxShadow(color: Color(0x1F000000), offset: Offset(0.0, 20.0), blurRadius: 50.0)];
+  static const List<BoxShadow> elevationPrimaryGlow = [BoxShadow(color: Color(0x47FF6B1A), offset: Offset(0.0, 4.0), blurRadius: 20.0)];
+  static const List<BoxShadow> elevationStickyTop = [BoxShadow(color: Color(0x2E000000), offset: Offset(0.0, -12.0), blurRadius: 40.0)];
 
   // --- Z order ---
   static const int zContent = 0;

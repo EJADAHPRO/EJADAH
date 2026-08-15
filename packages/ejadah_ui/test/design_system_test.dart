@@ -16,6 +16,26 @@ void main() {
       expect(EjadahColors.orangeText, const Color(0xFFC2450F));
     });
 
+    test('elevation resolves to tokens, not transcribed hex', () {
+      // These were hand-written into Dart once. The generator emits them now,
+      // so a change to DESIGN_TOKENS.json reaches the widgets instead of
+      // silently leaving them on the old values.
+      expect(EjadahElevation.card, RawTokens.elevationCard);
+      expect(EjadahElevation.raised, RawTokens.elevationRaised);
+      expect(EjadahElevation.overlay, RawTokens.elevationOverlay);
+      expect(EjadahElevation.primaryGlow, RawTokens.elevationPrimaryGlow);
+      expect(EjadahElevation.stickyTop, RawTokens.elevationStickyTop);
+    });
+
+    test('icon adornment sizes are named, not arithmetic', () {
+      // `EjadahIconSize.inline - 4` at a call site is a raw value wearing a
+      // token's clothes; the sizes it was reaching for have names now.
+      expect(EjadahIconSize.badge, RawTokens.iconSizeBadge);
+      expect(EjadahIconSize.adornment, RawTokens.iconSizeAdornment);
+      expect(EjadahIconSize.badge, lessThan(EjadahIconSize.inline));
+      expect(EjadahIconSize.adornment, lessThan(EjadahIconSize.inline));
+    });
+
     test('the banned muted label is not a role anywhere', () {
       // #8E8A83 passed only in a mistaken legacy table.
       const banned = Color(0xFF8E8A83);

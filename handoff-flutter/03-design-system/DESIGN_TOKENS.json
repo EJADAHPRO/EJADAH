@@ -165,6 +165,8 @@
   },
   "iconSize": {
     "inline": 16,
+    "badge": 12,
+    "adornment": 14,
     "nav": 21,
     "feature": 24
   },

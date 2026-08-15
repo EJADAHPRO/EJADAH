@@ -88,13 +88,18 @@ class DarkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: padding,
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color: EjadahColors.charcoal,
       borderRadius: EjadahRadius.card,
       gradient: RadialGradient(
         center: Alignment(0.8, -0.9),
         radius: 1.2,
-        colors: [Color(0x33FFC62E), EjadahColors.charcoal],
+        // The gold glow, at 20%. Derived from the token rather than
+        // transcribed, so a palette change reaches it.
+        colors: [
+          EjadahColors.gold.withValues(alpha: 0.2),
+          EjadahColors.charcoal,
+        ],
       ),
     ),
     child: DefaultTextStyle(

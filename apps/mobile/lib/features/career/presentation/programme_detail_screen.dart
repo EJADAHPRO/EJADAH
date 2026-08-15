@@ -50,13 +50,27 @@ class ProgrammeDetailScreen extends ConsumerWidget {
             padding: EdgeInsets.all(EjadahSpacing.gutter),
             child: CardSkeleton(),
           ),
-          error: (error, _) => EjadahErrorState(
-            title: FailureCopy.errorTitle(context),
-            body: error is Failure
-                ? error.message(context)
-                : FailureCopy.server(context),
-            retryLabel: strings.retry,
-            onRetry: () => ref.invalidate(programmeProvider(programmeId)),
+          // Back is never the only way back: the app bar is built here too,
+          // so a failed load is not a screen with an edge swipe as its only
+          // exit.
+          error: (error, _) => Column(
+            children: [
+              EjadahAppBar(
+                title: strings.mastersTitle,
+                onBack: () => context.pop(),
+                backLabel: strings.back,
+              ),
+              Expanded(
+                child: EjadahErrorState(
+                  title: FailureCopy.errorTitle(context),
+                  body: error is Failure
+                      ? error.message(context)
+                      : FailureCopy.server(context),
+                  retryLabel: strings.retry,
+                  onRetry: () => ref.invalidate(programmeProvider(programmeId)),
+                ),
+              ),
+            ],
           ),
           data: (data) => Column(
             children: [

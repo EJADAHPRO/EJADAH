@@ -120,27 +120,15 @@ abstract final class EjadahRadius {
 
 /// Elevation, expressed as the shadow lists the tokens describe.
 abstract final class EjadahElevation {
-  static const List<BoxShadow> card = [
-    BoxShadow(color: Color(0x0D000000), offset: Offset(0, 1), blurRadius: 3),
-  ];
-
-  static const List<BoxShadow> raised = [
-    BoxShadow(color: Color(0x1A000000), offset: Offset(0, 8), blurRadius: 28),
-  ];
-
-  static const List<BoxShadow> overlay = [
-    BoxShadow(color: Color(0x1F000000), offset: Offset(0, 20), blurRadius: 50),
-  ];
+  static const List<BoxShadow> card = RawTokens.elevationCard;
+  static const List<BoxShadow> raised = RawTokens.elevationRaised;
+  static const List<BoxShadow> overlay = RawTokens.elevationOverlay;
 
   /// The warm glow under a primary button.
-  static const List<BoxShadow> primaryGlow = [
-    BoxShadow(color: Color(0x47FF6B1A), offset: Offset(0, 4), blurRadius: 20),
-  ];
+  static const List<BoxShadow> primaryGlow = RawTokens.elevationPrimaryGlow;
 
   /// Cast upward by a sticky bottom bar.
-  static const List<BoxShadow> stickyTop = [
-    BoxShadow(color: Color(0x2E000000), offset: Offset(0, -12), blurRadius: 40),
-  ];
+  static const List<BoxShadow> stickyTop = RawTokens.elevationStickyTop;
 }
 
 /// Opacity constants.
@@ -224,6 +212,12 @@ enum EjadahWindowClass {
 /// Icon sizes.
 abstract final class EjadahIconSize {
   static const double inline = RawTokens.iconSizeInline;
+
+  /// Inside a badge or a chip, where the label is already small.
+  static const double badge = RawTokens.iconSizeBadge;
+
+  /// An adornment beside body text — the outbound-link mark, a clear button.
+  static const double adornment = RawTokens.iconSizeAdornment;
   static const double nav = RawTokens.iconSizeNav;
   static const double feature = RawTokens.iconSizeFeature;
 }

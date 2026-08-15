@@ -111,6 +111,14 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       // --- Public, chrome-free ----------------------------------------------
       GoRoute(
+        // The old path from `handoff/deep-links.md`, kept as a redirect rather
+        // than a second implementation. `/dr/{slug}` is canonical (REGISTER
+        // conflict 11), but a card printed with the old one must still resolve.
+        path: '/card/:handle',
+        redirect: (context, state) =>
+            '/dr/${state.pathParameters['handle']}',
+      ),
+      GoRoute(
         path: '/dr/:slug',
         builder: (context, state) => _screen(
           'public-profile',

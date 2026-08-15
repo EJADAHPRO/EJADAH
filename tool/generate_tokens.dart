@@ -27,7 +27,7 @@ Future<void> main() async {
     ..writeln('// a value in this file. A raw colour, radius, duration or size')
     ..writeln('// written anywhere else in the codebase is a defect.')
     ..writeln()
-    ..writeln("import 'dart:ui';")
+    ..writeln("import 'package:flutter/painting.dart';")
     ..writeln()
     ..writeln('/// The canonical Ejadah design tokens.')
     ..writeln('abstract final class RawTokens {');
@@ -211,6 +211,22 @@ Future<void> main() async {
     }
   }
 
+  // Elevation arrives as CSS shadow strings. They were hand-transcribed into
+  // Dart once, which is exactly the drift the generator exists to prevent — a
+  // change to the JSON would have silently left the widgets on the old values.
+  buffer
+    ..writeln()
+    ..writeln('  // --- Elevation ---');
+  for (final entry in (tokens['elevation'] as Map<String, dynamic>).entries) {
+    final shadow = _toShadow(entry.value as String);
+    buffer.writeln(
+      '  static const List<BoxShadow> elevation${_capitalize(entry.key)} = ['
+      'BoxShadow(color: Color(0x${shadow.argb}), '
+      'offset: Offset(${shadow.dx}, ${shadow.dy}), '
+      'blurRadius: ${shadow.blur})];',
+    );
+  }
+
   buffer
     ..writeln()
     ..writeln('  // --- Z order ---');
@@ -259,6 +275,26 @@ String _toArgb(String value) {
   if (hex.length == 6) return 'FF$hex';
   if (hex.length == 8) return hex;
   throw FormatException('Unrecognised colour token: $value');
+}
+
+/// Parses `0 8px 28px rgba(0,0,0,0.10)` into the pieces a `BoxShadow` needs.
+///
+/// Only the shape the token file actually uses — offset, blur, colour — is
+/// handled. A spread or an inset would be a new kind of token and should fail
+/// loudly here rather than be silently dropped.
+({String argb, double dx, double dy, double blur}) _toShadow(String value) {
+  final match = RegExp(
+    r'^(-?[\d.]+)(?:px)?\s+(-?[\d.]+)px\s+([\d.]+)px\s+(rgba?\(.+\)|#[0-9a-fA-F]+)$',
+  ).firstMatch(value.trim());
+  if (match == null) {
+    throw FormatException('Unrecognised elevation token: $value');
+  }
+  return (
+    argb: _toArgb(match.group(4)!),
+    dx: double.parse(match.group(1)!),
+    dy: double.parse(match.group(2)!),
+    blur: double.parse(match.group(3)!),
+  );
 }
 
 String _capitalize(String value) =>

@@ -33,12 +33,12 @@ against the handoff; what each is missing is named.
 | Flutter workspace + packages | COMPLETE | apps/mobile, ejadah_ui, ejadah_core, ejadah_models, ejadah_localization |
 | Dart backend (Shelf, layered) | COMPLETE | route → service → domain → repository → SQL |
 | PostgreSQL schema | COMPLETE | 8 migrations, constraint-enforced product rules |
-| Design tokens | COMPLETE | generated from `DESIGN_TOKENS.json`; raw values are defects |
+| Design tokens | COMPLETE | generated from `DESIGN_TOKENS.json`, elevation included; raw values are defects |
 | Ejadah component family | COMPLETE | buttons, cards, badges, inputs, sheets, states, bottom nav |
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 529 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 531 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
@@ -158,7 +158,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **529 keys** in each language, up from the 374 they arrived
+The tables now hold **531 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -190,7 +190,7 @@ Counts as of this commit, all run from a clean tree:
 |---|---|
 | `server` (`dart test`, real PostgreSQL) | 190 |
 | `apps/mobile` (`flutter test`) | 118 |
-| `packages/ejadah_ui` | 48 |
+| `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The

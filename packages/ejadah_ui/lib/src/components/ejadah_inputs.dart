@@ -115,7 +115,7 @@ class EjadahInput extends StatelessWidget {
               children: [
                 const Icon(
                   EjadahIcons.warning,
-                  size: EjadahIconSize.inline - 2,
+                  size: EjadahIconSize.adornment,
                   color: EjadahColors.dangerText,
                 ),
                 const SizedBox(width: EjadahSpacing.xxs),

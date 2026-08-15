@@ -314,6 +314,12 @@ abstract class EjadahStrings {
   /// **'Browse programmes'**
   String get browseProgrammes;
 
+  /// No description provided for @budgetBand.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total} destinations have a documented cost at or under this.'**
+  String budgetBand(Object count, Object total);
+
   /// No description provided for @budgetLabel.
   ///
   /// In en, this message translates to:
@@ -2959,6 +2965,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'4 programmes saved'**
   String get tileShortlistMeta;
+
+  /// No description provided for @timeBand.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total} destinations take this long or less.'**
+  String timeBand(Object count, Object total);
 
   /// No description provided for @timeLabel.
   ///
