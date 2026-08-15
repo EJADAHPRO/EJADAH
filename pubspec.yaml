@@ -1,0 +1,21 @@
+name: ejadah
+description: >-
+  Ejadah International Academy — repository root. Holds the developer tooling
+  in tool/ (importers, seeders) so they can be run as `dart run tool/<script>`
+  from the project root. The application itself lives in apps/, packages/ and
+  server/.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  ejadah_server:
+    path: server
+  ejadah_models:
+    path: packages/ejadah_models
+
+dev_dependencies:
+  lints: ^5.1.1
+  test: ^1.25.15

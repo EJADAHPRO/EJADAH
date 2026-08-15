@@ -1,0 +1,15 @@
+name: ejadah_models
+description: Typed domain models shared between the Ejadah Flutter app and Dart server.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  collection: ^1.19.0
+  meta: ^1.16.0
+
+dev_dependencies:
+  test: ^1.25.15
+  lints: ^5.1.1
