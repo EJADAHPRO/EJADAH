@@ -32,6 +32,7 @@ class EjadahPressable extends StatefulWidget {
     required this.child,
     this.onTap,
     this.onDisabledTap,
+    this.onLongPress,
     this.haptic = PressHaptic.light,
     this.semanticLabel,
     this.isButton = true,
@@ -44,6 +45,10 @@ class EjadahPressable extends StatefulWidget {
 
   /// Null means disabled.
   final VoidCallback? onTap;
+
+  /// A secondary action on the same target. Carries its own haptic, because a
+  /// long press with no feedback reads as a failed tap.
+  final VoidCallback? onLongPress;
 
   /// Called when a disabled control is tapped, so the reason can be surfaced.
   /// A disabled control that swallows taps silently is a defect.
@@ -120,6 +125,12 @@ class _EjadahPressableState extends State<EjadahPressable> {
         onTapUp: (_) => _setPressed(false),
         onTapCancel: () => _setPressed(false),
         onTap: widget.isEnabled ? widget.onTap : widget.onDisabledTap,
+        onLongPress: widget.onLongPress == null
+            ? null
+            : () {
+                HapticFeedback.mediumImpact();
+                widget.onLongPress!.call();
+              },
         child: result,
       ),
     );

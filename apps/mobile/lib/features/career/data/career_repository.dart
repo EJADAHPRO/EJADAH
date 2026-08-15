@@ -109,6 +109,20 @@ class CareerRepository {
         .toList(),
   );
 
+  /// Up to three guides in one request.
+  ///
+  /// Fetched together rather than as three calls so the comparison arrives in
+  /// one state — a table that fills in column by column is a table that keeps
+  /// moving under the reader.
+  Future<List<CountryGuide>> compareCountries(List<String> isos) => _client.get(
+    '/career/countries/compare',
+    query: {'iso': isos.join(',')},
+    parse: (json) => [
+      for (final item in json['items'] as List<dynamic>? ?? const [])
+        CountryGuide.fromJson(Map<String, dynamic>.from(item as Map)),
+    ],
+  );
+
   Future<CountryGuide> country(String iso) =>
       _client.get('/career/countries/$iso', parse: CountryGuide.fromJson);
 

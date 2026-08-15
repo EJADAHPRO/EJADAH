@@ -164,6 +164,12 @@ abstract class EjadahStrings {
   /// **'Apply to teach'**
   String get applyToTeach;
 
+  /// No description provided for @authorityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'REGULATOR'**
+  String get authorityLabel;
+
   /// No description provided for @availabilityLabel.
   ///
   /// In en, this message translates to:
@@ -716,6 +722,12 @@ abstract class EjadahStrings {
   /// **'difficulty'**
   String get difficulty;
 
+  /// No description provided for @difficultyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'DIFFICULTY'**
+  String get difficultyLabel;
+
   /// No description provided for @disclaimer.
   ///
   /// In en, this message translates to:
@@ -883,6 +895,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Exam fee'**
   String get examFee;
+
+  /// No description provided for @examLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'EXAM'**
+  String get examLabel;
 
   /// No description provided for @exploreLabel.
   ///
@@ -1759,6 +1777,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'CHOOSE A DIRECTION'**
   String get pathsLabel;
+
+  /// No description provided for @pathwayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PATHWAY'**
+  String get pathwayLabel;
 
   /// No description provided for @patientDataWarning.
   ///

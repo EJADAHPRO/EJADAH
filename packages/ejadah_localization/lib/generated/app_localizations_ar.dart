@@ -42,6 +42,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get applyToTeach => 'تقدّم للتدريس';
 
   @override
+  String get authorityLabel => 'الجهة المنظِّمة';
+
+  @override
   String get availabilityLabel => 'المواعيد المتاحة';
 
   @override
@@ -344,6 +347,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get difficulty => 'الصعوبة';
 
   @override
+  String get difficultyLabel => 'الصعوبة';
+
+  @override
   String get disclaimer =>
       'تأكّد دائمًا من الرسوم وقواعد التأشيرة وشروط التسجيل من الجهة المختصة قبل دفع أي مبلغ.';
 
@@ -433,6 +439,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get examFee => 'رسوم الامتحان';
+
+  @override
+  String get examLabel => 'الامتحان';
 
   @override
   String get exploreLabel => 'استكشف';
@@ -905,6 +914,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get pathsLabel => 'اختر اتجاهًا';
+
+  @override
+  String get pathwayLabel => 'المسار';
 
   @override
   String get patientDataWarning => 'لا تُدرج أسماء المرضى أو بيانات تعريفية.';

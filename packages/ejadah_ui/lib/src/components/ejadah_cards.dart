@@ -13,6 +13,7 @@ class EjadahCard extends StatelessWidget {
   const EjadahCard({
     required this.child,
     this.onTap,
+    this.onLongPress,
     this.padding = const EdgeInsets.all(EjadahSpacing.md),
     this.semanticLabel,
     this.isSelected = false,
@@ -22,6 +23,10 @@ class EjadahCard extends StatelessWidget {
 
   final Widget child;
   final VoidCallback? onTap;
+
+  /// A secondary action on the same card — comparison selection, where a card
+  /// has one. The tap stays with the card's primary action.
+  final VoidCallback? onLongPress;
   final EdgeInsetsGeometry padding;
   final String? semanticLabel;
 
@@ -55,10 +60,11 @@ class EjadahCard extends StatelessWidget {
       );
     }
 
-    if (onTap == null) return card;
+    if (onTap == null && onLongPress == null) return card;
 
     return EjadahPressable(
       onTap: onTap,
+      onLongPress: onLongPress,
       semanticLabel: semanticLabel,
       isButton: false,
       enforceMinimumTarget: false,

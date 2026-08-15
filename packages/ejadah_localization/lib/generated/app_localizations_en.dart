@@ -42,6 +42,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get applyToTeach => 'Apply to teach';
 
   @override
+  String get authorityLabel => 'REGULATOR';
+
+  @override
   String get availabilityLabel => 'AVAILABILITY';
 
   @override
@@ -342,6 +345,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get difficulty => 'difficulty';
 
   @override
+  String get difficultyLabel => 'DIFFICULTY';
+
+  @override
   String get disclaimer =>
       'Always confirm fees, visa rules and registration requirements with the relevant authority before committing money.';
 
@@ -434,6 +440,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get examFee => 'Exam fee';
+
+  @override
+  String get examLabel => 'EXAM';
 
   @override
   String get exploreLabel => 'EXPLORE';
@@ -904,6 +913,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get pathsLabel => 'CHOOSE A DIRECTION';
+
+  @override
+  String get pathwayLabel => 'PATHWAY';
 
   @override
   String get patientDataWarning =>

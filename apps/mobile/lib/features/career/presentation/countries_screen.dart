@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../application/compare_controller.dart';
 import '../data/career_repository.dart';
 
 final countriesProvider = FutureProvider<List<CountryGuideSummary>>(
@@ -43,6 +44,7 @@ class _CountriesScreenState extends ConsumerState<CountriesScreen> {
         onBack: () => context.pop(),
         backLabel: strings.back,
       ),
+      bottomNavigationBar: const _CompareBar(),
       body: SafeArea(
         top: false,
         child: EjadahPageBody(
@@ -136,16 +138,34 @@ class _CountriesScreenState extends ConsumerState<CountriesScreen> {
 }
 
 /// The canonical country card.
-class _CountryCard extends StatelessWidget {
+class _CountryCard extends ConsumerWidget {
   const _CountryCard({required this.guide});
 
   final CountryGuideSummary guide;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final strings = context.strings;
+    final isSelected = ref
+        .watch(countryComparisonProvider)
+        .contains(guide.iso);
+
     return EjadahCard(
       onTap: () => context.push('/country/${guide.iso}'),
+      // A long press picks the guide for comparison. The tap belongs to
+      // opening it — the primary action stays the primary action.
+      onLongPress: () {
+        final accepted = ref
+            .read(countryComparisonProvider.notifier)
+            .toggle(guide.iso);
+        if (!accepted) {
+          showEjadahToast(
+            context,
+            message: strings.compareLimit(maxComparisonItems),
+          );
+        }
+      },
+      isSelected: isSelected,
       semanticLabel: guide.name(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,6 +200,58 @@ class _CountryCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+/// The compare bar for country guides.
+class _CompareBar extends ConsumerWidget {
+  const _CompareBar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selected = ref.watch(countryComparisonProvider);
+    if (selected.isEmpty) return const SizedBox.shrink();
+
+    final strings = context.strings;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(EjadahSpacing.gutter),
+        child: Row(
+          children: [
+            LtrIsland(
+              child: Text(
+                '${selected.length}/$maxComparisonItems',
+                style: context.type.tabular(),
+              ),
+            ),
+            const SizedBox(width: EjadahSpacing.xxs),
+            Text(
+              strings.compareCount,
+              style: context.type.small(color: EjadahColors.textSecondary),
+            ),
+            const Spacer(),
+            EjadahGhostButton(
+              label: strings.clearAll,
+              onPressed: () =>
+                  ref.read(countryComparisonProvider.notifier).clear(),
+            ),
+            const SizedBox(width: EjadahSpacing.xs),
+            EjadahSecondaryButton(
+              label: strings.compareCta,
+              expand: false,
+              onPressed: selected.length >= 2
+                  ? () => context.push('/compare/countries')
+                  : null,
+              disabledReason: strings.compareNeedsTwo,
+              onDisabledTap: (reason) =>
+                  showEjadahToast(context, message: reason),
+            ),
+          ],
+        ),
       ),
     );
   }

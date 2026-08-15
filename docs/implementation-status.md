@@ -38,7 +38,7 @@ against the handoff; what each is missing is named.
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 509 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 513 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
@@ -77,7 +77,7 @@ against the handoff; what each is missing is named.
 | Guest → account migration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | What-if scenarios | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six presets, each a new roadmap linked to the original |
 | Compare programmes (≤3) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — selection survives paging and filtering |
-| Compare countries (≤3) | — | ✅ | ✅ | — | — | — | IN PROGRESS — server done, no UI |
+| Compare countries (≤3) | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE — long-press to pick, so the tap still opens the guide |
 | Saved-filter alerts | — | — | ✅ | — | — | — | NOT STARTED |
 | Career-scoped search screen | — | ✅ | ✅ | — | — | — | IN PROGRESS |
 | **Identity** |
@@ -158,7 +158,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **509 keys** in each language, up from the 374 they arrived
+The tables now hold **513 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
