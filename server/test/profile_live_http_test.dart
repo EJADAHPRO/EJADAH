@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:ejadah_server/src/http/middleware.dart';
 import 'package:ejadah_server/src/modules/profile/profile_repository.dart';
+import 'package:ejadah_server/src/modules/profile/cv_service.dart';
 import 'package:ejadah_server/src/modules/profile/profile_routes.dart';
 import 'package:ejadah_server/src/modules/profile/profile_service.dart';
 import 'package:ejadah_server/src/observability/logger.dart';
@@ -38,7 +39,7 @@ void main() {
       config: db.config,
     );
     final router = Router()
-      ..mount('/api/v1/profile', profileRoutes(service).call);
+      ..mount('/api/v1/profile', profileRoutes(service, CvService(db.database)).call);
 
     final handler = const Pipeline()
         .addMiddleware(contextMiddleware(TokenService(db.config)))

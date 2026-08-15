@@ -34,6 +34,7 @@ import '../features/people/presentation/tutor_application_screen.dart';
 import '../features/people/presentation/tutor_status_screen.dart';
 import '../features/profile/presentation/certificates_screen.dart';
 import '../features/profile/presentation/cpd_screen.dart';
+import '../features/profile/presentation/cv_screen.dart';
 import '../features/profile/presentation/delete_account_screen.dart';
 import '../features/profile/presentation/nfc_card_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
@@ -354,6 +355,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/profile/certificates',
         builder: (context, state) =>
             _screen('certificates', const CertificatesScreen()),
+      ),
+      GoRoute(
+        path: '/profile/cv',
+        builder: (context, state) => _screen('cv', const CvScreen()),
       ),
       GoRoute(
         path: '/profile/cpd',

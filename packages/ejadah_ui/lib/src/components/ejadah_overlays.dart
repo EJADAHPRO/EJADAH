@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../foundation/gradient_budget.dart';
 import '../theme/ejadah_theme.dart';
 import '../tokens/ejadah_tokens.dart';
 import 'ejadah_buttons.dart';
@@ -9,9 +10,15 @@ import 'ejadah_buttons.dart';
 /// Sheets carry options, filters and confirmations — **never long forms**. A
 /// multi-step form belongs on its own screen where the back stack, scroll
 /// restoration and keyboard all behave.
+///
+/// A sheet is its own route, so the screen's [GradientBudget] does not reach
+/// into it: [_SheetFrame] installs one. Without it any sheet containing a
+/// gradient — a primary button is enough — asserts in debug, and the six-per-
+/// screen limit would be unenforced in release.
 Future<T?> showEjadahSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
+  String screenName = 'sheet',
   bool isDismissible = true,
 }) => showModalBottomSheet<T>(
   context: context,
@@ -25,16 +32,23 @@ Future<T?> showEjadahSheet<T>({
     // Full width on a phone, capped on anything wider.
     maxWidth: EjadahSizes.phoneContentMaxWidth,
   ),
-  builder: (context) => _SheetFrame(child: builder(context)),
+  builder: (context) =>
+      _SheetFrame(screenName: screenName, child: builder(context)),
 );
 
 class _SheetFrame extends StatelessWidget {
-  const _SheetFrame({required this.child});
+  const _SheetFrame({required this.screenName, required this.child});
 
+  final String screenName;
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
+  Widget build(BuildContext context) => GradientBudget(
+    screenName: screenName,
+    child: _body(context),
+  );
+
+  Widget _body(BuildContext context) => SafeArea(
     top: false,
     child: Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),

@@ -337,6 +337,67 @@ class EjadahStringsAr extends EjadahStrings {
   String get curriculum => 'المحتوى';
 
   @override
+  String get cvAddSection => 'أضف قسمًا';
+
+  @override
+  String get cvBody => 'التفاصيل';
+
+  @override
+  String get cvEmpty =>
+      'لا شيء هنا بعد. ارفع سيرة ذاتية، أو أضف قسمًا — أيهما أسهل.';
+
+  @override
+  String get cvFileRemoved => 'تم حذف الملف';
+
+  @override
+  String get cvHeading => 'العنوان';
+
+  @override
+  String get cvKindEducation => 'التعليم';
+
+  @override
+  String get cvKindExperience => 'الخبرة';
+
+  @override
+  String get cvKindOther => 'أخرى';
+
+  @override
+  String get cvKindPublications => 'المنشورات';
+
+  @override
+  String get cvKindSkills => 'المهارات';
+
+  @override
+  String get cvKindSummary => 'نبذة';
+
+  @override
+  String get cvLead => 'لديك واحدة بالفعل؟ ارفعها. وكل ما يلي اختياري.';
+
+  @override
+  String get cvRemoveFile => 'إزالة الملف';
+
+  @override
+  String get cvSectionKind => 'القسم';
+
+  @override
+  String get cvSectionRemoved => 'تم حذف القسم';
+
+  @override
+  String get cvSectionsTitle => 'الأقسام';
+
+  @override
+  String get cvTitle => 'سيرتك الذاتية';
+
+  @override
+  String get cvUploadHint => 'ملف PDF بحد أقصى 5 ميجابايت';
+
+  @override
+  String get cvUploadTitle => 'ملفك';
+
+  @override
+  String get cvUploaded => 'تم الرفع';
+
+  @override
   String get daysLeft => 'يومًا متبقيًا';
 
   @override

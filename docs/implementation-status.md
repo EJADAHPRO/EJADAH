@@ -98,7 +98,7 @@ against the handoff; what each is missing is named.
 | Tutor onboarding (6 steps + playbook) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-10/11/12. Every step draft-saved, blocked submit names every missing item, the 70/30 split is read from config so the pitch and the ledger cannot disagree |
 | Tutor dashboard / availability editor | — | — | ✅ | — | — | — | NOT STARTED — PE-13, PE-14. The application's availability step writes rules; there is no editor afterwards |
 | Tutor earnings (70/30 itemised) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-15. Every row is the whole subtraction in a tabular LTR island; the payout floor states the shortfall in figures; two simultaneous requests produce one payout |
-| File uploads (certificate, photo, CV) | ✅ | ✅ | n/a | ✅ | ✅ | ✅ | COMPLETE — type decided by the bytes not the request, owner-only reads answering 404 to a stranger, 8 MB cap checked before decode |
+| File uploads (certificate, photo, CV) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — type decided by the bytes not the request, owner-only reads answering 404 to a stranger, 5 MB cap checked before decode, recorded in `stored_files` |
 | My bookings | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Learn** |
 | Course hub / list / detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
@@ -115,7 +115,7 @@ against the handoff; what each is missing is named.
 | Certificates (verified vs stated) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — two CHECK constraints make a forged verification impossible |
 | Public verification `/verify/{code}` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | CPD ledger | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| CV builder (PR-07) | — | — | ✅ | — | — | — | NOT STARTED |
+| CV builder (PR-07) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — upload-first, sections add/delete/reorder, patient-data warning server-supplied and shown on both screens. No export: the CV is stored and shown, never rendered to a PDF |
 | Settings, notification prefs | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Home** |
 | Feed (greeting, roadmap CTA, tiles) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six states, per-persona CTA, partial-data treatment |
@@ -160,7 +160,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **624 keys** in each language, up from the 374 they arrived
+The tables now hold **644 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -187,6 +187,11 @@ copy. They are grouped so a reviewer can find them:
   the payout labels. The fee percentage is a placeholder fed from config, and
   the payout shortfall is composed server-side in both languages so the figure
   the tutor is told they need is the figure the check uses.
+* 21 for the CV builder (PR-07): the upload-first lead, the six section
+  labels, and the field labels. The patient-data warning is **not** among them
+  — CONTENT.md's exact wording is sent by the server with the CV, so a redesign
+  that only touches the client cannot drop the one warning this screen must
+  always show.
 * 1 — `nextStep` ("Next" / «التالي»). The application's step button had been
   reaching for `continueLabel`, which is «أكمل ما بدأته» — a resume CTA, wrong
   on a form.
@@ -205,13 +210,13 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 232 |
-| `apps/mobile` (`flutter test`) | 135 |
+| `server` (`dart test`, real PostgreSQL) | 244 |
+| `apps/mobile` (`flutter test`) | 144 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The
-application is **63,232 lines of Dart across 233 files**; there is no JavaScript,
+application is **64,976 lines of Dart across 239 files**; there is no JavaScript,
 TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
 `apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
 under `reference/` and `uploads/` are the preserved design prototypes, read as

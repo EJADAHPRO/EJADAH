@@ -12,8 +12,8 @@ import '../../app/providers.dart';
 /// that took a PDF would render as a broken avatar on every card in the
 /// marketplace.
 enum UploadPurpose {
-  avatar('avatar', ['jpg', 'jpeg', 'png', 'webp']),
-  document('document', ['pdf', 'jpg', 'jpeg', 'png', 'webp']),
+  avatar('avatar', ['jpg', 'jpeg', 'png']),
+  document('document', ['pdf', 'jpg', 'jpeg', 'png']),
   cv('cv', ['pdf']);
 
   const UploadPurpose(this.wire, this.extensions);
@@ -54,10 +54,12 @@ class UploadRepository {
 
   /// The most a file may be, matching the server's cap.
   ///
-  /// Checked here as well so an eight-megabyte photograph is refused with a
-  /// readable message on a Cairo mobile connection rather than after a long
-  /// upload that ends in a 422.
-  static const int maxBytes = 8 * 1024 * 1024;
+  /// Checked here as well so an oversized photograph is refused with a readable
+  /// message on a Cairo mobile connection rather than after a long upload that
+  /// ends in a 422.
+  /// Five megabytes, the figure `CONTENT.md` states — and the limit the copy
+  /// promises has to be the limit that is enforced.
+  static const int maxBytes = 5 * 1024 * 1024;
 
   Future<StoredFile> upload({
     required UploadPurpose purpose,

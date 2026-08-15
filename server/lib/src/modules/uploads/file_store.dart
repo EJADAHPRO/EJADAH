@@ -16,16 +16,11 @@ import '../../http/api_error.dart';
 enum UploadPurpose {
   /// A profile photograph. Images only — a PDF here would render as a broken
   /// avatar on every card in the marketplace.
-  avatar('avatar', {MediaType.jpeg, MediaType.png, MediaType.webp}),
+  avatar('avatar', {MediaType.jpeg, MediaType.png}),
 
   /// A certificate or transcript proving a qualification. PDFs and photographs
   /// of paper both, because most Egyptian certificates exist as paper first.
-  document('document', {
-    MediaType.pdf,
-    MediaType.jpeg,
-    MediaType.png,
-    MediaType.webp,
-  }),
+  document('document', {MediaType.pdf, MediaType.jpeg, MediaType.png}),
 
   /// An uploaded CV, for the CV builder's upload-first path.
   cv('cv', {MediaType.pdf});
@@ -47,7 +42,6 @@ enum UploadPurpose {
 enum MediaType {
   jpeg('image/jpeg', 'jpg'),
   png('image/png', 'png'),
-  webp('image/webp', 'webp'),
   pdf('application/pdf', 'pdf');
 
   const MediaType(this.mime, this.extension);
@@ -76,15 +70,10 @@ enum MediaType {
       return MediaType.png;
     }
     if (startsWith([0x25, 0x50, 0x44, 0x46])) return MediaType.pdf;
-    // RIFF....WEBP — the size field sits between the two markers.
-    if (startsWith([0x52, 0x49, 0x46, 0x46]) &&
-        bytes.length >= 12 &&
-        bytes[8] == 0x57 &&
-        bytes[9] == 0x45 &&
-        bytes[10] == 0x42 &&
-        bytes[11] == 0x50) {
-      return MediaType.webp;
-    }
+    // Anything else is not a type this product accepts. WebP and the rest are
+    // absent deliberately: CONTENT.md says PDF, JPG or PNG, and an upload
+    // endpoint that silently accepts more than the copy promises is an
+    // endpoint whose rules nobody can read off the screen.
     return null;
   }
 }
@@ -134,10 +123,11 @@ abstract class FileStore {
 
   /// The most any single upload may be.
   ///
-  /// Eight megabytes covers a phone photograph of a certificate and a scanned
-  /// PDF; it is small enough that a hostile client cannot fill the disk with
-  /// one request.
-  static const int maxBytes = 8 * 1024 * 1024;
+  /// Five megabytes, because that is the figure `CONTENT.md` states for the
+  /// tutor application's files and the limit a user is told has to be the limit
+  /// that is enforced. It is also small enough that a hostile client cannot
+  /// fill the disk with one request.
+  static const int maxBytes = 5 * 1024 * 1024;
 
   /// Whether [key] belongs to [userId].
   ///
@@ -234,13 +224,13 @@ class LocalFileStore implements FileStore {
   );
 
   static const LocalizedText _tooLarge = LocalizedText(
-    en: 'That file is larger than 8 MB. Try a smaller one.',
-    ar: 'حجم الملف أكبر من 8 ميجابايت. جرّب ملفًا أصغر.',
+    en: 'That file is larger than 5 MB. Try a smaller one.',
+    ar: 'حجم الملف أكبر من 5 ميجابايت. جرّب ملفًا أصغر.',
   );
 
   static const LocalizedText _notAnImage = LocalizedText(
-    en: 'That is not a photograph. Use a JPG, PNG or WebP image.',
-    ar: 'هذه ليست صورة. استخدم صورة بصيغة JPG أو PNG أو WebP.',
+    en: 'That is not a photograph. Use a JPG or PNG image.',
+    ar: 'هذه ليست صورة. استخدم صورة بصيغة JPG أو PNG.',
   );
 
   static const LocalizedText _notAccepted = LocalizedText(

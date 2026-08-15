@@ -5,6 +5,7 @@ import 'package:shelf_router/shelf_router.dart';
 import '../../http/api_error.dart';
 import '../../http/context.dart';
 import '../../http/responses.dart';
+import 'cv_service.dart';
 import 'profile_service.dart';
 
 /// `/api/v1/profile` — the public card, public verification, certificates,
@@ -15,7 +16,7 @@ import 'profile_service.dart';
 /// scans a card or checks a credential has no account and must not need one.
 /// Everything below them is the owner's own private data and calls
 /// `requireUser()`.
-Router profileRoutes(ProfileService service) {
+Router profileRoutes(ProfileService service, CvService cv) {
   final router = Router();
 
   // --- Public ---------------------------------------------------------------
@@ -69,6 +70,75 @@ Router profileRoutes(ProfileService service) {
   });
 
   // --- Certificates ---------------------------------------------------------
+
+  // --- CV (PR-07) -----------------------------------------------------------
+  //
+  // Upload-first: most people already have a CV, and asking them to retype it
+  // into a form is how a feature goes unused. The sections are what someone
+  // builds afterwards, or instead.
+
+  router.get('/cv', (Request request) async {
+    final sections = await cv.sections(request.ctx.requireUser());
+    return Json.ok({
+      'items': sections.map((section) => section.toJson()).toList(),
+      // Sent with the CV rather than written into the app's copy, so the one
+      // warning this screen must always show cannot be dropped by a redesign
+      // that only touches the client.
+      'patient_data_warning': CvService.patientDataWarning.toJson(),
+      'kinds': CvService.kinds.toList(),
+    });
+  });
+
+  router.put('/cv/upload', (Request request) async {
+    final body = await readJsonBody(request);
+    final key = (body['storage_key'] as String? ?? '').trim();
+    if (key.isEmpty) throw ApiException.validation({'storage_key': _noFile});
+    return Json.ok(
+      (await cv.setUploadedFile(
+        userId: request.ctx.requireUser(),
+        storageKey: key,
+      )).toJson(),
+    );
+  });
+
+  router.delete('/cv/upload', (Request request) async {
+    await cv.removeUploadedFile(request.ctx.requireUser());
+    return Json.noContent();
+  });
+
+  router.post('/cv/sections', (Request request) async {
+    final body = await readJsonBody(request);
+    return Json.created(
+      (await cv.saveSection(
+        userId: request.ctx.requireUser(),
+        kind: (body['kind'] as String? ?? '').trim(),
+        heading: body['heading'] as String? ?? '',
+        body: body['body'] as String? ?? '',
+        position: (body['position'] as num?)?.toInt(),
+      )).toJson(),
+    );
+  });
+
+  router.delete('/cv/sections/<id>', (Request request, String id) async {
+    await cv.deleteSection(
+      userId: request.ctx.requireUser(),
+      sectionId: id,
+    );
+    return Json.noContent();
+  });
+
+  router.put('/cv/order', (Request request) async {
+    final body = await readJsonBody(request);
+    final reordered = await cv.reorder(
+      userId: request.ctx.requireUser(),
+      sectionIds: (body['section_ids'] as List<dynamic>? ?? const [])
+          .map((value) => value.toString())
+          .toList(),
+    );
+    return Json.ok({
+      'items': reordered.map((section) => section.toJson()).toList(),
+    });
+  });
 
   router.get('/certificates', (Request request) async {
     final items = await service.certificates(request.ctx.requireUser());
@@ -152,3 +222,8 @@ DateTime _date(Object? value) {
   }
   return DateTime.utc(parsed.year, parsed.month, parsed.day);
 }
+
+const LocalizedText _noFile = LocalizedText(
+  en: 'Choose a file first.',
+  ar: 'اختر ملفًا أولًا.',
+);

@@ -716,6 +716,126 @@ abstract class EjadahStrings {
   /// **'Curriculum'**
   String get curriculum;
 
+  /// No description provided for @cvAddSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a section'**
+  String get cvAddSection;
+
+  /// No description provided for @cvBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get cvBody;
+
+  /// No description provided for @cvEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet. Upload a CV, or add a section — whichever is easier.'**
+  String get cvEmpty;
+
+  /// No description provided for @cvFileRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'File removed'**
+  String get cvFileRemoved;
+
+  /// No description provided for @cvHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Heading'**
+  String get cvHeading;
+
+  /// No description provided for @cvKindEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get cvKindEducation;
+
+  /// No description provided for @cvKindExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get cvKindExperience;
+
+  /// No description provided for @cvKindOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get cvKindOther;
+
+  /// No description provided for @cvKindPublications.
+  ///
+  /// In en, this message translates to:
+  /// **'Publications'**
+  String get cvKindPublications;
+
+  /// No description provided for @cvKindSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get cvKindSkills;
+
+  /// No description provided for @cvKindSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get cvKindSummary;
+
+  /// No description provided for @cvLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have one? Upload it. Everything below is optional.'**
+  String get cvLead;
+
+  /// No description provided for @cvRemoveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove file'**
+  String get cvRemoveFile;
+
+  /// No description provided for @cvSectionKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Section'**
+  String get cvSectionKind;
+
+  /// No description provided for @cvSectionRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Section removed'**
+  String get cvSectionRemoved;
+
+  /// No description provided for @cvSectionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SECTIONS'**
+  String get cvSectionsTitle;
+
+  /// No description provided for @cvTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your CV'**
+  String get cvTitle;
+
+  /// No description provided for @cvUploadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF, up to 5 MB'**
+  String get cvUploadHint;
+
+  /// No description provided for @cvUploadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR FILE'**
+  String get cvUploadTitle;
+
+  /// No description provided for @cvUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded'**
+  String get cvUploaded;
+
   /// No description provided for @daysLeft.
   ///
   /// In en, this message translates to:

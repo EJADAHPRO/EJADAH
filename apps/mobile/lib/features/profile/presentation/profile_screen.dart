@@ -11,6 +11,7 @@ import '../../auth/auth_controller.dart';
 import '../application/profile_controllers.dart';
 import 'certificates_screen.dart';
 import 'cpd_screen.dart';
+import 'cv_screen.dart';
 import 'nfc_card_screen.dart';
 import 'public_profile_screen.dart';
 import 'settings_screen.dart';
@@ -201,6 +202,14 @@ class ProfileScreen extends ConsumerWidget {
                 title: strings.rowCertificates,
                 subtitle: strings.tileCertificatesMeta,
                 onTap: () => _push(context, ref, 'certificates', const CertificatesScreen()),
+                trailing: const DirectionalIcon(
+                  EjadahIcons.chevronForward,
+                  color: EjadahColors.labelMuted,
+                ),
+              ),
+              EjadahListRow(
+                title: strings.cvTitle,
+                onTap: () => _push(context, ref, 'cv', const CvScreen()),
                 trailing: const DirectionalIcon(
                   EjadahIcons.chevronForward,
                   color: EjadahColors.labelMuted,

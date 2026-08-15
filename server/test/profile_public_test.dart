@@ -5,6 +5,7 @@ import 'package:ejadah_models/ejadah_models.dart';
 import 'package:ejadah_server/src/http/api_error.dart';
 import 'package:ejadah_server/src/http/middleware.dart';
 import 'package:ejadah_server/src/modules/profile/profile_repository.dart';
+import 'package:ejadah_server/src/modules/profile/cv_service.dart';
 import 'package:ejadah_server/src/modules/profile/profile_routes.dart';
 import 'package:ejadah_server/src/modules/profile/profile_service.dart';
 import 'package:ejadah_server/src/observability/logger.dart';
@@ -52,7 +53,7 @@ void main() {
     // The real pipeline, minus logging noise. contextMiddleware is what turns
     // a missing Authorization header into a guest context rather than a 401,
     // so including it is the point.
-    final router = Router()..mount('/profile', profileRoutes(service).call);
+    final router = Router()..mount('/profile', profileRoutes(service, CvService(db.database)).call);
     handler = const Pipeline()
         .addMiddleware(contextMiddleware(TokenService(db.config)))
         .addMiddleware(errorMiddleware(AppLogger('test', sink: _silent)))

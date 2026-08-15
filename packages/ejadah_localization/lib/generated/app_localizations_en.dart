@@ -339,6 +339,68 @@ class EjadahStringsEn extends EjadahStrings {
   String get curriculum => 'Curriculum';
 
   @override
+  String get cvAddSection => 'Add a section';
+
+  @override
+  String get cvBody => 'Details';
+
+  @override
+  String get cvEmpty =>
+      'Nothing here yet. Upload a CV, or add a section — whichever is easier.';
+
+  @override
+  String get cvFileRemoved => 'File removed';
+
+  @override
+  String get cvHeading => 'Heading';
+
+  @override
+  String get cvKindEducation => 'Education';
+
+  @override
+  String get cvKindExperience => 'Experience';
+
+  @override
+  String get cvKindOther => 'Other';
+
+  @override
+  String get cvKindPublications => 'Publications';
+
+  @override
+  String get cvKindSkills => 'Skills';
+
+  @override
+  String get cvKindSummary => 'Summary';
+
+  @override
+  String get cvLead =>
+      'Already have one? Upload it. Everything below is optional.';
+
+  @override
+  String get cvRemoveFile => 'Remove file';
+
+  @override
+  String get cvSectionKind => 'Section';
+
+  @override
+  String get cvSectionRemoved => 'Section removed';
+
+  @override
+  String get cvSectionsTitle => 'SECTIONS';
+
+  @override
+  String get cvTitle => 'Your CV';
+
+  @override
+  String get cvUploadHint => 'PDF, up to 5 MB';
+
+  @override
+  String get cvUploadTitle => 'YOUR FILE';
+
+  @override
+  String get cvUploaded => 'Uploaded';
+
+  @override
   String get daysLeft => 'days left';
 
   @override

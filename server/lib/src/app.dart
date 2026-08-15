@@ -26,6 +26,7 @@ import 'modules/people/people_repository.dart';
 import 'modules/people/people_routes.dart';
 import 'modules/people/people_service.dart';
 import 'modules/people/tutor_application_service.dart';
+import 'modules/profile/cv_service.dart';
 import 'modules/profile/profile_repository.dart';
 import 'modules/profile/profile_routes.dart';
 import 'modules/profile/profile_service.dart';
@@ -155,8 +156,8 @@ class EjadahApp {
         ).call,
       )
       ..mount('/earnings', earningsRoutes(EarningsService(database, config)).call)
-      ..mount('/profile', profileRoutes(profileService).call)
-      ..mount('/uploads', uploadRoutes(LocalFileStore(config)).call);
+      ..mount('/profile', profileRoutes(profileService, CvService(database)).call)
+      ..mount('/uploads', uploadRoutes(LocalFileStore(config), database).call);
 
     final root = Router()
       ..mount('/api/v1', api.call)

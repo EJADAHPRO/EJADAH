@@ -5,6 +5,9 @@ import 'package:ejadah_models/ejadah_models.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import 'package:postgres/postgres.dart';
+
+import '../../db/database.dart';
 import '../../http/api_error.dart';
 import '../../http/context.dart';
 import '../../http/responses.dart';
@@ -25,7 +28,7 @@ import 'file_store.dart';
 ///
 /// Nothing about a file's *contents* is ever logged. The size and the type are;
 /// the bytes and the original filename are not.
-Router uploadRoutes(FileStore store) {
+Router uploadRoutes(FileStore store, Database database) {
   final router = Router();
 
   router.post('/<purpose>', (Request request, String purpose) async {
@@ -59,6 +62,29 @@ Router uploadRoutes(FileStore store) {
       purpose: resolved,
       bytes: bytes,
     );
+
+    // Recorded as well as written. A file that exists only on disk is a file
+    // nothing can list, audit or clean up — and the schema has had a table
+    // waiting for it since `006_profile_platform.sql`.
+    //
+    // The mime type is the one the bytes proved, never the one the request
+    // claimed, and the original filename is not stored: it routinely carries a
+    // person's name and nothing here needs it.
+    await database.run(
+      (session) => session.execute(
+        Sql.named(
+          'INSERT INTO stored_files (owner_id, storage_key, mime_type, bytes) '
+          'VALUES (@owner_id, @key, @mime, @bytes)',
+        ),
+        parameters: {
+          'owner_id': userId,
+          'key': stored.key,
+          'mime': stored.contentType,
+          'bytes': stored.sizeBytes,
+        },
+      ),
+    );
+
     return Json.created(stored.toJson());
   });
 
@@ -95,8 +121,8 @@ const LocalizedText _missingFile = LocalizedText(
 );
 
 const LocalizedText _tooLarge = LocalizedText(
-  en: 'That file is larger than 8 MB. Try a smaller one.',
-  ar: 'حجم الملف أكبر من 8 ميجابايت. جرّب ملفًا أصغر.',
+  en: 'That file is larger than 5 MB. Try a smaller one.',
+  ar: 'حجم الملف أكبر من 5 ميجابايت. جرّب ملفًا أصغر.',
 );
 
 const LocalizedText _notReadable = LocalizedText(

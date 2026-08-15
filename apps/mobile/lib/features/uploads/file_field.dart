@@ -145,8 +145,8 @@ class _EjadahFileFieldState extends ConsumerState<EjadahFileField> {
     final picked = await ref.read(filePickerProvider)(widget.purpose);
     if (picked == null || !mounted) return;
 
-    // Checked before the request, so an eight-megabyte photograph is refused
-    // in a moment rather than after a long upload on a mobile connection.
+    // Checked before the request, so an oversized photograph is refused in a
+    // moment rather than after a long upload on a mobile connection.
     if (picked.bytes.length > UploadRepository.maxBytes) {
       setState(() => _failure = ValidationFailure(message: _tooLarge));
       return;
@@ -187,6 +187,6 @@ class _EjadahFileFieldState extends ConsumerState<EjadahFileField> {
 }
 
 const LocalizedText _tooLarge = LocalizedText(
-  en: 'That file is larger than 8 MB. Try a smaller one.',
-  ar: 'حجم الملف أكبر من 8 ميجابايت. جرّب ملفًا أصغر.',
+  en: 'That file is larger than 5 MB. Try a smaller one.',
+  ar: 'حجم الملف أكبر من 5 ميجابايت. جرّب ملفًا أصغر.',
 );
