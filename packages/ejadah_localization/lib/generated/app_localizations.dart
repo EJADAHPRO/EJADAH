@@ -2981,7 +2981,7 @@ abstract class EjadahStrings {
   /// No description provided for @timezoneNote.
   ///
   /// In en, this message translates to:
-  /// **'Times shown in Cairo time (GMT+2).'**
+  /// **'Times shown in Cairo time.'**
   String get timezoneNote;
 
   /// No description provided for @toolsLabel.
@@ -3193,6 +3193,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Opens ejadah.com'**
   String get webOnly;
+
+  /// No description provided for @webPreviewWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview surface — do not use real credentials.'**
+  String get webPreviewWarning;
 
   /// No description provided for @weekLabel.
   ///

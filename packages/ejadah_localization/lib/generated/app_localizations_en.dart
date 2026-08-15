@@ -1572,7 +1572,7 @@ class EjadahStringsEn extends EjadahStrings {
   String get timeLabel => 'STUDY TIME';
 
   @override
-  String get timezoneNote => 'Times shown in Cairo time (GMT+2).';
+  String get timezoneNote => 'Times shown in Cairo time.';
 
   @override
   String get toolsLabel => 'TOOLS';
@@ -1683,6 +1683,10 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get webOnly => 'Opens ejadah.com';
+
+  @override
+  String get webPreviewWarning =>
+      'Preview surface — do not use real credentials.';
 
   @override
   String weekLabel(Object n) {

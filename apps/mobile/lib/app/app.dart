@@ -1,4 +1,5 @@
 import 'package:ejadah_localization/ejadah_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,13 +61,65 @@ class EjadahApp extends ConsumerWidget {
                 // turns any build failure into a state that says what happened
                 // and routes to Home.
                 child: SystemErrorBoundary(
-                  child: child ?? const SizedBox.shrink(),
+                  child: _WebPreviewBanner(
+                    child: child ?? const SizedBox.shrink(),
+                  ),
                 ),
               ),
             );
           },
         );
       },
+    );
+  }
+}
+
+
+/// Marks Flutter Web as a preview surface, in debug builds only.
+///
+/// The web build keeps its refresh token in `localStorage`, which any script in
+/// the origin can read — native builds use secure storage. Web is therefore not
+/// a distribution channel yet, and anyone poking at it in development should
+/// know that before they type a real password into it.
+///
+/// Debug only, and web only: this is a warning to us, not a banner on a
+/// shipped product. If web ever becomes a real channel, the fix is an HttpOnly
+/// refresh cookie and this widget goes away.
+class _WebPreviewBanner extends StatelessWidget {
+  const _WebPreviewBanner({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!kIsWeb || !kDebugMode) return child;
+
+    return Stack(
+      children: [
+        child,
+        // Ignores pointers so it never blocks what is being tested.
+        PositionedDirectional(
+          start: 0,
+          end: 0,
+          bottom: 0,
+          child: IgnorePointer(
+            child: ColoredBox(
+              color: EjadahColors.danger,
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.all(EjadahSpacing.xxs),
+                  child: Text(
+                    context.strings.webPreviewWarning,
+                    textAlign: TextAlign.center,
+                    style: context.type.micro(color: EjadahColors.onDark),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

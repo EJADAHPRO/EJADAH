@@ -1,18 +1,26 @@
 /// Cairo local time, in one place.
 ///
-/// Every user-facing time in this product is stated in Cairo time — the
-/// localization strings say so outright (`timezoneNote`: "Times shown in Cairo
-/// time (GMT+2)."), and a reminder that contradicts the screen it links to is
-/// worse than no reminder.
+/// Every user-facing time in this product is stated in Cairo time, and the copy
+/// names the zone rather than an offset — deliberately. Egypt reinstated
+/// summer time in 2023, so "GMT+2" is wrong for roughly half the year, while
+/// "Cairo time" is always true. A reminder that contradicts the screen it links
+/// to is worse than no reminder, and so is a screen that contradicts the clock
+/// on the user's wall.
 ///
-/// The offset is fixed at +02:00 to match what the copy claims, deliberately
-/// rather than by omission. If the product ever states a DST-aware Cairo time,
-/// this class is the single place that changes, and [offset] becomes a
-/// function of the date. Nothing else in the server formats a local time.
+/// The offset here is fixed at +02:00, which means displayed times run an hour
+/// behind during Egyptian summer time. That is a known and recorded gap, not an
+/// oversight: closing it is a *data* change — the IANA `Africa/Cairo` rules —
+/// applied to [offset] alone, because this is the only place in the server that
+/// converts to local time. Nothing else formats one.
+///
+/// Owner decision, 15 Aug 2026: keep the fixed offset, make the copy honest.
 class CairoClock {
   const CairoClock._();
 
-  /// The offset the product's own copy states.
+  /// Egypt's standard offset.
+  ///
+  /// Not DST-aware. See the class comment: this is the one value a timezone
+  /// database would replace.
   static const Duration offset = Duration(hours: 2);
 
   /// The label the copy uses, so server-sent text and screen text agree.
