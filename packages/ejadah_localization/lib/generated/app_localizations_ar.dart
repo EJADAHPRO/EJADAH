@@ -71,6 +71,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get bookedToast => 'تم إرسال طلب الجلسة';
 
   @override
+  String get bookingConfirmed => 'تم تأكيد الحجز';
+
+  @override
   String get bookingsBlurb => 'الجلسات القادمة والسابقة والملغاة.';
 
   @override
@@ -84,6 +87,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get buildRoute => 'ارسم مساري';
+
+  @override
+  String get cairoTime => 'توقيت القاهرة';
 
   @override
   String get cancel => 'إلغاء';
@@ -119,6 +125,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get clearCache => 'مسح الذاكرة المؤقتة';
+
+  @override
+  String get clearFiltersAction => 'امسح التصفية';
 
   @override
   String get closed => 'انتهى الموعد';
@@ -186,6 +195,21 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get createAccount => 'إنشاء الحساب';
+
+  @override
+  String get ctaContinueRoadmap => 'أكمل خارطة مساري';
+
+  @override
+  String get ctaFindConsulting => 'ابحث عن مستشار';
+
+  @override
+  String get ctaSetUpCard => 'جهّز بطاقتك المهنية';
+
+  @override
+  String get ctaStudyPlan => 'افتح خطة مذاكرتي';
+
+  @override
+  String get ctaTeaching => 'افتح لوحة التدريس';
 
   @override
   String get currentPlan => 'خطتك الحالية';
@@ -360,6 +384,13 @@ class EjadahStringsAr extends EjadahStrings {
   String get filters => 'تصفية';
 
   @override
+  String get firstRunBody =>
+      'أجب عن أربعة أسئلة قصيرة واحصل على مسار مبني على ميزانيتك ووقتك الحقيقيين.';
+
+  @override
+  String get firstRunTitle => 'ابدأ من حيث يهم';
+
+  @override
   String get fitLabel => 'ملاءمة';
 
   @override
@@ -377,6 +408,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get forgotTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get freeIntroCall => 'مكالمة تعريفية مجانية';
 
   @override
   String get fullName => 'الاسم الكامل';
@@ -418,6 +452,17 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get hideExpired => 'المنتهية مخفية';
+
+  @override
+  String holdCountdown(Object time) {
+    return 'محجوز لك $time';
+  }
+
+  @override
+  String get homeGreetingEvening => 'مساء الخير';
+
+  @override
+  String get homeGreetingMorning => 'صباح الخير';
 
   @override
   String get incCert => 'شهادة إتمام';
@@ -529,6 +574,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get namePlaceholder => 'كما يظهر في شهادتك';
 
   @override
+  String get newThisMonth => 'جديد هذا الشهر';
+
+  @override
   String get nextAvailable => 'أقرب موعد متاح';
 
   @override
@@ -561,6 +609,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get noAccount => 'جديد على إجادة؟';
+
+  @override
+  String get noProfessionals => 'لا أحد يطابق هذه التصفية بعد.';
 
   @override
   String noResultsNearest(Object relaxation) {
@@ -640,6 +691,10 @@ class EjadahStringsAr extends EjadahStrings {
   String get partialBody => 'بقية صفحتك محدَّثة.';
 
   @override
+  String get partialSectionNote =>
+      'لم يُحمَّل هذا الجزء من صفحتك. الباقي محدّث.';
+
+  @override
   String get partialTitle => 'تعذّر تحميل المدرّسين';
 
   @override
@@ -677,6 +732,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get perHour => '/ الساعة';
 
   @override
+  String get perHourRate => 'للساعة';
+
+  @override
   String get perSession => 'لكل جلسة — تفصيل العمولة';
 
   @override
@@ -690,6 +748,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get pickSlot => 'المواعيد المتاحة';
+
+  @override
+  String get pickSlotFirst => 'اختر موعدًا للمتابعة';
 
   @override
   String get plansTitle => 'الخطط';
@@ -836,6 +897,11 @@ class EjadahStringsAr extends EjadahStrings {
   String get roadmapLabel => 'خارطة مسارك';
 
   @override
+  String roadmapProgress(Object done, Object total) {
+    return '$done من $total مراحل مكتملة';
+  }
+
+  @override
   String get roadmapStageLabel => 'المرحلة 2 من 5';
 
   @override
@@ -896,6 +962,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get seeAll => 'عرض الكل';
 
   @override
+  String get seeAllDeadlines => 'عرض الكل';
+
+  @override
   String get seeBookings => 'عرض حجوزاتي';
 
   @override
@@ -909,6 +978,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get sessionFee => 'قيمة الجلسة';
+
+  @override
+  String get sessionUpcoming => 'جلستك القادمة';
 
   @override
   String get sessionsLabel => 'جلسة';
@@ -947,6 +1019,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get skip => 'تخطّي';
+
+  @override
+  String get slotTakenTitle => 'حُجز هذا الموعد للتو';
 
   @override
   String get sourceMissing =>
@@ -1141,6 +1216,11 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get webOnly => 'يفتح ejadah.com';
+
+  @override
+  String weekLabel(Object n) {
+    return 'الأسبوع $n';
+  }
 
   @override
   String get welcomeBack => 'أهلًا بعودتك';

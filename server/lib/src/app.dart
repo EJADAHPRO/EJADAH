@@ -12,6 +12,9 @@ import 'modules/auth/auth_service.dart';
 import 'modules/career/career_repository.dart';
 import 'modules/career/career_routes.dart';
 import 'modules/career/career_service.dart';
+import 'modules/home/home_routes.dart';
+import 'modules/home/home_service.dart';
+import 'modules/people/people_repository.dart';
 import 'modules/roadmap/roadmap_repository.dart';
 import 'modules/roadmap/roadmap_routes.dart';
 import 'modules/roadmap/roadmap_service.dart';
@@ -61,6 +64,7 @@ class EjadahApp {
     final authRepository = AuthRepository(database);
     final careerRepository = CareerRepository(database);
     final roadmapRepository = RoadmapRepository(database);
+    final peopleRepository = PeopleRepository(database);
 
     final authService = AuthService(
       database: database,
@@ -74,11 +78,18 @@ class EjadahApp {
     );
     final careerService = CareerService(careerRepository);
     final roadmapService = RoadmapService(repository: roadmapRepository);
+    final homeService = HomeService(
+      career: careerRepository,
+      roadmaps: roadmapRepository,
+      people: peopleRepository,
+      logger: log.child('home'),
+    );
 
     final api = Router()
       ..mount('/auth', authRoutes(authService).call)
       ..mount('/career', careerRoutes(careerService).call)
-      ..mount('/roadmap', roadmapRoutes(roadmapService).call);
+      ..mount('/roadmap', roadmapRoutes(roadmapService).call)
+      ..mount('/home', homeRoutes(homeService, authService).call);
 
     final root = Router()
       ..mount('/api/v1', api.call)

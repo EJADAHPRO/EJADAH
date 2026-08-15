@@ -218,6 +218,12 @@ abstract class EjadahStrings {
   /// **'Session request sent'**
   String get bookedToast;
 
+  /// No description provided for @bookingConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking confirmed'**
+  String get bookingConfirmed;
+
   /// No description provided for @bookingsBlurb.
   ///
   /// In en, this message translates to:
@@ -247,6 +253,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Build my route'**
   String get buildRoute;
+
+  /// No description provided for @cairoTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo time'**
+  String get cairoTime;
 
   /// No description provided for @cancel.
   ///
@@ -313,6 +325,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Clear cache'**
   String get clearCache;
+
+  /// No description provided for @clearFiltersAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get clearFiltersAction;
 
   /// No description provided for @closed.
   ///
@@ -439,6 +457,36 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Create account'**
   String get createAccount;
+
+  /// No description provided for @ctaContinueRoadmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue my roadmap'**
+  String get ctaContinueRoadmap;
+
+  /// No description provided for @ctaFindConsulting.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a consultant'**
+  String get ctaFindConsulting;
+
+  /// No description provided for @ctaSetUpCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your professional card'**
+  String get ctaSetUpCard;
+
+  /// No description provided for @ctaStudyPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Open my study plan'**
+  String get ctaStudyPlan;
+
+  /// No description provided for @ctaTeaching.
+  ///
+  /// In en, this message translates to:
+  /// **'Open teaching dashboard'**
+  String get ctaTeaching;
 
   /// No description provided for @currentPlan.
   ///
@@ -770,6 +818,18 @@ abstract class EjadahStrings {
   /// **'Filters'**
   String get filters;
 
+  /// No description provided for @firstRunBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer four short questions and get a route built around your real budget and time.'**
+  String get firstRunBody;
+
+  /// No description provided for @firstRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start where it matters'**
+  String get firstRunTitle;
+
   /// No description provided for @fitLabel.
   ///
   /// In en, this message translates to:
@@ -805,6 +865,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Reset your password'**
   String get forgotTitle;
+
+  /// No description provided for @freeIntroCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Free intro call'**
+  String get freeIntroCall;
 
   /// No description provided for @fullName.
   ///
@@ -877,6 +943,24 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Expired hidden'**
   String get hideExpired;
+
+  /// No description provided for @holdCountdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Held for you {time}'**
+  String holdCountdown(Object time);
+
+  /// No description provided for @homeGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get homeGreetingEvening;
+
+  /// No description provided for @homeGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get homeGreetingMorning;
 
   /// No description provided for @incCert.
   ///
@@ -1088,6 +1172,12 @@ abstract class EjadahStrings {
   /// **'As it appears on your degree'**
   String get namePlaceholder;
 
+  /// No description provided for @newThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'New this month'**
+  String get newThisMonth;
+
   /// No description provided for @nextAvailable.
   ///
   /// In en, this message translates to:
@@ -1153,6 +1243,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'New to Ejadah?'**
   String get noAccount;
+
+  /// No description provided for @noProfessionals.
+  ///
+  /// In en, this message translates to:
+  /// **'No one matches those filters yet.'**
+  String get noProfessionals;
 
   /// No description provided for @noResultsNearest.
   ///
@@ -1298,6 +1394,12 @@ abstract class EjadahStrings {
   /// **'The rest of your feed is up to date.'**
   String get partialBody;
 
+  /// No description provided for @partialSectionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This part of your feed didn’t load. The rest is up to date.'**
+  String get partialSectionNote;
+
   /// No description provided for @partialTitle.
   ///
   /// In en, this message translates to:
@@ -1370,6 +1472,12 @@ abstract class EjadahStrings {
   /// **'/ hour'**
   String get perHour;
 
+  /// No description provided for @perHourRate.
+  ///
+  /// In en, this message translates to:
+  /// **'per hour'**
+  String get perHourRate;
+
   /// No description provided for @perSession.
   ///
   /// In en, this message translates to:
@@ -1399,6 +1507,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'AVAILABLE SLOTS'**
   String get pickSlot;
+
+  /// No description provided for @pickSlotFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time to continue'**
+  String get pickSlotFirst;
 
   /// No description provided for @plansTitle.
   ///
@@ -1670,6 +1784,12 @@ abstract class EjadahStrings {
   /// **'YOUR ROADMAP'**
   String get roadmapLabel;
 
+  /// No description provided for @roadmapProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} stages done'**
+  String roadmapProgress(Object done, Object total);
+
   /// No description provided for @roadmapStageLabel.
   ///
   /// In en, this message translates to:
@@ -1790,6 +1910,12 @@ abstract class EjadahStrings {
   /// **'See all'**
   String get seeAll;
 
+  /// No description provided for @seeAllDeadlines.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAllDeadlines;
+
   /// No description provided for @seeBookings.
   ///
   /// In en, this message translates to:
@@ -1819,6 +1945,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Session fee'**
   String get sessionFee;
+
+  /// No description provided for @sessionUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR NEXT SESSION'**
+  String get sessionUpcoming;
 
   /// No description provided for @sessionsLabel.
   ///
@@ -1891,6 +2023,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Skip'**
   String get skip;
+
+  /// No description provided for @slotTakenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'That time just went'**
+  String get slotTakenTitle;
 
   /// No description provided for @sourceMissing.
   ///
@@ -2263,6 +2401,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Opens ejadah.com'**
   String get webOnly;
+
+  /// No description provided for @weekLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {n}'**
+  String weekLabel(Object n);
 
   /// No description provided for @welcomeBack.
   ///
