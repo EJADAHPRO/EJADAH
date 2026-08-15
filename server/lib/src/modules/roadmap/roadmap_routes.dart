@@ -62,7 +62,7 @@ Router roadmapRoutes(RoadmapService service) {
 
   router.get('/<id>', (Request request, String id) async {
     final view = await service.roadmap(
-      id,
+      parsePathUuid(id),
       userId: request.ctx.userId,
       deviceToken: request.ctx.deviceToken,
     );
@@ -70,14 +70,20 @@ Router roadmapRoutes(RoadmapService service) {
   });
 
   router.post('/<id>/save', (Request request, String id) async {
-    final view = await service.save(id, request.ctx.requireUser());
+    final view = await service.save(
+      parsePathUuid(id),
+      request.ctx.requireUser(),
+      // A guest who has just signed in still holds the device token that owns
+      // the draft, so saving it is a claim rather than a cross-user write.
+      deviceToken: request.ctx.deviceToken,
+    );
     return Json.ok(view.toJson());
   });
 
   router.post('/<id>/what-if', (Request request, String id) async {
     final body = await readJsonBody(request);
     final view = await service.whatIf(
-      parentId: id,
+      parentId: parsePathUuid(id),
       preset: WhatIfPreset.fromWire(body['preset'] as String?),
       userId: request.ctx.requireUser(),
     );
@@ -91,8 +97,10 @@ Router roadmapRoutes(RoadmapService service) {
   ) async {
     final body = await readJsonBody(request);
     final view = await service.setStageComplete(
-      roadmapId: id,
-      position: int.parse(position),
+      roadmapId: parsePathUuid(id),
+      // A path segment is user input. A bad one is a 400 the client can act on,
+      // never a 500 that reads as our fault.
+      position: parsePathInt(position, 'position'),
       isComplete: body['is_complete'] == true,
       userId: request.ctx.requireUser(),
     );

@@ -309,13 +309,56 @@ class RoadmapRepository {
         );
       }
 
-      return (await findRoadmap(id, session: s))!;
+      return (await _findRoadmap(id, session: s))!;
     }
 
     return session != null ? insert(session) : _database.runTx(insert);
   }
 
-  Future<Roadmap?> findRoadmap(String id, {Session? session}) async {
+  /// Loads a roadmap **for the caller who owns it**, and nobody else.
+  ///
+  /// Ownership is a `WHERE` clause rather than an `if` in Dart, because an `if`
+  /// is one refactor away from being dropped and this row holds the user's
+  /// specialty, budget and target regions. A guest owns their draft through the
+  /// device token that created it; once claimed, through `user_id`.
+  ///
+  /// Returns null — not a 403 — when the row exists but belongs to someone
+  /// else, so the caller answers "not found" and never confirms that an id is
+  /// real.
+  Future<Roadmap?> findRoadmapFor(
+    String id, {
+    String? userId,
+    String? deviceToken,
+    Session? session,
+  }) async {
+    // No identity at all owns nothing. Without this an unauthenticated caller
+    // with neither token would match the `user_id IS NULL` branch.
+    if (userId == null && deviceToken == null) return null;
+
+    final rows = await _query(
+      'SELECT * FROM roadmaps WHERE id = @id AND ('
+      '  (@user_id::uuid IS NOT NULL AND user_id = @user_id::uuid) '
+      '  OR (user_id IS NULL AND @device_token::text IS NOT NULL '
+      '      AND device_token = @device_token::text))',
+      {'id': id, 'user_id': userId, 'device_token': deviceToken},
+      session,
+    );
+    if (rows.isEmpty) return null;
+
+    final stages = await _query(
+      'SELECT * FROM roadmap_stages WHERE roadmap_id = @id ORDER BY position',
+      {'id': id},
+      session,
+    );
+    return _toRoadmap(rows.first, stages);
+  }
+
+  /// Loads a roadmap by id with no ownership predicate.
+  ///
+  /// Private on purpose. The only safe use is reading back a row this same
+  /// repository has just written, where the id did not come from a request.
+  /// Everything reachable from an HTTP route goes through [findRoadmapFor].
+  Future<Roadmap?> _findRoadmap(String id, {Session? session}) async {
     final rows = await _query('SELECT * FROM roadmaps WHERE id = @id', {
       'id': id,
     }, session);
@@ -356,22 +399,50 @@ class RoadmapRepository {
         .toList();
   }
 
-  Future<void> setSaved(String id, bool isSaved, {Session? session}) =>
-      _execute('UPDATE roadmaps SET is_saved = @is_saved WHERE id = @id', {
-        'id': id,
-        'is_saved': isSaved,
-      }, session);
+  /// Attaches an unclaimed guest roadmap to an account.
+  ///
+  /// Scoped to rows that have no owner yet, so this can never take a roadmap
+  /// away from another user.
+  Future<void> claimForUser(String id, String userId, {Session? session}) =>
+      _execute(
+        'UPDATE roadmaps SET user_id = @user_id, device_token = NULL '
+        'WHERE id = @id AND user_id IS NULL',
+        {'id': id, 'user_id': userId},
+        session,
+      );
+
+  /// Every mutation below carries the owner in its own `WHERE` clause, not just
+  /// in the read that preceded it. A check-then-write pair is two statements a
+  /// refactor can separate; this cannot be separated from the write.
+  Future<void> setSaved(
+    String id,
+    bool isSaved, {
+    required String userId,
+    Session? session,
+  }) => _execute(
+    'UPDATE roadmaps SET is_saved = @is_saved '
+    'WHERE id = @id AND user_id = @user_id',
+    {'id': id, 'is_saved': isSaved, 'user_id': userId},
+    session,
+  );
 
   Future<void> setStageComplete({
     required String roadmapId,
     required int position,
     required bool isComplete,
+    required String userId,
     Session? session,
   }) => _execute(
     'UPDATE roadmap_stages SET is_complete = @is_complete, '
     'completed_at = CASE WHEN @is_complete THEN now() ELSE NULL END '
-    'WHERE roadmap_id = @roadmap_id AND position = @position',
-    {'roadmap_id': roadmapId, 'position': position, 'is_complete': isComplete},
+    'WHERE position = @position AND roadmap_id = ('
+    '  SELECT id FROM roadmaps WHERE id = @roadmap_id AND user_id = @user_id)',
+    {
+      'roadmap_id': roadmapId,
+      'position': position,
+      'is_complete': isComplete,
+      'user_id': userId,
+    },
     session,
   );
 

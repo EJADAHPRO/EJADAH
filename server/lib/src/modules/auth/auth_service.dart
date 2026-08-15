@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ejadah_models/ejadah_models.dart';
 import 'package:postgres/postgres.dart';
 
@@ -138,7 +140,9 @@ class AuthService {
       // Spend comparable time on the unknown-address path so response timing
       // does not become the enumeration oracle the message avoids being.
       if (record == null) {
-        _hasher.verify(password: password, encodedHash: _dummyHash);
+        // Same Argon2id parameters as a real verification, so the unknown-
+        // address path is indistinguishable by timing as well as by copy.
+        _hasher.verifyDecoy(password);
       }
       throw ApiException.authentication(message: ValidationCopy.signInFailed);
     }
@@ -236,7 +240,27 @@ class AuthService {
   ///
   /// Always reports success. Whether an address has an account is not something
   /// an unauthenticated caller gets to learn.
+  /// Starts a password reset, telling the caller nothing about the address.
+  ///
+  /// The response is identical for a known and an unknown address, and it is
+  /// sent *before* the token is stored and the mail is dispatched. Awaiting
+  /// that work would make a known address measurably slower to answer, which
+  /// re-introduces by timing the enumeration the identical response exists to
+  /// prevent.
   Future<void> requestPasswordReset(String email, AppLanguage language) async {
+    unawaited(
+      _deliverPasswordReset(email, language).catchError((
+        Object error,
+        StackTrace stackTrace,
+      ) {
+        // A mail failure is ours to see, never the caller's — telling them
+        // would be the same disclosure by another route.
+        _logger.error('password reset delivery failed', const {}, error, stackTrace);
+      }),
+    );
+  }
+
+  Future<void> _deliverPasswordReset(String email, AppLanguage language) async {
     final record = await _repository.findByEmail(email);
     if (record == null) return;
 
@@ -338,8 +362,4 @@ class AuthService {
 
   String _newFamilyId() => _tokens.issueUuid();
 
-  /// A real Argon2id hash of a value no one uses, so the unknown-address path
-  /// performs the same work as a wrong-password path.
-  static const String _dummyHash =
-      r'$argon2id$v=19$m=8,t=2,p=1$c29tZXNhbHRoZXJlMTI$4W5wZ3RlbXBoYXNoZHVtbXk';
 }

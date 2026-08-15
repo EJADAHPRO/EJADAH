@@ -40,7 +40,7 @@ Router careerRoutes(CareerService service) {
 
   router.get('/programmes/<id>', (Request request, String id) async {
     final programme = await service.programme(
-      int.parse(id),
+      parsePathInt(id, 'id'),
       userId: request.ctx.userId,
     );
     return Json.ok(programme.toJson());
@@ -61,7 +61,7 @@ Router careerRoutes(CareerService service) {
   router.put('/shortlist/<id>', (Request request, String id) async {
     final saved = await service.saveProgramme(
       request.ctx.requireUser(),
-      int.parse(id),
+      parsePathInt(id, 'id'),
     );
     return Json.ok(saved.toJson());
   });
@@ -69,7 +69,7 @@ Router careerRoutes(CareerService service) {
   router.delete('/shortlist/<id>', (Request request, String id) async {
     await service.removeSavedProgramme(
       request.ctx.requireUser(),
-      int.parse(id),
+      parsePathInt(id, 'id'),
     );
     return Json.noContent();
   });

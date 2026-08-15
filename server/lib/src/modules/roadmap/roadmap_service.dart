@@ -107,12 +107,22 @@ class RoadmapService {
     return _view(roadmap, isGuest: userId == null);
   }
 
+  /// A roadmap is only ever readable by the caller who owns it.
+  ///
+  /// A roadmap holds the user's specialty, budget and target regions — their
+  /// private career and financial profile. Someone else's id resolves to "not
+  /// found", the same answer as an id that never existed, so the endpoint does
+  /// not confirm which roadmaps are real.
   Future<RoadmapView> roadmap(
     String id, {
     String? userId,
     String? deviceToken,
   }) async {
-    final roadmap = await _repository.findRoadmap(id);
+    final roadmap = await _repository.findRoadmapFor(
+      id,
+      userId: userId,
+      deviceToken: deviceToken,
+    );
     if (roadmap == null) throw ApiException.notFound();
     return _view(roadmap, isGuest: userId == null);
   }
@@ -120,11 +130,28 @@ class RoadmapService {
   Future<List<Roadmap>> myRoadmaps(String userId) =>
       _repository.listRoadmaps(userId);
 
-  Future<RoadmapView> save(String id, String userId) async {
-    final roadmap = await _repository.findRoadmap(id);
+  /// Claims a roadmap for an account.
+  ///
+  /// The caller must already own it — either as the signed-in user, or as the
+  /// guest whose device token created it and who has just signed in.
+  Future<RoadmapView> save(
+    String id,
+    String userId, {
+    String? deviceToken,
+  }) async {
+    final roadmap = await _repository.findRoadmapFor(
+      id,
+      userId: userId,
+      deviceToken: deviceToken,
+    );
     if (roadmap == null) throw ApiException.notFound();
-    await _repository.setSaved(id, true);
-    return _view((await _repository.findRoadmap(id))!, isGuest: false);
+
+    // A guest's draft becomes theirs on save; it is not another user's row.
+    await _repository.claimForUser(id, userId);
+    await _repository.setSaved(id, true, userId: userId);
+
+    final saved = await _repository.findRoadmapFor(id, userId: userId);
+    return _view(saved!, isGuest: false);
   }
 
   /// Runs a what-if preset.
@@ -136,7 +163,10 @@ class RoadmapService {
     required WhatIfPreset preset,
     required String userId,
   }) async {
-    final parent = await _repository.findRoadmap(parentId);
+    // A scenario is cloned from the parent's private answers, so the caller
+    // must own the parent — otherwise "what if" is a read of someone else's
+    // budget wearing a different name.
+    final parent = await _repository.findRoadmapFor(parentId, userId: userId);
     if (parent == null) throw ApiException.notFound();
 
     final candidates = await _repository.loadCandidates();
@@ -169,14 +199,19 @@ class RoadmapService {
     required bool isComplete,
     required String userId,
   }) async {
-    final roadmap = await _repository.findRoadmap(roadmapId);
+    final roadmap = await _repository.findRoadmapFor(roadmapId, userId: userId);
     if (roadmap == null) throw ApiException.notFound();
     await _repository.setStageComplete(
       roadmapId: roadmapId,
       position: position,
       isComplete: isComplete,
+      userId: userId,
     );
-    return _view((await _repository.findRoadmap(roadmapId))!, isGuest: false);
+    final updated = await _repository.findRoadmapFor(
+      roadmapId,
+      userId: userId,
+    );
+    return _view(updated!, isGuest: false);
   }
 
   RoadmapView _view(Roadmap roadmap, {required bool isGuest}) {

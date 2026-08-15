@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 
@@ -182,24 +183,60 @@ class _Window {
   final DateTime resetsAt;
 }
 
+/// The address the request actually arrived from.
+///
+/// `X-Forwarded-For` is written by the client and only becomes trustworthy once
+/// a proxy we control has overwritten it. Keying a limiter off the raw header
+/// means an attacker rotates one header value per attempt and the limiter never
+/// fires — which is the whole of the brute-force and credential-stuffing
+/// defence, gone.
+///
+/// So: the socket address is the key, and the forwarded header is consulted
+/// only when [trustedProxyCount] says a proxy of ours sits in front. That
+/// setting is deployment truth, not something a request can assert.
+String clientAddress(Request request, {required int trustedProxyCount}) {
+  final connection =
+      request.context['shelf.io.connection_info'] as HttpConnectionInfo?;
+  final socketAddress = connection?.remoteAddress.address;
+
+  if (trustedProxyCount > 0) {
+    final forwarded =
+        request.headers['x-forwarded-for']
+            ?.split(',')
+            .map((part) => part.trim())
+            .where((part) => part.isNotEmpty)
+            .toList() ??
+        const <String>[];
+    // Take the hop our own proxy appended, counting from the right. Anything
+    // further left was written by the client and is not evidence.
+    if (forwarded.length >= trustedProxyCount) {
+      return forwarded[forwarded.length - trustedProxyCount];
+    }
+  }
+
+  return socketAddress ?? 'unknown';
+}
+
 /// Rejects a caller that exceeds [limiter] for the given [scope].
 ///
 /// Keyed by the caller's identity where known and their address otherwise, so
 /// one abusive client cannot lock out everyone behind the same proxy.
-Middleware rateLimitMiddleware(RateLimiter limiter, {required String scope}) =>
-    (innerHandler) {
-      return (request) async {
+Middleware rateLimitMiddleware(
+  RateLimiter limiter, {
+  required String scope,
+  int trustedProxyCount = 0,
+}) => (innerHandler) {
+  return (request) async {
         final identity =
             request.ctx.userId ??
-            request.headers['x-forwarded-for']?.split(',').first.trim() ??
-            'anonymous';
+            clientAddress(request, trustedProxyCount: trustedProxyCount);
         final wait = limiter.consume('$scope:$identity');
         if (wait != null) {
           throw ApiException(ApiErrorCode.rateLimit, retryAfter: wait);
         }
         return innerHandler(request);
       };
-    };
+};
 
 /// CORS for Flutter Web.
 ///

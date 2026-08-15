@@ -14,6 +14,8 @@ import 'modules/career/career_routes.dart';
 import 'modules/career/career_service.dart';
 import 'modules/home/home_routes.dart';
 import 'modules/home/home_service.dart';
+import 'modules/notifications/notification_routes.dart';
+import 'modules/notifications/notification_scheduler.dart';
 import 'modules/people/people_repository.dart';
 import 'modules/roadmap/roadmap_repository.dart';
 import 'modules/roadmap/roadmap_routes.dart';
@@ -85,11 +87,20 @@ class EjadahApp {
       logger: log.child('home'),
     );
 
+    final notifications = NotificationScheduler(database);
+
     final api = Router()
-      ..mount('/auth', authRoutes(authService).call)
+      ..mount(
+        '/auth',
+        authRoutes(
+          authService,
+          trustedProxyCount: config.trustedProxyCount,
+        ).call,
+      )
       ..mount('/career', careerRoutes(careerService).call)
       ..mount('/roadmap', roadmapRoutes(roadmapService).call)
-      ..mount('/home', homeRoutes(homeService, authService).call);
+      ..mount('/home', homeRoutes(homeService, authService).call)
+      ..mount('/notifications', notificationRoutes(notifications).call);
 
     final root = Router()
       ..mount('/api/v1', api.call)

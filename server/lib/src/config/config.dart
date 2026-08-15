@@ -57,6 +57,7 @@ class AppConfig {
     required this.storageRoot,
     required this.paymentProvider,
     required this.enableBackgroundJobs,
+    required this.trustedProxyCount,
     required this.logLevel,
   });
 
@@ -80,6 +81,9 @@ class AppConfig {
   final String storageRoot;
   final String paymentProvider;
   final bool enableBackgroundJobs;
+
+  /// Proxies of ours in front of this process. See [clientAddress].
+  final int trustedProxyCount;
   final String logLevel;
 
   static AppConfig fromEnvironment([Map<String, String>? source]) {
@@ -94,10 +98,37 @@ class AppConfig {
     }
 
     final jwtSecret = env['JWT_SECRET'] ?? '';
-    if (environment.isProduction && jwtSecret.length < 32) {
-      throw ConfigurationError(
-        'JWT_SECRET must be at least 32 characters in production.',
-      );
+    if (environment.isProduction) {
+      if (jwtSecret.length < 32) {
+        throw ConfigurationError(
+          'JWT_SECRET must be at least 32 characters in production.',
+        );
+      }
+      // A length check alone passes the placeholder in `.env.example`, which is
+      // 52 characters and public in this repository. An operator who copies the
+      // example and flips EJADAH_ENV would boot production with a signing key
+      // anyone can read, making every access token forgeable.
+      if (_isPlaceholderSecret(jwtSecret)) {
+        throw ConfigurationError(
+          'JWT_SECRET is still the placeholder from .env.example. Generate a '
+          'real secret, for example with `openssl rand -base64 48`.',
+        );
+      }
+      // Distinct characters, not merely length: 'aaaa…' clears any length bar.
+      if (jwtSecret.split('').toSet().length < 16) {
+        throw ConfigurationError(
+          'JWT_SECRET has too little variety to be a random secret.',
+        );
+      }
+    }
+
+    // How many proxies of ours sit in front of this process. Zero means the
+    // socket address is the client, and X-Forwarded-For is ignored entirely —
+    // the safe default, because trusting that header by default is what lets a
+    // caller rotate it to defeat rate limiting.
+    final trustedProxyCount = int.tryParse(env['TRUSTED_PROXY_COUNT'] ?? '') ?? 0;
+    if (trustedProxyCount < 0) {
+      throw ConfigurationError('TRUSTED_PROXY_COUNT cannot be negative.');
     }
 
     final paymentProvider = env['PAYMENT_PROVIDER'] ?? 'dev';
@@ -134,8 +165,30 @@ class AppConfig {
       paymentProvider: paymentProvider,
       enableBackgroundJobs:
           (env['ENABLE_BACKGROUND_JOBS'] ?? 'true').toLowerCase() != 'false',
+      trustedProxyCount: trustedProxyCount,
       logLevel: env['LOG_LEVEL'] ?? 'info',
     );
+  }
+
+  /// Placeholder secrets that must never sign a production token.
+  ///
+  /// Matched loosely — a secret containing any of these fragments is one
+  /// somebody copied rather than generated.
+  static const List<String> _placeholderFragments = [
+    'replace-me',
+    'replace_me',
+    'change-me',
+    'changeme',
+    'your-secret',
+    'ejadah-development-only-secret',
+    'test-secret',
+    'not-for-production',
+    'before-production',
+  ];
+
+  static bool _isPlaceholderSecret(String secret) {
+    final lower = secret.toLowerCase();
+    return _placeholderFragments.any(lower.contains);
   }
 
   /// The share of a booking the professional keeps.

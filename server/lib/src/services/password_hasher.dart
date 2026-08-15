@@ -45,4 +45,23 @@ class PasswordHasher {
       return false;
     }
   }
+
+  /// A hash of a value nobody uses, carrying **this hasher's own parameters**.
+  ///
+  /// Built here rather than written as a constant because a hard-coded decoy
+  /// drifts from the real cost the moment [Argon2Security] changes — and a
+  /// cheap decoy is not a decoy. Verifying `m=8,t=2,p=1` against real hashes at
+  /// `m=8192,t=2,p=4` is roughly a thousandth of the work, which a caller can
+  /// measure: the unknown-address path answers in single-digit milliseconds
+  /// while a real address takes tens. That difference enumerates every
+  /// registered address, which is exactly what the identical error copy exists
+  /// to prevent.
+  late final String _decoyHash = hash('decoy-password-nobody-uses');
+
+  /// Spends the same work as a real verification, and always fails.
+  ///
+  /// Call this on the unknown-address path so sign-in costs the same whether or
+  /// not the address exists.
+  bool verifyDecoy(String password) =>
+      verify(password: password, encodedHash: _decoyHash);
 }

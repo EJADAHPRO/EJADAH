@@ -4,6 +4,7 @@ import 'package:postgres/postgres.dart';
 
 import '../config/config.dart';
 import '../db/database.dart';
+import '../modules/notifications/notification_scheduler.dart';
 import '../observability/logger.dart';
 
 /// A unit of recurring server-side work.
@@ -30,7 +31,13 @@ class JobRunner {
     List<Job>? jobs,
   }) : _database = database,
        _logger = logger.child('jobs'),
-       _jobs = jobs ?? [ExpireHoldsJob(database)];
+       _jobs =
+           jobs ??
+           [
+             ExpireHoldsJob(database),
+             ScheduleRemindersJob(NotificationScheduler(database)),
+             DeliverNotificationsJob(NotificationScheduler(database)),
+           ];
 
   final Database _database;
   final AppLogger _logger;
@@ -119,5 +126,51 @@ class ExpireHoldsJob implements Job {
         '''),
     );
     return 'released ${result.affectedRows} expired holds';
+  }
+}
+
+/// Queues deadline alerts (30/14/7 days) and session reminders (T-24h, T-1h).
+///
+/// Scheduling is server-side by requirement: none of this may depend on the
+/// Flutter app being open. Running hourly rather than daily is safe because
+/// every queued row carries a database-enforced dedupe key, so a second sweep
+/// over the same window queues nothing.
+class ScheduleRemindersJob implements Job {
+  const ScheduleRemindersJob(this._scheduler);
+
+  final NotificationScheduler _scheduler;
+
+  @override
+  String get name => 'schedule_reminders';
+
+  @override
+  Duration get interval => const Duration(hours: 1);
+
+  @override
+  Future<String> run() async {
+    final queued = await _scheduler.sweep(now: DateTime.now().toUtc());
+    return 'queued $queued reminders';
+  }
+}
+
+/// Moves due queue rows into the notification centre.
+///
+/// The centre is the system of record rather than the OS tray, so a user who
+/// declined push permission still finds every notification in the app.
+class DeliverNotificationsJob implements Job {
+  const DeliverNotificationsJob(this._scheduler);
+
+  final NotificationScheduler _scheduler;
+
+  @override
+  String get name => 'deliver_notifications';
+
+  @override
+  Duration get interval => const Duration(minutes: 5);
+
+  @override
+  Future<String> run() async {
+    final delivered = await _scheduler.deliverDue(now: DateTime.now().toUtc());
+    return 'delivered $delivered notifications';
   }
 }

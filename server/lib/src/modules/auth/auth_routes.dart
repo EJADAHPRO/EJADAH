@@ -11,7 +11,7 @@ import 'auth_service.dart';
 /// `/api/v1/auth` — registration, sign-in, session lifecycle.
 ///
 /// Routes parse input and shape output. Every decision lives in [AuthService].
-Router authRoutes(AuthService service) {
+Router authRoutes(AuthService service, {int trustedProxyCount = 0}) {
   final router = Router();
 
   // Credential endpoints are the ones worth attacking, so each carries its own
@@ -30,7 +30,11 @@ Router authRoutes(AuthService service) {
   );
 
   Handler limited(RateLimiter limiter, String scope, Handler handler) =>
-      rateLimitMiddleware(limiter, scope: scope)(handler);
+      rateLimitMiddleware(
+        limiter,
+        scope: scope,
+        trustedProxyCount: trustedProxyCount,
+      )(handler);
 
   router.post(
     '/register',

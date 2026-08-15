@@ -60,3 +60,36 @@ Future<Map<String, dynamic>> readJsonBody(Request request) async {
     );
   }
 }
+
+/// Reads an integer path segment.
+///
+/// A path segment is user input like any other. `int.parse` on it turns a
+/// typo'd link into a 500, which reads to the caller — and to our own
+/// monitoring — as a server fault rather than a bad request.
+int parsePathInt(String raw, String field) {
+  final value = int.tryParse(raw);
+  if (value == null) {
+    throw ApiException(
+      ApiErrorCode.validation,
+      details: '$field must be an integer.',
+    );
+  }
+  return value;
+}
+
+/// UUID v4 canonical form, the shape every id in the schema takes.
+final RegExp _uuidPattern = RegExp(
+  r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-'
+  r'[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+);
+
+/// Reads a UUID path segment.
+///
+/// Handing an arbitrary string to a `uuid`-typed query raises `22P02` deep in
+/// the driver, which surfaces as a 500. The shape is checked here so a
+/// malformed id is a plain not-found — the same answer as an id that does not
+/// exist, which is also the answer that reveals least.
+String parsePathUuid(String raw) {
+  if (!_uuidPattern.hasMatch(raw)) throw ApiException.notFound();
+  return raw;
+}
