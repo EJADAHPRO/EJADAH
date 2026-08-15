@@ -1,4 +1,5 @@
 {
+  "@@locale": "ar",
   "aboutTutor": "نبذة",
   "account": "الحساب",
   "again": "أعدها لاحقًا",
@@ -49,7 +50,7 @@
   "consultingBlurb": "استشارات العيادة والأعمال لأصحاب العيادات والشركاء.",
   "consultingTitle": "الاستشارات",
   "contentUnavailableBody": "لم يعد متاحًا — غالبًا أُغلقت الدفعة.",
-  "continue": "متابعة",
+  "continueAction": "متابعة",
   "continueCourse": "أكمل",
   "continueLabel": "أكمل ما بدأته",
   "countriesBlurb": "الامتحان والجهة المنظّمة ومسار التأشيرة والتكاليف الحقيقية لـ 23 دولة.",

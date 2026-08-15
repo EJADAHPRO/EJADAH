@@ -1,0 +1,53 @@
+name: ejadah_ui
+description: >-
+  The Ejadah design system — canonical tokens and the reusable Ejadah component
+  family. Ejadah components are built here rather than Material defaults being
+  restyled at each call site.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ejadah_models:
+    path: ../ejadah_models
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  fonts:
+    # Bundled, never system-fallback — Arabic in particular must never fall back
+    # to a system face (ASSETS_AND_REFERENCE.md: fonts are FINAL, OFL 1.1).
+    #
+    # Playfair Display and Inter ship as variable fonts: one asset carries the
+    # whole weight axis, so the design system's 400-800 range is available
+    # without bundling five static files each.
+    - family: Playfair Display
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Variable.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
+    # Amiri is the Arabic display face — Playfair has no Arabic glyphs and must
+    # never be rendered in Arabic.
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/Amiri-Bold.ttf
+          weight: 700
+    - family: IBM Plex Sans Arabic
+      fonts:
+        - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexSansArabic-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansArabic-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansArabic-Bold.ttf
+          weight: 700

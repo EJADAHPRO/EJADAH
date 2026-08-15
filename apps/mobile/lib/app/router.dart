@@ -1,0 +1,236 @@
+import 'package:ejadah_localization/ejadah_localization.dart';
+import 'package:ejadah_ui/ejadah_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../features/auth/auth_controller.dart';
+import '../features/auth/presentation/language_screen.dart';
+import '../features/auth/presentation/sign_in_screen.dart';
+import '../features/auth/presentation/sign_up_screen.dart';
+import '../features/career/presentation/career_hub_screen.dart';
+import '../features/career/presentation/countries_screen.dart';
+import '../features/career/presentation/country_detail_screen.dart';
+import '../features/career/presentation/programme_detail_screen.dart';
+import '../features/career/presentation/programmes_screen.dart';
+import '../features/career/presentation/shortlist_screen.dart';
+import '../features/home/presentation/home_screen.dart';
+import '../features/learn/presentation/learn_screen.dart';
+import '../features/people/presentation/people_screen.dart';
+import '../features/profile/presentation/profile_screen.dart';
+import '../features/profile/presentation/public_profile_screen.dart';
+import '../features/profile/presentation/verify_certificate_screen.dart';
+import '../features/roadmap/presentation/roadmap_funnel_screen.dart';
+import '../features/roadmap/presentation/roadmap_result_screen.dart';
+import '../features/shell/app_shell.dart';
+import '../features/shell/not_found_screen.dart';
+
+/// The five tabs. Home · Learn · Career · People · Profile.
+enum AppTab {
+  home('/home'),
+  learn('/learn'),
+  career('/career'),
+  people('/people'),
+  profile('/profile');
+
+  const AppTab(this.path);
+
+  final String path;
+}
+
+final _rootKey = GlobalKey<NavigatorState>();
+
+/// The application router.
+///
+/// Paths follow `handoff/deep-links.md` exactly, so a universal link, a shared
+/// WhatsApp URL and an in-app push all resolve to the same screen.
+///
+/// Two rules shape the structure:
+///
+/// * **Public routes render without shell chrome.** `/dr/{slug}` and
+///   `/verify/{code}` must work for a signed-out visitor: they are the growth
+///   and trust loops, and gating them would break both.
+/// * **Cold start navigates once.** The router waits for auth to resolve before
+///   redirecting, so a deep link does not land somewhere and then jump.
+final routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: _rootKey,
+    initialLocation: AppTab.home.path,
+    debugLogDiagnostics: false,
+    redirect: (context, state) {
+      final auth = ref.read(authControllerProvider);
+
+      // Auth is still resolving: hold rather than guess, so the cold-start deep
+      // link is not navigated twice.
+      if (auth is AuthResolving) return null;
+
+      // Everything else — browsing, the roadmap funnel, public profiles — is
+      // open. The gates live in the screens that need them, not here, because a
+      // guest must be able to reach and complete the funnel.
+      const gated = {'/shortlist', '/bookings', '/profile'};
+      final needsAccount = gated.any(state.matchedLocation.startsWith);
+      if (needsAccount && !auth.isAuthenticated) {
+        // Carries where the user was headed, so sign-in returns them there.
+        return '/sign-in?next=${Uri.encodeComponent(state.matchedLocation)}';
+      }
+      return null;
+    },
+    errorBuilder: (context, state) => const NotFoundScreen(),
+    routes: [
+      // --- Public, chrome-free ----------------------------------------------
+      GoRoute(
+        path: '/dr/:slug',
+        builder: (context, state) =>
+            PublicProfileScreen(slug: state.pathParameters['slug']!),
+      ),
+      GoRoute(
+        path: '/verify/:code',
+        builder: (context, state) =>
+            VerifyCertificateScreen(code: state.pathParameters['code']!),
+      ),
+
+      // --- First run ---------------------------------------------------------
+      GoRoute(
+        path: '/language',
+        builder: (context, state) => const LanguageScreen(),
+      ),
+      GoRoute(
+        path: '/sign-in',
+        builder: (context, state) =>
+            SignInScreen(next: state.uri.queryParameters['next']),
+      ),
+      GoRoute(
+        path: '/sign-up',
+        builder: (context, state) => SignUpScreen(
+          // Set when the user arrived from the guest gate, so the analytics
+          // event can report guest-first conversion.
+          fromGate: state.uri.queryParameters['intent'] == 'gate',
+          next: state.uri.queryParameters['next'],
+        ),
+      ),
+
+      // --- The roadmap funnel: guest-capable throughout ----------------------
+      GoRoute(
+        path: '/roadmap/new',
+        builder: (context, state) =>
+            RoadmapFunnelScreen(seedPath: state.uri.queryParameters['path']),
+      ),
+      GoRoute(
+        path: '/roadmap/:id',
+        builder: (context, state) =>
+            RoadmapResultScreen(roadmapId: state.pathParameters['id']!),
+      ),
+
+      // --- Detail routes, pushed over the current tab ------------------------
+      GoRoute(
+        path: '/programme/:id',
+        builder: (context, state) => ProgrammeDetailScreen(
+          programmeId: int.parse(state.pathParameters['id']!),
+        ),
+      ),
+      GoRoute(
+        path: '/country/:iso',
+        builder: (context, state) => CountryDetailScreen(
+          iso: state.pathParameters['iso']!,
+          initialTab: state.uri.queryParameters['tab'],
+        ),
+      ),
+      GoRoute(
+        path: '/countries',
+        builder: (context, state) => const CountriesScreen(),
+      ),
+      GoRoute(
+        path: '/programmes',
+        builder: (context, state) => const ProgrammesScreen(),
+      ),
+      GoRoute(
+        path: '/shortlist',
+        builder: (context, state) => const ShortlistScreen(),
+      ),
+
+      // --- The tab shell -----------------------------------------------------
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            AppShell(navigationShell: navigationShell),
+        branches: [
+          // Each branch keeps its own stack and scroll position, restored on
+          // return and reset only when the active tab's root is re-tapped.
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppTab.home.path,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppTab.learn.path,
+                builder: (context, state) => const LearnScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppTab.career.path,
+                builder: (context, state) => const CareerHubScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppTab.people.path,
+                builder: (context, state) => const PeopleScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppTab.profile.path,
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
+});
+
+/// The bottom-navigation destinations, in canonical order.
+List<EjadahNavDestination> navDestinations(BuildContext context) {
+  final strings = context.strings;
+  return [
+    EjadahNavDestination(
+      label: strings.tabHome,
+      icon: EjadahIcons.home,
+      activeIcon: EjadahIcons.homeFilled,
+    ),
+    EjadahNavDestination(
+      // Canonical "Learn" — the prototype's "Courses" label is legacy.
+      label: strings.tabLearn,
+      icon: EjadahIcons.learn,
+      activeIcon: EjadahIcons.learnFilled,
+    ),
+    EjadahNavDestination(
+      label: strings.tabCareer,
+      icon: EjadahIcons.career,
+      activeIcon: EjadahIcons.careerFilled,
+    ),
+    EjadahNavDestination(
+      // Canonical "People" — the prototype's "Connect" label is legacy.
+      label: strings.tabPeople,
+      icon: EjadahIcons.people,
+      activeIcon: EjadahIcons.peopleFilled,
+    ),
+    EjadahNavDestination(
+      label: strings.tabProfile,
+      icon: EjadahIcons.profile,
+      activeIcon: EjadahIcons.profileFilled,
+    ),
+  ];
+}

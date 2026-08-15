@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "aboutTutor": "ABOUT",
   "account": "ACCOUNT",
   "again": "Again",
@@ -49,7 +50,7 @@
   "consultingBlurb": "Clinic and business advisory for owners and partners.",
   "consultingTitle": "Consulting",
   "contentUnavailableBody": "This is no longer available — often the intake closed.",
-  "continue": "Continue",
+  "continueAction": "Continue",
   "continueCourse": "Continue",
   "continueLabel": "CONTINUE",
   "countriesBlurb": "Exam, regulator, visa route and real costs for 23 countries.",

@@ -1,0 +1,64 @@
+import 'package:ejadah_localization/ejadah_localization.dart';
+import 'package:ejadah_ui/ejadah_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'providers.dart';
+import 'router.dart';
+
+/// The Ejadah application.
+///
+/// Direction, typography and every visual constant follow from the active
+/// language, resolved here once. Switching language rebuilds this subtree in
+/// place — instantly, with no reload and no lost form state, because only the
+/// locale changes.
+class EjadahApp extends ConsumerWidget {
+  const EjadahApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final language = ref.watch(languageProvider);
+    final reduceMotion = ref.watch(reduceMotionProvider);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Fluid breakpoints, never device models.
+        final windowClass = EjadahBreakpoints.of(constraints.maxWidth);
+
+        return MaterialApp.router(
+          onGenerateTitle: (context) => context.strings.appName,
+          debugShowCheckedModeBanner: false,
+          routerConfig: ref.watch(routerProvider),
+          locale: Locale(language.code),
+          supportedLocales: ejadahSupportedLocales,
+          localizationsDelegates: EjadahStrings.localizationsDelegates,
+          theme: buildEjadahTheme(
+            language: language,
+            windowClass: windowClass,
+            reduceMotion: reduceMotion,
+          ),
+          builder: (context, child) {
+            // Directionality follows the language; no screen sets it by hand,
+            // and no widget reasons about left and right.
+            return Directionality(
+              textDirection: language.isRtl
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: MediaQuery(
+                // Text scaling up to 200% must not clip. Beyond that the layout
+                // stops being usable, so it is capped rather than allowed to
+                // break silently.
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(minScaleFactor: 0.85, maxScaleFactor: 2.0),
+                ),
+                child: child ?? const SizedBox.shrink(),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}

@@ -1,0 +1,1183 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class EjadahStringsAr extends EjadahStrings {
+  EjadahStringsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get aboutTutor => 'نبذة';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get again => 'أعدها لاحقًا';
+
+  @override
+  String get alsoWorth => 'خيارات أخرى تستحق النظر';
+
+  @override
+  String get alsoWorthLabel => 'خيارات أخرى تستحق النظر';
+
+  @override
+  String get appName => 'أكاديمية إجادة الدولية';
+
+  @override
+  String get apply => 'افتح التقديم';
+
+  @override
+  String get applyToTeach => 'تقدّم للتدريس';
+
+  @override
+  String get availableBalance => 'الرصيد المتاح';
+
+  @override
+  String get avgCompletion => 'متوسط الإكمال';
+
+  @override
+  String get back => 'رجوع';
+
+  @override
+  String get backHome => 'العودة للرئيسية';
+
+  @override
+  String get backToCourse => 'ابدأ الدورة';
+
+  @override
+  String get becomeBlurb =>
+      'تقدّم كمدرّس أو مرشد. تحدد سعرك وساعاتك، ونسبة 70/30 معروضة قبل الموافقة.';
+
+  @override
+  String get becomeTitle => 'علّم على إجادة';
+
+  @override
+  String get bestRoute => 'أفضل مسار لك';
+
+  @override
+  String get bookSession => 'احجز جلسة';
+
+  @override
+  String get bookedBody =>
+      'تأكد الدفع على ejadah.com، وأُبلغ المدرّس، والجلسة الآن في حجوزاتي.';
+
+  @override
+  String get bookedTitle => 'تم حجز الجلسة';
+
+  @override
+  String get bookedToast => 'تم إرسال طلب الجلسة';
+
+  @override
+  String get bookingsBlurb => 'الجلسات القادمة والسابقة والملغاة.';
+
+  @override
+  String get bookingsTitle => 'حجوزاتي';
+
+  @override
+  String get browseProgrammes => 'تصفح البرامج';
+
+  @override
+  String get budgetLabel => 'الميزانية';
+
+  @override
+  String get buildRoute => 'ارسم مساري';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get cancelBody =>
+      'لم يُخصم أي مبلغ. مقعدك غير محجوز وقد يتغير السعر إن عدت لاحقًا.';
+
+  @override
+  String get cancelTitle => 'أُلغيت عملية الدفع';
+
+  @override
+  String get careerEyebrow => 'المسار المهني';
+
+  @override
+  String get careerSub =>
+      'أربعة مسارات من نفس الشهادة. اختر واحدًا وشاهد الطريق كاملًا — بالتكلفة والوقت ودرجة الصعوبة.';
+
+  @override
+  String get careerTitle => 'شهادتك تفتح أبوابًا أكثر مما تتخيل';
+
+  @override
+  String get certCode => 'رمز الشهادة';
+
+  @override
+  String get certTitleSample => 'المعالجة اللبية بالمبارد الدوّارة · 11 درسًا';
+
+  @override
+  String get choosePlan => 'اختر';
+
+  @override
+  String get clearAll => 'مسح الكل';
+
+  @override
+  String get clearCache => 'مسح الذاكرة المؤقتة';
+
+  @override
+  String get closed => 'انتهى الموعد';
+
+  @override
+  String get cmpEmptyBody =>
+      'اضغط + على ثلاثة برامج كحد أقصى من القائمة ثم عد إلى هنا.';
+
+  @override
+  String get cmpEmptyTitle => 'لم تحدد شيئًا بعد';
+
+  @override
+  String get communityLabel => 'من المجتمع';
+
+  @override
+  String get compareCount => 'مُحدد';
+
+  @override
+  String get compareCta => 'قارن';
+
+  @override
+  String get compareMode => 'مقارنة';
+
+  @override
+  String get compareTitle => 'مقارنة جانبية';
+
+  @override
+  String get connectEyebrow => 'تواصل';
+
+  @override
+  String get connectSub =>
+      'ثلاثة أنواع من الحوار. اختر بحسب ما تحتاجه، لا بحسب المسمى الوظيفي.';
+
+  @override
+  String get connectTitle => 'وقت مع من سبقك في الطريق';
+
+  @override
+  String get consultingBlurb =>
+      'استشارات العيادة والأعمال لأصحاب العيادات والشركاء.';
+
+  @override
+  String get consultingTitle => 'الاستشارات';
+
+  @override
+  String get contentUnavailableBody => 'لم يعد متاحًا — غالبًا أُغلقت الدفعة.';
+
+  @override
+  String get continueAction => 'متابعة';
+
+  @override
+  String get continueCourse => 'أكمل';
+
+  @override
+  String get continueLabel => 'أكمل ما بدأته';
+
+  @override
+  String get countriesBlurb =>
+      'الامتحان والجهة المنظّمة ومسار التأشيرة والتكاليف الحقيقية لـ 23 دولة.';
+
+  @override
+  String get coursesEyebrow => 'الدورات';
+
+  @override
+  String get coursesTitle => 'تعلّم من أطباء التعليم مهنتهم';
+
+  @override
+  String get createAccount => 'إنشاء الحساب';
+
+  @override
+  String get currentPlan => 'خطتك الحالية';
+
+  @override
+  String get currentPlanShort => 'خطتك';
+
+  @override
+  String get currentStage => 'مرحلتك الحالية';
+
+  @override
+  String get curriculum => 'المحتوى';
+
+  @override
+  String get daysLeft => 'يومًا متبقيًا';
+
+  @override
+  String get deadlinesAction => 'افتح قاعدة البرامج';
+
+  @override
+  String get deadlinesBody =>
+      'و32 برنامجًا يُغلق خلال 60 يومًا. الدفعات المنتهية مخفية حتى تطلبها.';
+
+  @override
+  String get deadlinesLabel => 'مواعيد التقديم';
+
+  @override
+  String get deadlinesTitle => '17 برنامجًا مفتوح للتقديم الآن';
+
+  @override
+  String get deleteAccount => 'حذف حسابي';
+
+  @override
+  String get difficulty => 'الصعوبة';
+
+  @override
+  String get disclaimer =>
+      'تأكّد دائمًا من الرسوم وقواعد التأشيرة وشروط التسجيل من الجهة المختصة قبل دفع أي مبلغ.';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String get download => 'تحميل';
+
+  @override
+  String get durationLabel => 'مدة الجلسة';
+
+  @override
+  String get earningsLink => 'أرباحي';
+
+  @override
+  String get editCard => 'تعديل بيانات البطاقة';
+
+  @override
+  String get editCardTitle => 'تعديل بطاقتك';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emptyBookBody =>
+      'الجلسات التي تحجزها أو تلغيها ستظهر في هذا القسم.';
+
+  @override
+  String get emptyBookTitle => 'لا يوجد شيء هنا بعد';
+
+  @override
+  String get emptyMastersBody => 'جرّب تخصصًا أوسع، أو أظهر الدفعات المنتهية.';
+
+  @override
+  String get emptyMastersTitle => 'لا نتائج لهذه التصفية';
+
+  @override
+  String get emptySavedBody =>
+      'اضغط على القلب في أي برنامج ليبقى هنا مع موعد التقديم.';
+
+  @override
+  String emptySavedRelaxed(Object count) {
+    return 'لا برامج محفوظة بعد — $count برنامجًا مفتوح الآن.';
+  }
+
+  @override
+  String get emptySavedTitle => 'لم تحفظ شيئًا بعد';
+
+  @override
+  String get enrol => 'اشترك';
+
+  @override
+  String get enrolNow => 'اشترك الآن';
+
+  @override
+  String get enrolled => 'مشترك';
+
+  @override
+  String get errBody =>
+      'عملك المحفوظ آمن على هذا الجهاز. حاول مرة أخرى بعد قليل.';
+
+  @override
+  String get errGeneric => 'تعذّر ذلك الآن. لم يُفقد ما أدخلته.';
+
+  @override
+  String get errServer => 'حدث خطأ من جانبنا. لم يتأثر ما حفظته.';
+
+  @override
+  String get errTitle => 'تعذّر تحميل صفحتك';
+
+  @override
+  String get estCost => 'التكلفة المتوقعة';
+
+  @override
+  String get exploreLabel => 'استكشف';
+
+  @override
+  String get fBudget => 'الميزانية (تقدير بالدولار)';
+
+  @override
+  String get fDeadline => 'آخر موعد';
+
+  @override
+  String get fDegreeType => 'الدرجة';
+
+  @override
+  String get fDuration => 'المدة';
+
+  @override
+  String get fGpa => 'المعدل';
+
+  @override
+  String get fIelts => 'آيلتس';
+
+  @override
+  String get fIntake => 'بدء الدراسة';
+
+  @override
+  String get fInterview => 'المقابلة';
+
+  @override
+  String get fLanguage => 'لغة الدراسة';
+
+  @override
+  String get fRank => 'تصنيف QS';
+
+  @override
+  String get fRegion => 'المنطقة';
+
+  @override
+  String get fScholarship => 'المنح';
+
+  @override
+  String get fSpecialty => 'التخصص';
+
+  @override
+  String get fThesis => 'الرسالة';
+
+  @override
+  String get fTuition => 'الرسوم';
+
+  @override
+  String get fieldBio => 'نبذة قصيرة';
+
+  @override
+  String get fieldClinic => 'العيادة';
+
+  @override
+  String get fieldTitle => 'المسمى';
+
+  @override
+  String get filterBy => 'الصيغة';
+
+  @override
+  String get filters => 'تصفية';
+
+  @override
+  String get fitLabel => 'ملاءمة';
+
+  @override
+  String get flashcards => 'البطاقات';
+
+  @override
+  String get forgotBody => 'أدخل بريد حسابك وسنرسل لك رابط إعادة التعيين.';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة المرور؟';
+
+  @override
+  String get forgotSent =>
+      'إن كان هذا البريد مسجلًا فالرابط في طريقه إليك. راجع البريد المزعج قبل مراسلتنا.';
+
+  @override
+  String get forgotTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String gateBody(Object count) {
+    return '$count مراحل أخرى وتكاليفك والمواعيد الدقيقة — مجانًا وبدون بطاقة.';
+  }
+
+  @override
+  String get gateTitle => 'اطّلع على مسارك كاملًا';
+
+  @override
+  String get getBullet1 =>
+      'أنت تحضر الحالة — الأشعة والملاحظات والجزء الذي أخفق.';
+
+  @override
+  String get getBullet2 =>
+      'مشاركة الشاشة على صور CBCT والصور الخاصة بك، مع تسجيل إن أردت.';
+
+  @override
+  String get getBullet3 =>
+      'ملخص مكتوب وقائمة تحقّق للحالة القادمة خلال 24 ساعة.';
+
+  @override
+  String get gotIt => 'أتقنتها';
+
+  @override
+  String get greetingEyebrow => 'الإثنين · 28 يوليو';
+
+  @override
+  String get handouts => 'المرفقات';
+
+  @override
+  String get handoutsTitle => 'المرفقات';
+
+  @override
+  String get haveAccount => 'لدي حساب بالفعل';
+
+  @override
+  String get hideExpired => 'المنتهية مخفية';
+
+  @override
+  String get incCert => 'شهادة إتمام';
+
+  @override
+  String get incCpd => 'ساعات تطوير مهني معتمدة';
+
+  @override
+  String get incHandouts => 'مرفقات قابلة للتحميل';
+
+  @override
+  String get incLifetime => 'وصول دائم';
+
+  @override
+  String get included => 'ما يشمله';
+
+  @override
+  String get includes => 'ما يشمله الاشتراك';
+
+  @override
+  String get initials => 'ي ح';
+
+  @override
+  String get instructorBio =>
+      'استشارية علاج جذور، تُدرّس إعادة المعالجة تحت المجهر في جامعة القاهرة.';
+
+  @override
+  String get instructorLabel => 'المحاضر';
+
+  @override
+  String get instructorLink => 'دوراتي';
+
+  @override
+  String get instructorTitle => 'دوراتك';
+
+  @override
+  String get issuedBy => 'الجهة المُصدِرة';
+
+  @override
+  String get issuedDate => '12 مايو 2026';
+
+  @override
+  String get issuedOn => 'تاريخ الإصدار';
+
+  @override
+  String get join => 'انضم';
+
+  @override
+  String get keyFacts => 'الحقائق الأساسية';
+
+  @override
+  String get kingsBlurb =>
+      'تسعة أقسام: المحتوى الدراسي، الشروط، إعداد التقديم، خمس جهات تمويل، الرواتب الحقيقية، الاعتماد الخليجي والمصري، تكاليف لندن والتأشيرة.';
+
+  @override
+  String get languageLabel => 'اللغة';
+
+  @override
+  String get lastSixMonths => 'آخر ستة أشهر';
+
+  @override
+  String get lessons => 'درسًا';
+
+  @override
+  String get level => 'المستوى';
+
+  @override
+  String get licensingRoute => 'مسار الترخيص';
+
+  @override
+  String get manageOnWeb => 'الإدارة على ejadah.com';
+
+  @override
+  String get markAllRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get mastersEyebrow => 'دراسات عليا · 123 دولة';
+
+  @override
+  String get mastersTitle => '199 برنامجًا بوصف صادق';
+
+  @override
+  String get maybeLater => 'ربما لاحقًا';
+
+  @override
+  String get mediaNote =>
+      'المدرّسون أصحاب الصورة والفيديو التعريفي يحصلون على 3 أضعاف الحجوزات. الفيديو من دقيقتين إلى ثلاث — عرّف بنفسك وبأسلوبك في التدريس.';
+
+  @override
+  String get mentoringBlurb =>
+      'أطباء أنجزوا الانتقال فعلًا — المطابقة على المسار لا التخصص.';
+
+  @override
+  String get mentoringTitle => 'الإرشاد المهني';
+
+  @override
+  String get monthsTypical => 'شهرًا في المتوسط';
+
+  @override
+  String get myCareer => 'مساري';
+
+  @override
+  String get myLearning => 'تعلّمي';
+
+  @override
+  String get myShortlist => 'قائمتي المختارة';
+
+  @override
+  String get namePlaceholder => 'كما يظهر في شهادتك';
+
+  @override
+  String get nextAvailable => 'أقرب موعد متاح';
+
+  @override
+  String get nextMentor => 'تحدّث مع من خاض التجربة';
+
+  @override
+  String get nextMentorSub => 'مرشدون على هذا المسار تحديدًا.';
+
+  @override
+  String get nextProgrammes => 'برامج الدراسات العليا';
+
+  @override
+  String get nextProgrammesSub => 'مُصفّاة على تخصصك ووجهتك.';
+
+  @override
+  String get nextQuestion => 'السؤال التالي';
+
+  @override
+  String get nfcClinic => 'نايل دنتال ستوديو، الزمالك، القاهرة';
+
+  @override
+  String get nfcNote =>
+      'ملفك العام على ejadah.com/p/yasmine-hassan — يفتحه أي شخص من رمز QR أو بلمسة، دون حاجة للتطبيق.';
+
+  @override
+  String get nfcTitle => 'علاج الجذور · طب الأسنان الرقمي';
+
+  @override
+  String get no => 'غير مطلوبة';
+
+  @override
+  String get noAccount => 'جديد على إجادة؟';
+
+  @override
+  String noResultsNearest(Object relaxation) {
+    return 'لا نتائج بهذه التصفية. الأقرب: $relaxation.';
+  }
+
+  @override
+  String get notListed => 'غير مذكور';
+
+  @override
+  String get notVerified => 'الاعتماد غير مُتحقَّق';
+
+  @override
+  String get notesLabel => 'ملاحظات للمدرّس';
+
+  @override
+  String get notesPlaceholder =>
+      'أحضر الحالة التي تريد مناقشتها — الأشعة تساعد.';
+
+  @override
+  String get notifBooking => 'تذكيرات الجلسات';
+
+  @override
+  String get notifDeadline => 'مواعيد التقديم';
+
+  @override
+  String get notifPrefs => 'الإشعارات';
+
+  @override
+  String get notifStudy => 'تذكيرات الدراسة';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get nowPlaying => 'يُشغَّل الآن';
+
+  @override
+  String get offlineBanner => 'بلا اتصال — نعرض المحتوى المحفوظ';
+
+  @override
+  String get openGuide => 'افتح الدليل';
+
+  @override
+  String get openNow => 'مفتوح الآن';
+
+  @override
+  String get openRoadmap => 'افتح الخارطة';
+
+  @override
+  String get pGoal => 'ما هدفك؟';
+
+  @override
+  String get pNotify => 'هل نرسل لك تذكيرات؟';
+
+  @override
+  String get pNotifyWhy =>
+      'اثنتان يوميًا كحد أقصى، ولا شيء بين 22:00 و08:00 بتوقيت القاهرة، وأنت تختار الفئات.';
+
+  @override
+  String get pRegion => 'إلى أين تفكر في الانتقال؟';
+
+  @override
+  String get pRegionSub => 'اختر ما ينطبق — هذا يحدد ما نعرضه أولًا فقط.';
+
+  @override
+  String get pSpec => 'أي مجال يهمك؟';
+
+  @override
+  String get paidBody =>
+      'تأكد الدفع على ejadah.com، وصلاحيتك مفعّلة على هذا الجهاز.';
+
+  @override
+  String get paidTitle => 'تم اشتراكك';
+
+  @override
+  String get partialBody => 'بقية صفحتك محدَّثة.';
+
+  @override
+  String get partialTitle => 'تعذّر تحميل المدرّسين';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get pathBusiness => 'الأعمال والصناعة';
+
+  @override
+  String get pathDigital => 'العمل الرقمي والحر';
+
+  @override
+  String get pathGpAbroad => 'العمل بالخارج كطبيب عام';
+
+  @override
+  String get pathSpecialise => 'التخصص الإكلينيكي';
+
+  @override
+  String get pathsLabel => 'اختر اتجاهًا';
+
+  @override
+  String get payCta => 'الدفع على ejadah.com';
+
+  @override
+  String get payNote =>
+      'تتم عمليات الدفع بأمان على ejadah.com — التطبيق لا يتعامل مع بيانات البطاقات.';
+
+  @override
+  String get pendingClearing => 'قيد التحصيل:';
+
+  @override
+  String get pendingSource => 'بانتظار المصدر';
+
+  @override
+  String get perHour => '/ الساعة';
+
+  @override
+  String get perSession => 'لكل جلسة — تفصيل العمولة';
+
+  @override
+  String get photoSlot => 'صورة الملف';
+
+  @override
+  String get pickDate => 'اختر اليوم والوقت';
+
+  @override
+  String get pickDept => 'ثلاثة أقسام في هذه النسخة. اختر واحدًا لعرض دوراته.';
+
+  @override
+  String get pickSlot => 'المواعيد المتاحة';
+
+  @override
+  String get plansTitle => 'الخطط';
+
+  @override
+  String get platformFee => 'عمولة إجادة (30%)';
+
+  @override
+  String get previewAvailable => 'معاينة متاحة';
+
+  @override
+  String get priorityLabel => 'الأهم لك';
+
+  @override
+  String get privacy => 'سياسة الخصوصية';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get profileEyebrow => 'ملفي';
+
+  @override
+  String get profileName => 'د. ياسمين حسن';
+
+  @override
+  String get profileStage => 'طبيبة أسنان عامة · 3 سنوات بعد التخرج';
+
+  @override
+  String get programmeCount => '199 برنامجًا';
+
+  @override
+  String get programmesBlurb =>
+      'تصفية بالتخصص والدولة والرسوم وموعد البدء والتقديم. قارن حتى ثلاثة.';
+
+  @override
+  String get publicCardTitle => 'الملف العام';
+
+  @override
+  String get publicPageNote =>
+      'هذه الصفحة عامة — يمكن لأي عيادة أو جهة تسجيل فتحها من رمز QR دون حساب في إجادة.';
+
+  @override
+  String get pwRule => '8 أحرف على الأقل مع حرف ورقم';
+
+  @override
+  String get q1 => 'هل تريد الاستمرار في علاج المرضى؟';
+
+  @override
+  String get q2 => 'أي مسار يناسبك؟';
+
+  @override
+  String get q3 => 'عنك';
+
+  @override
+  String get q4 => 'ما الذي تستطيع تحمّله فعلًا؟';
+
+  @override
+  String get q4sub =>
+      'كن صادقًا — الخطة مبنية على هذا، لا على ما يبدو مثيرًا للإعجاب.';
+
+  @override
+  String get q5 => 'أين ولماذا';
+
+  @override
+  String get quiz => 'الاختبار';
+
+  @override
+  String get rating => 'التقييم';
+
+  @override
+  String get recognitionBody =>
+      'توجد إشارات لمصر والإمارات والسعودية وقطر في البيانات المصدرية لكن حالتها فُقدت أثناء الاستخراج. نعرض لا شيء بدلًا من التخمين.';
+
+  @override
+  String get recognitionLabel => 'الاعتماد';
+
+  @override
+  String get recognitionNotice => 'لم يتم التحقق من حالة الاعتماد لكل دولة بعد';
+
+  @override
+  String get regionEurope => 'أوروبا';
+
+  @override
+  String get regionGulf => 'الخليج';
+
+  @override
+  String get regionLabel => 'المنطقة';
+
+  @override
+  String get regionNorthAmerica => 'أمريكا الشمالية';
+
+  @override
+  String get regionStayEgypt => 'البقاء في مصر';
+
+  @override
+  String get regionUkIreland => 'بريطانيا وأيرلندا';
+
+  @override
+  String get registerSub => 'دقيقتان الآن توفّر عليك شهرًا من التخمين لاحقًا.';
+
+  @override
+  String get requestsLink => 'الطلبات';
+
+  @override
+  String get reschedule => 'تغيير الموعد';
+
+  @override
+  String resultsCount(Object count) {
+    return '$count برنامجًا';
+  }
+
+  @override
+  String get retry => 'حاول مرة أخرى';
+
+  @override
+  String get reviewBooking => 'راجع حجزك';
+
+  @override
+  String get reviewTimeline =>
+      'نراجع الطلبات خلال خمسة أيام عمل ونرد في كل الأحوال.';
+
+  @override
+  String get reviewsLabel => 'التقييمات';
+
+  @override
+  String get roadmapCtaAction => 'ابدأ';
+
+  @override
+  String get roadmapCtaBody =>
+      'أجب عن خمسة أسئلة قصيرة واحصل على مسار مبني على ميزانيتك ووقتك الحقيقيين — لا على ماجستير لم تطلبه.';
+
+  @override
+  String get roadmapCtaEyebrow => '3 دقائق فقط';
+
+  @override
+  String get roadmapCtaTitle => 'أنشئ خارطة مسارك المهني';
+
+  @override
+  String get roadmapFunnelBody =>
+      'خمسة أسئلة قصيرة. ميزانيتك ووقتك حدود صارمة، والعمل عن بُعد من مصر خيار كامل الأحقية.';
+
+  @override
+  String get roadmapLabel => 'خارطة مسارك';
+
+  @override
+  String get roadmapStageLabel => 'المرحلة 2 من 5';
+
+  @override
+  String get rowBilling => 'الفواتير';
+
+  @override
+  String get rowBookings => 'حجوزاتي';
+
+  @override
+  String get rowCertificates => 'الشهادات';
+
+  @override
+  String get rowMembership => 'العضوية';
+
+  @override
+  String get rowNfc => 'بطاقة NFC';
+
+  @override
+  String get rowNotifications => 'الإشعارات';
+
+  @override
+  String get rowRoadmap => 'خارطة مساري';
+
+  @override
+  String get rowSettings => 'الإعدادات';
+
+  @override
+  String get rowShortlist => 'البرامج المحفوظة';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get saveChanges => 'حفظ التعديلات';
+
+  @override
+  String get saveDraft => 'حفظ كمسودة';
+
+  @override
+  String get saveProg => 'حفظ';
+
+  @override
+  String get savedProg => 'محفوظ';
+
+  @override
+  String get savedToast => 'أُضيف إلى قائمتك';
+
+  @override
+  String get schNo => 'غير مذكورة';
+
+  @override
+  String get schYes => 'متاحة';
+
+  @override
+  String get searchPlaceholder => 'الجامعة أو البرنامج أو المدينة';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String get seeBookings => 'عرض حجوزاتي';
+
+  @override
+  String get seeProgrammesHere => 'شاهد البرامج هنا';
+
+  @override
+  String get sendLink => 'أرسل الرابط';
+
+  @override
+  String get sessionDetails => 'تفاصيل الجلسة';
+
+  @override
+  String get sessionFee => 'قيمة الجلسة';
+
+  @override
+  String get sessionsLabel => 'جلسة';
+
+  @override
+  String get share => 'شارك البطاقة';
+
+  @override
+  String get shareVerify => 'مشاركة التحقق';
+
+  @override
+  String get shareWhatsapp => 'شارك على واتساب';
+
+  @override
+  String get shortlistTitle => 'البرامج المحفوظة';
+
+  @override
+  String get showExpired => 'أظهر المنتهية';
+
+  @override
+  String showingRange(Object first, Object last, Object total) {
+    return '$first–$last من $total';
+  }
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get signInToSave => 'سجّل الدخول للحفظ';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get signUp => 'إنشاء حساب';
+
+  @override
+  String get skip => 'تخطّي';
+
+  @override
+  String get sourceMissing =>
+      'لا يوجد رابط رسمي في هذا السجل — تحقّق قبل التقديم.';
+
+  @override
+  String get specAll => 'كل التخصصات';
+
+  @override
+  String get specDigital => 'رقمي';
+
+  @override
+  String get specEndo => 'علاج الجذور';
+
+  @override
+  String get splitNote =>
+      'كل جلسة تُظهر القيمة الإجمالية وعمولة المنصة 30% ونصيبك الصافي 70%. تُعالج التحويلات على الموقع.';
+
+  @override
+  String get stageConsultantOwner => 'استشاري أو مالك عيادة';
+
+  @override
+  String get stageFreshGraduate => 'خريج حديث';
+
+  @override
+  String get stageGeneralDentist => 'طبيب أسنان عام';
+
+  @override
+  String stageOf(Object n, Object total) {
+    return 'المرحلة $n من $total';
+  }
+
+  @override
+  String get stageSpecialist => 'أخصائي';
+
+  @override
+  String get stageStudent => 'طالب طب أسنان';
+
+  @override
+  String get startCourse => 'ابدأ الدورة';
+
+  @override
+  String get startNow => 'ابدأ هذا الشهر';
+
+  @override
+  String get startOver => 'ابدأ من جديد';
+
+  @override
+  String get statedByTutor => 'مُقدَّم من المدرّس';
+
+  @override
+  String get streak => '12 يومًا متواصلة';
+
+  @override
+  String get stubBody =>
+      'هذا القسم هو التالي في ترتيب البناء. الهيكل وشريط التنقّل وتبديل اللغة جاهزة بالفعل.';
+
+  @override
+  String get subjectsLabel => 'المواضيع';
+
+  @override
+  String get submitApplication => 'إرسال الطلب';
+
+  @override
+  String get tabCareer => 'المسار';
+
+  @override
+  String get tabConnect => 'تواصل';
+
+  @override
+  String get tabCourses => 'الدورات';
+
+  @override
+  String get tabHome => 'الرئيسية';
+
+  @override
+  String get tabLearn => 'التعلّم';
+
+  @override
+  String get tabMasters => 'دراسات عليا';
+
+  @override
+  String get tabPeople => 'الأشخاص';
+
+  @override
+  String get tabProfile => 'ملفي';
+
+  @override
+  String get tapToFlip => 'اضغط للقلب';
+
+  @override
+  String get terms => 'شروط الاستخدام';
+
+  @override
+  String get theRoute => 'المسار مرحلة بمرحلة';
+
+  @override
+  String get tileCertificates => 'الشهادات';
+
+  @override
+  String get tileCertificatesMeta => 'تحميل ومشاركة';
+
+  @override
+  String get tileCountries => 'أدلة الدول';
+
+  @override
+  String get tileCountriesMeta => '23 مسار ترخيص';
+
+  @override
+  String get tileProgrammes => 'برامج الدراسات العليا';
+
+  @override
+  String get tileProgrammesMeta => '199 برنامجًا · 6 مناطق';
+
+  @override
+  String get tileShortlist => 'قائمتي المختارة';
+
+  @override
+  String get tileShortlistMeta => '4 برامج محفوظة';
+
+  @override
+  String get timeLabel => 'وقت الدراسة';
+
+  @override
+  String get timezoneNote => 'المواعيد بتوقيت القاهرة (GMT+2).';
+
+  @override
+  String get toolsLabel => 'الأدوات';
+
+  @override
+  String get topic => 'الموضوع';
+
+  @override
+  String get totalTime => 'المدة الإجمالية';
+
+  @override
+  String get tryPayAgain => 'حاول مرة أخرى';
+
+  @override
+  String get tutorBio =>
+      'استشارية علاج جذور في عيادة تحويلية بالقاهرة، تُدرّس إعادة المعالجة تحت المجهر. الجلسات تدور حول حالات تأتي بها أنت — بالأشعة والأطوال العاملة وكل التفاصيل.';
+
+  @override
+  String get tutoringBlurb =>
+      'للطلاب — معيدون ومحاضرون وأوائل الخريجين يدرّسون مادة أو سنة كاملة، أسبوعيًا أو تحضيرًا للامتحان.';
+
+  @override
+  String get tutoringTitle => 'الدروس الخاصة';
+
+  @override
+  String get tutorsLabel => 'مدرّسون مناسبون لك';
+
+  @override
+  String get tutorsSub => 'مطابقون لتخصص علاج الجذور المحفوظ في ملفك.';
+
+  @override
+  String get typicalCost => 'التكلفة المعتادة';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
+  String get undoRemove => 'أُزيل من قائمتك';
+
+  @override
+  String get upcomingLabel => 'قادم';
+
+  @override
+  String get userName => 'صباح الخير، ياسمين';
+
+  @override
+  String get verified => 'شهادة موثّقة';
+
+  @override
+  String get verifiedByEjadah => 'موثّق من إجادة';
+
+  @override
+  String get verifiedTutor => 'موثّق';
+
+  @override
+  String get verifyNote =>
+      'كل شهادة لها صفحة تحقق عامة يمكن لأي عيادة أو جهة تسجيل مراجعتها دون حساب.';
+
+  @override
+  String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get visaRoute => 'مسار التأشيرة';
+
+  @override
+  String get watchOut => 'احترس';
+
+  @override
+  String get webOnly => 'يفتح ejadah.com';
+
+  @override
+  String get welcomeBack => 'أهلًا بعودتك';
+
+  @override
+  String get whatIf => 'ماذا لو';
+
+  @override
+  String get whatIfSub => 'غيّر متغيرًا واحدًا ويُعاد حساب المسار بالكامل.';
+
+  @override
+  String get whatYouGet => 'ماذا تحصل عليه';
+
+  @override
+  String get whatYouLearn => 'ماذا ستتعلّم';
+
+  @override
+  String get withdrawWeb => 'السحب على ejadah.com';
+
+  @override
+  String get writeNfc => 'اكتب على NFC';
+
+  @override
+  String get yearsLabel => 'سنة خبرة';
+
+  @override
+  String get yearsSince => 'سنوات بعد التخرج';
+
+  @override
+  String get yes => 'مطلوبة';
+
+  @override
+  String get youKeep => 'نصيبك (70%)';
+
+  @override
+  String get yourRate => 'سعر الساعة';
+
+  @override
+  String get yourStage => 'مرحلتك الحالية';
+}

@@ -31,8 +31,11 @@ class LocalizedText extends ValueObject {
   final String en;
   final String ar;
 
-  String call(AppLanguage language) => resolve(language);
-
+  /// Resolves against [language].
+  ///
+  /// Deliberately not `call`: widget code resolves against a `BuildContext`
+  /// through an extension in `ejadah_localization`, and a `call` here would
+  /// shadow it, because an instance method always wins over an extension.
   String resolve(AppLanguage language) =>
       switch (language) { AppLanguage.ar => ar, AppLanguage.en => en };
 

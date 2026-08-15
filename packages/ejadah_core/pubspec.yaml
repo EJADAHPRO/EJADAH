@@ -1,0 +1,23 @@
+name: ejadah_core
+description: >-
+  Cross-cutting client infrastructure for Ejadah — typed failures, the API
+  client, local persistence, and the analytics abstraction.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.3.0
+  shared_preferences: ^2.5.3
+  ejadah_models:
+    path: ../ejadah_models
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

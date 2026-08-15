@@ -1,0 +1,43 @@
+name: ejadah_mobile
+description: >-
+  Ejadah International Academy — the Flutter application. Android, iOS and Web
+  from one codebase, Arabic-default and fully bilingual.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State: one strategy across the app, with presentation, server, auth, form
+  # and navigation state kept separate.
+  flutter_riverpod: ^2.6.1
+
+  # Routing with deep links, auth guards and browser history.
+  go_router: ^14.8.1
+
+  intl: ^0.20.2
+  url_launcher: ^6.3.1
+
+  ejadah_core:
+    path: ../../packages/ejadah_core
+  ejadah_localization:
+    path: ../../packages/ejadah_localization
+  ejadah_models:
+    path: ../../packages/ejadah_models
+  ejadah_ui:
+    path: ../../packages/ejadah_ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

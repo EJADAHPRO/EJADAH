@@ -1,0 +1,27 @@
+name: ejadah_localization
+description: >-
+  EN/AR strings for Ejadah, generated from the canonical handoff tables. Arabic
+  is the product default and the two tables are key-identical by contract.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  ejadah_models:
+    path: ../ejadah_models
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  generate: true
