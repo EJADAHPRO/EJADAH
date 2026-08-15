@@ -584,10 +584,11 @@ class PeopleRepository {
     );
     return {
       for (final kind in ServiceKind.values)
-        kind: rows
-            .where((row) => row.str('kind') == kind.wire)
-            .map((row) => row.intAt('n'))
-            .firstOrNull ??
+        kind:
+            rows
+                .where((row) => row.str('kind') == kind.wire)
+                .map((row) => row.intAt('n'))
+                .firstOrNull ??
             0,
     };
   }

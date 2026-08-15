@@ -8,6 +8,7 @@ import '../../http/responses.dart';
 import 'booking_service.dart';
 import 'people_repository.dart';
 import 'people_service.dart';
+import 'tutor_application_service.dart';
 
 /// `/api/v1/people` — the three marketplace doors and the booking flow.
 ///
@@ -20,8 +21,71 @@ import 'people_service.dart';
 /// every literal path — `/bookings`, `/holds`, `/profile/...` — is registered
 /// ahead of it, and `/profile/<slug>` ahead of `/<id>/availability` so that
 /// "profile" is never parsed as a professional id.
-Router peopleRoutes(PeopleService service, BookingService booking) {
+Router peopleRoutes(
+  PeopleService service,
+  BookingService booking,
+  TutorApplicationService applications,
+) {
   final router = Router();
+
+  // --- Becoming a tutor ------------------------------------------------------
+  //
+  // Registered before `/<kind>`, which matches any single segment.
+
+  router.get('/apply', (Request request) async {
+    // Public: the pitch states the split before anyone signs in, and the split
+    // is computed rather than written into copy so the public number and the
+    // ledger cannot drift apart.
+    final userId = request.ctx.userId;
+    final application = userId == null ? null : await applications.find(userId);
+
+    return Json.ok({
+      'professional_share_percent': applications.professionalSharePercent,
+      'minimum_weekly_hours': TutorApplicationService.minimumWeeklyHours,
+      'application': application?.toJson(),
+      // Shown live on the review step: "submit disabled WITH reason" needs the
+      // reason before the tap, not after it.
+      'missing': application == null
+          ? const []
+          : applications
+                .missingItems(application.payload)
+                .map((item) => item.toJson())
+                .toList(),
+    });
+  });
+
+  router.put('/apply/<step>', (Request request, String step) async {
+    final body = await readJsonBody(request);
+    final resolved = ApplicationStep.fromPosition(parsePathInt(step, 'step'));
+    if (resolved == null) throw ApiException.notFound();
+    final saved = await applications.saveStep(
+      userId: request.ctx.requireUser(),
+      step: resolved,
+      answers: Map<String, dynamic>.from(body['answers'] as Map? ?? const {}),
+    );
+    return Json.ok(saved.toJson());
+  });
+
+  router.post('/apply/submit', (Request request) async {
+    // Refuses with every missing item named at once.
+    final submitted = await applications.submit(request.ctx.requireUser());
+    return Json.ok(submitted.toJson());
+  });
+
+  router.get('/playbook', (Request request) async {
+    return Json.ok({
+      'items': await applications.playbook(request.ctx.requireUser()),
+    });
+  });
+
+  router.post('/playbook/<item>', (Request request, String item) async {
+    return Json.ok({
+      'items': await applications.completePlaybookItem(
+        userId: request.ctx.requireUser(),
+        item: item,
+      ),
+    });
+  });
 
   // --- Hub ------------------------------------------------------------------
 

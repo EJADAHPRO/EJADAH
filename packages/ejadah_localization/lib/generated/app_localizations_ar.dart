@@ -18,6 +18,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get addCertificate => 'أضف شهادة';
 
   @override
+  String get addWindow => 'أضف ساعات';
+
+  @override
   String get again => 'أعدها لاحقًا';
 
   @override
@@ -42,6 +45,19 @@ class EjadahStringsAr extends EjadahStrings {
   String get appName => 'أكاديمية إجادة الدولية';
 
   @override
+  String get applicationDraftNote =>
+      'تُحفظ كل خطوة فور إتمامها. يمكنك إغلاق هذه الشاشة والعودة إليها.';
+
+  @override
+  String get applicationSaved => 'تم الحفظ';
+
+  @override
+  String get applicationSaving => 'يجري الحفظ…';
+
+  @override
+  String get applicationTitle => 'طلبك';
+
+  @override
   String get apply => 'افتح التقديم';
 
   @override
@@ -51,7 +67,17 @@ class EjadahStringsAr extends EjadahStrings {
   String get authorityLabel => 'الجهة المنظِّمة';
 
   @override
+  String availabilityFloorHint(Object hours) {
+    return 'ما لا يقل عن $hours ساعات أسبوعيًا يبقيك ظاهرًا للطلاب.';
+  }
+
+  @override
   String get availabilityLabel => 'المواعيد المتاحة';
+
+  @override
+  String availabilityWeeklyTotal(Object hours) {
+    return '$hours ساعة أسبوعيًا';
+  }
 
   @override
   String get availableBalance => 'الرصيد المتاح';
@@ -171,6 +197,12 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get certificatesTitle => 'الشهادات';
+
+  @override
+  String get chooseFile => 'اختر ملفًا';
+
+  @override
+  String get choosePhoto => 'اختر صورة شخصية';
 
   @override
   String get choosePlan => 'اختر';
@@ -383,6 +415,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get earningsLink => 'أرباحي';
 
   @override
+  String get editAndResend => 'عدّل وأعد الإرسال';
+
+  @override
   String get editCard => 'تعديل بيانات البطاقة';
 
   @override
@@ -518,7 +553,39 @@ class EjadahStringsAr extends EjadahStrings {
   String get fieldClinic => 'العيادة';
 
   @override
+  String get fieldDocument => 'المستند الداعم';
+
+  @override
+  String get fieldHeadline => 'السطر التعريفي';
+
+  @override
+  String get fieldHeadlineHint => 'استشاري علاج جذور، القاهرة';
+
+  @override
+  String get fieldHourlyRate => 'سعر الساعة (بالجنيه)';
+
+  @override
+  String get fieldNameAr => 'الاسم بالعربية';
+
+  @override
+  String get fieldNameEn => 'الاسم بالإنجليزية';
+
+  @override
+  String get fieldOnePerLine => 'واحد في كل سطر';
+
+  @override
+  String get fieldQualifications => 'المؤهلات';
+
+  @override
+  String get fieldSubjects => 'المواد التي تدرّسها';
+
+  @override
   String get fieldTitle => 'المسمى';
+
+  @override
+  String fileChosen(Object name) {
+    return 'المختار: $name';
+  }
 
   @override
   String get filterBy => 'الصيغة';
@@ -689,6 +756,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get issuedOn => 'تاريخ الإصدار';
 
   @override
+  String get itemDone => 'منجز';
+
+  @override
   String get join => 'انضم';
 
   @override
@@ -730,6 +800,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get markAllRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get markDone => 'علّم كمنجز';
 
   @override
   String get mastersEyebrow => 'دراسات عليا · 123 دولة';
@@ -794,6 +867,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get nextQuestion => 'السؤال التالي';
 
   @override
+  String get nextStep => 'التالي';
+
+  @override
   String get nfcClinic => 'نايل دنتال ستوديو، الزمالك، القاهرة';
 
   @override
@@ -835,6 +911,9 @@ class EjadahStringsAr extends EjadahStrings {
   @override
   String get notesPlaceholder =>
       'أحضر الحالة التي تريد مناقشتها — الأشعة تساعد.';
+
+  @override
+  String get nothingMissing => 'كل ما طلبناه موجود.';
 
   @override
   String get notifBooking => 'تذكيرات الجلسات';
@@ -1000,6 +1079,28 @@ class EjadahStringsAr extends EjadahStrings {
   String get platformFee => 'عمولة إجادة (30%)';
 
   @override
+  String get playbookCompleteProfile => 'أكمل ملفك — النبذة والمواد والصورة';
+
+  @override
+  String get playbookLead => 'المدرّسون الذين ينجزون الثلاثة يُحجزون أسرع.';
+
+  @override
+  String playbookProgress(Object done, Object total) {
+    return '$done من $total منجزة';
+  }
+
+  @override
+  String playbookSetAvailability(Object hours) {
+    return 'افتح ما لا يقل عن $hours ساعات هذا الأسبوع';
+  }
+
+  @override
+  String get playbookShareCard => 'شارك بطاقتك مع مجموعة دفعتك';
+
+  @override
+  String get playbookTitle => 'أول طالب';
+
+  @override
   String premiumRenews(Object date) {
     return 'يُجدَّد في $date';
   }
@@ -1085,6 +1186,22 @@ class EjadahStringsAr extends EjadahStrings {
   }
 
   @override
+  String get rateEstimateAssumes =>
+      'بافتراض الحجز الكامل. ومعظم الأسابيع لا تكون كاملة.';
+
+  @override
+  String get rateEstimateNeedsHours =>
+      'افتح بعض الساعات في الخطوة التالية لعرض هذا.';
+
+  @override
+  String get rateEstimateTitle => 'إذا حُجزت كل ساعة تفتحها';
+
+  @override
+  String rateEstimateWeekly(Object fee, Object hours, Object net) {
+    return '$net أسبوعيًا مقابل $hours ساعة، بعد نسبة إجادة $fee%.';
+  }
+
+  @override
   String get rating => 'التقييم';
 
   @override
@@ -1124,6 +1241,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get registerSub => 'دقيقتان الآن توفّر عليك شهرًا من التخمين لاحقًا.';
 
   @override
+  String get removeWindow => 'إزالة';
+
+  @override
+  String get replaceFile => 'استبدال';
+
+  @override
   String get requestsLink => 'الطلبات';
 
   @override
@@ -1159,6 +1282,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get reviewBookingTitle => 'راجع حجزك';
+
+  @override
+  String get reviewStepTitle => 'قبل الإرسال';
 
   @override
   String get reviewTimeline =>
@@ -1413,9 +1539,70 @@ class EjadahStringsAr extends EjadahStrings {
   String get statedByTutor => 'مُقدَّم من المدرّس';
 
   @override
+  String get statusApproved => 'تمت الموافقة';
+
+  @override
+  String get statusApprovedBody => 'ملفك ظاهر الآن. وثلاثة أمور تجلب أول طالب.';
+
+  @override
+  String get statusRejected => 'لم تتم الموافقة';
+
+  @override
+  String get statusRejectedBody =>
+      'صحّح ما يلي وأعد الإرسال — كل إجابة قدّمتها ما زالت محفوظة.';
+
+  @override
+  String statusSentOn(Object date) {
+    return 'أُرسل في $date';
+  }
+
+  @override
+  String get statusUnderReview => 'قيد المراجعة';
+
+  @override
+  String get statusUnderReviewBody =>
+      'نردّ خلال 3 أيام عمل. وسيصلك إشعار في الحالتين.';
+
+  @override
+  String get stepAvailabilityTitle => 'أوقاتك المتاحة';
+
+  @override
+  String get stepBasicsTitle => 'عنك';
+
+  @override
+  String get stepMediaTitle => 'الصورة الشخصية';
+
+  @override
   String stepOfSteps(Object n, Object total) {
     return 'الخطوة $n من $total';
   }
+
+  @override
+  String get stepQualificationsTitle => 'المؤهلات';
+
+  @override
+  String get stepRateTitle => 'سعرك';
+
+  @override
+  String get stepSubjectsTitle => 'المواد';
+
+  @override
+  String stillNeededCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مطلوب $count شيء',
+      many: 'مطلوبًا $count شيئًا',
+      few: 'مطلوبة $count أشياء',
+      two: 'مطلوب شيئان',
+      one: 'مطلوب شيء واحد',
+      zero: 'لا شيء مطلوب',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stillNeededTitle => 'ما زال مطلوبًا';
 
   @override
   String get storePurchaseNote =>
@@ -1432,7 +1619,10 @@ class EjadahStringsAr extends EjadahStrings {
   String get subjectsLabel => 'المواضيع';
 
   @override
-  String get submitApplication => 'إرسال الطلب';
+  String get submitApplication => 'أرسل للمراجعة';
+
+  @override
+  String get submitBlockedReason => 'أضف ما هو مذكور أعلاه أولًا.';
 
   @override
   String get sysCameraDeniedBody =>
@@ -1526,6 +1716,56 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get tapToFlip => 'اضغط للقلب';
+
+  @override
+  String get teachAskAvailability => 'الساعات التي تكون فيها متاحًا';
+
+  @override
+  String get teachAskBasics => 'اسمك وسطر تعريفي واحد';
+
+  @override
+  String get teachAskMedia => 'صورة شخصية';
+
+  @override
+  String get teachAskQualifications => 'مؤهلاتك، ومستند يثبت أحدها';
+
+  @override
+  String get teachAskRate => 'سعر الساعة لديك';
+
+  @override
+  String get teachAskSubjects => 'المواد التي تدرّسها';
+
+  @override
+  String get teachAsksTitle => 'ما نطلبه منك';
+
+  @override
+  String get teachEyebrow => 'التدريس';
+
+  @override
+  String get teachLead =>
+      'أنت تحدّد سعرك والساعات التي تكون فيها متاحًا. يجدك الطلاب حسب المادة، ويحجزون وقتًا فتحته أنت، ويدفعون قبل بدء الجلسة.';
+
+  @override
+  String get teachReplyPromise => 'نردّ خلال 3 أيام عمل.';
+
+  @override
+  String get teachResume => 'أكمل تقديمك';
+
+  @override
+  String get teachSeeStatus => 'اطّلع على طلبك';
+
+  @override
+  String teachSplitBody(Object fee) {
+    return 'تحتفظ إجادة بـ $fee% لتشغيل المدفوعات والجدولة والدعم. ولا يُخصم شيء عن جلسة لم تنعقد.';
+  }
+
+  @override
+  String teachSplitTitle(Object percent) {
+    return 'تحتفظ بـ $percent% من كل جلسة';
+  }
+
+  @override
+  String get teachStart => 'ابدأ التقديم';
 
   @override
   String get terms => 'شروط الاستخدام';
@@ -1704,6 +1944,12 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get wifiOnlyDownloads => 'التنزيل عبر الواي فاي فقط';
+
+  @override
+  String get windowFrom => 'من';
+
+  @override
+  String get windowTo => 'إلى';
 
   @override
   String get withdrawWeb => 'السحب على ejadah.com';

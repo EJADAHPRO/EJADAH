@@ -8,6 +8,7 @@ import 'package:ejadah_server/src/modules/people/booking_service.dart';
 import 'package:ejadah_server/src/modules/people/people_repository.dart';
 import 'package:ejadah_server/src/modules/people/people_routes.dart';
 import 'package:ejadah_server/src/modules/people/people_service.dart';
+import 'package:ejadah_server/src/modules/people/tutor_application_service.dart';
 import 'package:ejadah_server/src/observability/logger.dart';
 import 'package:ejadah_server/src/services/payments/payment_provider.dart';
 import 'package:ejadah_server/src/services/token_service.dart';
@@ -62,7 +63,14 @@ void main() {
         .addMiddleware(contextMiddleware(tokens))
         .addMiddleware(errorMiddleware(logger))
         .addHandler(
-          (Router()..mount('/people', peopleRoutes(people, booking).call))
+          (Router()..mount(
+                '/people',
+                peopleRoutes(
+                  people,
+                  booking,
+                  TutorApplicationService(db.database, db.config),
+                ).call,
+              ))
               .call,
         );
 
@@ -106,8 +114,8 @@ void main() {
     test('states how many people stand behind each door', () async {
       final body = await _json(handler, 'GET', '/people/');
 
-      final doors = (body['doors'] as List<dynamic>).cast<Map<String, dynamic>>(
-      );
+      final doors = (body['doors'] as List<dynamic>)
+          .cast<Map<String, dynamic>>();
       expect(_countFor(doors, 'mentoring'), 1);
       expect(_countFor(doors, 'tutoring'), 1);
       // An empty door is reported as zero rather than omitted: the hub must be
@@ -121,8 +129,8 @@ void main() {
     test('a door returns only its own kind, to a guest', () async {
       final body = await _json(handler, 'GET', '/people/mentoring');
 
-      final items = (body['items'] as List<dynamic>).cast<Map<String, dynamic>>(
-      );
+      final items = (body['items'] as List<dynamic>)
+          .cast<Map<String, dynamic>>();
       expect(items, hasLength(1));
       expect(items.single['slug'], 'dr-mona-adel');
       expect(items.single['kind'], 'mentoring');
@@ -182,10 +190,13 @@ void main() {
       expect((tutoring['items'] as List<dynamic>), hasLength(1));
     });
 
-    test('an unknown door is not-found, never a silent tutoring list', () async {
-      final response = await _send(handler, 'GET', '/people/nonsense');
-      expect(response.statusCode, 404);
-    });
+    test(
+      'an unknown door is not-found, never a silent tutoring list',
+      () async {
+        final response = await _send(handler, 'GET', '/people/nonsense');
+        expect(response.statusCode, 404);
+      },
+    );
   });
 
   group('the profile', () {
@@ -261,12 +272,12 @@ void main() {
         handler,
         'GET',
         '/people/$mentorId/availability'
-        '?from=${Uri.encodeComponent(from.toIso8601String())}'
-        '&to=${Uri.encodeComponent(to.toIso8601String())}',
+            '?from=${Uri.encodeComponent(from.toIso8601String())}'
+            '&to=${Uri.encodeComponent(to.toIso8601String())}',
       );
 
-      final items = (body['items'] as List<dynamic>).cast<Map<String, dynamic>>(
-      );
+      final items = (body['items'] as List<dynamic>)
+          .cast<Map<String, dynamic>>();
       expect(items, isNotEmpty);
 
       final held = items.firstWhere(
@@ -284,8 +295,8 @@ void main() {
         handler,
         'GET',
         '/people/$mentorId/availability'
-        '?from=${Uri.encodeComponent(from.toIso8601String())}'
-        '&to=${Uri.encodeComponent(from.toIso8601String())}',
+            '?from=${Uri.encodeComponent(from.toIso8601String())}'
+            '&to=${Uri.encodeComponent(from.toIso8601String())}',
       );
       expect(response.statusCode, 422);
     });
@@ -469,7 +480,8 @@ void main() {
         '/people/bookings',
         token: studentToken,
       );
-      final row = (list['items'] as List<dynamic>).cast<Map<String, dynamic>>()
+      final row = (list['items'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
           .single;
 
       // Projected from the same function the cancellation will use, so the
@@ -479,29 +491,33 @@ void main() {
       expect(booking['refundable_egp'], 800);
     });
 
-    test('a booking inside the half-refund tier says so before the button', () async {
-      final soon = DateTime.timestamp().add(const Duration(hours: 6));
-      final booking = await _confirmBooking(
-        handler,
-        token: studentToken,
-        professionalId: mentorId,
-        startsAt: soon,
-      );
+    test(
+      'a booking inside the half-refund tier says so before the button',
+      () async {
+        final soon = DateTime.timestamp().add(const Duration(hours: 6));
+        final booking = await _confirmBooking(
+          handler,
+          token: studentToken,
+          professionalId: mentorId,
+          startsAt: soon,
+        );
 
-      final list = await _json(
-        handler,
-        'GET',
-        '/people/bookings',
-        token: studentToken,
-      );
-      final row = (list['items'] as List<dynamic>).cast<Map<String, dynamic>>()
-          .single;
+        final list = await _json(
+          handler,
+          'GET',
+          '/people/bookings',
+          token: studentToken,
+        );
+        final row = (list['items'] as List<dynamic>)
+            .cast<Map<String, dynamic>>()
+            .single;
 
-      // Between two and twenty-four hours out: half. Stated now, not discovered
-      // after the confirmation sheet.
-      expect(row['refundable_egp'], 400);
-      expect(booking['refundable_egp'], 400);
-    });
+        // Between two and twenty-four hours out: half. Stated now, not discovered
+        // after the confirmation sheet.
+        expect(row['refundable_egp'], 400);
+        expect(booking['refundable_egp'], 400);
+      },
+    );
 
     test('cancelling names the exact refund and keeps it afterwards', () async {
       final booking = await _confirmBooking(
@@ -533,7 +549,8 @@ void main() {
         '/people/bookings',
         token: studentToken,
       );
-      final row = (list['items'] as List<dynamic>).cast<Map<String, dynamic>>()
+      final row = (list['items'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
           .single;
       expect(row['refundable_egp'], 800);
     });
@@ -551,7 +568,10 @@ void main() {
         handler,
         'POST',
         '/people/bookings/${booking['id']}/cancel',
-        token: tokens.issueAccessToken(userId: intruder, role: UserRole.student),
+        token: tokens.issueAccessToken(
+          userId: intruder,
+          role: UserRole.student,
+        ),
       );
       expect(response.statusCode, 403);
     });

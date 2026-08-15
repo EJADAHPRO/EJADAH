@@ -95,8 +95,10 @@ against the handoff; what each is missing is named.
 | Payment abstraction + simulator | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — checkout URL comes from the provider, never assembled client-side |
 | Professional discovery (3 kinds) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Multi-session plans | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — one booking, one row per real time, all-or-nothing |
-| Tutor onboarding (6 steps) | — | — | ✅ | — | — | — | NOT STARTED — supply-side screens PE-10..PE-16 |
-| Tutor earnings (70/30 itemised) | — | — | ✅ | — | — | — | NOT STARTED |
+| Tutor onboarding (6 steps + playbook) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-10/11/12. Every step draft-saved, blocked submit names every missing item, the 70/30 split is read from config so the pitch and the ledger cannot disagree |
+| Tutor dashboard / availability editor | — | — | ✅ | — | — | — | NOT STARTED — PE-13, PE-14. The application's availability step writes rules; there is no editor afterwards |
+| Tutor earnings (70/30 itemised) | — | — | ✅ | — | — | — | NOT STARTED — PE-15. Tables exist; no service, routes or UI |
+| File uploads (certificate, photo, CV) | ✅ | ✅ | n/a | ✅ | ✅ | ✅ | COMPLETE — type decided by the bytes not the request, owner-only reads answering 404 to a stranger, 8 MB cap checked before decode |
 | My bookings | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Learn** |
 | Course hub / list / detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
@@ -158,7 +160,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **531 keys** in each language, up from the 374 they arrived
+The tables now hold **602 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -173,6 +175,16 @@ copy. They are grouped so a reviewer can find them:
 * 10 the feature agents worked around rather than invent — a taken slot's
   label, the goal-too-short error, the mentor destination facet, the CPD title
   and total, and the settings rows.
+* 70 for tutor onboarding (PE-10/11/12): the pitch, the six step titles and
+  their field labels, the live earnings estimate with its "assumes full
+  booking" caveat, the availability floor, the review step's missing-item list
+  with an ICU plural in Arabic's six forms, the three status states, and the
+  playbook's three actions. The 70/30 split is **not** among them: it is
+  rendered through a placeholder fed from `PLATFORM_FEE_PERCENT`, so the number
+  on the public pitch cannot drift from the number in the ledger.
+* 1 — `nextStep` ("Next" / «التالي»). The application's step button had been
+  reaching for `continueLabel`, which is «أكمل ما بدأته» — a resume CTA, wrong
+  on a form.
 
 Three keys were **corrected** rather than added, because they contradicted the
 glossary: `notVerified` ("Recognition not verified" → "Not verified", a data
@@ -188,13 +200,13 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 190 |
-| `apps/mobile` (`flutter test`) | 118 |
+| `server` (`dart test`, real PostgreSQL) | 219 |
+| `apps/mobile` (`flutter test`) | 127 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The
-application is **54,790 lines of Dart across 213 files**; there is no JavaScript,
+application is **61,106 lines of Dart across 226 files**; there is no JavaScript,
 TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
 `apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
 under `reference/` and `uploads/` are the preserved design prototypes, read as
@@ -202,17 +214,29 @@ specification and never ported.
 
 ## Known gaps in what is built
 
-* **Cairo time is a fixed +02:00 offset**, matching what the copy states
-  ("Times shown in Cairo time (GMT+2)"). It lives in one class, `CairoClock`,
-  so a DST-aware definition is a single change — but if Egypt's summer time
-  applies, session reminders and displayed times are an hour out during it.
-  Worth an owner decision on what the copy should say.
+* **Cairo time is a fixed +02:00 offset.** Egypt reinstated summer time in
+  2023, so displayed times run an hour behind during it. Owner decision of
+  15 Aug 2026: keep the fixed offset and make the copy honest — every screen
+  and every reminder now names the zone ("Cairo time" / «بتوقيت القاهرة») and
+  no string says "GMT+2". The offset lives in one place per side, `CairoClock`
+  on the server and `CairoTime` in the app, so closing the gap is a data change
+  (IANA `Africa/Cairo`) rather than a redesign.
 * **Video playback is a surface.** Position, five-second checkpointing, the
   ten-second resume rule and completion are all real and server-backed; the
   player advances a playhead on a timer until a media dependency is added.
 * **Handouts fetch but do not save**, so LN-11 Downloads does not exist.
 * **In-app purchase is not verified against the store.** The path exists and
   deliberately fails rather than granting entitlement on an unverified receipt.
+  On the pre-submission checklist, not the build order: it needs real store
+  credentials.
+* **Uploaded files live on local disk.** `LocalFileStore` is the only
+  implementation of `FileStore`; a single VM is fine for it, and moving to
+  object storage changes that one class and nothing that calls it. There is no
+  virus scanning and no image re-encoding — a certificate is served back as the
+  bytes that arrived, always as an attachment with `nosniff`, never inline.
+* **A tutor cannot edit their availability after approval.** The application's
+  step 5 writes the rules once; PE-14, the editor, is not built, so changing
+  them today means the roster is edited server-side.
 * **Refresh tokens are in `localStorage` on Flutter Web**, which any XSS could
   read. Native builds use secure storage. Either move the web refresh token to
   an HttpOnly cookie or treat web as a preview surface.

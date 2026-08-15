@@ -41,6 +41,12 @@ class PeopleScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: EjadahSpacing.lg),
                 ..._doors(context, ref, state),
+                const SizedBox(height: EjadahSpacing.lg),
+                // The supply side's way in, on the screen that lists the
+                // demand side. Without an entry point here, the only route to
+                // becoming a tutor is a Home card a signed-in student may
+                // never be shown.
+                const _TeachRow(),
                 const SizedBox(height: EjadahSpacing.section),
               ],
             ),
@@ -137,6 +143,48 @@ class _Door extends StatelessWidget {
             ),
           ),
           const SizedBox(width: EjadahSpacing.sm),
+          const DirectionalIcon(
+            EjadahIcons.chevronForward,
+            size: EjadahIconSize.nav,
+            color: EjadahColors.labelMuted,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// "Teach on Ejadah" — the door into the supply side.
+class _TeachRow extends StatelessWidget {
+  const _TeachRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = context.strings;
+    final type = context.type;
+
+    return EjadahCard(
+      onTap: () => context.push('/teach'),
+      semanticLabel: strings.becomeTitle,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(strings.becomeTitle, style: type.h5()),
+                const SizedBox(height: EjadahSpacing.xxs),
+                Text(
+                  strings.teachLead,
+                  style: type.caption(color: EjadahColors.textSecondary),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: EjadahSpacing.sm),
+          // Directional: the chevron points the way the language reads.
           const DirectionalIcon(
             EjadahIcons.chevronForward,
             size: EjadahIconSize.nav,

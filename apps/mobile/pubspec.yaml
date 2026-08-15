@@ -33,6 +33,7 @@ dependencies:
     path: ../../packages/ejadah_models
   ejadah_ui:
     path: ../../packages/ejadah_ui
+  file_picker: ^12.0.0
 
 dev_dependencies:
   flutter_test:

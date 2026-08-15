@@ -23,12 +23,15 @@ import 'modules/people/booking_service.dart';
 import 'modules/people/people_repository.dart';
 import 'modules/people/people_routes.dart';
 import 'modules/people/people_service.dart';
+import 'modules/people/tutor_application_service.dart';
 import 'modules/profile/profile_repository.dart';
 import 'modules/profile/profile_routes.dart';
 import 'modules/profile/profile_service.dart';
 import 'modules/roadmap/roadmap_repository.dart';
 import 'modules/roadmap/roadmap_routes.dart';
 import 'modules/roadmap/roadmap_service.dart';
+import 'modules/uploads/file_store.dart';
+import 'modules/uploads/upload_routes.dart';
 import 'observability/logger.dart';
 import 'services/mailer.dart';
 import 'services/password_hasher.dart';
@@ -141,8 +144,16 @@ class EjadahApp {
       ..mount('/home', homeRoutes(homeService, authService).call)
       ..mount('/notifications', notificationRoutes(notifications).call)
       ..mount('/learn', learnRoutes(learnService).call)
-      ..mount('/people', peopleRoutes(peopleService, bookingService).call)
-      ..mount('/profile', profileRoutes(profileService).call);
+      ..mount(
+        '/people',
+        peopleRoutes(
+          peopleService,
+          bookingService,
+          TutorApplicationService(database, config),
+        ).call,
+      )
+      ..mount('/profile', profileRoutes(profileService).call)
+      ..mount('/uploads', uploadRoutes(LocalFileStore(config)).call);
 
     final root = Router()
       ..mount('/api/v1', api.call)

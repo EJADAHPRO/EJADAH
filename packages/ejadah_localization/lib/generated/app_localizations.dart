@@ -116,6 +116,12 @@ abstract class EjadahStrings {
   /// **'Add a certificate'**
   String get addCertificate;
 
+  /// No description provided for @addWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Add hours'**
+  String get addWindow;
+
   /// No description provided for @again.
   ///
   /// In en, this message translates to:
@@ -164,6 +170,30 @@ abstract class EjadahStrings {
   /// **'Ejadah International Academy'**
   String get appName;
 
+  /// No description provided for @applicationDraftNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Every step is saved as you finish it. You can close this and come back.'**
+  String get applicationDraftNote;
+
+  /// No description provided for @applicationSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get applicationSaved;
+
+  /// No description provided for @applicationSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get applicationSaving;
+
+  /// No description provided for @applicationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your application'**
+  String get applicationTitle;
+
   /// No description provided for @apply.
   ///
   /// In en, this message translates to:
@@ -182,11 +212,23 @@ abstract class EjadahStrings {
   /// **'REGULATOR'**
   String get authorityLabel;
 
+  /// No description provided for @availabilityFloorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'At least {hours} hours a week keeps you visible to students.'**
+  String availabilityFloorHint(Object hours);
+
   /// No description provided for @availabilityLabel.
   ///
   /// In en, this message translates to:
   /// **'AVAILABILITY'**
   String get availabilityLabel;
+
+  /// No description provided for @availabilityWeeklyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours a week'**
+  String availabilityWeeklyTotal(Object hours);
 
   /// No description provided for @availableBalance.
   ///
@@ -409,6 +451,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Certificates'**
   String get certificatesTitle;
+
+  /// No description provided for @chooseFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a file'**
+  String get chooseFile;
+
+  /// No description provided for @choosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a photograph'**
+  String get choosePhoto;
 
   /// No description provided for @choosePlan.
   ///
@@ -788,6 +842,12 @@ abstract class EjadahStrings {
   /// **'Earnings'**
   String get earningsLink;
 
+  /// No description provided for @editAndResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit and send again'**
+  String get editAndResend;
+
   /// No description provided for @editCard.
   ///
   /// In en, this message translates to:
@@ -1046,11 +1106,71 @@ abstract class EjadahStrings {
   /// **'Clinic'**
   String get fieldClinic;
 
+  /// No description provided for @fieldDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Supporting document'**
+  String get fieldDocument;
+
+  /// No description provided for @fieldHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Headline'**
+  String get fieldHeadline;
+
+  /// No description provided for @fieldHeadlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultant endodontist, Cairo'**
+  String get fieldHeadlineHint;
+
+  /// No description provided for @fieldHourlyRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly rate (EGP)'**
+  String get fieldHourlyRate;
+
+  /// No description provided for @fieldNameAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Name in Arabic'**
+  String get fieldNameAr;
+
+  /// No description provided for @fieldNameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Name in English'**
+  String get fieldNameEn;
+
+  /// No description provided for @fieldOnePerLine.
+  ///
+  /// In en, this message translates to:
+  /// **'One per line'**
+  String get fieldOnePerLine;
+
+  /// No description provided for @fieldQualifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Qualifications'**
+  String get fieldQualifications;
+
+  /// No description provided for @fieldSubjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Subjects you teach'**
+  String get fieldSubjects;
+
   /// No description provided for @fieldTitle.
   ///
   /// In en, this message translates to:
   /// **'Title'**
   String get fieldTitle;
+
+  /// No description provided for @fileChosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Chosen: {name}'**
+  String fileChosen(Object name);
 
   /// No description provided for @filterBy.
   ///
@@ -1340,6 +1460,12 @@ abstract class EjadahStrings {
   /// **'Issued on'**
   String get issuedOn;
 
+  /// No description provided for @itemDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get itemDone;
+
   /// No description provided for @join.
   ///
   /// In en, this message translates to:
@@ -1423,6 +1549,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Mark all read'**
   String get markAllRead;
+
+  /// No description provided for @markDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get markDone;
 
   /// No description provided for @mastersEyebrow.
   ///
@@ -1544,6 +1676,12 @@ abstract class EjadahStrings {
   /// **'Next question'**
   String get nextQuestion;
 
+  /// No description provided for @nextStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextStep;
+
   /// No description provided for @nfcClinic.
   ///
   /// In en, this message translates to:
@@ -1621,6 +1759,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Bring the case you want to discuss — radiographs help.'**
   String get notesPlaceholder;
+
+  /// No description provided for @nothingMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything we asked for is here.'**
+  String get nothingMissing;
 
   /// No description provided for @notifBooking.
   ///
@@ -1940,6 +2084,42 @@ abstract class EjadahStrings {
   /// **'Ejadah fee (30%)'**
   String get platformFee;
 
+  /// No description provided for @playbookCompleteProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your profile — bio, subjects, photograph'**
+  String get playbookCompleteProfile;
+
+  /// No description provided for @playbookLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutors who do all three are booked soonest.'**
+  String get playbookLead;
+
+  /// No description provided for @playbookProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String playbookProgress(Object done, Object total);
+
+  /// No description provided for @playbookSetAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Open at least {hours} hours this week'**
+  String playbookSetAvailability(Object hours);
+
+  /// No description provided for @playbookShareCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your card with your class group'**
+  String get playbookShareCard;
+
+  /// No description provided for @playbookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FIRST STUDENT'**
+  String get playbookTitle;
+
   /// No description provided for @premiumRenews.
   ///
   /// In en, this message translates to:
@@ -2090,6 +2270,30 @@ abstract class EjadahStrings {
   /// **'{score}% — {correct} of {total}'**
   String quizScore(Object correct, Object score, Object total);
 
+  /// No description provided for @rateEstimateAssumes.
+  ///
+  /// In en, this message translates to:
+  /// **'Assumes full booking. Most weeks are not full.'**
+  String get rateEstimateAssumes;
+
+  /// No description provided for @rateEstimateNeedsHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Open some hours in the next step to see this.'**
+  String get rateEstimateNeedsHours;
+
+  /// No description provided for @rateEstimateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'IF EVERY HOUR YOU OPEN IS BOOKED'**
+  String get rateEstimateTitle;
+
+  /// No description provided for @rateEstimateWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'{net} a week across {hours} hours, after Ejadah\'s {fee}%.'**
+  String rateEstimateWeekly(Object fee, Object hours, Object net);
+
   /// No description provided for @rating.
   ///
   /// In en, this message translates to:
@@ -2162,6 +2366,18 @@ abstract class EjadahStrings {
   /// **'Two minutes now saves you a month of guessing later.'**
   String get registerSub;
 
+  /// No description provided for @removeWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeWindow;
+
+  /// No description provided for @replaceFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get replaceFile;
+
   /// No description provided for @requestsLink.
   ///
   /// In en, this message translates to:
@@ -2227,6 +2443,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Review your booking'**
   String get reviewBookingTitle;
+
+  /// No description provided for @reviewStepTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you send'**
+  String get reviewStepTitle;
 
   /// No description provided for @reviewTimeline.
   ///
@@ -2696,11 +2918,101 @@ abstract class EjadahStrings {
   /// **'Stated by the tutor'**
   String get statedByTutor;
 
+  /// No description provided for @statusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get statusApproved;
+
+  /// No description provided for @statusApprovedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile is live. Three things bring the first student.'**
+  String get statusApprovedBody;
+
+  /// No description provided for @statusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get statusRejected;
+
+  /// No description provided for @statusRejectedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix what\'s below and send it again — every answer you gave is still here.'**
+  String get statusRejectedBody;
+
+  /// No description provided for @statusSentOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {date}'**
+  String statusSentOn(Object date);
+
+  /// No description provided for @statusUnderReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get statusUnderReview;
+
+  /// No description provided for @statusUnderReviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We reply within 3 working days. You\'ll get a notification either way.'**
+  String get statusUnderReviewBody;
+
+  /// No description provided for @stepAvailabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get stepAvailabilityTitle;
+
+  /// No description provided for @stepBasicsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About you'**
+  String get stepBasicsTitle;
+
+  /// No description provided for @stepMediaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph'**
+  String get stepMediaTitle;
+
   /// No description provided for @stepOfSteps.
   ///
   /// In en, this message translates to:
   /// **'Step {n} of {total}'**
   String stepOfSteps(Object n, Object total);
+
+  /// No description provided for @stepQualificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Qualifications'**
+  String get stepQualificationsTitle;
+
+  /// No description provided for @stepRateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rate'**
+  String get stepRateTitle;
+
+  /// No description provided for @stepSubjectsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subjects'**
+  String get stepSubjectsTitle;
+
+  /// No description provided for @stillNeededCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing is still needed} other{{count} things are still needed}}'**
+  String stillNeededCount(num count);
+
+  /// No description provided for @stillNeededTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'STILL NEEDED'**
+  String get stillNeededTitle;
 
   /// No description provided for @storePurchaseNote.
   ///
@@ -2729,8 +3041,14 @@ abstract class EjadahStrings {
   /// No description provided for @submitApplication.
   ///
   /// In en, this message translates to:
-  /// **'Submit application'**
+  /// **'Send for review'**
   String get submitApplication;
+
+  /// No description provided for @submitBlockedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what\'s listed above first.'**
+  String get submitBlockedReason;
 
   /// No description provided for @sysCameraDeniedBody.
   ///
@@ -2905,6 +3223,96 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Tap to flip'**
   String get tapToFlip;
+
+  /// No description provided for @teachAskAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'The hours you are free'**
+  String get teachAskAvailability;
+
+  /// No description provided for @teachAskBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name and a one-line headline'**
+  String get teachAskBasics;
+
+  /// No description provided for @teachAskMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'A photograph'**
+  String get teachAskMedia;
+
+  /// No description provided for @teachAskQualifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Your qualifications, and a document for one of them'**
+  String get teachAskQualifications;
+
+  /// No description provided for @teachAskRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hourly rate'**
+  String get teachAskRate;
+
+  /// No description provided for @teachAskSubjects.
+  ///
+  /// In en, this message translates to:
+  /// **'The subjects you teach'**
+  String get teachAskSubjects;
+
+  /// No description provided for @teachAsksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WHAT WE ASK FOR'**
+  String get teachAsksTitle;
+
+  /// No description provided for @teachEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'TEACH'**
+  String get teachEyebrow;
+
+  /// No description provided for @teachLead.
+  ///
+  /// In en, this message translates to:
+  /// **'You set your rate and the hours you are free. Students find you by subject, book a time you opened, and pay before the session starts.'**
+  String get teachLead;
+
+  /// No description provided for @teachReplyPromise.
+  ///
+  /// In en, this message translates to:
+  /// **'We reply within 3 working days.'**
+  String get teachReplyPromise;
+
+  /// No description provided for @teachResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue your application'**
+  String get teachResume;
+
+  /// No description provided for @teachSeeStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'See your application'**
+  String get teachSeeStatus;
+
+  /// No description provided for @teachSplitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Ejadah keeps {fee}% to run payments, scheduling and support. Nothing is deducted from a session that does not happen.'**
+  String teachSplitBody(Object fee);
+
+  /// No description provided for @teachSplitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You keep {percent}% of every session'**
+  String teachSplitTitle(Object percent);
+
+  /// No description provided for @teachStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the application'**
+  String get teachStart;
 
   /// No description provided for @terms.
   ///
@@ -3241,6 +3649,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Download over Wi-Fi only'**
   String get wifiOnlyDownloads;
+
+  /// No description provided for @windowFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get windowFrom;
+
+  /// No description provided for @windowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get windowTo;
 
   /// No description provided for @withdrawWeb.
   ///

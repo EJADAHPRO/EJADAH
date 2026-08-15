@@ -9,11 +9,19 @@ import 'package:intl/intl.dart';
 /// reads in their own device's zone and attends in Cairo's is the single most
 /// expensive misunderstanding this product can cause.
 ///
-/// The offset is fixed at GMT+2, which is what the product's own copy states
-/// ("Times shown in Cairo time (GMT+2)"). It is deliberately not the device
-/// zone, and deliberately not a full tz database: a formatting helper is the
-/// wrong place to acquire one, and the string table has already committed to
-/// this wording.
+/// The copy names the zone rather than an offset — "Cairo time", never
+/// "GMT+2". Egypt reinstated summer time in 2023, so an offset in the copy is
+/// wrong for roughly half the year while the zone name is always true.
+///
+/// The offset here is fixed at +02:00, which means displayed times run an hour
+/// behind during Egyptian summer time. That is recorded, not overlooked: it is
+/// the same known gap as the server's `CairoClock`, and closing it is a data
+/// change — the IANA `Africa/Cairo` rules — applied to [offset] alone. It is
+/// deliberately not the device zone: a booking read in the user's own zone and
+/// attended in Cairo's is the most expensive misunderstanding this product can
+/// cause.
+///
+/// Owner decision, 15 Aug 2026: keep the fixed offset, make the copy honest.
 abstract final class CairoTime {
   static const Duration offset = Duration(hours: 2);
 

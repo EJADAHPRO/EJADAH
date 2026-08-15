@@ -42,7 +42,18 @@ Conflict #9 in `REGISTER.md`. Two JPGs exist; no vector, no dark variant, no
 app-icon master. The app icon uses the documented gradient-tile pattern until
 one is supplied.
 
-### 6. Real rosters and photographs
+### 6. Somewhere for a tutor application to be reviewed
+`POST /people/apply/submit` moves an application to `under_review` and the
+screen promises a reply within three working days. Nothing in this repository
+approves one — the reviewer's tool is the admin panel, which is web-only and
+deliberately outside this app. Until it exists, an application that arrives is
+an application nobody answers, and the promise on PE-12 is one the product
+cannot keep.
+
+Approving by hand is a one-line `UPDATE` on `tutor_applications`, so this does
+not block a build; it blocks the first real tutor.
+
+### 7. Real rosters and photographs
 Every tutor image in the handoff is a placeholder and unlicensed for
 production. The app shows initials on the inset surface — never a broken image,
 never an unlicensed portrait — so this does not break, but shipping placeholder
@@ -69,6 +80,14 @@ local time.
 7 exam fees and 7 cost rows print "Pending source". This is a first-class data
 state, not a gap to fill before shipping — the product's credibility rests on
 it. Owner-supplied sources replace them whenever they arrive.
+
+### Uploaded files sit on local disk, unscanned
+`LocalFileStore` writes under `STORAGE_ROOT`. The bytes decide the type (a
+request that calls an executable `image/png` is refused), reads are owner-only
+and answer 404 rather than 403 to a stranger, and everything is served as an
+attachment with `nosniff` — but there is no virus scanning and no image
+re-encoding, and the disk is not backed up by this repository. Moving to object
+storage replaces one class behind the `FileStore` interface.
 
 ### Arabic clinical-terminology review
 Strings ship exactly as authored in `strings.ar.json`. No machine translation

@@ -24,10 +24,13 @@ import '../features/learn/presentation/course_detail_screen.dart';
 import '../features/learn/presentation/course_list_screen.dart';
 import '../features/learn/presentation/learn_screen.dart';
 import '../features/notifications/presentation/notifications_screen.dart';
+import '../features/people/presentation/become_tutor_screen.dart';
 import '../features/people/presentation/my_bookings_screen.dart';
 import '../features/people/presentation/people_screen.dart';
 import '../features/people/presentation/professional_list_screen.dart';
 import '../features/people/presentation/professional_profile_screen.dart';
+import '../features/people/presentation/tutor_application_screen.dart';
+import '../features/people/presentation/tutor_status_screen.dart';
 import '../features/profile/presentation/certificates_screen.dart';
 import '../features/profile/presentation/cpd_screen.dart';
 import '../features/profile/presentation/delete_account_screen.dart';
@@ -98,6 +101,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         '/bookings',
         '/profile',
         '/notifications',
+        // `/teach` itself stays public — only what stores an application is
+        // gated, which is the same rule booking follows.
+        '/teach/apply',
+        '/teach/status',
       };
       final needsAccount = gated.any(state.matchedLocation.startsWith);
       if (needsAccount && !auth.isAuthenticated) {
@@ -268,6 +275,30 @@ final routerProvider = Provider<GoRouter>((ref) {
             CourseListScreen(department: department),
           );
         },
+      ),
+
+      // --- Becoming a tutor -------------------------------------------------
+      //
+      // `/teach` is public: the split is the first thing anyone weighing this
+      // wants to know, and asking someone to open an account to find out what
+      // they would be paid is the wrong order. The two routes underneath it are
+      // gated, in the `gated` set above.
+      GoRoute(
+        path: '/teach',
+        builder: (context, state) =>
+            _screen('become-tutor', const BecomeTutorScreen()),
+        routes: [
+          GoRoute(
+            path: 'apply',
+            builder: (context, state) =>
+                _screen('tutor-application', const TutorApplicationScreen()),
+          ),
+          GoRoute(
+            path: 'status',
+            builder: (context, state) =>
+                _screen('tutor-status', const TutorStatusScreen()),
+          ),
+        ],
       ),
 
       // --- People: the doors, a professional, and the user's own sessions ----

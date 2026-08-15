@@ -176,7 +176,7 @@ class HomePrimaryCta extends StatelessWidget {
         strings.becomeTitle,
         strings.becomeBlurb,
         strings.ctaTeaching,
-        '/people',
+        '/teach',
       ),
     };
 
