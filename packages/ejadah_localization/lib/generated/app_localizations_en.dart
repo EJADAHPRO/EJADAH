@@ -194,7 +194,15 @@ class EjadahStringsEn extends EjadahStrings {
   String get compareCta => 'Compare';
 
   @override
+  String compareLimit(Object count) {
+    return 'Compare up to $count at a time.';
+  }
+
+  @override
   String get compareMode => 'Compare';
+
+  @override
+  String get compareNeedsTwo => 'Pick one more to compare.';
 
   @override
   String get compareTitle => 'Side by side';

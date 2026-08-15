@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../auth/auth_controller.dart';
+import '../application/compare_controller.dart';
 import '../application/programmes_controller.dart';
 import '../data/career_repository.dart';
 import 'widgets/programme_card.dart';
@@ -57,6 +58,9 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
     return GradientBudget(
       screenName: 'programmes',
       child: Scaffold(
+        // Appears only once something is selected, so the bar is never a
+        // permanent tax on the list's height.
+        bottomNavigationBar: const _CompareBar(),
         body: SafeArea(
           bottom: false,
           child: EjadahPageBody(
@@ -143,12 +147,29 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
                 programme: programme,
                 onTap: () => context.push('/programme/${programme.id}'),
                 onToggleSave: () => _toggleSave(programme),
+                isCompareSelected: ref
+                    .watch(programmeComparisonProvider)
+                    .contains(programme.id),
+                onToggleCompare: () => _toggleCompare(programme.id),
               );
             },
           ),
           SliverToBoxAdapter(child: _Pagination(page: ready.page)),
         ],
       };
+
+  void _toggleCompare(int id) {
+    final accepted = ref
+        .read(programmeComparisonProvider.notifier)
+        .toggle(id);
+    if (accepted) return;
+    // A tap that does nothing has to say why. Three is a design limit, not a
+    // technical one, and the user cannot see it from the card.
+    showEjadahToast(
+      context,
+      message: context.strings.compareLimit(maxComparisonItems),
+    );
+  }
 
   Future<void> _toggleSave(ProgrammeSummary programme) async {
     // Saving is one of the five gates. A guest is taken to sign-up and comes
@@ -491,3 +512,60 @@ class _FacetGroup extends StatelessWidget {
 final filterFacetsProvider = FutureProvider<Map<String, List<String>>>(
   (ref) => ref.watch(careerRepositoryProvider).filterFacets(),
 );
+
+
+/// The compare bar: how many are picked, and the way to see them side by side.
+///
+/// Selection survives paging, filtering and searching, which is why it is worth
+/// a persistent bar rather than a mode — picking one programme on page 1 and
+/// another on page 4 is the normal way this gets used.
+class _CompareBar extends ConsumerWidget {
+  const _CompareBar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selected = ref.watch(programmeComparisonProvider);
+    if (selected.isEmpty) return const SizedBox.shrink();
+
+    final strings = context.strings;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(EjadahSpacing.gutter),
+        child: Row(
+          children: [
+            LtrIsland(
+              child: Text(
+                '${selected.length}/$maxComparisonItems',
+                style: context.type.tabular(),
+              ),
+            ),
+            const SizedBox(width: EjadahSpacing.xxs),
+            Text(
+              strings.compareCount,
+              style: context.type.small(color: EjadahColors.textSecondary),
+            ),
+            const Spacer(),
+            EjadahGhostButton(
+              label: strings.clearAll,
+              onPressed: () =>
+                  ref.read(programmeComparisonProvider.notifier).clear(),
+            ),
+            const SizedBox(width: EjadahSpacing.xs),
+            EjadahSecondaryButton(
+              label: strings.compareCta,
+              expand: false,
+              // Two is the fewest that can differ from each other.
+              onPressed: selected.length >= 2
+                  ? () => context.push('/compare/programmes')
+                  : null,
+              disabledReason: strings.compareNeedsTwo,
+              onDisabledTap: (reason) =>
+                  showEjadahToast(context, message: reason),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

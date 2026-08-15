@@ -120,6 +120,8 @@ class EjadahSecondaryButton extends StatelessWidget {
     this.isLoading = false,
     this.icon,
     this.expand = true,
+    this.disabledReason,
+    this.onDisabledTap,
     super.key,
   });
 
@@ -128,6 +130,17 @@ class EjadahSecondaryButton extends StatelessWidget {
   final bool isLoading;
   final IconData? icon;
   final bool expand;
+
+  /// Why the button is disabled, surfaced on tap.
+  ///
+  /// The state matrix asks every disabled control to explain itself, not just
+  /// the primary one: a greyed secondary action with no reason is the same
+  /// dead end wearing a quieter colour.
+  final String? disabledReason;
+
+  /// Shows [disabledReason] — usually as a toast.
+  final void Function(String reason)? onDisabledTap;
+
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +195,9 @@ class EjadahSecondaryButton extends StatelessWidget {
 
     return EjadahPressable(
       onTap: enabled ? onPressed : null,
+      onDisabledTap: disabledReason == null
+          ? null
+          : () => onDisabledTap?.call(disabledReason!),
       semanticLabel: label,
       enforceMinimumTarget: false,
       child: button,
@@ -195,6 +211,8 @@ class EjadahGhostButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.color,
+    this.disabledReason,
+    this.onDisabledTap,
     super.key,
   });
 
@@ -202,9 +220,23 @@ class EjadahGhostButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? color;
 
+  /// Why the button is disabled, surfaced on tap.
+  ///
+  /// The state matrix asks every disabled control to explain itself, not just
+  /// the primary one: a greyed secondary action with no reason is the same
+  /// dead end wearing a quieter colour.
+  final String? disabledReason;
+
+  /// Shows [disabledReason] — usually as a toast.
+  final void Function(String reason)? onDisabledTap;
+
+
   @override
   Widget build(BuildContext context) => EjadahPressable(
     onTap: onPressed,
+    onDisabledTap: disabledReason == null
+        ? null
+        : () => onDisabledTap?.call(disabledReason!),
     semanticLabel: label,
     child: Padding(
       padding: const EdgeInsetsDirectional.symmetric(
@@ -233,6 +265,8 @@ class EjadahDestructiveButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.expand = true,
+    this.disabledReason,
+    this.onDisabledTap,
     super.key,
   });
 
@@ -240,6 +274,17 @@ class EjadahDestructiveButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final bool expand;
+
+  /// Why the button is disabled, surfaced on tap.
+  ///
+  /// The state matrix asks every disabled control to explain itself, not just
+  /// the primary one: a greyed secondary action with no reason is the same
+  /// dead end wearing a quieter colour.
+  final String? disabledReason;
+
+  /// Shows [disabledReason] — usually as a toast.
+  final void Function(String reason)? onDisabledTap;
+
 
   @override
   Widget build(BuildContext context) {
@@ -268,6 +313,9 @@ class EjadahDestructiveButton extends StatelessWidget {
 
     return EjadahPressable(
       onTap: enabled ? onPressed : null,
+      onDisabledTap: disabledReason == null
+          ? null
+          : () => onDisabledTap?.call(disabledReason!),
       semanticLabel: label,
       enforceMinimumTarget: false,
       child: button,

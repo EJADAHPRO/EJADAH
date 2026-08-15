@@ -11,6 +11,7 @@ import '../features/auth/presentation/language_screen.dart';
 import '../features/auth/presentation/sign_in_screen.dart';
 import '../features/auth/presentation/sign_up_screen.dart';
 import '../features/career/presentation/career_hub_screen.dart';
+import '../features/career/presentation/compare_programmes_screen.dart';
 import '../features/career/presentation/countries_screen.dart';
 import '../features/career/presentation/country_detail_screen.dart';
 import '../features/career/presentation/programme_detail_screen.dart';
@@ -202,6 +203,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             countryIso: state.uri.queryParameters['country'],
           ),
         ),
+      ),
+      GoRoute(
+        path: '/compare/programmes',
+        builder: (context, state) =>
+            _screen('compare-programmes', const CompareProgrammesScreen()),
       ),
       GoRoute(
         path: '/shortlist',

@@ -452,11 +452,23 @@ abstract class EjadahStrings {
   /// **'Compare'**
   String get compareCta;
 
+  /// No description provided for @compareLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare up to {count} at a time.'**
+  String compareLimit(Object count);
+
   /// No description provided for @compareMode.
   ///
   /// In en, this message translates to:
   /// **'Compare'**
   String get compareMode;
+
+  /// No description provided for @compareNeedsTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one more to compare.'**
+  String get compareNeedsTwo;
 
   /// No description provided for @compareTitle.
   ///

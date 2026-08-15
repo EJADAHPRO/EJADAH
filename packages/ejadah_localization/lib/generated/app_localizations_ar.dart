@@ -193,7 +193,15 @@ class EjadahStringsAr extends EjadahStrings {
   String get compareCta => 'قارن';
 
   @override
+  String compareLimit(Object count) {
+    return 'قارن حتى $count في المرة الواحدة.';
+  }
+
+  @override
   String get compareMode => 'مقارنة';
+
+  @override
+  String get compareNeedsTwo => 'اختر واحدًا آخر للمقارنة.';
 
   @override
   String get compareTitle => 'مقارنة جانبية';
