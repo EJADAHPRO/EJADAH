@@ -80,6 +80,11 @@ class PlanBuilderScreen extends ConsumerWidget {
                   onPressed: state.weeks.first.chosen.isEmpty
                       ? null
                       : controller.copyFirstWeekForward,
+                  // Copying forward needs something to copy. Saying so beats a
+                  // control whose precondition is invisible.
+                  disabledReason: strings.pickWeekOneFirst,
+                  onDisabledTap: (reason) =>
+                      showEjadahToast(context, message: reason),
                 ),
                 const SizedBox(height: EjadahSpacing.md),
                 if (week.isLoading)
@@ -111,26 +116,19 @@ class PlanBuilderScreen extends ConsumerWidget {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: EjadahColors.background,
-            border: Border(top: BorderSide(color: EjadahColors.border)),
-            boxShadow: EjadahElevation.stickyTop,
-          ),
-          child: SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.all(EjadahSpacing.md),
-              child: EjadahPrimaryButton(
-                label: strings.continueAction,
-                onPressed: state.isComplete ? () => onSubmit(state) : null,
-                // Disabled with a reason, named: "fill week 3" beats a grey
-                // button that does nothing.
-                disabledReason: strings.weekLabel(state.filledWeeks + 1),
-                onDisabledTap: (reason) =>
-                    showEjadahToast(context, message: reason),
-              ),
-            ),
+        bottomNavigationBar: EjadahStickyBar(
+          background: EjadahColors.background,
+          // Named, not merely disabled: "fill week 3" beats a grey button
+          // that does nothing, and it is on screen rather than behind a tap.
+          reason: state.isComplete
+              ? null
+              : strings.weekLabel(state.filledWeeks + 1),
+          child: EjadahPrimaryButton(
+            label: strings.continueAction,
+            onPressed: state.isComplete ? () => onSubmit(state) : null,
+            disabledReason: strings.weekLabel(state.filledWeeks + 1),
+            onDisabledTap: (reason) =>
+                showEjadahToast(context, message: reason),
           ),
         ),
       ),

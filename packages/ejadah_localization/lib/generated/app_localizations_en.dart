@@ -1009,6 +1009,10 @@ class EjadahStringsEn extends EjadahStrings {
   String get noSlots => 'No open times this week.';
 
   @override
+  String get notEditableNow =>
+      'This can\'t be changed while your application is under review.';
+
+  @override
   String get notIncluded => 'Not included';
 
   @override
@@ -1204,6 +1208,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get pickSlotFirst => 'Pick a time to continue';
+
+  @override
+  String get pickWeekOneFirst => 'Choose week 1 first — the rest copy from it.';
 
   @override
   String get plansTitle => 'Plans';
@@ -2082,6 +2089,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get whatYouLearn => 'WHAT YOU WILL LEARN';
+
+  @override
+  String get whileRestoring => 'Wait for the restore to finish.';
 
   @override
   String get wifiOnlyDownloads => 'Download over Wi-Fi only';

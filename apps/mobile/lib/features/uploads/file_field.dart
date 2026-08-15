@@ -120,6 +120,10 @@ class _EjadahFileFieldState extends ConsumerState<EjadahFileField> {
           isLoading: _uploading,
           onPressed: widget.enabled && !_uploading ? _choose : null,
           expand: false,
+          // Disabled means the form is locked — an application under review.
+          // A file picker that will not open needs to say which.
+          disabledReason: strings.notEditableNow,
+          onDisabledTap: (reason) => showEjadahToast(context, message: reason),
         ),
         if (widget.helperText != null) ...[
           const SizedBox(height: EjadahSpacing.xxs),

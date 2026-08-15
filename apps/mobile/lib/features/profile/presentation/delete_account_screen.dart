@@ -119,9 +119,13 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                 EjadahDestructiveButton(
                   label: strings.deleteAccount,
                   isLoading: _isDeleting,
-                  // Disabled until the word matches exactly, and the field
-                  // above says which word.
+                  // Disabled until the word matches exactly. The field above
+                  // says which word, and so does the button when tapped — on
+                  // an irreversible action, being told twice is right.
                   onPressed: _isConfirmed ? _delete : null,
+                  disabledReason: strings.typeDeleteToConfirm,
+                  onDisabledTap: (reason) =>
+                      showEjadahToast(context, message: reason),
                 ),
               ],
               const SizedBox(height: EjadahSpacing.xs),

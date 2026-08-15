@@ -1,4 +1,5 @@
 import 'package:ejadah_models/ejadah_models.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../tokens/ejadah_tokens.dart';
@@ -97,6 +98,23 @@ ThemeData buildEjadahTheme({
     scaffoldBackgroundColor: EjadahColors.background,
     fontFamily: type.bodyFamily,
     splashFactory: NoSplash.splashFactory,
+    // Swipe-back on every pushed route, on every platform.
+    //
+    // Android's default (`ZoomPageTransitionsBuilder`) has no drag-to-dismiss
+    // at all, so on the phones most of this product's users hold, the only way
+    // out of a screen was the system back button or the app bar's arrow. An
+    // interior screen you cannot swipe out of is the single most-felt piece of
+    // friction in a deep app, and this is a marketplace with a lot of interior
+    // screens.
+    //
+    // Cupertino's builder honours [Directionality], so in Arabic the gesture
+    // starts at the right edge — the side the language reads back towards.
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        for (final platform in TargetPlatform.values)
+          platform: const CupertinoPageTransitionsBuilder(),
+      },
+    ),
     // Ejadah acknowledges a press by scaling the control and firing a haptic;
     // a Material ink ripple is a different design language.
     highlightColor: Colors.transparent,

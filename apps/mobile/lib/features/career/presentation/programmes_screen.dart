@@ -64,40 +64,44 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
         body: SafeArea(
           bottom: false,
           child: EjadahPageBody(
-            child: CustomScrollView(
-              // Per-tab scroll position is restored when the user returns.
-              key: const PageStorageKey('programmes'),
-              controller: _scroll,
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: EjadahSpacing.md),
-                      PageHeader(
-                        eyebrow: strings.mastersEyebrow,
-                        title: strings.mastersTitle,
-                      ),
-                      const SizedBox(height: EjadahSpacing.md),
-                      EjadahSearchField(
-                        controller: _search,
-                        hint: strings.searchPlaceholder,
-                        clearLabel: strings.clearField,
-                        onSubmitted: (value) => ref
-                            .read(programmesControllerProvider.notifier)
-                            .search(value),
-                      ),
-                      const SizedBox(height: EjadahSpacing.sm),
-                      _FilterBar(state: state),
-                      const SizedBox(height: EjadahSpacing.sm),
-                    ],
+            // The group is what makes the stagger play once: it remembers, so
+            // a row recycled back into view appears instead of re-animating.
+            child: StaggerGroup(
+              child: CustomScrollView(
+                // Per-tab scroll position is restored when the user returns.
+                key: const PageStorageKey('programmes'),
+                controller: _scroll,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: EjadahSpacing.md),
+                        PageHeader(
+                          eyebrow: strings.mastersEyebrow,
+                          title: strings.mastersTitle,
+                        ),
+                        const SizedBox(height: EjadahSpacing.md),
+                        EjadahSearchField(
+                          controller: _search,
+                          hint: strings.searchPlaceholder,
+                          clearLabel: strings.clearField,
+                          onSubmitted: (value) => ref
+                              .read(programmesControllerProvider.notifier)
+                              .search(value),
+                        ),
+                        const SizedBox(height: EjadahSpacing.sm),
+                        _FilterBar(state: state),
+                        const SizedBox(height: EjadahSpacing.sm),
+                      ],
+                    ),
                   ),
-                ),
-                ..._slivers(context, state),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: EjadahSpacing.section),
-                ),
-              ],
+                  ..._slivers(context, state),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: EjadahSpacing.section),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -143,14 +147,19 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
             itemCount: ready.page.items.length,
             itemBuilder: (context, index) {
               final programme = ready.page.items[index];
-              return ProgrammeCard(
-                programme: programme,
-                onTap: () => context.push('/programme/${programme.id}'),
-                onToggleSave: () => _toggleSave(programme),
-                isCompareSelected: ref
-                    .watch(programmeComparisonProvider)
-                    .contains(programme.id),
-                onToggleCompare: () => _toggleCompare(programme.id),
+              // Staggered in once, on first appearance. The group above the
+              // list is what makes it once rather than on every scroll-back.
+              return StaggeredIn(
+                index: index,
+                child: ProgrammeCard(
+                  programme: programme,
+                  onTap: () => context.push('/programme/${programme.id}'),
+                  onToggleSave: () => _toggleSave(programme),
+                  isCompareSelected: ref
+                      .watch(programmeComparisonProvider)
+                      .contains(programme.id),
+                  onToggleCompare: () => _toggleCompare(programme.id),
+                ),
               );
             },
           ),
@@ -159,9 +168,7 @@ class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
       };
 
   void _toggleCompare(int id) {
-    final accepted = ref
-        .read(programmeComparisonProvider.notifier)
-        .toggle(id);
+    final accepted = ref.read(programmeComparisonProvider.notifier).toggle(id);
     if (accepted) return;
     // A tap that does nothing has to say why. Three is a design limit, not a
     // technical one, and the user cannot see it from the card.
@@ -275,8 +282,7 @@ Future<void> _saveSearch(
           const SizedBox(height: EjadahSpacing.md),
           EjadahPrimaryButton(
             label: strings.saveProg,
-            onPressed: () =>
-                Navigator.of(context).pop(controller.text.trim()),
+            onPressed: () => Navigator.of(context).pop(controller.text.trim()),
           ),
         ],
       ),
@@ -604,7 +610,6 @@ class _FacetGroup extends StatelessWidget {
 final filterFacetsProvider = FutureProvider<Map<String, List<String>>>(
   (ref) => ref.watch(careerRepositoryProvider).filterFacets(),
 );
-
 
 /// The compare bar: how many are picked, and the way to see them side by side.
 ///

@@ -141,6 +141,9 @@ class _Session extends StatelessWidget {
               Expanded(
                 child: EjadahSecondaryButton(
                   label: strings.again,
+                  // Its sibling showed a spinner while recording and this one
+                  // just went grey. Same state, same explanation.
+                  isLoading: state.isRecording,
                   onPressed: state.isRecording
                       ? null
                       : () => onAnswer(ReviewOutcome.again),

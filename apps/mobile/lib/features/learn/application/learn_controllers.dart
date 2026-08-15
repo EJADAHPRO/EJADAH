@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:ejadah_core/ejadah_core.dart';
 import 'package:ejadah_models/ejadah_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/providers.dart';
 import '../data/learn_models.dart';
 import '../data/learn_repository.dart';
 
@@ -24,9 +27,10 @@ final courseDetailProvider = FutureProvider.family<CourseDetail, String>(
 
 /// The course list's format filter.
 ///
-/// Filters persist so nobody has to re-apply them on every visit. This holds
-/// for the life of the app process; carrying it across a restart needs a
-/// `LocalStore` accessor, which lives in `ejadah_core`.
+/// Filters survive a relaunch, the same as the Career database's and each
+/// People door's. Re-applying them by hand on every visit is friction the
+/// design removes deliberately, and a filter that forgets overnight is the
+/// version of that friction people notice most.
 final courseFilterProvider =
     NotifierProvider<CourseFilterController, Set<String>>(
       CourseFilterController.new,
@@ -34,7 +38,19 @@ final courseFilterProvider =
 
 class CourseFilterController extends Notifier<Set<String>> {
   @override
-  Set<String> build() => const {};
+  Set<String> build() {
+    // Restored asynchronously, so the list paints immediately with nothing
+    // filtered and narrows a frame later. The alternative — holding the list
+    // back until storage answers — trades a correct first frame for a blank
+    // one, which is the worse of the two.
+    Future.microtask(_restore);
+    return const {};
+  }
+
+  Future<void> _restore() async {
+    final stored = await ref.read(localStoreProvider).courseFilters();
+    if (stored != null && stored.isNotEmpty) state = stored;
+  }
 
   /// Selections are toggles: with none selected the list shows everything,
   /// which is why there is no separate "All" chip to keep in sync.
@@ -42,9 +58,19 @@ class CourseFilterController extends Notifier<Set<String>> {
     state = state.contains(level)
         ? (state.toSet()..remove(level))
         : (state.toSet()..add(level));
+    _persist();
   }
 
-  void clear() => state = const {};
+  void clear() {
+    state = const {};
+    _persist();
+  }
+
+  /// Best-effort: a filter that fails to save is not worth an error state on a
+  /// course list.
+  void _persist() {
+    unawaited(ref.read(localStoreProvider).saveCourseFilters(state));
+  }
 
   List<Course> apply(List<Course> courses) => state.isEmpty
       ? courses

@@ -297,6 +297,20 @@ class _SectionEditorState extends State<_SectionEditor> {
           backLabel: strings.back,
           onBack: () => Navigator.of(context).pop(),
         ),
+        // Sticky: the details field grows, and a Save that scrolls out of
+        // view is a Save people believe is missing.
+        bottomNavigationBar: EjadahStickyBar(
+          child: EjadahPrimaryButton(
+            label: strings.save,
+            onPressed: () => Navigator.of(context).pop(
+              _SectionDraft(
+                kind: _kind,
+                heading: _heading.text.trim(),
+                body: _body.text.trim(),
+              ),
+            ),
+          ),
+        ),
         body: SafeArea(
           top: false,
           child: EjadahPageBody(
@@ -346,17 +360,6 @@ class _SectionEditorState extends State<_SectionEditor> {
                   label: strings.cvBody,
                   controller: _body,
                   maxLines: 6,
-                ),
-                const SizedBox(height: EjadahSpacing.lg),
-                EjadahPrimaryButton(
-                  label: strings.save,
-                  onPressed: () => Navigator.of(context).pop(
-                    _SectionDraft(
-                      kind: _kind,
-                      heading: _heading.text.trim(),
-                      body: _body.text.trim(),
-                    ),
-                  ),
                 ),
                 const SizedBox(height: EjadahSpacing.md),
               ],

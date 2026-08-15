@@ -83,84 +83,90 @@ class _Results extends ConsumerWidget {
     final controller = ref.read(courseFilterProvider.notifier);
     final visible = controller.apply(catalogue.courses);
 
-    return ListView(
-      key: PageStorageKey('course-list-${department.wire}'),
-      children: [
-        const SizedBox(height: EjadahSpacing.sm),
-        if (catalogue.levels.length > 1) ...[
-          Text(
-            context.type.eyebrowText(strings.filterBy),
-            style: context.type.eyebrow(color: EjadahColors.labelMuted),
-          ),
-          const SizedBox(height: EjadahSpacing.xs),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (final level in catalogue.levels) ...[
-                  EjadahFilterChip(
-                    label: level(context),
-                    isSelected: filter.contains(level.en),
-                    count: catalogue.courses
-                        .where((course) => course.level.en == level.en)
-                        .length,
-                    onTap: () => controller.toggle(level.en),
-                  ),
-                  const SizedBox(width: EjadahSpacing.xs),
-                ],
-                if (filter.isNotEmpty)
-                  EjadahGhostButton(
-                    label: strings.clearAll,
-                    onPressed: controller.clear,
-                  ),
-              ],
-            ),
-          ),
+    return StaggerGroup(
+      child: ListView(
+        key: PageStorageKey('course-list-${department.wire}'),
+        children: [
           const SizedBox(height: EjadahSpacing.sm),
-        ],
-        // The list always states its own size.
-        Row(
-          children: [
-            LtrIsland(
-              child: Text(
-                '${visible.length}',
-                style: context.type.tabular(fontSize: 12),
+          if (catalogue.levels.length > 1) ...[
+            Text(
+              context.type.eyebrowText(strings.filterBy),
+              style: context.type.eyebrow(color: EjadahColors.labelMuted),
+            ),
+            const SizedBox(height: EjadahSpacing.xs),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (final level in catalogue.levels) ...[
+                    EjadahFilterChip(
+                      label: level(context),
+                      isSelected: filter.contains(level.en),
+                      count: catalogue.courses
+                          .where((course) => course.level.en == level.en)
+                          .length,
+                      onTap: () => controller.toggle(level.en),
+                    ),
+                    const SizedBox(width: EjadahSpacing.xs),
+                  ],
+                  if (filter.isNotEmpty)
+                    EjadahGhostButton(
+                      label: strings.clearAll,
+                      onPressed: controller.clear,
+                    ),
+                ],
               ),
             ),
-            const SizedBox(width: EjadahSpacing.xxs),
-            Text(
-              strings.coursesEyebrow.toLowerCase(),
-              style: context.type.micro(color: EjadahColors.labelMuted),
-            ),
+            const SizedBox(height: EjadahSpacing.sm),
           ],
-        ),
-        const SizedBox(height: EjadahSpacing.sm),
-        if (visible.isEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: EjadahSpacing.lg),
-            child: EjadahEmptyState(
-              title: strings.emptyMastersTitle,
-              body: strings.emptyMastersBody,
-              // The empty state routes somewhere: clearing the filter is the
-              // one action that brings the list back.
-              actionLabel: strings.clearAll,
-              onAction: controller.clear,
-            ),
-          )
-        else
-          for (final course in visible) ...[
-            CourseCard(
-              course: course,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => CourseDetailScreen(slug: course.slug),
+          // The list always states its own size.
+          Row(
+            children: [
+              LtrIsland(
+                child: Text(
+                  '${visible.length}',
+                  style: context.type.tabular(fontSize: 12),
                 ),
               ),
-            ),
-            const SizedBox(height: EjadahSpacing.cardGap),
-          ],
-        const SizedBox(height: EjadahSpacing.section),
-      ],
+              const SizedBox(width: EjadahSpacing.xxs),
+              Text(
+                strings.coursesEyebrow.toLowerCase(),
+                style: context.type.micro(color: EjadahColors.labelMuted),
+              ),
+            ],
+          ),
+          const SizedBox(height: EjadahSpacing.sm),
+          if (visible.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: EjadahSpacing.lg),
+              child: EjadahEmptyState(
+                title: strings.emptyMastersTitle,
+                body: strings.emptyMastersBody,
+                // The empty state routes somewhere: clearing the filter is the
+                // one action that brings the list back.
+                actionLabel: strings.clearAll,
+                onAction: controller.clear,
+              ),
+            )
+          else
+            for (final (index, course) in visible.indexed) ...[
+              // Staggered in once, on first appearance.
+              StaggeredIn(
+                index: index,
+                child: CourseCard(
+                  course: course,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => CourseDetailScreen(slug: course.slug),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: EjadahSpacing.cardGap),
+            ],
+          const SizedBox(height: EjadahSpacing.section),
+        ],
+      ),
     );
   }
 }

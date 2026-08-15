@@ -19,6 +19,7 @@ class LocalStore {
   static const String _firstOpenKey = 'ejadah.first_open_at';
   static const String _programmeFiltersKey = 'ejadah.programme_filters';
   static const String _activeTabKey = 'ejadah.active_tab';
+  static const String _courseFiltersKey = 'ejadah.course_filters';
 
   Future<String?> language() => _preferences.getString(_languageKey);
 
@@ -57,6 +58,18 @@ class LocalStore {
 
   Future<void> clearProgrammeFilters() =>
       _preferences.remove(_programmeFiltersKey);
+
+  /// The Learn list's format filter.
+  ///
+  /// A set rather than a map: the filter is a list of selected levels, and
+  /// storing it as one keeps the shape the controller already uses.
+  Future<Set<String>?> courseFilters() async {
+    final raw = await _preferences.getStringList(_courseFiltersKey);
+    return raw?.toSet();
+  }
+
+  Future<void> saveCourseFilters(Set<String> levels) =>
+      _preferences.setStringList(_courseFiltersKey, levels.toList());
 
   Future<int> activeTab() async =>
       await _preferences.getInt(_activeTabKey) ?? 0;

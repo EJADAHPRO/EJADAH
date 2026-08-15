@@ -160,7 +160,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **644 keys** in each language, up from the 374 they arrived
+The tables now hold **647 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -211,16 +211,54 @@ Counts as of this commit, all run from a clean tree:
 | Suite | Count |
 |---|---|
 | `server` (`dart test`, real PostgreSQL) | 244 |
-| `apps/mobile` (`flutter test`) | 144 |
+| `apps/mobile` (`flutter test`) | 151 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The
-application is **64,976 lines of Dart across 239 files**; there is no JavaScript,
+application is **65,896 lines of Dart across 241 files**; there is no JavaScript,
 TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
 `apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
 under `reference/` and `uploads/` are the preserved design prototypes, read as
 specification and never ported.
+
+## The smoothness sweep
+
+Done, in the order the owner set:
+
+1. **Swipe-back everywhere.** The theme had no `pageTransitionsTheme` at all,
+   so Android's default `ZoomPageTransitionsBuilder` gave no drag-to-dismiss —
+   on the phones most of this product's users hold, the app-bar arrow was the
+   only way out of an interior screen. One `CupertinoPageTransitionsBuilder`
+   for every platform, and a test that drags a route away on Android, on iOS,
+   and from the right edge in Arabic.
+2. **Per-tab scroll memory** — already in place: `StatefulShellRoute` keeps
+   each branch alive and every tab root carries a `PageStorageKey`.
+3. **Filter persistence.** Career and each People door already persisted;
+   Learn's format filter was process-lifetime only, with a comment naming
+   exactly what was missing. It now goes through `LocalStore` like the others.
+4. **Skeletons on the three lists** — already in place on all three.
+5. **Optimistic + Undo.** Shortlist remove already had it, with a five-second
+   window. **Download delete does not exist**, because downloads do not: LN-11
+   was never built (handouts fetch but do not save to disk), so there is
+   nothing to delete and nothing to undo. Not done, and not fudged.
+6. **40ms stagger-in, once.** The `staggerListMs` token existed and nothing
+   used it. `StaggeredIn` + `StaggerGroup` now do, on all three lists. "Once"
+   is the whole design and it is what the group is for — a stagger that
+   replays every time a recycled row scrolls back reads as a stutter, then as
+   a bug. Capped at six items, or item 200 would wait eight seconds.
+7. **Sticky bars.** Extracted `EjadahStickyBar` after writing the same
+   container by hand four times. Plan, CV editor, tutor application, earnings
+   and the NFC card's share action all use it; the last two did not have a
+   sticky bar before.
+8. **Disabled-reason audit.** Every `onPressed: … ? null : …` in the app was
+   read. Six had no reason: the IAP buy button while restoring, account
+   deletion before the confirmation word matches, the NFC editor on an invalid
+   link, the plan builder's copy-forward before week 1 is chosen, the
+   flashcards "Again" button (whose sibling showed a spinner and it did not),
+   and the file picker when the form is locked. All six now explain
+   themselves, and on a sticky bar the reason sits *above* the button rather
+   than only behind a tap on it.
 
 ## Known gaps in what is built
 

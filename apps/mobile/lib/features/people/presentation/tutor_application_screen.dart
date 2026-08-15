@@ -161,9 +161,7 @@ class _TutorApplicationScreenState
     ApplicationStep.availability => {
       'rules': _windows.map((window) => window.toJson()).toList(),
     },
-    ApplicationStep.media => {
-      if (_avatarKey != null) 'avatar_key': _avatarKey,
-    },
+    ApplicationStep.media => {if (_avatarKey != null) 'avatar_key': _avatarKey},
   };
 
   /// Going back a step saves the one being left.
@@ -583,7 +581,21 @@ class _AvailabilityEditor extends StatelessWidget {
   final ValueChanged<List<AvailabilityWindow>> onChanged;
 
   static const List<int> _hours = [
-    8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
   ];
 
   @override
@@ -630,10 +642,7 @@ class _AvailabilityEditor extends StatelessWidget {
               : null,
         ),
         const SizedBox(height: EjadahSpacing.md),
-        Text(
-          strings.availabilityWeeklyTotal(total),
-          style: type.bodyText(),
-        ),
+        Text(strings.availabilityWeeklyTotal(total), style: type.bodyText()),
         const SizedBox(height: EjadahSpacing.xxs),
         // Below the floor this is not a suggestion — it is the reason submit
         // will refuse, said here rather than at the end.
@@ -762,7 +771,9 @@ class _HourPicker extends StatelessWidget {
         ),
         const SizedBox(height: EjadahSpacing.xxs),
         DropdownButton<String>(
-          value: hours.map(_format).contains(value) ? value : _format(hours.first),
+          value: hours.map(_format).contains(value)
+              ? value
+              : _format(hours.first),
           isExpanded: true,
           underline: const SizedBox.shrink(),
           onChanged: enabled
@@ -806,10 +817,7 @@ class _ReviewStep extends StatelessWidget {
         PageHeader(title: strings.reviewStepTitle),
         const SizedBox(height: EjadahSpacing.md),
         if (missing.isEmpty)
-          InlineAlert(
-            message: strings.nothingMissing,
-            tone: AlertTone.success,
-          )
+          InlineAlert(message: strings.nothingMissing, tone: AlertTone.success)
         else ...[
           SectionHeader(title: strings.stillNeededTitle),
           const SizedBox(height: EjadahSpacing.xs),
@@ -866,54 +874,43 @@ class _ActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.strings;
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: EjadahColors.card,
-        border: Border(top: BorderSide(color: EjadahColors.border)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: EjadahPageBody(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: EjadahSpacing.sm),
-            child: Row(
-              children: [
-                Expanded(
-                  child: EjadahSecondaryButton(
-                    label: strings.back,
-                    onPressed: onBack,
-                  ),
-                ),
-                const SizedBox(width: EjadahSpacing.sm),
-                Expanded(
-                  flex: 2,
-                  child: state.onReview
-                      ? EjadahPrimaryButton(
-                          label: strings.submitApplication,
-                          isLoading: state.submitting,
-                          onPressed: state.canSubmit && state.isEditable
-                              ? onSubmit
-                              : null,
-                          // Disabled *with* the reason, and the reason is
-                          // already listed above it — a greyed button with no
-                          // explanation is a dead end.
-                          disabledReason: strings.submitBlockedReason,
-                          onDisabledTap: (reason) =>
-                              showEjadahToast(context, message: reason),
-                        )
-                      : EjadahPrimaryButton(
-                          label: strings.nextStep,
-                          isLoading: state.saveState == SaveState.saving,
-                          onPressed: state.isEditable ? onContinue : null,
-                          disabledReason: strings.statusUnderReviewBody,
-                          onDisabledTap: (reason) =>
-                              showEjadahToast(context, message: reason),
-                        ),
-                ),
-              ],
+    return EjadahStickyBar(
+      // The reason sits above the button rather than only behind a tap on it.
+      reason: state.onReview && !state.canSubmit
+          ? strings.submitBlockedReason
+          : null,
+      child: Row(
+        children: [
+          Expanded(
+            child: EjadahSecondaryButton(
+              label: strings.back,
+              onPressed: onBack,
             ),
           ),
-        ),
+          const SizedBox(width: EjadahSpacing.sm),
+          Expanded(
+            flex: 2,
+            child: state.onReview
+                ? EjadahPrimaryButton(
+                    label: strings.submitApplication,
+                    isLoading: state.submitting,
+                    onPressed: state.canSubmit && state.isEditable
+                        ? onSubmit
+                        : null,
+                    disabledReason: strings.submitBlockedReason,
+                    onDisabledTap: (reason) =>
+                        showEjadahToast(context, message: reason),
+                  )
+                : EjadahPrimaryButton(
+                    label: strings.nextStep,
+                    isLoading: state.saveState == SaveState.saving,
+                    onPressed: state.isEditable ? onContinue : null,
+                    disabledReason: strings.statusUnderReviewBody,
+                    onDisabledTap: (reason) =>
+                        showEjadahToast(context, message: reason),
+                  ),
+          ),
+        ],
       ),
     );
   }

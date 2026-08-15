@@ -196,6 +196,14 @@ class _NfcEditorScreenState extends ConsumerState<NfcEditorScreen> {
                 label: strings.saveChanges,
                 isLoading: _isSaving,
                 onPressed: _hasInvalidLink ? null : _save,
+                // The offending field already shows the rule; the button
+                // repeats it, because a user who scrolled past the field sees
+                // only a control that will not move.
+                disabledReason: context.language == AppLanguage.ar
+                    ? 'يجب أن يبدأ الرابط بـ https://'
+                    : 'Links must start with https://',
+                onDisabledTap: (reason) =>
+                    showEjadahToast(context, message: reason),
               ),
               const SizedBox(height: EjadahSpacing.xs),
               EjadahGhostButton(

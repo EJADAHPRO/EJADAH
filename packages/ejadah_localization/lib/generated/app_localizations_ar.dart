@@ -1009,6 +1009,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get noSlots => 'لا مواعيد متاحة هذا الأسبوع.';
 
   @override
+  String get notEditableNow => 'لا يمكن تغيير هذا أثناء مراجعة طلبك.';
+
+  @override
   String get notIncluded => 'غير مشمول';
 
   @override
@@ -1201,6 +1204,10 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get pickSlotFirst => 'اختر موعدًا للمتابعة';
+
+  @override
+  String get pickWeekOneFirst =>
+      'اختر الأسبوع الأول أولًا — وتُنسخ منه البقية.';
 
   @override
   String get plansTitle => 'الخطط';
@@ -2074,6 +2081,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get whatYouLearn => 'ماذا ستتعلّم';
+
+  @override
+  String get whileRestoring => 'انتظر حتى تنتهي عملية الاستعادة.';
 
   @override
   String get wifiOnlyDownloads => 'التنزيل عبر الواي فاي فقط';

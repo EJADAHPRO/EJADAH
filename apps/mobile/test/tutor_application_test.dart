@@ -148,13 +148,17 @@ void main() {
     await tester.tap(find.text('التالي'));
     await tester.pumpAndSettle();
 
+    // The reason is on screen *before* the tap, above the button — not only
+    // discovered by prodding a control that looks broken.
+    expect(find.text('أضف ما هو مذكور أعلاه أولًا.'), findsOneWidget);
+
     await tester.tap(find.text('أرسل للمراجعة'));
     await tester.pumpAndSettle();
 
-    // Nothing was sent, and the button explained itself rather than sitting
-    // grey and silent.
+    // Nothing was sent, and the tap repeated the reason rather than doing
+    // nothing at all.
     expect(repository.submitted, isFalse);
-    expect(find.text('أضف ما هو مذكور أعلاه أولًا.'), findsOneWidget);
+    expect(find.text('أضف ما هو مذكور أعلاه أولًا.'), findsNWidgets(2));
   });
 
   testWidgets('with nothing missing, submit sends', (tester) async {

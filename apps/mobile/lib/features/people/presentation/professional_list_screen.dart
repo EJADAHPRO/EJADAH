@@ -17,7 +17,11 @@ import 'widgets/professional_card.dart';
 /// exists so a professional with no reviews yet gets a first booking, and
 /// filtering it away would defeat the only mechanism that does that.
 class ProfessionalListScreen extends ConsumerStatefulWidget {
-  const ProfessionalListScreen({required this.kind, this.destinationIso, super.key});
+  const ProfessionalListScreen({
+    required this.kind,
+    this.destinationIso,
+    super.key,
+  });
 
   final ServiceKind kind;
 
@@ -69,18 +73,24 @@ class _ProfessionalListScreenState
           top: false,
           bottom: false,
           child: EjadahPageBody(
-            child: CustomScrollView(
-              key: PageStorageKey('people-list-${kind.wire}'),
-              slivers: [
-                SliverToBoxAdapter(child: _FilterBar(kind: kind, state: state)),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: EjadahSpacing.sm),
-                ),
-                ..._body(context, ref, state),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: EjadahSpacing.section),
-                ),
-              ],
+            // The group is what makes the stagger play once: it remembers, so
+            // a row recycled back into view appears instead of re-animating.
+            child: StaggerGroup(
+              child: CustomScrollView(
+                key: PageStorageKey('people-list-${kind.wire}'),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: _FilterBar(kind: kind, state: state),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: EjadahSpacing.sm),
+                  ),
+                  ..._body(context, ref, state),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: EjadahSpacing.section),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -141,10 +151,13 @@ class _ProfessionalListScreenState
               const SizedBox(height: EjadahSpacing.cardGap),
           itemBuilder: (context, index) {
             final professional = ready.page.items[index];
-            return ProfessionalCard(
-              professional: professional,
-              onTap: () => context.push('/people/who/${professional.slug}'),
-              onBook: () => context.push('/people/who/${professional.slug}'),
+            return StaggeredIn(
+              index: index,
+              child: ProfessionalCard(
+                professional: professional,
+                onTap: () => context.push('/people/who/${professional.slug}'),
+                onBook: () => context.push('/people/who/${professional.slug}'),
+              ),
             );
           },
         ),
@@ -333,10 +346,9 @@ class _FilterSheetState extends State<_FilterSheet> {
                   label: strings.fSpecialty,
                   options: widget.facets['specialties'] ?? const [],
                   selected: _draft.specialties,
-                  onChanged: (values) =>
-                      setState(() => _draft = _draft.copyWith(
-                        specialties: values,
-                      )),
+                  onChanged: (values) => setState(
+                    () => _draft = _draft.copyWith(specialties: values),
+                  ),
                 ),
                 _FacetGroup(
                   label: strings.fLanguage,

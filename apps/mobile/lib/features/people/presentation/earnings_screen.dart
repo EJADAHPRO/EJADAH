@@ -167,9 +167,7 @@ class _Ledger extends ConsumerWidget {
                   ),
                 if (earnings.payouts.isNotEmpty) ...[
                   const SizedBox(height: EjadahSpacing.lg),
-                  EjadahPageBody(
-                    child: _Payouts(payouts: earnings.payouts),
-                  ),
+                  EjadahPageBody(child: _Payouts(payouts: earnings.payouts)),
                 ],
               ],
             ),
@@ -334,10 +332,14 @@ class _TableRow extends StatelessWidget {
                 child: Text(
                   formatThousands(row.netEgp),
                   textAlign: TextAlign.end,
-                  style: type.bodyText(color: colour).copyWith(
-                    fontWeight: FontWeight.w600,
-                    decoration: isReversed ? TextDecoration.lineThrough : null,
-                  ),
+                  style: type
+                      .bodyText(color: colour)
+                      .copyWith(
+                        fontWeight: FontWeight.w600,
+                        decoration: isReversed
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
                 ),
               ),
             ],
@@ -408,45 +410,17 @@ class _PayoutBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final strings = context.strings;
-    final type = context.type;
     final reason = earnings.payoutBlockedReason;
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: EjadahColors.card,
-        border: Border(top: BorderSide(color: EjadahColors.border)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: EjadahPageBody(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: EjadahSpacing.sm),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (reason != null) ...[
-                  // The reason is on the screen, above the button, not hidden
-                  // behind a tap on a control that looks broken.
-                  Text(
-                    reason(context),
-                    style: type.caption(color: EjadahColors.textSecondary),
-                  ),
-                  const SizedBox(height: EjadahSpacing.xs),
-                ],
-                EjadahPrimaryButton(
-                  label: strings.requestPayout,
-                  onPressed: earnings.canRequestPayout
-                      ? () => _request(context, ref)
-                      : null,
-                  disabledReason: reason?.call(context),
-                  onDisabledTap: (message) =>
-                      showEjadahToast(context, message: message),
-                ),
-              ],
-            ),
-          ),
-        ),
+    return EjadahStickyBar(
+      reason: reason?.call(context),
+      child: EjadahPrimaryButton(
+        label: strings.requestPayout,
+        onPressed: earnings.canRequestPayout
+            ? () => _request(context, ref)
+            : null,
+        disabledReason: reason?.call(context),
+        onDisabledTap: (message) => showEjadahToast(context, message: message),
       ),
     );
   }

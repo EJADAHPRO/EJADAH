@@ -144,6 +144,11 @@ class _PurchaseSheetState extends ConsumerState<_PurchaseSheet> {
           label: strings.buyCourse,
           isLoading: _isBuying,
           onPressed: _isRestoring ? null : () => _buy(course.id),
+          // Restoring holds the store connection; buying meanwhile would race
+          // it. Grey with no explanation reads as a broken purchase button on
+          // the one screen where that costs a sale.
+          disabledReason: strings.whileRestoring,
+          onDisabledTap: (reason) => showEjadahToast(context, message: reason),
         ),
         const SizedBox(height: EjadahSpacing.xs),
         Text(

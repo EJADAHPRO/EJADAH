@@ -57,7 +57,30 @@ class NfcCardScreen extends ConsumerWidget {
           ),
         ),
       ),
+      // Sharing the card is the product's growth loop, and this screen scrolls
+      // past a preview and a QR code before reaching it. The one action that
+      // matters stays where a thumb already is.
+      bottomNavigationBar: card.whenOrNull(
+        data: (data) => data.shareUrl == null
+            ? null
+            : EjadahStickyBar(
+                child: EjadahPrimaryButton(
+                  label: strings.shareCard,
+                  onPressed: () => _share(context, data.shareUrl!),
+                ),
+              ),
+      ),
     );
+  }
+
+  /// The card's URL, to the clipboard.
+  ///
+  /// The platform share sheet is not available to this build, so the action
+  /// does the honest thing it can do rather than opening nothing.
+  Future<void> _share(BuildContext context, String url) async {
+    await Clipboard.setData(ClipboardData(text: url));
+    if (!context.mounted) return;
+    showEjadahToast(context, message: url);
   }
 }
 
@@ -103,11 +126,6 @@ class _Card extends ConsumerWidget {
         const SizedBox(height: EjadahSpacing.md),
         InlineAlert(message: strings.nfcNote, tone: AlertTone.info),
         const SizedBox(height: EjadahSpacing.md),
-        EjadahPrimaryButton(
-          label: strings.shareCard,
-          onPressed: () => _share(context, card.shareUrl!),
-        ),
-        const SizedBox(height: EjadahSpacing.xs),
         EjadahSecondaryButton(
           label: strings.editCard,
           onPressed: () => _openEditor(context, ref),
@@ -138,16 +156,6 @@ class _Card extends ConsumerWidget {
       ),
     );
     ref.invalidate(myCardProvider);
-  }
-
-  /// Copies the link and says so.
-  ///
-  /// The platform share sheet is not available to this build, so the action
-  /// does the honest thing it can do rather than opening nothing.
-  Future<void> _share(BuildContext context, String url) async {
-    await Clipboard.setData(ClipboardData(text: url));
-    if (!context.mounted) return;
-    showEjadahToast(context, message: url);
   }
 
   Future<void> _orderPhysicalCard() => launchUrl(

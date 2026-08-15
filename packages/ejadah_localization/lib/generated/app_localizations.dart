@@ -1940,6 +1940,12 @@ abstract class EjadahStrings {
   /// **'No open times this week.'**
   String get noSlots;
 
+  /// No description provided for @notEditableNow.
+  ///
+  /// In en, this message translates to:
+  /// **'This can\'t be changed while your application is under review.'**
+  String get notEditableNow;
+
   /// No description provided for @notIncluded.
   ///
   /// In en, this message translates to:
@@ -2317,6 +2323,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Pick a time to continue'**
   String get pickSlotFirst;
+
+  /// No description provided for @pickWeekOneFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose week 1 first — the rest copy from it.'**
+  String get pickWeekOneFirst;
 
   /// No description provided for @plansTitle.
   ///
@@ -3895,6 +3907,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'WHAT YOU WILL LEARN'**
   String get whatYouLearn;
+
+  /// No description provided for @whileRestoring.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for the restore to finish.'**
+  String get whileRestoring;
 
   /// No description provided for @wifiOnlyDownloads.
   ///
