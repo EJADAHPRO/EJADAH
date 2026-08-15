@@ -52,7 +52,9 @@ class Migrator {
         // the one that accepts a multi-statement script.
         await tx.execute(sql, queryMode: QueryMode.simple);
         await tx.execute(
-          Sql.named('INSERT INTO schema_migrations (version) VALUES (@version)'),
+          Sql.named(
+            'INSERT INTO schema_migrations (version) VALUES (@version)',
+          ),
           parameters: {'version': version},
         );
       });

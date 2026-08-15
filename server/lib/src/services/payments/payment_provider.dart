@@ -21,10 +21,7 @@ enum PaymentOutcome {
 
 /// A checkout the client should open.
 class CheckoutSession {
-  const CheckoutSession({
-    required this.checkoutUrl,
-    required this.externalRef,
-  });
+  const CheckoutSession({required this.checkoutUrl, required this.externalRef});
 
   /// Opened externally. The redirect sheet names the host it goes to, so the
   /// user is never surprised about where their card details are going.
@@ -64,11 +61,9 @@ abstract interface class PaymentProvider {
 /// [AppConfig.fromEnvironment] refuses to boot with this selected in
 /// production: the guard is in configuration, not in a code comment.
 class DevPaymentProvider implements PaymentProvider {
-  DevPaymentProvider({
-    required AppConfig config,
-    required AppLogger logger,
-  }) : _config = config,
-       _logger = logger {
+  DevPaymentProvider({required AppConfig config, required AppLogger logger})
+    : _config = config,
+      _logger = logger {
     if (config.environment.isProduction) {
       throw StateError(
         'The development payment simulator cannot run in production.',

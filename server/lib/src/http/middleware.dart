@@ -48,9 +48,8 @@ Middleware contextMiddleware(TokenService tokens) => (innerHandler) {
     );
 
     return Future.sync(() => innerHandler(request.withContext(context))).then(
-      (response) => response.change(
-        headers: {'x-correlation-id': correlationId},
-      ),
+      (response) =>
+          response.change(headers: {'x-correlation-id': correlationId}),
     );
   };
 };
@@ -82,12 +81,14 @@ Middleware errorMiddleware(AppLogger logger) => (innerHandler) {
     } on ServerException catch (error, stackTrace) {
       // Database-level failures that the repository layer did not translate.
       final translated = _translatePostgresError(error);
-      logger.withCorrelationId(request.ctx.correlationId).error(
-        'database error',
-        {'path': request.url.path, 'sqlstate': error.code},
-        error,
-        stackTrace,
-      );
+      logger
+          .withCorrelationId(request.ctx.correlationId)
+          .error(
+            'database error',
+            {'path': request.url.path, 'sqlstate': error.code},
+            error,
+            stackTrace,
+          );
       return Json.error(translated);
     } catch (error, stackTrace) {
       logger
@@ -106,14 +107,15 @@ Middleware errorMiddleware(AppLogger logger) => (innerHandler) {
 };
 
 /// Maps the two PostgreSQL states the product depends on onto product states.
-ApiException _translatePostgresError(ServerException error) => switch (error.code) {
-  // 23P01 exclusion_violation — two callers raced for the same slot and the
-  // database refused the second. This is the booking guarantee firing.
-  '23P01' => ApiException.conflict(message: ApiErrorCopy.slotTaken),
-  // 23505 unique_violation.
-  '23505' => ApiException.conflict(),
-  _ => ApiException(ApiErrorCode.unexpected, details: error.message),
-};
+ApiException _translatePostgresError(ServerException error) =>
+    switch (error.code) {
+      // 23P01 exclusion_violation — two callers raced for the same slot and the
+      // database refused the second. This is the booking guarantee firing.
+      '23P01' => ApiException.conflict(message: ApiErrorCopy.slotTaken),
+      // 23505 unique_violation.
+      '23505' => ApiException.conflict(),
+      _ => ApiException(ApiErrorCode.unexpected, details: error.message),
+    };
 
 /// One structured log line per request, with its duration.
 Middleware loggingMiddleware(AppLogger logger) => (innerHandler) {
@@ -158,7 +160,10 @@ class RateLimiter {
 
     if (existing.count >= limit) return existing.resetsAt.difference(at);
 
-    _windows[key] = _Window(count: existing.count + 1, resetsAt: existing.resetsAt);
+    _windows[key] = _Window(
+      count: existing.count + 1,
+      resetsAt: existing.resetsAt,
+    );
     return null;
   }
 
@@ -181,22 +186,20 @@ class _Window {
 ///
 /// Keyed by the caller's identity where known and their address otherwise, so
 /// one abusive client cannot lock out everyone behind the same proxy.
-Middleware rateLimitMiddleware(
-  RateLimiter limiter, {
-  required String scope,
-}) => (innerHandler) {
-  return (request) async {
-    final identity =
-        request.ctx.userId ??
-        request.headers['x-forwarded-for']?.split(',').first.trim() ??
-        'anonymous';
-    final wait = limiter.consume('$scope:$identity');
-    if (wait != null) {
-      throw ApiException(ApiErrorCode.rateLimit, retryAfter: wait);
-    }
-    return innerHandler(request);
-  };
-};
+Middleware rateLimitMiddleware(RateLimiter limiter, {required String scope}) =>
+    (innerHandler) {
+      return (request) async {
+        final identity =
+            request.ctx.userId ??
+            request.headers['x-forwarded-for']?.split(',').first.trim() ??
+            'anonymous';
+        final wait = limiter.consume('$scope:$identity');
+        if (wait != null) {
+          throw ApiException(ApiErrorCode.rateLimit, retryAfter: wait);
+        }
+        return innerHandler(request);
+      };
+    };
 
 /// CORS for Flutter Web.
 ///

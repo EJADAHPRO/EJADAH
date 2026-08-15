@@ -58,7 +58,8 @@ class LocalStore {
   Future<void> clearProgrammeFilters() =>
       _preferences.remove(_programmeFiltersKey);
 
-  Future<int> activeTab() async => await _preferences.getInt(_activeTabKey) ?? 0;
+  Future<int> activeTab() async =>
+      await _preferences.getInt(_activeTabKey) ?? 0;
 
   Future<void> setActiveTab(int index) =>
       _preferences.setInt(_activeTabKey, index);

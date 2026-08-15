@@ -21,7 +21,9 @@ Future<void> main() async {
     ..writeln('// Source: ${source.path}')
     ..writeln('// Regenerate: dart run tool/generate_tokens.dart')
     ..writeln('//')
-    ..writeln('// Every visual constant in the Ejadah design system resolves to')
+    ..writeln(
+      '// Every visual constant in the Ejadah design system resolves to',
+    )
     ..writeln('// a value in this file. A raw colour, radius, duration or size')
     ..writeln('// written anywhere else in the codebase is a defect.')
     ..writeln()
@@ -65,12 +67,18 @@ Future<void> main() async {
     ..writeln(
       '  static const List<double> gradientPositions = <double>[${positions.map((p) => (p as num).toDouble()).join(', ')}];',
     )
-    ..writeln('  static const double gradientAngleLtr = '
-        '${(gradient['brand'] as Map)['angleLTR']};')
-    ..writeln('  static const double gradientAngleRtl = '
-        '${(gradient['brand'] as Map)['angleRTL']};')
-    ..writeln('  static const int gradientMaxPerScreen = '
-        '${gradient['maxPerScreen']};')
+    ..writeln(
+      '  static const double gradientAngleLtr = '
+      '${(gradient['brand'] as Map)['angleLTR']};',
+    )
+    ..writeln(
+      '  static const double gradientAngleRtl = '
+      '${(gradient['brand'] as Map)['angleRTL']};',
+    )
+    ..writeln(
+      '  static const int gradientMaxPerScreen = '
+      '${gradient['maxPerScreen']};',
+    )
     ..writeln(
       '  static const List<String> gradientPermittedUses = <String>[${(gradient['permittedUses'] as List).map((u) => "'$u'").join(', ')}];',
     );
@@ -111,10 +119,14 @@ Future<void> main() async {
   buffer
     ..writeln('  /// Arabic headings shrink by this fraction above')
     ..writeln('  /// [arHeadingThresholdChars] characters.')
-    ..writeln('  static const double arHeadingReducePct = '
-        '${(arHeading['abovePct'] as num).toDouble()};')
-    ..writeln('  static const int arHeadingThresholdChars = '
-        '${arHeading['thresholdChars']};');
+    ..writeln(
+      '  static const double arHeadingReducePct = '
+      '${(arHeading['abovePct'] as num).toDouble()};',
+    )
+    ..writeln(
+      '  static const int arHeadingThresholdChars = '
+      '${arHeading['thresholdChars']};',
+    );
 
   buffer
     ..writeln()
@@ -153,8 +165,10 @@ Future<void> main() async {
     );
   }
   buffer
-    ..writeln('  static const double pressScale = '
-        '${(motion['pressScale'] as num).toDouble()};')
+    ..writeln(
+      '  static const double pressScale = '
+      '${(motion['pressScale'] as num).toDouble()};',
+    )
     ..writeln('  static const int staggerListMs = ${motion['staggerListMs']};');
 
   buffer
@@ -201,8 +215,10 @@ Future<void> main() async {
     ..writeln()
     ..writeln('  // --- Z order ---');
   for (final entry in (tokens['zOrder'] as Map<String, dynamic>).entries) {
-    buffer.writeln('  static const int z${_capitalize(entry.key)} = '
-        '${entry.value};');
+    buffer.writeln(
+      '  static const int z${_capitalize(entry.key)} = '
+      '${entry.value};',
+    );
   }
 
   buffer.writeln('}');

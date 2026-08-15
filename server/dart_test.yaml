@@ -1,0 +1,9 @@
+# The database-backed suites share one `ejadah_test` database and truncate
+# between tests, so letting test files run in parallel lets one suite wipe
+# another's fixtures mid-run.
+#
+# Serialising the files is the honest fix. A database per suite would buy speed
+# this suite does not need, and the concurrency the product actually depends on
+# is exercised *inside* booking_concurrency_test.dart, where ten simultaneous
+# callers race for one slot.
+concurrency: 1

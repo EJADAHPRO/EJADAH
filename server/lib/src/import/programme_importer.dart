@@ -56,7 +56,9 @@ class ProgrammeImporter {
     Session tx,
     ProgrammeImportReport report,
   ) async {
-    final status = DeadlineStatus.fromSourceText(row['Deadline Status'] as String?);
+    final status = DeadlineStatus.fromSourceText(
+      row['Deadline Status'] as String?,
+    );
     final countryName = _text(row['Country']);
     final iso = countryIsoByName[countryName.toLowerCase()];
 

@@ -302,11 +302,12 @@ class RoadmapEngine {
     RoadmapAnswers answers,
     List<RoadmapCandidate> candidates,
   ) {
-    final scored = candidates
-        .where((candidate) => _isApplicableToPath(candidate, answers))
-        .map((candidate) => _score(candidate, answers))
-        .toList()
-      ..sort();
+    final scored =
+        candidates
+            .where((candidate) => _isApplicableToPath(candidate, answers))
+            .map((candidate) => _score(candidate, answers))
+            .toList()
+          ..sort();
 
     if (scored.isEmpty) {
       return const ScoredCandidates(all: [], eligible: []);
@@ -380,8 +381,8 @@ class RoadmapEngine {
     // scoring it is what separates six otherwise-identical Gulf routes.
     if (overTimeBy == 0 && answers.monthsAvailable > 0) {
       final used = candidate.minMonths / answers.monthsAvailable;
-      score +=
-          ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.speedBonusMax).round();
+      score += ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.speedBonusMax)
+          .round();
     }
     // Budget headroom is only credited when the cost floor is complete. A
     // guide with unsourced rows has an artificially low floor — crediting it
@@ -392,9 +393,8 @@ class RoadmapEngine {
         candidate.floorCostComplete &&
         answers.budgetUsd > 0) {
       final used = floorCost / answers.budgetUsd;
-      score +=
-          ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.headroomBonusMax)
-              .round();
+      score += ((1 - used.clamp(0.0, 1.0)) * RoadmapConstants.headroomBonusMax)
+          .round();
     }
 
     if (overBudgetBy > 0) {
@@ -407,8 +407,7 @@ class RoadmapEngine {
 
     if (overTimeBy > 0) {
       score = score.clamp(0, RoadmapConstants.unaffordableCeiling);
-      final quartersOver =
-          (overTimeBy * 4 / answers.monthsAvailable).ceil();
+      final quartersOver = (overTimeBy * 4 / answers.monthsAvailable).ceil();
       score -= quartersOver * RoadmapConstants.timeOverageStepPenalty;
     }
 
@@ -629,9 +628,11 @@ class RoadmapEngine {
       );
     }
     return LocalizedText(
-      en: '${candidate.candidate.minMonths} months, '
+      en:
+          '${candidate.candidate.minMonths} months, '
           '${candidate.candidate.examCode}',
-      ar: '${candidate.candidate.minMonths} شهرًا، '
+      ar:
+          '${candidate.candidate.minMonths} شهرًا، '
           '${candidate.candidate.examCode}',
     );
   }
@@ -648,7 +649,8 @@ class RoadmapEngine {
       ar: 'تعذّر بناء مسار من هذه الإجابات',
     ),
     summary: const LocalizedText(
-      en: 'Nothing in our guides matches what you told us. '
+      en:
+          'Nothing in our guides matches what you told us. '
           'Nothing you entered is lost.',
       ar: 'لا شيء في أدلتنا يطابق ما ذكرته. لم يُفقد ما أدخلته.',
     ),
@@ -686,10 +688,7 @@ class RoadmapEngine {
       return const LocalizedText(en: 'another language', ar: 'لغة أخرى');
     }
     final names = codes
-        .map(
-          (code) =>
-              _languageDisplayNames[code] ?? LocalizedText.same(code),
-        )
+        .map((code) => _languageDisplayNames[code] ?? LocalizedText.same(code))
         .toList();
     return LocalizedText(
       en: names.map((n) => n.en).join(' and '),

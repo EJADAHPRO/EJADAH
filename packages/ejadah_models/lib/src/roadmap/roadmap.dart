@@ -110,7 +110,10 @@ class RoadmapAnswers extends ValueObject {
 
   /// True once every question needed to generate has an answer.
   bool get isComplete =>
-      budgetUsd > 0 && monthsAvailable > 0 && regions.isNotEmpty && languages.isNotEmpty;
+      budgetUsd > 0 &&
+      monthsAvailable > 0 &&
+      regions.isNotEmpty &&
+      languages.isNotEmpty;
 
   factory RoadmapAnswers.fromJson(Map<String, dynamic> json) => RoadmapAnswers(
     path: RoadmapPath.fromWire(json['path'] as String?),
@@ -269,7 +272,8 @@ class RoadmapAlternative extends ValueObject {
         countryName: LocalizedText.fromJson(json['country_name'])!,
         fitScore: jsonInt(json['fit_score']) ?? 0,
         reason:
-            LocalizedText.fromJson(json['reason']) ?? const LocalizedText.same(''),
+            LocalizedText.fromJson(json['reason']) ??
+            const LocalizedText.same(''),
       );
 
   Map<String, dynamic> toJson() => {
@@ -353,11 +357,13 @@ class Roadmap extends ValueObject {
     destinationName: LocalizedText.fromJson(json['destination_name'])!,
     fitScore: jsonInt(json['fit_score']) ?? 0,
     headline:
-        LocalizedText.fromJson(json['headline']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['headline']) ??
+        const LocalizedText.same(''),
     summary:
         LocalizedText.fromJson(json['summary']) ?? const LocalizedText.same(''),
     watchOut:
-        LocalizedText.fromJson(json['watch_out']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['watch_out']) ??
+        const LocalizedText.same(''),
     thisMonthAction:
         LocalizedText.fromJson(json['this_month_action']) ??
         const LocalizedText.same(''),
@@ -366,7 +372,8 @@ class Roadmap extends ValueObject {
         .toList(),
     alternatives: (json['alternatives'] as List<dynamic>? ?? const [])
         .map(
-          (a) => RoadmapAlternative.fromJson(Map<String, dynamic>.from(a as Map)),
+          (a) =>
+              RoadmapAlternative.fromJson(Map<String, dynamic>.from(a as Map)),
         )
         .toList(),
     answers: RoadmapAnswers.fromJson(

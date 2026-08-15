@@ -86,10 +86,12 @@ class TestDatabase {
   Future<void> close() => database.close();
 
   /// Convenience for arranging fixtures.
-  Future<Result> execute(String sql, [Map<String, Object?> parameters = const {}]) =>
-      database.run(
-        (session) => session.execute(Sql.named(sql), parameters: parameters),
-      );
+  Future<Result> execute(
+    String sql, [
+    Map<String, Object?> parameters = const {},
+  ]) => database.run(
+    (session) => session.execute(Sql.named(sql), parameters: parameters),
+  );
 }
 
 class _NullSink implements IOSink {

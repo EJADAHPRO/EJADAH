@@ -34,7 +34,8 @@ Future<void> main(List<String> arguments) async {
   if (config.enableBackgroundJobs) {
     // Deadline reminders, session reminders and hold expiry cannot depend on
     // the Flutter app being open.
-    jobs = JobRunner(database: database, config: config, logger: logger)..start();
+    jobs = JobRunner(database: database, config: config, logger: logger)
+      ..start();
   }
 
   final server = await shelf_io.serve(

@@ -92,7 +92,9 @@ class ProgrammeSummary extends ValueObject {
         specialty: (json['specialty'] ?? '') as String,
         degreeType: (json['degree_type'] ?? '') as String,
         deadline: jsonDate(json['deadline']),
-        deadlineStatus: DeadlineStatus.fromWire(json['deadline_status'] as String?),
+        deadlineStatus: DeadlineStatus.fromWire(
+          json['deadline_status'] as String?,
+        ),
         daysRemaining: jsonInt(json['days_remaining']),
         tuitionUsd: jsonInt(json['tuition_usd']),
         currency: json['currency'] as String?,
@@ -355,7 +357,9 @@ class ProgrammeQuery extends ValueObject {
     specialties: specialties ?? this.specialties,
     degreeTypes: degreeTypes ?? this.degreeTypes,
     intakeMonths: intakeMonths ?? this.intakeMonths,
-    maxTuitionUsd: clearMaxTuition ? null : (maxTuitionUsd ?? this.maxTuitionUsd),
+    maxTuitionUsd: clearMaxTuition
+        ? null
+        : (maxTuitionUsd ?? this.maxTuitionUsd),
     maxYears: clearMaxYears ? null : (maxYears ?? this.maxYears),
     minIelts: clearMinIelts ? null : (minIelts ?? this.minIelts),
     requiresScholarship: requiresScholarship ?? this.requiresScholarship,

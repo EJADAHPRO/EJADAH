@@ -51,7 +51,8 @@ abstract final class ValidationCopy {
   );
 
   static const LocalizedText goalTooShort = LocalizedText(
-    en: 'Write a line or two about what you need — '
+    en:
+        'Write a line or two about what you need — '
         'it makes the session far more useful.',
     ar: 'اكتب سطرًا أو سطرين عمّا تحتاجه',
   );

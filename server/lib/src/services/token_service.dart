@@ -48,11 +48,7 @@ class TokenService {
   final Random _random;
 
   String issueAccessToken({required String userId, required UserRole role}) {
-    final jwt = JWT(
-      {'role': role.wire},
-      subject: userId,
-      issuer: 'ejadah',
-    );
+    final jwt = JWT({'role': role.wire}, subject: userId, issuer: 'ejadah');
     return jwt.sign(
       SecretKey(_config.jwtSecret),
       expiresIn: _config.accessTokenTtl,
@@ -66,7 +62,11 @@ class TokenService {
   /// with the wrong key — callers treat all of those identically.
   AccessClaims? verifyAccessToken(String token) {
     try {
-      final jwt = JWT.verify(token, SecretKey(_config.jwtSecret), issuer: 'ejadah');
+      final jwt = JWT.verify(
+        token,
+        SecretKey(_config.jwtSecret),
+        issuer: 'ejadah',
+      );
       final subject = jwt.subject;
       if (subject == null) return null;
       final payload = jwt.payload;

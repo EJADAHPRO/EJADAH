@@ -304,7 +304,11 @@ class AuthRepository {
   }) => _execute(
     'INSERT INTO auth_attempts (scope, identifier, succeeded) '
     'VALUES (@scope, @identifier, @succeeded)',
-    {'scope': scope, 'identifier': identifier.toLowerCase(), 'succeeded': succeeded},
+    {
+      'scope': scope,
+      'identifier': identifier.toLowerCase(),
+      'succeeded': succeeded,
+    },
     session,
   );
 
@@ -333,7 +337,9 @@ class AuthRepository {
   ) async {
     Future<Result> run(Session s) =>
         s.execute(Sql.named(sql), parameters: parameters);
-    final result = session != null ? await run(session) : await _database.run(run);
+    final result = session != null
+        ? await run(session)
+        : await _database.run(run);
     return result.map((row) => row.toColumnMap()).toList();
   }
 

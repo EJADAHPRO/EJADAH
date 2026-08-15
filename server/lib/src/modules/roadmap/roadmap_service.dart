@@ -107,7 +107,11 @@ class RoadmapService {
     return _view(roadmap, isGuest: userId == null);
   }
 
-  Future<RoadmapView> roadmap(String id, {String? userId, String? deviceToken}) async {
+  Future<RoadmapView> roadmap(
+    String id, {
+    String? userId,
+    String? deviceToken,
+  }) async {
     final roadmap = await _repository.findRoadmap(id);
     if (roadmap == null) throw ApiException.notFound();
     return _view(roadmap, isGuest: userId == null);
@@ -120,10 +124,7 @@ class RoadmapService {
     final roadmap = await _repository.findRoadmap(id);
     if (roadmap == null) throw ApiException.notFound();
     await _repository.setSaved(id, true);
-    return _view(
-      (await _repository.findRoadmap(id))!,
-      isGuest: false,
-    );
+    return _view((await _repository.findRoadmap(id))!, isGuest: false);
   }
 
   /// Runs a what-if preset.

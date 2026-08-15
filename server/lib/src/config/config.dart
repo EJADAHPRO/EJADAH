@@ -11,12 +11,13 @@ enum AppEnvironment {
   staging,
   production;
 
-  static AppEnvironment fromName(String? value) => switch (value?.toLowerCase()) {
-    'test' => AppEnvironment.test,
-    'staging' => AppEnvironment.staging,
-    'production' || 'prod' => AppEnvironment.production,
-    _ => AppEnvironment.development,
-  };
+  static AppEnvironment fromName(String? value) =>
+      switch (value?.toLowerCase()) {
+        'test' => AppEnvironment.test,
+        'staging' => AppEnvironment.staging,
+        'production' || 'prod' => AppEnvironment.production,
+        _ => AppEnvironment.development,
+      };
 
   bool get isProduction => this == AppEnvironment.production;
 
@@ -125,8 +126,7 @@ class AppConfig {
       bookingHoldDuration: Duration(
         minutes: int.tryParse(env['BOOKING_HOLD_MINUTES'] ?? '') ?? 15,
       ),
-      platformFeePercent:
-          int.tryParse(env['PLATFORM_FEE_PERCENT'] ?? '') ?? 30,
+      platformFeePercent: int.tryParse(env['PLATFORM_FEE_PERCENT'] ?? '') ?? 30,
       publicBaseUrl: env['PUBLIC_BASE_URL'] ?? 'https://ejadah.international',
       checkoutBaseUrl:
           env['CHECKOUT_BASE_URL'] ?? 'https://ejadah.international/checkout',

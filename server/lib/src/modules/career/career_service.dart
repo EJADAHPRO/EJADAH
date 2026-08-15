@@ -74,7 +74,8 @@ class CareerService {
     return _repository.findProgrammes(ids, userId: userId);
   }
 
-  Future<Map<String, List<String>>> filterFacets() => _repository.filterFacets();
+  Future<Map<String, List<String>>> filterFacets() =>
+      _repository.filterFacets();
 
   Future<int> openProgrammeCount() => _repository.countOpenProgrammes();
 
@@ -145,44 +146,45 @@ class CareerService {
   /// Tried in the order a user is most likely to accept — showing expired
   /// intakes first, then loosening budget, then dropping category filters.
   Future<FilterRelaxation?> _findRelaxation(ProgrammeQuery query) async {
-    final candidates = <({String field, LocalizedText label, ProgrammeQuery query})>[
-      if (!query.showExpired)
-        (
-          field: 'show_expired',
-          label: const LocalizedText(
-            en: 'including expired intakes',
-            ar: 'مع الدفعات المنتهية',
-          ),
-          query: query.copyWith(showExpired: true, page: 1),
-        ),
-      if (query.maxTuitionUsd != null)
-        (
-          field: 'max_tuition_usd',
-          label: const LocalizedText(en: 'any tuition', ar: 'أي رسوم'),
-          query: query.copyWith(clearMaxTuition: true, page: 1),
-        ),
-      if (query.specialties.isNotEmpty)
-        (
-          field: 'specialties',
-          label: const LocalizedText(
-            en: 'all specialties',
-            ar: 'كل التخصصات',
-          ),
-          query: query.copyWith(specialties: const [], page: 1),
-        ),
-      if (query.regions.isNotEmpty)
-        (
-          field: 'regions',
-          label: const LocalizedText(en: 'all regions', ar: 'كل المناطق'),
-          query: query.copyWith(regions: const [], page: 1),
-        ),
-      if (query.degreeTypes.isNotEmpty)
-        (
-          field: 'degree_types',
-          label: const LocalizedText(en: 'any degree', ar: 'أي درجة'),
-          query: query.copyWith(degreeTypes: const [], page: 1),
-        ),
-    ];
+    final candidates =
+        <({String field, LocalizedText label, ProgrammeQuery query})>[
+          if (!query.showExpired)
+            (
+              field: 'show_expired',
+              label: const LocalizedText(
+                en: 'including expired intakes',
+                ar: 'مع الدفعات المنتهية',
+              ),
+              query: query.copyWith(showExpired: true, page: 1),
+            ),
+          if (query.maxTuitionUsd != null)
+            (
+              field: 'max_tuition_usd',
+              label: const LocalizedText(en: 'any tuition', ar: 'أي رسوم'),
+              query: query.copyWith(clearMaxTuition: true, page: 1),
+            ),
+          if (query.specialties.isNotEmpty)
+            (
+              field: 'specialties',
+              label: const LocalizedText(
+                en: 'all specialties',
+                ar: 'كل التخصصات',
+              ),
+              query: query.copyWith(specialties: const [], page: 1),
+            ),
+          if (query.regions.isNotEmpty)
+            (
+              field: 'regions',
+              label: const LocalizedText(en: 'all regions', ar: 'كل المناطق'),
+              query: query.copyWith(regions: const [], page: 1),
+            ),
+          if (query.degreeTypes.isNotEmpty)
+            (
+              field: 'degree_types',
+              label: const LocalizedText(en: 'any degree', ar: 'أي درجة'),
+              query: query.copyWith(degreeTypes: const [], page: 1),
+            ),
+        ];
 
     for (final candidate in candidates) {
       final count = await _repository.countWithRelaxation(candidate.query);

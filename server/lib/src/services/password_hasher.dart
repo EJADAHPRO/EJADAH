@@ -31,11 +31,7 @@ class PasswordHasher {
     final salt = Uint8List.fromList(
       List<int>.generate(_saltBytes, (_) => _random.nextInt(256)),
     );
-    return argon2id(
-      utf8.encode(password),
-      salt,
-      security: _security,
-    ).encoded();
+    return argon2id(utf8.encode(password), salt, security: _security).encoded();
   }
 
   /// Constant-time verification against a stored encoded hash.

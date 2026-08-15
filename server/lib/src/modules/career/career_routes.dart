@@ -67,7 +67,10 @@ Router careerRoutes(CareerService service) {
   });
 
   router.delete('/shortlist/<id>', (Request request, String id) async {
-    await service.removeSavedProgramme(request.ctx.requireUser(), int.parse(id));
+    await service.removeSavedProgramme(
+      request.ctx.requireUser(),
+      int.parse(id),
+    );
     return Json.noContent();
   });
 
@@ -77,9 +80,7 @@ Router careerRoutes(CareerService service) {
     final params = request.url.queryParameters;
     final guides = await service.countries(
       regions: _stringList(params['region']),
-      classes: _stringList(
-        params['class'],
-      ).map(PathwayClass.fromWire).toList(),
+      classes: _stringList(params['class']).map(PathwayClass.fromWire).toList(),
     );
     return Json.ok({
       'items': guides.map((guide) => guide.toJson()).toList(),
@@ -102,7 +103,10 @@ Router careerRoutes(CareerService service) {
     return Json.ok(guide.toJson());
   });
 
-  router.get('/countries/<iso>/programmes', (Request request, String iso) async {
+  router.get('/countries/<iso>/programmes', (
+    Request request,
+    String iso,
+  ) async {
     final programmes = await service.programmesInCountry(
       iso,
       userId: request.ctx.userId,
@@ -137,8 +141,7 @@ ProgrammeQuery _queryFrom(Request request) {
   );
 }
 
-List<String> _stringList(String? value) =>
-    value == null || value.isEmpty
+List<String> _stringList(String? value) => value == null || value.isEmpty
     ? const []
     : value.split(',').map((v) => v.trim()).where((v) => v.isNotEmpty).toList();
 

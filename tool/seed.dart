@@ -67,9 +67,7 @@ Future<void> main() async {
 
     await database.run(
       (s) => s.execute(
-        Sql.named(
-          "UPDATE users SET role = 'admin' WHERE id = @id",
-        ),
+        Sql.named("UPDATE users SET role = 'admin' WHERE id = @id"),
         parameters: {'id': admin},
       ),
     );
@@ -113,7 +111,9 @@ Future<void> main() async {
     stdout
       ..writeln('Seeded development data.')
       ..writeln('  student@ejadah.test   / EjadahDemo1')
-      ..writeln('  tutor@ejadah.test     / EjadahDemo1  (approved professional)')
+      ..writeln(
+        '  tutor@ejadah.test     / EjadahDemo1  (approved professional)',
+      )
       ..writeln('  admin@ejadah.test     / EjadahDemo1  (admin)')
       ..writeln('')
       ..writeln('Credentials are development-only. See docs/demo.md.');

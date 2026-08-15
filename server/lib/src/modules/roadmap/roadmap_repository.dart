@@ -40,24 +40,30 @@ class RoadmapRepository {
 
     final stepsByCountry = <String, List<CountryStep>>{};
     for (final row in steps) {
-      stepsByCountry.putIfAbsent(row.str('country_iso'), () => []).add(
-        CountryStep(
-          position: row.intAt('position'),
-          title: LocalizedText(en: row.str('title_en'), ar: row.str('title_ar')),
-          detail: LocalizedText(
-            en: row.str('detail_en'),
-            ar: row.str('detail_ar'),
-          ),
-          whenLabel: row.strOrNull('when_label'),
-          isOptional: row.boolAt('is_optional'),
-        ),
-      );
+      stepsByCountry
+          .putIfAbsent(row.str('country_iso'), () => [])
+          .add(
+            CountryStep(
+              position: row.intAt('position'),
+              title: LocalizedText(
+                en: row.str('title_en'),
+                ar: row.str('title_ar'),
+              ),
+              detail: LocalizedText(
+                en: row.str('detail_en'),
+                ar: row.str('detail_ar'),
+              ),
+              whenLabel: row.strOrNull('when_label'),
+              isOptional: row.boolAt('is_optional'),
+            ),
+          );
     }
 
     final costsByCountry = <String, Map<int, Sourced<String>>>{};
     for (final row in costs) {
-      costsByCountry.putIfAbsent(row.str('country_iso'), () => {})[row
-          .intAt('position')] = Sourced<String>(
+      costsByCountry.putIfAbsent(row.str('country_iso'), () => {})[row.intAt(
+        'position',
+      )] = Sourced<String>(
         value: row.strOrNull('usd_value'),
         status: SourceStatus.fromWire(row.str('usd_status')),
       );
@@ -310,11 +316,9 @@ class RoadmapRepository {
   }
 
   Future<Roadmap?> findRoadmap(String id, {Session? session}) async {
-    final rows = await _query(
-      'SELECT * FROM roadmaps WHERE id = @id',
-      {'id': id},
-      session,
-    );
+    final rows = await _query('SELECT * FROM roadmaps WHERE id = @id', {
+      'id': id,
+    }, session);
     if (rows.isEmpty) return null;
 
     final stages = await _query(
@@ -352,11 +356,11 @@ class RoadmapRepository {
         .toList();
   }
 
-  Future<void> setSaved(String id, bool isSaved, {Session? session}) => _execute(
-    'UPDATE roadmaps SET is_saved = @is_saved WHERE id = @id',
-    {'id': id, 'is_saved': isSaved},
-    session,
-  );
+  Future<void> setSaved(String id, bool isSaved, {Session? session}) =>
+      _execute('UPDATE roadmaps SET is_saved = @is_saved WHERE id = @id', {
+        'id': id,
+        'is_saved': isSaved,
+      }, session);
 
   Future<void> setStageComplete({
     required String roadmapId,
@@ -367,11 +371,7 @@ class RoadmapRepository {
     'UPDATE roadmap_stages SET is_complete = @is_complete, '
     'completed_at = CASE WHEN @is_complete THEN now() ELSE NULL END '
     'WHERE roadmap_id = @roadmap_id AND position = @position',
-    {
-      'roadmap_id': roadmapId,
-      'position': position,
-      'is_complete': isComplete,
-    },
+    {'roadmap_id': roadmapId, 'position': position, 'is_complete': isComplete},
     session,
   );
 
@@ -390,7 +390,10 @@ class RoadmapRepository {
       en: row.str('headline_en'),
       ar: row.str('headline_ar'),
     ),
-    summary: LocalizedText(en: row.str('summary_en'), ar: row.str('summary_ar')),
+    summary: LocalizedText(
+      en: row.str('summary_en'),
+      ar: row.str('summary_ar'),
+    ),
     watchOut: LocalizedText(
       en: row.str('watch_out_en'),
       ar: row.str('watch_out_ar'),
@@ -426,7 +429,8 @@ class RoadmapRepository {
         .toList(),
     alternatives: (_decodeJson(row['alternatives']) as List<dynamic>)
         .map(
-          (a) => RoadmapAlternative.fromJson(Map<String, dynamic>.from(a as Map)),
+          (a) =>
+              RoadmapAlternative.fromJson(Map<String, dynamic>.from(a as Map)),
         )
         .toList(),
     answers: RoadmapAnswers.fromJson(
@@ -456,7 +460,9 @@ class RoadmapRepository {
   ) async {
     Future<Result> run(Session s) =>
         s.execute(Sql.named(sql), parameters: parameters);
-    final result = session != null ? await run(session) : await _database.run(run);
+    final result = session != null
+        ? await run(session)
+        : await _database.run(run);
     return result.map((row) => row.toColumnMap()).toList();
   }
 

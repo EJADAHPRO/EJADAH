@@ -53,7 +53,8 @@ class CountryStep extends ValueObject {
   factory CountryStep.fromJson(Map<String, dynamic> json) => CountryStep(
     position: jsonInt(json['position']) ?? 0,
     title: LocalizedText.fromJson(json['title'])!,
-    detail: LocalizedText.fromJson(json['detail']) ?? const LocalizedText.same(''),
+    detail:
+        LocalizedText.fromJson(json['detail']) ?? const LocalizedText.same(''),
     whenLabel: json['when_label'] as String?,
     isOptional: jsonBool(json['is_optional']) ?? false,
   );
@@ -97,13 +98,16 @@ class CountryExam extends ValueObject {
     position: jsonInt(json['position']) ?? 0,
     name: LocalizedText.fromJson(json['name'])!,
     description:
-        LocalizedText.fromJson(json['description']) ?? const LocalizedText.same(''),
-    dates: LocalizedText.fromJson(json['dates']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['description']) ??
+        const LocalizedText.same(''),
+    dates:
+        LocalizedText.fromJson(json['dates']) ?? const LocalizedText.same(''),
     fee:
         Sourced.fromJson<String>(json['fee'], (v) => v as String?) ??
         const Sourced<String>.pending(),
     passMark:
-        LocalizedText.fromJson(json['pass_mark']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['pass_mark']) ??
+        const LocalizedText.same(''),
   );
 
   Map<String, dynamic> toJson() => {
@@ -234,7 +238,13 @@ class CountryGuideSummary extends ValueObject {
   };
 
   @override
-  List<Object?> get props => [iso, pathwayClass, minMonths, maxMonths, floorCostUsd];
+  List<Object?> get props => [
+    iso,
+    pathwayClass,
+    minMonths,
+    maxMonths,
+    floorCostUsd,
+  ];
 }
 
 /// A full country licensing guide — the four-tab detail screen.
@@ -284,22 +294,28 @@ class CountryGuide extends ValueObject {
   factory CountryGuide.fromJson(Map<String, dynamic> json) => CountryGuide(
     summary: CountryGuideSummary.fromJson(json),
     examFull:
-        LocalizedText.fromJson(json['exam_full']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['exam_full']) ??
+        const LocalizedText.same(''),
     overview:
-        LocalizedText.fromJson(json['overview']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['overview']) ??
+        const LocalizedText.same(''),
     authority:
-        LocalizedText.fromJson(json['authority']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['authority']) ??
+        const LocalizedText.same(''),
     authoritySite: json['authority_site'] as String?,
     visa: LocalizedText.fromJson(json['visa']) ?? const LocalizedText.same(''),
-    market: LocalizedText.fromJson(json['market']) ?? const LocalizedText.same(''),
+    market:
+        LocalizedText.fromJson(json['market']) ?? const LocalizedText.same(''),
     salaryBand: json['salary_band'] as String?,
     salaryNote:
-        LocalizedText.fromJson(json['salary_note']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['salary_note']) ??
+        const LocalizedText.same(''),
     recognitionNote:
         LocalizedText.fromJson(json['recognition_note']) ??
         const LocalizedText.same(''),
     costNote:
-        LocalizedText.fromJson(json['cost_note']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['cost_note']) ??
+        const LocalizedText.same(''),
     updatedLabel: (json['updated_label'] ?? '') as String,
     steps: _list(json['steps'], CountryStep.fromJson),
     exams: _list(json['exams'], CountryExam.fromJson),

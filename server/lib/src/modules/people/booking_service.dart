@@ -182,15 +182,13 @@ class BookingService {
   }
 
   /// Releases a hold the user abandoned.
-  Future<void> releaseHold({
-    required String userId,
-    required String holdId,
-  }) => _database.runTx((tx) async {
-    final hold = await _repository.lockReservation(holdId, session: tx);
-    if (hold == null) return;
-    if (hold.heldByUserId != userId) throw ApiException.authorization();
-    await _repository.releaseReservation(holdId, session: tx);
-  });
+  Future<void> releaseHold({required String userId, required String holdId}) =>
+      _database.runTx((tx) async {
+        final hold = await _repository.lockReservation(holdId, session: tx);
+        if (hold == null) return;
+        if (hold.heldByUserId != userId) throw ApiException.authorization();
+        await _repository.releaseReservation(holdId, session: tx);
+      });
 
   /// Bookable slots for a day, computed from the professional's own schedule.
   ///
@@ -309,7 +307,10 @@ class BookingService {
     required Session session,
   }) async {
     if (packageId != null) {
-      final package = await _repository.findPackage(packageId, session: session);
+      final package = await _repository.findPackage(
+        packageId,
+        session: session,
+      );
       if (package == null || package.professionalId != professional.id) {
         throw ApiException.notFound();
       }

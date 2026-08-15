@@ -60,7 +60,9 @@ class Paginated<T> extends ValueObject {
     pageSize: jsonInt(json['page_size']) ?? 12,
   );
 
-  Map<String, dynamic> toJson(Map<String, dynamic> Function(T item) encodeItem) => {
+  Map<String, dynamic> toJson(
+    Map<String, dynamic> Function(T item) encodeItem,
+  ) => {
     'items': items.map(encodeItem).toList(),
     'total': total,
     'page': page,

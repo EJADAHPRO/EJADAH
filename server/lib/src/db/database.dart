@@ -47,8 +47,7 @@ class Database {
   }
 
   /// Runs [body] against a pooled connection with no explicit transaction.
-  Future<T> run<T>(Future<T> Function(Session session) body) =>
-      _pool.run(body);
+  Future<T> run<T>(Future<T> Function(Session session) body) => _pool.run(body);
 
   /// Runs [body] inside a transaction, committing on success and rolling back
   /// on any thrown error.

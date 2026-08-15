@@ -27,12 +27,18 @@ void main() {
 
     test('AA contrast holds for the small-text roles on the app surface', () {
       // The two roles the handoff singles out for spot-checking.
-      expect(_contrast(EjadahColors.labelMuted, EjadahColors.background),
-          greaterThanOrEqualTo(4.5));
-      expect(_contrast(EjadahColors.textSecondary, EjadahColors.background),
-          greaterThanOrEqualTo(4.5));
-      expect(_contrast(EjadahColors.orangeText, EjadahColors.background),
-          greaterThanOrEqualTo(4.5));
+      expect(
+        _contrast(EjadahColors.labelMuted, EjadahColors.background),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(
+        _contrast(EjadahColors.textSecondary, EjadahColors.background),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(
+        _contrast(EjadahColors.orangeText, EjadahColors.background),
+        greaterThanOrEqualTo(4.5),
+      );
     });
   });
 
@@ -217,7 +223,9 @@ void main() {
   });
 
   group('disabled controls explain themselves', () {
-    testWidgets('a disabled primary button surfaces its reason', (tester) async {
+    testWidgets('a disabled primary button surfaces its reason', (
+      tester,
+    ) async {
       String? surfaced;
       await tester.pumpWidget(
         _harness(

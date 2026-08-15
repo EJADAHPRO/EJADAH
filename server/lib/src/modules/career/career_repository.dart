@@ -199,7 +199,9 @@ class CareerRepository {
 
   /// Saved programmes whose deadline falls exactly [daysOut] days from today —
   /// the 30/14/7 alert windows.
-  Future<List<({String userId, int programmeId, String university, String country})>>
+  Future<
+    List<({String userId, int programmeId, String university, String country})>
+  >
   savedProgrammesDueIn(int daysOut) async {
     final rows = await _query(
       '''
@@ -254,11 +256,9 @@ class CareerRepository {
   }
 
   Future<CountryGuide?> findCountry(String iso) async {
-    final rows = await _query(
-      'SELECT * FROM countries WHERE iso = @iso',
-      {'iso': iso.toLowerCase()},
-      null,
-    );
+    final rows = await _query('SELECT * FROM countries WHERE iso = @iso', {
+      'iso': iso.toLowerCase(),
+    }, null);
     if (rows.isEmpty) return null;
 
     final country = rows.first;
@@ -303,7 +303,10 @@ class CareerRepository {
         ar: country.str('authority_ar'),
       ),
       authoritySite: country.strOrNull('authority_site'),
-      visa: LocalizedText(en: country.str('visa_en'), ar: country.str('visa_ar')),
+      visa: LocalizedText(
+        en: country.str('visa_en'),
+        ar: country.str('visa_ar'),
+      ),
       market: LocalizedText(
         en: country.str('market_en'),
         ar: country.str('market_ar'),
@@ -367,7 +370,8 @@ class CareerRepository {
           .toList(),
       tips: tips
           .map(
-            (row) => LocalizedText(en: row.str('body_en'), ar: row.str('body_ar')),
+            (row) =>
+                LocalizedText(en: row.str('body_en'), ar: row.str('body_ar')),
           )
           .toList(),
     );
@@ -431,16 +435,14 @@ class CareerRepository {
     final search = query.search?.trim();
     if (search != null && search.isNotEmpty) {
       // Matches the search field's own promise: "University, programme or city".
-      conditions.add(
-        '''(
+      conditions.add('''(
           to_tsvector('simple',
             p.university || ' ' || p.programme_name || ' ' || p.city || ' ' || p.country
           ) @@ plainto_tsquery('simple', @search)
           OR p.university ILIKE @search_like
           OR p.programme_name ILIKE @search_like
           OR p.city ILIKE @search_like
-        )''',
-      );
+        )''');
       parameters['search'] = search;
       parameters['search_like'] = '%$search%';
     }
@@ -460,7 +462,9 @@ class CareerRepository {
     if (query.maxTuitionUsd != null) {
       // A programme with no recorded tuition is not silently excluded by a
       // budget filter — an unknown cost is a real state, not an infinite one.
-      conditions.add('(p.tuition_usd IS NULL OR p.tuition_usd <= @max_tuition)');
+      conditions.add(
+        '(p.tuition_usd IS NULL OR p.tuition_usd <= @max_tuition)',
+      );
       parameters['max_tuition'] = query.maxTuitionUsd;
     }
     if (query.maxYears != null) {
@@ -492,8 +496,7 @@ class CareerRepository {
   /// A trailing `p.id` keeps paging stable: without a unique final key, two rows
   /// with equal sort values can swap between pages and a user sees one twice.
   static String _orderBy(ProgrammeSort sort) => switch (sort) {
-    ProgrammeSort.deadline =>
-      'p.deadline_status, p.deadline NULLS LAST, p.id',
+    ProgrammeSort.deadline => 'p.deadline_status, p.deadline NULLS LAST, p.id',
     ProgrammeSort.tuitionAsc => 'p.tuition_usd NULLS LAST, p.id',
     ProgrammeSort.tuitionDesc => 'p.tuition_usd DESC NULLS LAST, p.id',
     ProgrammeSort.rank => 'p.qs_rank NULLS LAST, p.id',
@@ -602,7 +605,9 @@ class CareerRepository {
   ) async {
     Future<Result> run(Session s) =>
         s.execute(Sql.named(sql), parameters: parameters);
-    final result = session != null ? await run(session) : await _database.run(run);
+    final result = session != null
+        ? await run(session)
+        : await _database.run(run);
     return result.map((row) => row.toColumnMap()).toList();
   }
 

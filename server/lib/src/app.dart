@@ -102,9 +102,7 @@ class EjadahApp {
         .addMiddleware(securityHeadersMiddleware())
         .addMiddleware(
           corsMiddleware(
-            config.environment.isProduction
-                ? [config.publicBaseUrl]
-                : ['*'],
+            config.environment.isProduction ? [config.publicBaseUrl] : ['*'],
           ),
         )
         .addMiddleware(errorMiddleware(log))

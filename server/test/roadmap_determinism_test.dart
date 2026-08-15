@@ -111,10 +111,11 @@ void main() {
 
       // ae and bh tie on score and cost; the country code decides, so 'ae'
       // leads 'bh', and the pricier 'qa' comes last.
-      expect(
-        scored.eligible.map((c) => c.candidate.iso).toList(),
-        ['ae', 'bh', 'qa'],
-      );
+      expect(scored.eligible.map((c) => c.candidate.iso).toList(), [
+        'ae',
+        'bh',
+        'qa',
+      ]);
     });
 
     test('incomplete cost data never reads as affordability', () {
@@ -216,14 +217,17 @@ void main() {
       expect(result.destinationIso, 'eg');
     });
 
-    test('"work abroad" does not answer with Egypt unless it was asked for', () {
-      final result = engine.generate(
-        answers: answers,
-        candidates: _candidates(),
-        today: today,
-      );
-      expect(result.destinationIso, isNot('eg'));
-    });
+    test(
+      '"work abroad" does not answer with Egypt unless it was asked for',
+      () {
+        final result = engine.generate(
+          answers: answers,
+          candidates: _candidates(),
+          today: today,
+        );
+        expect(result.destinationIso, isNot('eg'));
+      },
+    );
 
     test('a region the user picked outranks one they did not', () {
       const ukOnly = RoadmapAnswers(
@@ -359,8 +363,6 @@ RoadmapCandidate _candidate({
   ],
   stepCosts:
       stepCosts ??
-      const {
-        1: Sourced<String>(value: r'$250', status: SourceStatus.verified),
-      },
+      const {1: Sourced<String>(value: r'$250', status: SourceStatus.verified)},
   authority: const LocalizedText(en: 'The regulator', ar: 'الجهة المنظِّمة'),
 );

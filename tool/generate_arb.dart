@@ -29,9 +29,7 @@ Future<void> main() async {
   _write('en', english);
   _write('ar', arabic);
 
-  stdout.writeln(
-    'Generated ARB for ${english.length} keys in both languages.',
-  );
+  stdout.writeln('Generated ARB for ${english.length} keys in both languages.');
 }
 
 Map<String, dynamic> _read(String path) =>
@@ -39,7 +37,10 @@ Map<String, dynamic> _read(String path) =>
 
 /// The tables are shallow today, but nested groups are flattened with a dotted
 /// path so a future grouping change does not silently drop keys.
-Map<String, String> _flatten(Map<String, dynamic> source, [String prefix = '']) {
+Map<String, String> _flatten(
+  Map<String, dynamic> source, [
+  String prefix = '',
+]) {
   final result = <String, String>{};
   for (final entry in source.entries) {
     final key = prefix.isEmpty ? entry.key : '$prefix.${entry.key}';

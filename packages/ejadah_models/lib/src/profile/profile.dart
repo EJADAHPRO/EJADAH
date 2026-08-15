@@ -34,7 +34,8 @@ class Certificate extends ValueObject {
   final String? documentUrl;
 
   bool get isEjadahIssued =>
-      evidence == CredentialEvidence.verifiedByEjadah && verificationCode != null;
+      evidence == CredentialEvidence.verifiedByEjadah &&
+      verificationCode != null;
 
   factory Certificate.fromJson(Map<String, dynamic> json) => Certificate(
     id: jsonRequire<String>(json, 'id'),
@@ -157,7 +158,8 @@ class PublicProfile extends ValueObject {
   factory PublicProfile.fromJson(Map<String, dynamic> json) => PublicProfile(
     slug: jsonRequire<String>(json, 'slug'),
     displayName: LocalizedText.fromJson(json['display_name'])!,
-    title: LocalizedText.fromJson(json['title']) ?? const LocalizedText.same(''),
+    title:
+        LocalizedText.fromJson(json['title']) ?? const LocalizedText.same(''),
     clinic:
         LocalizedText.fromJson(json['clinic']) ?? const LocalizedText.same(''),
     bio: LocalizedText.fromJson(json['bio']) ?? const LocalizedText.same(''),
@@ -307,7 +309,9 @@ class AppNotification extends ValueObject {
   final bool isRead;
   final String? deepLink;
 
-  factory AppNotification.fromJson(Map<String, dynamic> json) => AppNotification(
+  factory AppNotification.fromJson(
+    Map<String, dynamic> json,
+  ) => AppNotification(
     id: jsonRequire<String>(json, 'id'),
     category: NotificationCategory.fromWire(json['category'] as String?),
     title: LocalizedText.fromJson(json['title'])!,

@@ -65,7 +65,8 @@ abstract final class ApiErrorCopy {
   );
 
   static const LocalizedText holdExpired = LocalizedText(
-    en: 'That hold ran out and the time was released. '
+    en:
+        'That hold ran out and the time was released. '
         'Pick another — nothing was charged.',
     ar: 'انتهى الحجز المؤقت وتحرر الموعد. اختر آخر — لم يُخصم شيء.',
   );
@@ -94,8 +95,10 @@ class ApiException implements Exception {
     this.retryAfter,
   }) : message = message ?? _defaultMessage(code);
 
-  ApiException.validation(Map<String, LocalizedText> fields, {LocalizedText? message})
-    : this(ApiErrorCode.validation, fields: fields, message: message);
+  ApiException.validation(
+    Map<String, LocalizedText> fields, {
+    LocalizedText? message,
+  }) : this(ApiErrorCode.validation, fields: fields, message: message);
 
   ApiException.notFound({LocalizedText? message})
     : this(ApiErrorCode.notFound, message: message);

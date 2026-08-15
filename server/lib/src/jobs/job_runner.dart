@@ -112,13 +112,11 @@ class ExpireHoldsJob implements Job {
   @override
   Future<String> run() async {
     final result = await _database.run(
-      (session) => session.execute(
-        '''
+      (session) => session.execute('''
         UPDATE slot_reservations
         SET status = 'released', released_at = now()
         WHERE kind = 'hold' AND status = 'active' AND expires_at <= now()
-        ''',
-      ),
+        '''),
     );
     return 'released ${result.affectedRows} expired holds';
   }

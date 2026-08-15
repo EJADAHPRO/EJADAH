@@ -85,7 +85,10 @@ class AuthUser extends ValueObject {
   String initials(AppLanguage language) {
     final name = fullName.resolve(language).trim();
     if (name.isEmpty) return '';
-    final parts = name.split(RegExp(r'\s+')).where((p) => p.isNotEmpty).toList();
+    final parts = name
+        .split(RegExp(r'\s+'))
+        .where((p) => p.isNotEmpty)
+        .toList();
     if (parts.length == 1) return _firstLetter(parts.first);
     return '${_firstLetter(parts.first)}${_firstLetter(parts.last)}';
   }
@@ -126,7 +129,13 @@ class AuthUser extends ValueObject {
   };
 
   @override
-  List<Object?> get props => [id, role, emailVerified, professionalStatus, isPremium];
+  List<Object?> get props => [
+    id,
+    role,
+    emailVerified,
+    professionalStatus,
+    isPremium,
+  ];
 }
 
 /// An access/refresh token pair.
@@ -147,9 +156,9 @@ class AuthTokens extends ValueObject {
   bool get isExpired => DateTime.now().toUtc().isAfter(expiresAt);
 
   /// Refresh a little early so a request never races the expiry boundary.
-  bool get needsRefresh => DateTime.now()
-      .toUtc()
-      .isAfter(expiresAt.subtract(const Duration(seconds: 60)));
+  bool get needsRefresh => DateTime.now().toUtc().isAfter(
+    expiresAt.subtract(const Duration(seconds: 60)),
+  );
 
   factory AuthTokens.fromJson(Map<String, dynamic> json) => AuthTokens(
     accessToken: jsonRequire<String>(json, 'access_token'),
@@ -176,7 +185,9 @@ class AuthSession extends ValueObject {
 
   factory AuthSession.fromJson(Map<String, dynamic> json) => AuthSession(
     user: AuthUser.fromJson(Map<String, dynamic>.from(json['user'] as Map)),
-    tokens: AuthTokens.fromJson(Map<String, dynamic>.from(json['tokens'] as Map)),
+    tokens: AuthTokens.fromJson(
+      Map<String, dynamic>.from(json['tokens'] as Map),
+    ),
   );
 
   Map<String, dynamic> toJson() => {

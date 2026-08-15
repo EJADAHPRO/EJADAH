@@ -193,8 +193,9 @@ class AuthService {
     });
   }
 
-  Future<void> logout(String refreshToken) =>
-      _repository.revokeRefreshToken(TokenService.hashOpaqueToken(refreshToken));
+  Future<void> logout(String refreshToken) => _repository.revokeRefreshToken(
+    TokenService.hashOpaqueToken(refreshToken),
+  );
 
   Future<void> logoutEverywhere(String userId) =>
       _repository.revokeAllRefreshTokens(userId);
@@ -318,7 +319,10 @@ class AuthService {
     );
   }
 
-  Future<void> _sendVerificationCode(AuthUser user, AppLanguage language) async {
+  Future<void> _sendVerificationCode(
+    AuthUser user,
+    AppLanguage language,
+  ) async {
     final code = _tokens.issueNumericCode();
     await _repository.storeEmailVerification(
       userId: user.id,

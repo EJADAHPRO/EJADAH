@@ -52,7 +52,10 @@ class CountryImporter {
     if (start < 0) {
       throw FormatException('No JSON object found in the countries dataset.');
     }
-    final json = source.substring(start).trim().replaceAll(RegExp(r';\s*$'), '');
+    final json = source
+        .substring(start)
+        .trim()
+        .replaceAll(RegExp(r';\s*$'), '');
     final decoded = jsonDecode(json);
     if (decoded is! Map) {
       throw const FormatException('Countries dataset is not an object.');
@@ -357,10 +360,9 @@ class CountryImporter {
 
   /// Parses "12–24" into a month range. A single value means both ends match.
   static ({int min, int max}) _parseMonthRange(String label) {
-    final numbers = RegExp(r'\d+')
-        .allMatches(label)
-        .map((m) => int.parse(m.group(0)!))
-        .toList();
+    final numbers = RegExp(
+      r'\d+',
+    ).allMatches(label).map((m) => int.parse(m.group(0)!)).toList();
     if (numbers.isEmpty) return (min: 0, max: 0);
     if (numbers.length == 1) return (min: numbers.first, max: numbers.first);
     return (min: numbers.first, max: numbers[1]);
@@ -430,11 +432,14 @@ class CountryImporter {
       salary is Map ? salary['note'] : null;
 
   static List<Map<String, dynamic>> _listOf(Object? value) => switch (value) {
-    final List<dynamic> list => list
-        .map((item) => item is Map
-            ? Map<String, dynamic>.from(item)
-            : <String, dynamic>{'en': item, 'ar': item})
-        .toList(),
+    final List<dynamic> list =>
+      list
+          .map(
+            (item) => item is Map
+                ? Map<String, dynamic>.from(item)
+                : <String, dynamic>{'en': item, 'ar': item},
+          )
+          .toList(),
     _ => const [],
   };
 }

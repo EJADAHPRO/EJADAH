@@ -16,9 +16,18 @@ Router authRoutes(AuthService service) {
 
   // Credential endpoints are the ones worth attacking, so each carries its own
   // limiter rather than sharing a global budget.
-  final signInLimiter = RateLimiter(limit: 8, window: const Duration(minutes: 5));
-  final signUpLimiter = RateLimiter(limit: 5, window: const Duration(minutes: 15));
-  final resetLimiter = RateLimiter(limit: 4, window: const Duration(minutes: 15));
+  final signInLimiter = RateLimiter(
+    limit: 8,
+    window: const Duration(minutes: 5),
+  );
+  final signUpLimiter = RateLimiter(
+    limit: 5,
+    window: const Duration(minutes: 15),
+  );
+  final resetLimiter = RateLimiter(
+    limit: 4,
+    window: const Duration(minutes: 15),
+  );
 
   Handler limited(RateLimiter limiter, String scope, Handler handler) =>
       rateLimitMiddleware(limiter, scope: scope)(handler);

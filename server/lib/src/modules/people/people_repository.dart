@@ -296,9 +296,10 @@ class PeopleRepository {
 
     final rulesByWeekday = <int, List<({int start, int end})>>{};
     for (final rule in rules) {
-      rulesByWeekday
-          .putIfAbsent(rule.intAt('weekday'), () => [])
-          .add((start: rule.intAt('start_minute'), end: rule.intAt('end_minute')));
+      rulesByWeekday.putIfAbsent(rule.intAt('weekday'), () => []).add((
+        start: rule.intAt('start_minute'),
+        end: rule.intAt('end_minute'),
+      ));
     }
 
     final slots = <AvailabilitySlot>[];
@@ -559,7 +560,9 @@ class PeopleRepository {
   ) async {
     Future<Result> run(Session s) =>
         s.execute(Sql.named(sql), parameters: parameters);
-    final result = session != null ? await run(session) : await _database.run(run);
+    final result = session != null
+        ? await run(session)
+        : await _database.run(run);
     return result.map((row) => row.toColumnMap()).toList();
   }
 

@@ -36,8 +36,7 @@ enum CredentialEvidence {
 
   final String wire;
 
-  static CredentialEvidence fromWire(String? value) =>
-      value == 'verified'
+  static CredentialEvidence fromWire(String? value) => value == 'verified'
       ? CredentialEvidence.verifiedByEjadah
       : CredentialEvidence.statedByProfessional;
 }
@@ -195,7 +194,8 @@ class Professional extends ValueObject {
     kind: ServiceKind.fromWire(json['kind'] as String?),
     displayName: LocalizedText.fromJson(json['display_name'])!,
     headline:
-        LocalizedText.fromJson(json['headline']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['headline']) ??
+        const LocalizedText.same(''),
     bio: LocalizedText.fromJson(json['bio']) ?? const LocalizedText.same(''),
     specialties: (json['specialties'] as List<dynamic>? ?? const [])
         .map((s) => s.toString())
@@ -210,7 +210,9 @@ class Professional extends ValueObject {
         .map((q) => Qualification.fromJson(Map<String, dynamic>.from(q as Map)))
         .toList(),
     packages: (json['packages'] as List<dynamic>? ?? const [])
-        .map((p) => ServicePackage.fromJson(Map<String, dynamic>.from(p as Map)))
+        .map(
+          (p) => ServicePackage.fromJson(Map<String, dynamic>.from(p as Map)),
+        )
         .toList(),
     offersFreeIntroCall: jsonBool(json['offers_free_intro_call']) ?? false,
     isNewThisMonth: jsonBool(json['is_new_this_month']) ?? false,
@@ -344,8 +346,8 @@ enum BookingStatus {
 
   final String wire;
 
-  static BookingStatus fromWire(String? value) => BookingStatus.values
-      .firstWhere(
+  static BookingStatus fromWire(String? value) =>
+      BookingStatus.values.firstWhere(
         (status) => status.wire == value,
         orElse: () => BookingStatus.pendingPayment,
       );
@@ -446,7 +448,9 @@ class Booking extends ValueObject {
     kind: ServiceKind.fromWire(json['kind'] as String?),
     status: BookingStatus.fromWire(json['status'] as String?),
     sessions: (json['sessions'] as List<dynamic>? ?? const [])
-        .map((s) => BookingSession.fromJson(Map<String, dynamic>.from(s as Map)))
+        .map(
+          (s) => BookingSession.fromJson(Map<String, dynamic>.from(s as Map)),
+        )
         .toList(),
     totalEgp: jsonInt(json['total_egp']) ?? 0,
     refundableEgp: jsonInt(json['refundable_egp']) ?? 0,

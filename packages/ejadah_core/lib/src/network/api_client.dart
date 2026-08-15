@@ -42,12 +42,7 @@ class ApiClient {
     String path, {
     Map<String, String>? query,
     required T Function(Map<String, dynamic>) parse,
-  }) => _send(
-    'GET',
-    path,
-    query: query,
-    parse: parse,
-  );
+  }) => _send('GET', path, query: query, parse: parse);
 
   Future<T> post<T>(
     String path, {
@@ -86,9 +81,9 @@ class ApiClient {
     T Function(Map<String, dynamic>)? parse,
     bool isRetryAfterRefresh = false,
   }) async {
-    final uri = Uri.parse('$baseUrl$path').replace(
-      queryParameters: query?.isEmpty ?? true ? null : query,
-    );
+    final uri = Uri.parse(
+      '$baseUrl$path',
+    ).replace(queryParameters: query?.isEmpty ?? true ? null : query);
 
     late http.Response response;
     try {

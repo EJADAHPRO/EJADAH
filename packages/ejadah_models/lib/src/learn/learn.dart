@@ -67,7 +67,8 @@ class Course extends ValueObject {
     slug: jsonRequire<String>(json, 'slug'),
     title: LocalizedText.fromJson(json['title'])!,
     subtitle:
-        LocalizedText.fromJson(json['subtitle']) ?? const LocalizedText.same(''),
+        LocalizedText.fromJson(json['subtitle']) ??
+        const LocalizedText.same(''),
     department: Department.fromWire(json['department'] as String?),
     lessonCount: jsonInt(json['lesson_count']) ?? 0,
     totalMinutes: jsonInt(json['total_minutes']) ?? 0,
@@ -80,7 +81,8 @@ class Course extends ValueObject {
         const LocalizedText.same(''),
     iapProductId: (json['iap_product_id'] ?? '') as String,
     isOwned: jsonBool(json['is_owned']) ?? false,
-    level: LocalizedText.fromJson(json['level']) ?? const LocalizedText.same(''),
+    level:
+        LocalizedText.fromJson(json['level']) ?? const LocalizedText.same(''),
     description: LocalizedText.fromJson(json['description']),
     thumbnailUrl: json['thumbnail_url'] as String?,
   );

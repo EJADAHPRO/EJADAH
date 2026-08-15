@@ -42,8 +42,11 @@ class AppLogger {
   AppLogger withCorrelationId(String id) =>
       AppLogger(scope, correlationId: id, sink: _sink);
 
-  AppLogger child(String childScope) =>
-      AppLogger('$scope.$childScope', correlationId: correlationId, sink: _sink);
+  AppLogger child(String childScope) => AppLogger(
+    '$scope.$childScope',
+    correlationId: correlationId,
+    sink: _sink,
+  );
 
   void debug(String message, [Map<String, Object?> fields = const {}]) =>
       _write('debug', message, fields);

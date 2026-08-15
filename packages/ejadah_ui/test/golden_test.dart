@@ -38,7 +38,10 @@ void main() {
 
     testWidgets('sourced facts and badges render ($suffix)', (tester) async {
       await tester.pumpWidget(
-        _Frame(language: language, child: _BadgeSample(language: language)),
+        _Frame(
+          language: language,
+          child: _BadgeSample(language: language),
+        ),
       );
       await expectLater(
         find.byType(_Frame),
@@ -48,7 +51,10 @@ void main() {
 
     testWidgets('buttons render ($suffix)', (tester) async {
       await tester.pumpWidget(
-        _Frame(language: language, child: _ButtonSample(language: language)),
+        _Frame(
+          language: language,
+          child: _ButtonSample(language: language),
+        ),
       );
       await expectLater(
         find.byType(_Frame),
@@ -106,9 +112,7 @@ class _ProgrammeCardSample extends StatelessWidget {
         const CodeText("King's College London"),
         const SizedBox(height: EjadahSpacing.xxs),
         Text(
-          language.isRtl
-              ? 'ماجستير علاج الجذور'
-              : 'MSc in Endodontology',
+          language.isRtl ? 'ماجستير علاج الجذور' : 'MSc in Endodontology',
           style: context.type.h6(),
         ),
         const SizedBox(height: EjadahSpacing.xs),
@@ -152,13 +156,17 @@ class _BadgeSample extends StatelessWidget {
       VerificationBadge(
         evidence: CredentialEvidence.verifiedByEjadah,
         verifiedLabel: language.isRtl ? 'موثّق من إجادة' : 'Verified by Ejadah',
-        statedLabel: language.isRtl ? 'مُقدَّم من المدرّس' : 'Stated by the tutor',
+        statedLabel: language.isRtl
+            ? 'مُقدَّم من المدرّس'
+            : 'Stated by the tutor',
       ),
       const SizedBox(height: EjadahSpacing.xs),
       VerificationBadge(
         evidence: CredentialEvidence.statedByProfessional,
         verifiedLabel: language.isRtl ? 'موثّق من إجادة' : 'Verified by Ejadah',
-        statedLabel: language.isRtl ? 'مُقدَّم من المدرّس' : 'Stated by the tutor',
+        statedLabel: language.isRtl
+            ? 'مُقدَّم من المدرّس'
+            : 'Stated by the tutor',
       ),
       const SizedBox(height: EjadahSpacing.md),
       // The exact words for an unsourced fact.
@@ -223,9 +231,7 @@ Future<void> _loadBundledFonts() async {
     final file = File(entry.value);
     if (!file.existsSync()) continue;
     final loader = FontLoader(entry.key)
-      ..addFont(
-        Future.value(file.readAsBytesSync().buffer.asByteData()),
-      );
+      ..addFont(Future.value(file.readAsBytesSync().buffer.asByteData()));
     await loader.load();
   }
 }
