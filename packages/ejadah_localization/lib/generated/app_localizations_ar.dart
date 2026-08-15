@@ -250,6 +250,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get createAccount => 'إنشاء الحساب';
 
   @override
+  String get crossingsLabel => 'إلى أين بعد ذلك';
+
+  @override
   String get ctaContinueRoadmap => 'أكمل خارطة مساري';
 
   @override
@@ -381,7 +384,7 @@ class EjadahStringsAr extends EjadahStrings {
       'تصل هنا تنبيهات المواعيد وتذكيرات الجلسات. احفظ برنامجًا وسيصلك أولها.';
 
   @override
-  String get emptyNotifTitle => 'لا شيء بانتظارك';
+  String get emptyNotifTitle => 'لا إشعارات بعد';
 
   @override
   String get emptySavedBody =>
@@ -564,6 +567,21 @@ class EjadahStringsAr extends EjadahStrings {
   String get greetingEyebrow => 'الإثنين · 28 يوليو';
 
   @override
+  String guidesCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count دليل',
+      many: '$count دليلًا',
+      few: '$count أدلة',
+      two: 'دليلان',
+      one: 'دليل واحد',
+      zero: 'لا أدلة',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get handouts => 'المرفقات';
 
   @override
@@ -701,6 +719,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get mentoringTitle => 'الإرشاد المهني';
+
+  @override
+  String get mentorsWhoMoved => 'مرشدون خاضوا هذه النقلة';
 
   @override
   String get monthsTypical => 'شهرًا في المتوسط';
@@ -981,6 +1002,11 @@ class EjadahStringsAr extends EjadahStrings {
       'تصفية بالتخصص والدولة والرسوم وموعد البدء والتقديم. قارن حتى ثلاثة.';
 
   @override
+  String programmesHere(Object country) {
+    return 'البرامج في $country';
+  }
+
+  @override
   String get publicCardTitle => 'الملف العام';
 
   @override
@@ -1131,6 +1157,9 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get roadmapStageLabel => 'المرحلة 2 من 5';
+
+  @override
+  String get routeToHere => 'هل هذا أفضل مسار لي؟';
 
   @override
   String get rowBilling => 'الفواتير';

@@ -560,6 +560,12 @@ abstract class EjadahStrings {
   /// **'Create account'**
   String get createAccount;
 
+  /// No description provided for @crossingsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Where next'**
+  String get crossingsLabel;
+
   /// No description provided for @ctaContinueRoadmap.
   ///
   /// In en, this message translates to:
@@ -791,7 +797,7 @@ abstract class EjadahStrings {
   /// No description provided for @emptyNotifTitle.
   ///
   /// In en, this message translates to:
-  /// **'Nothing waiting'**
+  /// **'No notifications yet'**
   String get emptyNotifTitle;
 
   /// No description provided for @emptySavedBody.
@@ -1130,6 +1136,12 @@ abstract class EjadahStrings {
   /// **'MONDAY · 28 JULY'**
   String get greetingEyebrow;
 
+  /// No description provided for @guidesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 guide} other{{count} guides}}'**
+  String guidesCount(num count);
+
   /// No description provided for @handouts.
   ///
   /// In en, this message translates to:
@@ -1393,6 +1405,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Mentoring'**
   String get mentoringTitle;
+
+  /// No description provided for @mentorsWhoMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Mentors who made this move'**
+  String get mentorsWhoMoved;
 
   /// No description provided for @monthsTypical.
   ///
@@ -1928,6 +1946,12 @@ abstract class EjadahStrings {
   /// **'Filter by specialty, country, tuition, intake and deadline. Compare up to three.'**
   String get programmesBlurb;
 
+  /// No description provided for @programmesHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Programmes in {country}'**
+  String programmesHere(Object country);
+
   /// No description provided for @publicCardTitle.
   ///
   /// In en, this message translates to:
@@ -2197,6 +2221,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'STAGE 2 OF 5'**
   String get roadmapStageLabel;
+
+  /// No description provided for @routeToHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Is this my best route?'**
+  String get routeToHere;
 
   /// No description provided for @rowBilling.
   ///

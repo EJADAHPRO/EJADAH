@@ -101,6 +101,49 @@ class _CountryDetailState extends ConsumerState<CountryDetailScreen>
   }
 }
 
+/// The three ways out of a guide, named in FLOWS §1.
+///
+/// A guide that only describes a pathway is a document. These make it a step:
+/// the programmes that exist in this country, the mentors who have already made
+/// this exact move, and the question of whether this is even the right country
+/// — which is what the roadmap answers.
+class _Crossings extends StatelessWidget {
+  const _Crossings({required this.guide});
+
+  final CountryGuide guide;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = context.strings;
+    final country = guide.summary.name(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SectionHeader(title: strings.crossingsLabel),
+        const SizedBox(height: EjadahSpacing.xs),
+        EjadahListRow(
+          title: strings.programmesHere(country),
+          // Pre-filtered to this country, so the crossing lands on results
+          // rather than on the whole database.
+          onTap: () => context.push('/programmes?country=${guide.summary.iso}'),
+        ),
+        EjadahListRow(
+          // A mentor is someone who made this move — the door's whole premise.
+          title: strings.mentorsWhoMoved,
+          onTap: () =>
+              context.push('/people/mentoring?destination=${guide.summary.iso}'),
+        ),
+        EjadahListRow(
+          title: strings.routeToHere,
+          onTap: () => context.push('/roadmap/new'),
+        ),
+      ],
+    );
+  }
+}
+
 class _PathwayTab extends StatelessWidget {
   const _PathwayTab({required this.guide});
 
@@ -110,6 +153,8 @@ class _PathwayTab extends StatelessWidget {
   Widget build(BuildContext context) => _GuideBody(
     children: [
       Text(guide.overview(context), style: context.type.bodyText()),
+      const SizedBox(height: EjadahSpacing.lg),
+      _Crossings(guide: guide),
       const SizedBox(height: EjadahSpacing.lg),
       SectionHeader(title: context.strings.theRoute),
       const SizedBox(height: EjadahSpacing.xs),

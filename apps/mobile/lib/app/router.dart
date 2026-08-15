@@ -196,8 +196,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/programmes',
-        builder: (context, state) =>
-            _screen('programmes', const ProgrammesScreen()),
+        builder: (context, state) => _screen(
+          'programmes',
+          ProgrammesScreen(
+            countryIso: state.uri.queryParameters['country'],
+          ),
+        ),
       ),
       GoRoute(
         path: '/shortlist',
@@ -264,7 +268,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           }
           return _screen(
             'professional-list',
-            ProfessionalListScreen(kind: kind),
+            ProfessionalListScreen(
+              kind: kind,
+              destinationIso: state.uri.queryParameters['destination'],
+            ),
           );
         },
       ),

@@ -16,13 +16,38 @@ import 'widgets/professional_card.dart';
 /// above the results and is deliberately *not* narrowed by the filters: it
 /// exists so a professional with no reviews yet gets a first booking, and
 /// filtering it away would defeat the only mechanism that does that.
-class ProfessionalListScreen extends ConsumerWidget {
-  const ProfessionalListScreen({required this.kind, super.key});
+class ProfessionalListScreen extends ConsumerStatefulWidget {
+  const ProfessionalListScreen({required this.kind, this.destinationIso, super.key});
 
   final ServiceKind kind;
 
+  /// Set when a country guide sent the user here, so "mentors who made this
+  /// move" means this move.
+  final String? destinationIso;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfessionalListScreen> createState() =>
+      _ProfessionalListScreenState();
+}
+
+class _ProfessionalListScreenState
+    extends ConsumerState<ProfessionalListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final iso = widget.destinationIso;
+    if (iso != null) {
+      Future.microtask(
+        () => ref
+            .read(professionalListControllerProvider(widget.kind).notifier)
+            .showDestination(iso),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final kind = widget.kind;
     final strings = context.strings;
     final state = ref.watch(professionalListControllerProvider(kind));
 
@@ -70,7 +95,7 @@ class ProfessionalListScreen extends ConsumerWidget {
   ) {
     final strings = context.strings;
     final controller = ref.read(
-      professionalListControllerProvider(kind).notifier,
+      professionalListControllerProvider(widget.kind).notifier,
     );
 
     return switch (state) {
@@ -123,7 +148,9 @@ class ProfessionalListScreen extends ConsumerWidget {
             );
           },
         ),
-        SliverToBoxAdapter(child: _Pagination(kind: kind, page: ready.page)),
+        SliverToBoxAdapter(
+          child: _Pagination(kind: widget.kind, page: ready.page),
+        ),
       ],
     };
   }

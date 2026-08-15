@@ -17,7 +17,11 @@ import 'widgets/programme_card.dart';
 /// a zero-result state that offers the nearest relaxation, and a failure that
 /// retries. None of them is a spinner on an empty screen.
 class ProgrammesScreen extends ConsumerStatefulWidget {
-  const ProgrammesScreen({super.key});
+  const ProgrammesScreen({this.countryIso, super.key});
+
+  /// Set when a country guide sent the user here. The list opens filtered to
+  /// that country, so the crossing lands on results rather than on all 199.
+  final String? countryIso;
 
   @override
   ConsumerState<ProgrammesScreen> createState() => _ProgrammesScreenState();
@@ -26,6 +30,17 @@ class ProgrammesScreen extends ConsumerStatefulWidget {
 class _ProgrammesScreenState extends ConsumerState<ProgrammesScreen> {
   final TextEditingController _search = TextEditingController();
   final ScrollController _scroll = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    final iso = widget.countryIso;
+    if (iso != null) {
+      Future.microtask(
+        () => ref.read(programmesControllerProvider.notifier).showCountry(iso),
+      );
+    }
+  }
 
   @override
   void dispose() {

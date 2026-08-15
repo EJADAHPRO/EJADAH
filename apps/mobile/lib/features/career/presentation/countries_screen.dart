@@ -13,11 +13,27 @@ final countriesProvider = FutureProvider<List<CountryGuideSummary>>(
 );
 
 /// The 23 country licensing guides.
-class CountriesScreen extends ConsumerWidget {
+///
+/// CR-15: filter chips and a live count. The chips filter by pathway class —
+/// how a country actually lets a foreign dentist in — because that is the
+/// question a dentist is really asking, and because the label is bilingual in
+/// the dataset itself.
+///
+/// There are deliberately no region chips: the dataset's regions ("Oceania",
+/// "Middle East") exist in English only, and inventing Arabic names for them
+/// would be exactly the manufactured data this product refuses to print.
+class CountriesScreen extends ConsumerStatefulWidget {
   const CountriesScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CountriesScreen> createState() => _CountriesScreenState();
+}
+
+class _CountriesScreenState extends ConsumerState<CountriesScreen> {
+  PathwayClass? _pathway;
+
+  @override
+  Widget build(BuildContext context) {
     final strings = context.strings;
     final guides = ref.watch(countriesProvider);
 
@@ -46,16 +62,72 @@ class CountriesScreen extends ConsumerWidget {
               onRetry: () => ref.invalidate(countriesProvider),
             ),
             // 1 → 2 → 3 columns with the window, single-column on a phone.
-            data: (items) => CustomScrollView(
-              key: const PageStorageKey('countries'),
-              slivers: [
-                SliverCardGrid(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) =>
-                      _CountryCard(guide: items[index]),
-                ),
-              ],
-            ),
+            data: (items) {
+              final classes =
+                  items.map((guide) => guide.pathwayClass).toSet().toList()
+                    ..sort((a, b) => a.index.compareTo(b.index));
+              final visible = _pathway == null
+                  ? items
+                  : items
+                        .where((guide) => guide.pathwayClass == _pathway)
+                        .toList();
+
+              return CustomScrollView(
+                key: const PageStorageKey('countries'),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (final pathway in classes) ...[
+                            EjadahFilterChip(
+                              // The label comes from the guide's own data, so
+                              // it is right in both languages without a
+                              // translation table to drift from.
+                              label: items
+                                  .firstWhere(
+                                    (guide) => guide.pathwayClass == pathway,
+                                  )
+                                  .pathwayClassLabel(context),
+                              isSelected: _pathway == pathway,
+                              // Tapping the active chip clears it, so the
+                              // filter is never a one-way door.
+                              onTap: () => setState(
+                                () => _pathway = _pathway == pathway
+                                    ? null
+                                    : pathway,
+                              ),
+                            ),
+                            const SizedBox(width: EjadahSpacing.xs),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: EjadahSpacing.sm,
+                      ),
+                      // The count moves with the chips — a filter that does not
+                      // say what it did is a filter the user has to count.
+                      child: Text(
+                        strings.guidesCount(visible.length),
+                        style: context.type.small(
+                          color: EjadahColors.labelMuted,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverCardGrid(
+                    itemCount: visible.length,
+                    itemBuilder: (context, index) =>
+                        _CountryCard(guide: visible[index]),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

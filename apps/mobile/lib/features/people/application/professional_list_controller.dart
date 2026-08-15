@@ -98,12 +98,25 @@ class ProfessionalListController
     }
   }
 
-  Future<void> _apply(ProfessionalQuery query) async {
+  Future<void> _apply(ProfessionalQuery query, {bool persist = true}) async {
     _query = query;
-    // Filters persist across launches, per door.
-    await ref.read(peopleRepositoryProvider).saveFilters(query);
+    // Filters persist across launches, per door — but only the ones the user
+    // chose. A filter a crossing applied on their behalf is not theirs to
+    // inherit next time.
+    if (persist) {
+      await ref.read(peopleRepositoryProvider).saveFilters(query);
+    }
     await _load(keepCurrentResults: true);
   }
+
+  /// Opens the door already filtered to one destination.
+  ///
+  /// The country-guide crossing lands here: "mentors who made this move" has
+  /// to mean this move, not the whole roster.
+  Future<void> showDestination(String iso) => _apply(
+    _query.copyWith(destinations: [iso], page: 1),
+    persist: false,
+  );
 
   /// Applying a filter resets to page one — staying on page three of a
   /// different result set shows an empty screen for no reason.

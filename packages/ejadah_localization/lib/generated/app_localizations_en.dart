@@ -252,6 +252,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get createAccount => 'Create account';
 
   @override
+  String get crossingsLabel => 'Where next';
+
+  @override
   String get ctaContinueRoadmap => 'Continue my roadmap';
 
   @override
@@ -380,7 +383,7 @@ class EjadahStringsEn extends EjadahStrings {
       'Deadline warnings and session reminders land here. Save a programme and the first one is on its way.';
 
   @override
-  String get emptyNotifTitle => 'Nothing waiting';
+  String get emptyNotifTitle => 'No notifications yet';
 
   @override
   String get emptySavedBody =>
@@ -566,6 +569,17 @@ class EjadahStringsEn extends EjadahStrings {
   String get greetingEyebrow => 'MONDAY · 28 JULY';
 
   @override
+  String guidesCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count guides',
+      one: '1 guide',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get handouts => 'Handouts';
 
   @override
@@ -703,6 +717,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get mentoringTitle => 'Mentoring';
+
+  @override
+  String get mentorsWhoMoved => 'Mentors who made this move';
 
   @override
   String get monthsTypical => 'months, typical';
@@ -986,6 +1003,11 @@ class EjadahStringsEn extends EjadahStrings {
       'Filter by specialty, country, tuition, intake and deadline. Compare up to three.';
 
   @override
+  String programmesHere(Object country) {
+    return 'Programmes in $country';
+  }
+
+  @override
   String get publicCardTitle => 'Public profile';
 
   @override
@@ -1138,6 +1160,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get roadmapStageLabel => 'STAGE 2 OF 5';
+
+  @override
+  String get routeToHere => 'Is this my best route?';
 
   @override
   String get rowBilling => 'Billing';

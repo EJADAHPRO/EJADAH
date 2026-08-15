@@ -86,6 +86,16 @@ class ProgrammesController extends Notifier<ProgrammesState> {
     await _load();
   }
 
+  /// Opens the list already filtered to one country.
+  ///
+  /// The country-guide crossing lands here. It replaces the country filter
+  /// rather than adding to it — arriving from Germany's guide and seeing
+  /// Germany *and* whatever was filtered last week is not what the tap meant —
+  /// and it deliberately does not persist, so the next visit is the user's own
+  /// filters again.
+  Future<void> showCountry(String iso) =>
+      _applyQuery(_query.copyWith(countries: [iso], page: 1), persist: false);
+
   Future<void> _load({bool keepCurrentResults = false}) async {
     final current = state;
     if (keepCurrentResults && current is ProgrammesReady) {
@@ -108,9 +118,13 @@ class ProgrammesController extends Notifier<ProgrammesState> {
     }
   }
 
-  Future<void> _applyQuery(ProgrammeQuery query) async {
+  Future<void> _applyQuery(ProgrammeQuery query, {bool persist = true}) async {
     _query = query;
-    await ref.read(localStoreProvider).saveProgrammeFilters(query.toJson());
+    // A filter the user chose is remembered; one a crossing applied on their
+    // behalf is not, or every country guide they open rewrites their filters.
+    if (persist) {
+      await ref.read(localStoreProvider).saveProgrammeFilters(query.toJson());
+    }
     await _load(keepCurrentResults: true);
   }
 

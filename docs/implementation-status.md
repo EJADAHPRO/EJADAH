@@ -38,7 +38,7 @@ against the handoff; what each is missing is named.
 | Gradient budget enforcement | COMPLETE | debug assertion at six per screen |
 | Typography (EN + AR rules) | COMPLETE | families, line-heights, tracking, −12% long headings |
 | Bundled fonts | COMPLETE | Playfair, Inter, Amiri, IBM Plex Sans Arabic, OFL, licences recorded |
-| Localization (EN/AR) | COMPLETE | 502 keys, key-identical, build fails on divergence |
+| Localization (EN/AR) | COMPLETE | 507 keys, key-identical, build fails on divergence |
 | RTL | COMPLETE | locale-driven `Directionality`, logical edges, mirror list, bidi islands |
 | Routing + deep links | COMPLETE | canonical paths, guards, public routes, single cold-start navigation |
 | API client | COMPLETE | single-flight refresh, timeouts, typed failure translation |
@@ -71,7 +71,7 @@ against the handoff; what each is missing is named.
 | Zero-result relaxation | ✅ | ✅ | ✅ | ✅ | ✅ | — | COMPLETE |
 | Programme detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — sources block names the regulator, or says Not verified |
 | Shortlist + optimistic save/undo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| 23 country guides (4 tabs) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — no jump-pills, no FAQ accordion, none of the three crossings |
+| 23 country guides (4 tabs) | ✅ | ✅ | ✅ | ✅ | ✅ | — | PARTIAL — all three crossings and the list's chips and live count are in; no jump-pills or FAQ accordion |
 | Roadmap generator + gate | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — share row is in and ungated; no per-stage SourceLine list |
 | Roadmap funnel (guest-capable) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Guest → account migration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
@@ -158,7 +158,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **502 keys** in each language, up from the 374 they arrived
+The tables now hold **507 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
