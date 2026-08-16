@@ -61,6 +61,30 @@ for simplification. They are not. Each is covered by a test in
    trade-off stays visible. Without this tier a user who picked Europe and
    speaks German was answered with Jordan.
 
+### Earnings release: marking, with a backstop (owner-approved 16 Aug 2026)
+
+**Marking releases money; the job catches tutors who never mark — forgetting is
+never punished.**
+
+A held session becomes money when the tutor marks it as held. That is the rule
+the dashboard states in words before the tap, because a tutor who does not know
+what marking is for will not do it. `MatureEarningsJob` is the second half and
+only the second half: seven days after a booking's last session it completes the
+booking and releases the earning anyway. Covered by `server/test/earnings_test.dart`
+and `server/test/dashboard_test.dart`.
+
+Two things follow that will look like bugs and are not:
+
+- Marking is **idempotent, not guarded**. `attended_at` is set with `COALESCE`,
+  so a second tap cannot rewrite when the session was really marked, and a
+  booking already moved to `completed` still accepts a mark rather than
+  answering 404 to a tutor who did nothing wrong. Do not "tighten" this into a
+  status check that rejects the second tap.
+- The backstop is a **safety net, not the mechanism**. Do not shorten it toward
+  zero and let the job become the normal path — the copy on PE-13 promises the
+  tutor that marking is what releases their earnings, and a job that beats them
+  to it every time makes that sentence false.
+
 ## Flutter implementation notes
 Read `03-design-system/DESIGN_SYSTEM.md` §6 first. Also: assert gradient-count in debug · generate ARB from handoff/strings JSONs (keys 1:1; build fails on missing key) · PageStorageKey per tab list · go_router with the deep-link table · in_app_purchase only in Learn · url_launcher for ejadah.international checkout + regulator links (external-link icon + noopener semantics) · bundle fonts + flags · analytics wrapper stamps lang/persona/version/ms_since_first_open on every event (taxonomy: handoff/analytics-events.md) · min-display pacing on generating screen (~2.2s) even though generation is instant.
 

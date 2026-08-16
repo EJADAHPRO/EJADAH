@@ -13,18 +13,52 @@ Every statement below has been run against the real schema, inside a
 transaction that was rolled back — they are transcribed from a rehearsal, not
 written from memory.
 
-**Before running anything:** take a backup, and run each statement inside an
-explicit transaction so a mistyped `WHERE` can be rolled back rather than
-discovered.
+## The three rules
+
+These are not style advice. Until the admin panel exists, they are the whole
+safety system — there is no confirmation dialog, no undo, and no audit trail
+except the one you write.
+
+**1 · Take a backup.** Before the first statement of the day, not before each
+one.
+
+**2 · Read before you write, inside one explicit transaction.** Every flow below
+starts with a `SELECT` for a reason: it is how you find out that the `WHERE`
+clause you are about to reuse matches the row you meant and only that row. Run
+the read and the write in the *same* transaction, so what you read is what you
+change:
 
 ```sql
 BEGIN;
--- … statement …
--- Read the RETURNING output. If it is not exactly what you meant:
+
+-- (a) The SELECT-first check from the flow you are running. Read its output.
+--     Wrong row, wrong count, or anything you did not expect:
 ROLLBACK;
--- Otherwise:
+
+-- (b) Otherwise the UPDATE, with its RETURNING clause. Read that too.
 COMMIT;
 ```
+
+A transaction left open holds locks — if you walk away mid-flow, `ROLLBACK`
+first and start again. Never type `COMMIT` on a `RETURNING` output you have not
+actually read; the point of the whole arrangement is the two seconds spent
+looking at it.
+
+**3 · Write it down.** Append a dated line to [`docs/ops-log.md`](ops-log.md)
+for every run — approvals, rejections, payouts sent, payouts reversed. One line,
+committed to the repository.
+
+The log is a paper trail until the panel exists, and it is the only one. Nothing
+in the schema records *who* approved a tutor or *who* marked a payout sent:
+`payout_requests.resolver_id` holds an id, `professionals.approved_at` holds a
+timestamp, and neither says which person typed the statement or why. When a
+tutor asks in three months why their application was rejected, or a transfer is
+disputed, the log is the answer. Its own file explains the format.
+
+Do not log anything the application itself would refuse to log: no passwords, no
+tokens, no bank details, no attachment contents. An email address and a name are
+already in the database and are what make a line findable — that is the whole of
+what a line needs.
 
 ---
 
@@ -71,6 +105,13 @@ so the tutor would see a playbook and no student would ever see them.
 
 ```sql
 BEGIN;
+
+-- (0) SELECT-first, in the same transaction, on the same WHERE clause the
+--     writes use. One row, the right person, still under review. Anything
+--     else — two rows, no rows, a name you do not recognise — is a ROLLBACK.
+SELECT user_id, status, submitted_at
+FROM tutor_applications
+WHERE user_id = '<user-uuid>' AND status = 'under_review';
 
 -- (a) The application itself.
 UPDATE tutor_applications
@@ -169,6 +210,21 @@ request anything again.
 ```sql
 BEGIN;
 
+-- (0) SELECT-first, in the same transaction. The request must still be open,
+--     and the ledger must agree with it — the reconciliation query below,
+--     run here rather than after the fact. A mismatch is a ROLLBACK, always:
+--     paying against a total you have not reconciled is the one mistake in
+--     this file that costs real money.
+SELECT
+  r.status,
+  r.amount_egp AS requested,
+  COALESCE(SUM(e.gross_egp - e.platform_fee_egp), 0) AS ledger
+FROM payout_requests r
+LEFT JOIN earnings e
+  ON e.payout_request_id = r.id AND e.status = 'requested'
+WHERE r.id = '<payout-uuid>'
+GROUP BY r.status, r.amount_egp;
+
 UPDATE payout_requests
 SET status = 'paid', resolved_at = now(), resolver_id = '<admin-user-uuid>'
 WHERE id = '<payout-uuid>' AND status IN ('requested', 'approved')
@@ -182,18 +238,10 @@ RETURNING id, status;
 COMMIT;
 ```
 
-Check the two agree before committing — the sum of the earnings rows must equal
-the request's `amount_egp`:
-
-```sql
-SELECT
-  r.amount_egp AS requested,
-  COALESCE(SUM(e.gross_egp - e.platform_fee_egp), 0) AS ledger
-FROM payout_requests r
-LEFT JOIN earnings e ON e.payout_request_id = r.id
-WHERE r.id = '<payout-uuid>'
-GROUP BY r.amount_egp;
-```
+`requested` and `ledger` in step (0) must be equal. If they are not, the request
+was built against a set of earnings that has since changed, and the transfer
+amount is not the amount the ledger will mark paid — roll back and find out why
+before anyone is paid anything.
 
 A professional may have only one open request at a time — `payout_requests`
 carries a partial unique index on `(professional_id) WHERE status IN
@@ -227,3 +275,8 @@ Neither flow sends an email or a push notification. The applicant and the tutor
 find out by opening the app. When the admin panel lands it should do both, and
 these statements should be deleted from this file rather than left as a second
 way to do the same thing.
+
+Neither flow records who ran it. That is rule 3's whole job — the line you
+append to [`ops-log.md`](ops-log.md) is the only place the operator's name and
+their reason will ever exist. When the panel lands it should write that row
+itself, and this file and its log should go together.
