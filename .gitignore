@@ -31,3 +31,10 @@ test/**/failures/
 # OS
 .DS_Store
 Thumbs.db
+
+# Signing — a key in a repository is a key everyone with read access owns
+apps/mobile/android/key.properties
+*.jks
+*.keystore
+*.p12
+*.mobileprovision

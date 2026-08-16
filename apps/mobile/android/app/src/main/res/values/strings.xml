@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The launcher label. The one place every user sees the product's name,
+         and until this file existed it read "ejadah_mobile" — the scaffold
+         default. Arabic lives in values-ar/. -->
+    <string name="app_name">Ejadah</string>
+</resources>

@@ -1,0 +1,4 @@
+/* The launcher label in Arabic. Requires the enclosing ar.lproj to be
+   added to the Runner target in Xcode — see docs/pre-submission-checklist.md */
+"CFBundleDisplayName" = "إجادة";
+"CFBundleName" = "إجادة";
