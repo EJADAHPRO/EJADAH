@@ -77,9 +77,15 @@ class EjadahApp extends ConsumerWidget {
 /// Marks Flutter Web as a preview surface, in debug builds only.
 ///
 /// The web build keeps its refresh token in `localStorage`, which any script in
-/// the origin can read — native builds use secure storage. Web is therefore not
-/// a distribution channel yet, and anyone poking at it in development should
-/// know that before they type a real password into it.
+/// the origin can read. Web is therefore not a distribution channel yet, and
+/// anyone poking at it in development should know that before they type a real
+/// password into it.
+///
+/// Native is better but not yet good: `TokenStore` uses `SharedPreferences`
+/// there too, which on iOS is `NSUserDefaults` and rides along in device and
+/// iCloud backups. Moving it to the Keychain is item 3.1 of the
+/// store-submission checklist. Said here because this comment previously
+/// claimed native used secure storage, which it does not.
 ///
 /// Debug only, and web only: this is a warning to us, not a banner on a
 /// shipped product. If web ever becomes a real channel, the fix is an HttpOnly
