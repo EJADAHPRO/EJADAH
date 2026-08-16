@@ -140,7 +140,12 @@ class _MetaChip extends StatelessWidget {
         color: EjadahColors.labelMuted,
       ),
       const SizedBox(width: EjadahSpacing.xxs),
-      LtrIsland(child: Text(value, style: context.type.tabular(fontSize: 12))),
+      LtrIsland(
+        child: Text(
+          value,
+          style: context.type.tabular(fontSize: EjadahTypeSize.caption),
+        ),
+      ),
       const SizedBox(width: EjadahSpacing.xxs),
       Text(label, style: context.type.micro(color: EjadahColors.labelMuted)),
     ],

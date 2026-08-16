@@ -60,8 +60,7 @@ class PublicProfileScreen extends ConsumerWidget {
                         ? error.message(context)
                         : FailureCopy.server(context),
                     retryLabel: strings.retry,
-                    onRetry: () =>
-                        ref.invalidate(publicProfileProvider(slug)),
+                    onRetry: () => ref.invalidate(publicProfileProvider(slug)),
                   ),
             data: (view) => _PublicCard(view: view),
           ),

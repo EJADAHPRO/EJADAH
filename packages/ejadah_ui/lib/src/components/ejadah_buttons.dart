@@ -141,7 +141,6 @@ class EjadahSecondaryButton extends StatelessWidget {
   /// Shows [disabledReason] — usually as a toast.
   final void Function(String reason)? onDisabledTap;
 
-
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null && !isLoading;
@@ -149,9 +148,16 @@ class EjadahSecondaryButton extends StatelessWidget {
     Widget button = Opacity(
       opacity: enabled || isLoading ? 1 : EjadahOpacity.disabled,
       child: Container(
-        height: EjadahSizes.secondaryButtonHeight,
+        // `minHeight`, not `height`: at 200% type the label is taller
+        // than 48 and a fixed box ellipsises it. This is the button an
+        // empty state's mandatory action uses, so a truncated label here
+        // is the one control that saves a screen from being a dead end.
+        constraints: const BoxConstraints(
+          minHeight: EjadahSizes.secondaryButtonHeight,
+        ),
         padding: const EdgeInsetsDirectional.symmetric(
           horizontal: EjadahSpacing.md,
+          vertical: EjadahSpacing.xs,
         ),
         decoration: BoxDecoration(
           color: EjadahColors.card,
@@ -181,8 +187,11 @@ class EjadahSecondaryButton extends StatelessWidget {
                         style: context.type.button(
                           color: EjadahColors.textPrimary,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        // Wraps rather than ellipsising, the same way the
+                        // primary button already does. A truncated label on
+                        // the button an empty state depends on is the one
+                        // place truncation actually costs the user a route.
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],
@@ -229,7 +238,6 @@ class EjadahGhostButton extends StatelessWidget {
 
   /// Shows [disabledReason] — usually as a toast.
   final void Function(String reason)? onDisabledTap;
-
 
   @override
   Widget build(BuildContext context) => EjadahPressable(
@@ -285,7 +293,6 @@ class EjadahDestructiveButton extends StatelessWidget {
   /// Shows [disabledReason] — usually as a toast.
   final void Function(String reason)? onDisabledTap;
 
-
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null && !isLoading;
@@ -293,7 +300,17 @@ class EjadahDestructiveButton extends StatelessWidget {
     Widget button = Opacity(
       opacity: enabled || isLoading ? 1 : EjadahOpacity.disabled,
       child: Container(
-        height: EjadahSizes.secondaryButtonHeight,
+        // `minHeight`, not `height`: at 200% type the label is taller
+        // than 48 and a fixed box ellipsises it. This is the button an
+        // empty state's mandatory action uses, so a truncated label here
+        // is the one control that saves a screen from being a dead end.
+        constraints: const BoxConstraints(
+          minHeight: EjadahSizes.secondaryButtonHeight,
+        ),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: EjadahSpacing.md,
+          vertical: EjadahSpacing.xs,
+        ),
         decoration: BoxDecoration(
           color: EjadahColors.tint(EjadahColors.danger),
           borderRadius: EjadahRadius.all(EjadahRadius.lg),
@@ -304,6 +321,7 @@ class EjadahDestructiveButton extends StatelessWidget {
               : Text(
                   label,
                   style: context.type.button(color: EjadahColors.dangerText),
+                  textAlign: TextAlign.center,
                 ),
         ),
       ),

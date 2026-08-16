@@ -49,10 +49,7 @@ class BookingsReady extends BookingsState {
     }).toList();
   }
 
-  static List<Booking> _sorted(
-    List<Booking> items, {
-    required bool ascending,
-  }) {
+  static List<Booking> _sorted(List<Booking> items, {required bool ascending}) {
     final sorted = items.toList()
       ..sort((a, b) {
         final left = a.firstSessionStart ?? a.createdAt;
@@ -70,9 +67,7 @@ class BookingsFailed extends BookingsState {
 }
 
 final bookingsControllerProvider =
-    NotifierProvider<BookingsController, BookingsState>(
-      BookingsController.new,
-    );
+    NotifierProvider<BookingsController, BookingsState>(BookingsController.new);
 
 /// Owns My bookings.
 ///
@@ -102,9 +97,7 @@ class BookingsController extends Notifier<BookingsState> {
   /// The figure comes back from the server rather than being assumed to match
   /// what the sheet said, so a disagreement is visible instead of silent.
   Future<CancellationOutcome> cancel(Booking booking) async {
-    final outcome = await ref
-        .read(peopleRepositoryProvider)
-        .cancel(booking.id);
+    final outcome = await ref.read(peopleRepositoryProvider).cancel(booking.id);
     await load();
     return outcome;
   }

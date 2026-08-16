@@ -74,7 +74,6 @@ class EjadahApp extends ConsumerWidget {
   }
 }
 
-
 /// Marks Flutter Web as a preview surface, in debug builds only.
 ///
 /// The web build keeps its refresh token in `localStorage`, which any script in

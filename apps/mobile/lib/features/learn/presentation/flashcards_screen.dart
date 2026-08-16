@@ -112,7 +112,7 @@ class _Session extends StatelessWidget {
             LtrIsland(
               child: Text(
                 '${state.position}/${state.cards.length}',
-                style: context.type.tabular(fontSize: 12),
+                style: context.type.tabular(fontSize: EjadahTypeSize.caption),
               ),
             ),
           ],
@@ -192,7 +192,14 @@ class _Summary extends StatelessWidget {
     return ListView(
       children: [
         const SizedBox(height: EjadahSpacing.section),
-        Text(state.deck.title(context), style: context.type.h4()),
+        Text(
+          state.deck.title(context),
+          // `text:` is what arms the Arabic long-heading reduction. Omitting it
+          // does not fail — it silently measures an empty string, which is
+          // never over the threshold — so a localized dynamic title like this
+          // one keeps its full size and wraps where it should have shrunk.
+          style: context.type.h4(text: state.deck.title(context)),
+        ),
         const SizedBox(height: EjadahSpacing.lg),
         Row(
           children: [

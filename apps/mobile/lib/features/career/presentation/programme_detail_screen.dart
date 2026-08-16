@@ -10,15 +10,13 @@ import '../../../app/providers.dart';
 import '../../auth/auth_controller.dart';
 import '../data/career_repository.dart';
 
-final programmeProvider = AsyncNotifierProvider.family<
-  ProgrammeDetailController,
-  Programme,
-  int
->(ProgrammeDetailController.new);
+final programmeProvider =
+    AsyncNotifierProvider.family<ProgrammeDetailController, Programme, int>(
+      ProgrammeDetailController.new,
+    );
 
 /// One programme, with the save state the screen can move ahead of the server.
-class ProgrammeDetailController
-    extends FamilyAsyncNotifier<Programme, int> {
+class ProgrammeDetailController extends FamilyAsyncNotifier<Programme, int> {
   @override
   Future<Programme> build(int programmeId) =>
       ref.watch(careerRepositoryProvider).programme(programmeId);
@@ -103,7 +101,14 @@ class _Body extends ConsumerWidget {
       child: ListView(
         children: [
           const SizedBox(height: EjadahSpacing.xs),
-          Text(summary.programmeName, style: context.type.h3()),
+          Text(
+            summary.programmeName,
+            // Passed even though programme names stay Latin in both locales:
+            // the reduction only fires on Arabic script, so this is a no-op
+            // today and correct on the day a name arrives translated. The
+            // alternative — omitting it — reads as a decision nobody made.
+            style: context.type.h3(text: summary.programmeName),
+          ),
           const SizedBox(height: EjadahSpacing.xs),
           Text(
             '${summary.city} · ${summary.country}',
@@ -113,9 +118,7 @@ class _Body extends ConsumerWidget {
           DeadlineBadge(
             status: summary.deadlineStatus,
             daysRemaining: summary.daysRemaining,
-            closingSoonLabel: strings.daysLeftCount(
-              summary.daysRemaining ?? 0,
-            ),
+            closingSoonLabel: strings.daysLeftCount(summary.daysRemaining ?? 0),
             openLabel: strings.openNow,
             closedLabel: strings.closed,
           ),
@@ -189,7 +192,8 @@ class _Body extends ConsumerWidget {
                   SourceLine(
                     sourceName: programme.regulator!(context),
                     verifiedOnLabel:
-                        programme.regulatorUpdatedLabel ?? strings.pendingSource,
+                        programme.regulatorUpdatedLabel ??
+                        strings.pendingSource,
                   ),
                 if (programme.sourceDeadlineText.isNotEmpty) ...[
                   if (programme.regulator != null)

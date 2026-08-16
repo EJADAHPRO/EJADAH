@@ -1,7 +1,6 @@
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 
-
 /// The page chrome every system state shares.
 ///
 /// The ten screens differ only in their copy, icon and actions; putting the

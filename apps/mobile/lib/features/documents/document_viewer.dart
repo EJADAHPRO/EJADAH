@@ -25,7 +25,4 @@ final documentViewerProvider = Provider<DocumentViewer>(
 Future<void> _openWithPlatform({
   required Uint8List bytes,
   required String name,
-}) => Printing.layoutPdf(
-  onLayout: (_) async => bytes,
-  name: name,
-);
+}) => Printing.layoutPdf(onLayout: (_) async => bytes, name: name);

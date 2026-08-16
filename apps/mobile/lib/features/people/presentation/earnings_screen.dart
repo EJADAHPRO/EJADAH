@@ -306,7 +306,7 @@ class _TableRow extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: EjadahSpacing.xxs),
                     Text(
                       '${formatCertificateDate(row.occurredAt, context.language)}'
                       ' · ${_statusLabel(strings, row.status)}',
@@ -332,10 +332,13 @@ class _TableRow extends StatelessWidget {
                 child: Text(
                   formatThousands(row.netEgp),
                   textAlign: TextAlign.end,
+                  // `bodyStrong`, not `bodyText().copyWith(w600)`: the weight
+                  // is the same, but the strong role also carries the snug
+                  // line-height, and a body line-height on a ledger figure
+                  // spaces a table like prose.
                   style: type
-                      .bodyText(color: colour)
+                      .bodyStrong(color: colour)
                       .copyWith(
-                        fontWeight: FontWeight.w600,
                         decoration: isReversed
                             ? TextDecoration.lineThrough
                             : null,

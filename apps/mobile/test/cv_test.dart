@@ -78,9 +78,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      _harness(
-        _FakeRepository(cv: _cv(kinds: const ['summary', 'skills'])),
-      ),
+      _harness(_FakeRepository(cv: _cv(kinds: const ['summary', 'skills']))),
     );
     await tester.pumpAndSettle();
 
@@ -147,9 +145,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text(
-        'لا شيء هنا بعد. ارفع سيرة ذاتية، أو أضف قسمًا — أيهما أسهل.',
-      ),
+      find.text('لا شيء هنا بعد. ارفع سيرة ذاتية، أو أضف قسمًا — أيهما أسهل.'),
       findsOneWidget,
     );
   });

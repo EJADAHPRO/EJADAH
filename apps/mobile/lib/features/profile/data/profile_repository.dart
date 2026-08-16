@@ -100,10 +100,8 @@ class ProfileRepository {
 
   final ApiClient _client;
 
-  Future<PublicProfileView> publicProfile(String slug) => _client.get(
-    '/profile/public/$slug',
-    parse: PublicProfileView.fromJson,
-  );
+  Future<PublicProfileView> publicProfile(String slug) =>
+      _client.get('/profile/public/$slug', parse: PublicProfileView.fromJson);
 
   Future<CertificateVerification> verifyCertificate(String code) => _client.get(
     '/profile/verify/$code',

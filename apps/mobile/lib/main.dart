@@ -46,9 +46,9 @@ Future<void> main() async {
   await container.read(languageProvider.notifier).restore();
   await container.read(authControllerProvider.notifier).restore();
 
-  container.read(reduceMotionProvider.notifier).follow(
-    SchedulerBinding.instance.platformDispatcher,
-  );
+  container
+      .read(reduceMotionProvider.notifier)
+      .follow(SchedulerBinding.instance.platformDispatcher);
 
   // A failed refresh sends the user to sign in — and brings them straight back.
   container.read(apiClientProvider).onSessionExpired = container

@@ -68,7 +68,10 @@ class CompareCountriesScreen extends ConsumerWidget {
         child: comparison.when(
           loading: () => const EjadahPageBody(
             child: Column(
-              children: [SizedBox(height: EjadahSpacing.md), CardSkeleton()],
+              children: [
+                SizedBox(height: EjadahSpacing.md),
+                CardSkeleton(),
+              ],
             ),
           ),
           error: (error, _) => EjadahErrorState(
@@ -207,7 +210,9 @@ class _FactRow extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: EjadahSpacing.sm),
               child: isLtr
-                  ? LtrIsland(child: Text(value, style: context.type.bodyText()))
+                  ? LtrIsland(
+                      child: Text(value, style: context.type.bodyText()),
+                    )
                   : Text(value, style: context.type.bodyText()),
             ),
           ),

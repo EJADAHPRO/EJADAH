@@ -246,9 +246,7 @@ class TutorApplicationController extends Notifier<TutorApplicationState> {
 
 /// The three actions after approval.
 final playbookControllerProvider =
-    AsyncNotifierProvider<PlaybookController, Playbook>(
-      PlaybookController.new,
-    );
+    AsyncNotifierProvider<PlaybookController, Playbook>(PlaybookController.new);
 
 class PlaybookController extends AsyncNotifier<Playbook> {
   @override
@@ -268,9 +266,9 @@ class PlaybookController extends AsyncNotifier<Playbook> {
     }
     try {
       state = AsyncData(
-        await ref.read(tutorApplicationRepositoryProvider).completePlaybookItem(
-          item,
-        ),
+        await ref
+            .read(tutorApplicationRepositoryProvider)
+            .completePlaybookItem(item),
       );
     } on Failure catch (failure, stack) {
       if (previous != null) {

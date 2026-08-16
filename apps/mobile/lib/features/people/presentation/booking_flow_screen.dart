@@ -152,8 +152,14 @@ class _BookingFlowScreenState extends ConsumerState<BookingFlowScreen> {
                   ),
                 ],
                 const SizedBox(height: EjadahSpacing.md),
-                Expanded(child: _StepBody(args: _args, state: state,
-                    subject: _subject, goal: _goal)),
+                Expanded(
+                  child: _StepBody(
+                    args: _args,
+                    state: state,
+                    subject: _subject,
+                    goal: _goal,
+                  ),
+                ),
               ],
             ),
           ),
@@ -627,11 +633,7 @@ class _StickyBar extends ConsumerWidget {
         strings.pickSlotFirst,
       ),
       BookingStep.duration ||
-      BookingStep.subject => (
-        strings.continueAction,
-        controller.next,
-        null,
-      ),
+      BookingStep.subject => (strings.continueAction, controller.next, null),
       BookingStep.goal => (
         strings.continueAction,
         state.isGoalLongEnough ? controller.next : null,

@@ -31,7 +31,10 @@ void main() {
 
   test('a feed the device has seen survives a relaunch offline', () async {
     // First launch: online, the feed loads and is written to the device.
-    final online = _Container(store: store, repository: _FakeApi(feed: _feed));
+    final online = _Container(
+      store: store,
+      repository: _FakeApi(feed: _feed),
+    );
     await online.settle();
     expect(online.state, isA<HomeReady>());
     expect((online.state as HomeReady).isOffline, isFalse);
@@ -69,7 +72,10 @@ void main() {
   });
 
   test('signing out takes the cached feed with it', () async {
-    final online = _Container(store: store, repository: _FakeApi(feed: _feed));
+    final online = _Container(
+      store: store,
+      repository: _FakeApi(feed: _feed),
+    );
     await online.settle();
     expect(await store.cachedResponse(HomeRepository.cacheKey), isNotNull);
 
@@ -163,8 +169,7 @@ class _RecordingRepository implements HomeRepository {
   }
 
   @override
-  dynamic noSuchMethod(Invocation invocation) =>
-      super.noSuchMethod(invocation);
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _SignedInController extends AuthController {

@@ -15,9 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// would be standing up — because the only other way those students find out is
 /// by turning up to an empty call.
 void main() {
-  testWidgets('the week is seven days, each with three blocks', (
-    tester,
-  ) async {
+  testWidgets('the week is seven days, each with three blocks', (tester) async {
     await tester.pumpWidget(_harness(_FakeRepository(availability: _empty())));
     await tester.pumpAndSettle();
 
@@ -114,8 +112,14 @@ void main() {
           ar: 'لديك جلسات مؤكدة في هذا الوقت.',
         ),
         [
-          LocalizedText(en: 'Khaled Fathy — Endodontics', ar: 'خالد فتحي — علاج الجذور'),
-          LocalizedText(en: 'Sara Nabil — Prosthodontics', ar: 'سارة نبيل — التركيبات'),
+          LocalizedText(
+            en: 'Khaled Fathy — Endodontics',
+            ar: 'خالد فتحي — علاج الجذور',
+          ),
+          LocalizedText(
+            en: 'Sara Nabil — Prosthodontics',
+            ar: 'سارة نبيل — التركيبات',
+          ),
         ],
       ),
     );
@@ -191,10 +195,8 @@ void main() {
 /// `.first` because the sticky bar carries the same sentence as its disabled
 /// reason — deliberately, since the two say the same thing in two places a
 /// tutor might be looking.
-Color? _hintColour(WidgetTester tester) => tester
-    .widget<Text>(find.textContaining('ما لا يقل عن').first)
-    .style
-    ?.color;
+Color? _hintColour(WidgetTester tester) =>
+    tester.widget<Text>(find.textContaining('ما لا يقل عن').first).style?.color;
 
 Widget _harness(AvailabilityRepository repository) => ProviderScope(
   overrides: [availabilityRepositoryProvider.overrideWithValue(repository)],

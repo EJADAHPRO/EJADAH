@@ -54,9 +54,7 @@ class LanguageController extends Notifier<AppLanguage> {
 /// The real first-open instant, read from disk in `main` before the first
 /// frame. Overridden there; the fallback only applies to tests that build the
 /// container directly.
-final firstOpenAtProvider = Provider<DateTime>(
-  (ref) => DateTime.now().toUtc(),
-);
+final firstOpenAtProvider = Provider<DateTime>((ref) => DateTime.now().toUtc());
 
 final analyticsProvider = Provider<AnalyticsService>((ref) {
   return AnalyticsDispatcher(
@@ -89,8 +87,9 @@ final apiClientProvider = Provider<ApiClient>((ref) {
 /// startup meant a user who turned the setting on mid-session kept every
 /// animation until they restarted the app — and someone turning it on
 /// mid-session is very often turning it on *because* of what they just saw.
-final reduceMotionProvider =
-    NotifierProvider<ReduceMotionController, bool>(ReduceMotionController.new);
+final reduceMotionProvider = NotifierProvider<ReduceMotionController, bool>(
+  ReduceMotionController.new,
+);
 
 class ReduceMotionController extends Notifier<bool> {
   PlatformDispatcher? _dispatcher;

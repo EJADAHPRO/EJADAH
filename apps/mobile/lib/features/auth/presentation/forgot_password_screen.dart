@@ -80,10 +80,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPasswordScreen> {
                     onPressed: () => context.pop(),
                   ),
                 ] else ...[
-                  Text(
-                    strings.forgotBody,
-                    style: context.type.bodyText(),
-                  ),
+                  Text(strings.forgotBody, style: context.type.bodyText()),
                   const SizedBox(height: EjadahSpacing.lg),
                   EjadahInput(
                     label: strings.email,

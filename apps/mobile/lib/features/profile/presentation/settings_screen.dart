@@ -61,11 +61,20 @@ class SettingsScreen extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(vertical: EjadahSpacing.sm),
                   child: Column(
                     children: [
-                      Skeleton(width: double.infinity, height: EjadahSizes.tapTargetMin),
+                      Skeleton(
+                        width: double.infinity,
+                        height: EjadahSizes.tapTargetMin,
+                      ),
                       SizedBox(height: EjadahSpacing.xs),
-                      Skeleton(width: double.infinity, height: EjadahSizes.tapTargetMin),
+                      Skeleton(
+                        width: double.infinity,
+                        height: EjadahSizes.tapTargetMin,
+                      ),
                       SizedBox(height: EjadahSpacing.xs),
-                      Skeleton(width: double.infinity, height: EjadahSizes.tapTargetMin),
+                      Skeleton(
+                        width: double.infinity,
+                        height: EjadahSizes.tapTargetMin,
+                      ),
                     ],
                   ),
                 ),
@@ -83,18 +92,14 @@ class SettingsScreen extends ConsumerWidget {
                     _Toggle(
                       title: strings.notifDeadline,
                       value: current.deadlineAlerts,
-                      onChanged: (value) => _save(
-                        ref,
-                        current.copyWith(deadlineAlerts: value),
-                      ),
+                      onChanged: (value) =>
+                          _save(ref, current.copyWith(deadlineAlerts: value)),
                     ),
                     _Toggle(
                       title: strings.notifBooking,
                       value: current.sessionReminders,
-                      onChanged: (value) => _save(
-                        ref,
-                        current.copyWith(sessionReminders: value),
-                      ),
+                      onChanged: (value) =>
+                          _save(ref, current.copyWith(sessionReminders: value)),
                     ),
                     _Toggle(
                       title: strings.notifStudy,
@@ -143,10 +148,7 @@ class SettingsScreen extends ConsumerWidget {
                   color: EjadahColors.labelMuted,
                 ),
               ),
-              EjadahListRow(
-                title: strings.versionLabel,
-                subtitle: appVersion,
-              ),
+              EjadahListRow(title: strings.versionLabel, subtitle: appVersion),
 
               const SizedBox(height: EjadahSpacing.lg),
               EjadahGhostButton(

@@ -143,8 +143,9 @@ class _Crossings extends StatelessWidget {
         EjadahListRow(
           // A mentor is someone who made this move — the door's whole premise.
           title: strings.mentorsWhoMoved,
-          onTap: () =>
-              context.push('/people/mentoring?destination=${guide.summary.iso}'),
+          onTap: () => context.push(
+            '/people/mentoring?destination=${guide.summary.iso}',
+          ),
         ),
         EjadahListRow(
           title: strings.routeToHere,

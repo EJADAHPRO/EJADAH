@@ -39,7 +39,8 @@ class HomeScreen extends ConsumerWidget {
               title: context.strings.errTitle,
               body: failure.message(context),
               retryLabel: context.strings.retry,
-              onRetry: () => ref.read(homeControllerProvider.notifier).refresh(),
+              onRetry: () =>
+                  ref.read(homeControllerProvider.notifier).refresh(),
             ),
             HomeReady(:final feed, :final isOffline) => _Feed(
               feed: feed,
@@ -187,9 +188,7 @@ class _LanguageRow extends ConsumerWidget {
         label: language == AppLanguage.ar ? 'English' : 'العربية',
         onPressed: () => ref
             .read(languageProvider.notifier)
-            .set(
-              language == AppLanguage.ar ? AppLanguage.en : AppLanguage.ar,
-            ),
+            .set(language == AppLanguage.ar ? AppLanguage.en : AppLanguage.ar),
       ),
     );
   }

@@ -195,7 +195,9 @@ class _LabelledValue extends StatelessWidget {
 /// alongside codes and points, and mixing numeral systems down one column is
 /// what makes a credential look improvised.
 String formatCertificateDate(DateTime date, AppLanguage language) =>
-    toWesternDigits(DateFormat('d MMM yyyy', language.code).format(date.toLocal()));
+    toWesternDigits(
+      DateFormat('d MMM yyyy', language.code).format(date.toLocal()),
+    );
 
 /// Replaces Arabic-Indic digits with Western ones, leaving all other
 /// characters untouched.

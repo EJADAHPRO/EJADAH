@@ -275,7 +275,9 @@ class _FactRow extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: EjadahSpacing.sm),
               child: isLtr
-                  ? LtrIsland(child: Text(value, style: context.type.bodyText()))
+                  ? LtrIsland(
+                      child: Text(value, style: context.type.bodyText()),
+                    )
                   : Text(value, style: context.type.bodyText()),
             ),
           ),

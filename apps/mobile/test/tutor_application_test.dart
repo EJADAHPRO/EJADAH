@@ -53,10 +53,7 @@ void main() {
     // phone that only writes at the end is a form that loses step 4.
     expect(repository.saved, hasLength(1));
     expect(repository.saved.single.step, ApplicationStep.basics);
-    expect(
-      repository.saved.single.answers['display_name_en'],
-      'Dr. Mona Adel',
-    );
+    expect(repository.saved.single.answers['display_name_en'], 'Dr. Mona Adel');
   });
 
   testWidgets('going back also saves, and does not lose the answer', (

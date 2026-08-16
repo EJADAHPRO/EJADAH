@@ -43,11 +43,12 @@ class BecomeTutorScreen extends ConsumerWidget {
               title: FailureCopy.errorTitle(context),
               body: failure.message(context),
               retryLabel: strings.retry,
-              onRetry: () => ref
-                  .read(tutorApplicationControllerProvider.notifier)
-                  .retry(),
+              onRetry: () =>
+                  ref.read(tutorApplicationControllerProvider.notifier).retry(),
             ),
-            TutorApplicationReady(:final snapshot) => _Pitch(snapshot: snapshot),
+            TutorApplicationReady(:final snapshot) => _Pitch(
+              snapshot: snapshot,
+            ),
           },
         ),
       ),
@@ -162,8 +163,7 @@ class _PitchAction extends ConsumerWidget {
     final strings = context.strings;
     final application = snapshot.application;
 
-    final isUnderReviewOrLive =
-        application != null && !application.isEditable;
+    final isUnderReviewOrLive = application != null && !application.isEditable;
 
     final label = switch (application) {
       null => strings.teachStart,

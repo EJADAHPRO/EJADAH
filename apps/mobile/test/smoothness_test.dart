@@ -101,9 +101,7 @@ void main() {
 
     testWidgets('outside a group it is a plain pass-through', (tester) async {
       await tester.pumpWidget(
-        _frame(
-          const StaggeredIn(index: 3, child: Text('bare')),
-        ),
+        _frame(const StaggeredIn(index: 3, child: Text('bare'))),
       );
       await tester.pumpAndSettle();
 
@@ -119,12 +117,7 @@ void main() {
 
     // The transform is what causes vestibular trouble; the opacity is not.
     final transform = tester.widget<Transform>(
-      find
-          .descendant(
-            of: _itemAt(0),
-            matching: find.byType(Transform),
-          )
-          .first,
+      find.descendant(of: _itemAt(0), matching: find.byType(Transform)).first,
     );
     expect(transform.transform.getTranslation().y, 0);
   });
@@ -154,16 +147,17 @@ Widget _frame(Widget child, {bool reduceMotion = false}) => MaterialApp(
   home: Scaffold(body: child),
 );
 
-Widget _staggered({required int itemCount, bool reduceMotion = false}) => _frame(
-  StaggerGroup(
-    child: ListView.builder(
-      itemCount: itemCount,
-      itemBuilder: (context, index) =>
-          StaggeredIn(index: index, child: Text('item $index')),
-    ),
-  ),
-  reduceMotion: reduceMotion,
-);
+Widget _staggered({required int itemCount, bool reduceMotion = false}) =>
+    _frame(
+      StaggerGroup(
+        child: ListView.builder(
+          itemCount: itemCount,
+          itemBuilder: (context, index) =>
+              StaggeredIn(index: index, child: Text('item $index')),
+        ),
+      ),
+      reduceMotion: reduceMotion,
+    );
 
 /// A two-screen app: a launcher and one interior screen to swipe away.
 Widget _app(AppLanguage language) => MaterialApp(
@@ -182,7 +176,8 @@ Widget _app(AppLanguage language) => MaterialApp(
         child: TextButton(
           onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (_) => const Scaffold(body: Center(child: Text('interior'))),
+              builder: (_) =>
+                  const Scaffold(body: Center(child: Text('interior'))),
             ),
           ),
           child: const Text('open'),

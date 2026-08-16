@@ -263,7 +263,7 @@ class _SessionCard extends ConsumerWidget {
               // A clock time stays LTR in both languages.
               CodeText(
                 CairoTime.time(session.startsAt),
-                style: type.tabular(fontSize: 13),
+                style: type.tabular(fontSize: EjadahTypeSize.small),
               ),
             ],
           ),
@@ -421,11 +421,7 @@ class _HideMe extends ConsumerWidget {
     );
   }
 
-  Future<void> _toggle(
-    BuildContext context,
-    WidgetRef ref,
-    bool hidden,
-  ) async {
+  Future<void> _toggle(BuildContext context, WidgetRef ref, bool hidden) async {
     final failure = await ref
         .read(dashboardControllerProvider.notifier)
         .setHidden(hidden);

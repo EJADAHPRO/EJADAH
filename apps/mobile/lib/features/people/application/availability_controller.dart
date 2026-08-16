@@ -38,8 +38,7 @@ class AvailabilityDraft {
   final List<AvailabilityRule> rules;
   final bool isSaving;
 
-  int get weeklyMinutes =>
-      rules.fold(0, (total, rule) => total + rule.minutes);
+  int get weeklyMinutes => rules.fold(0, (total, rule) => total + rule.minutes);
 
   int get weeklyHours => weeklyMinutes ~/ 60;
 
@@ -53,8 +52,7 @@ class AvailabilityDraft {
   bool get isDirty {
     final before = _signature(saved.rules);
     final after = _signature(rules);
-    return before.length != after.length ||
-        !before.every(after.contains);
+    return before.length != after.length || !before.every(after.contains);
   }
 
   List<AvailabilityRule> forDay(int weekday) =>

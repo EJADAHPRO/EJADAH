@@ -244,6 +244,18 @@ abstract final class EjadahSizes {
 
   /// The numbered step marker on a stage list.
   static const double stepMarkerSize = 28;
+
+  /// The rounded icon tile an empty or error state opens with.
+  static const double stateIconTile = 56;
+
+  /// A card's width inside a horizontally scrolling rail. Width is fixed on
+  /// purpose — the rail's rhythm depends on it — while height is measured.
+  static const double railCardWidth = 280;
+
+  /// The app bar's height. Named because it was written twice in the shell —
+  /// once as a `preferredSize` and once as a `Container` height — and two
+  /// literals that must agree are one that eventually will not.
+  static const double appBarHeight = 56;
 }
 
 /// The six things the brand gradient is allowed to be.

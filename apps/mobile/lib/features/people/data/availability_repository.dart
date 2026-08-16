@@ -27,8 +27,7 @@ class AvailabilityRule {
   /// Exact rather than overlapping: the chips are a shorthand for one specific
   /// window, and a chip that lights up for a window it does not describe is a
   /// chip that lies about what tapping it will do.
-  bool matches(int start, int end) =>
-      startMinute == start && endMinute == end;
+  bool matches(int start, int end) => startMinute == start && endMinute == end;
 
   Map<String, dynamic> toJson() => {
     'weekday': weekday,
@@ -158,17 +157,15 @@ class AvailabilityRepository {
     ),
   );
 
-  Future<void> open({
-    required DateTime startsAt,
-    required DateTime endsAt,
-  }) => _client.post<void>(
-    '/availability/openings',
-    body: {
-      'starts_at': startsAt.toUtc().toIso8601String(),
-      'ends_at': endsAt.toUtc().toIso8601String(),
-    },
-    parse: (_) {},
-  );
+  Future<void> open({required DateTime startsAt, required DateTime endsAt}) =>
+      _client.post<void>(
+        '/availability/openings',
+        body: {
+          'starts_at': startsAt.toUtc().toIso8601String(),
+          'ends_at': endsAt.toUtc().toIso8601String(),
+        },
+        parse: (_) {},
+      );
 
   Future<void> removeException(int id) =>
       _client.delete('/availability/exceptions/$id');
@@ -183,10 +180,7 @@ class AvailabilityRepository {
       await action();
     } on ConflictFailure catch (failure) {
       if (failure.fields.isEmpty) rethrow;
-      throw AvailabilityClash(
-        failure.message,
-        failure.fields.values.toList(),
-      );
+      throw AvailabilityClash(failure.message, failure.fields.values.toList());
     }
   }
 }

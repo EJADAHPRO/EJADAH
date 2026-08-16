@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../foundation/ejadah_icons.dart';
 import '../theme/ejadah_theme.dart';
 import '../tokens/ejadah_tokens.dart';
+import '../tokens/ejadah_typography.dart';
 import 'ejadah_buttons.dart';
 
 /// A shimmering placeholder in the shape of the content that is coming.
@@ -113,7 +114,10 @@ class CardSkeleton extends StatelessWidget {
       children: [
         Skeleton(width: 120, height: 12),
         SizedBox(height: EjadahSpacing.xs),
-        Skeleton(width: double.infinity, height: 18),
+        // A skeleton line stands in for a line of text, so its height is that
+        // text's size — not a number that happens to look right. 18 written
+        // here was the "18 in a layout" the tokens file calls a defect.
+        Skeleton(width: double.infinity, height: EjadahTypeSize.h6),
         SizedBox(height: EjadahSpacing.xs),
         Skeleton(width: 180, height: 12),
         SizedBox(height: EjadahSpacing.sm),
@@ -335,15 +339,43 @@ class _CentredState extends StatelessWidget {
   final VoidCallback onAction;
 
   @override
-  Widget build(BuildContext context) => Center(
+  // Scrollable, not just centred. Handed a bounded box — inside an `Expanded`,
+  // a `TabBarView`, or under a tab bar that has already taken its share — the
+  // column cannot grow, and at 200% type with Arabic body copy it does not fit:
+  // icon tile, a title wrapping to two lines, a body at four, and a button that
+  // must stay reachable because an empty state without its action is a dead
+  // end. `Center` inside a scroll view keeps the small case centred and lets
+  // the large case scroll, so both read the way they were designed to.
+  //
+  // The sliver call sites were already safe — `SliverFillRemaining(hasScrollBody:
+  // false)` treats the extent as a minimum — which is why this only ever showed
+  // up in the box-constrained half of the app.
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      // Unbounded height means nothing is squeezing this state — it is inside
+      // a scroll view already, or a shrink-wrapping column — so it lays out at
+      // its natural size and adding a scroll view of our own would ask for an
+      // infinite minimum and throw.
+      if (!constraints.hasBoundedHeight) return _content(context);
+
+      return SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: _content(context),
+        ),
+      );
+    },
+  );
+
+  Widget _content(BuildContext context) => Center(
     child: Padding(
       padding: const EdgeInsets.all(EjadahSpacing.section),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: EjadahSizes.stateIconTile,
+            height: EjadahSizes.stateIconTile,
             decoration: BoxDecoration(
               color: EjadahColors.inset,
               borderRadius: EjadahRadius.all(EjadahRadius.lg),

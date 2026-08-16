@@ -21,7 +21,8 @@ class _NotificationBell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final unread = ref.watch(notificationCentreProvider).valueOrNull?.unread ?? 0;
+    final unread =
+        ref.watch(notificationCentreProvider).valueOrNull?.unread ?? 0;
 
     return EjadahPressable(
       onTap: () => context.push('/notifications'),
@@ -144,7 +145,9 @@ class HomePrimaryCta extends StatelessWidget {
         strings.currentStage,
         strings.roadmapCtaTitle,
         feed.roadmap?.thisMonthAction.resolve(
-              AppLanguage.fromCode(Localizations.localeOf(context).languageCode),
+              AppLanguage.fromCode(
+                Localizations.localeOf(context).languageCode,
+              ),
             ) ??
             strings.roadmapCtaBody,
         strings.ctaContinueRoadmap,
@@ -441,9 +444,7 @@ class DeadlineStrip extends StatelessWidget {
                 // Names a real number rather than saying "nothing here".
                 Text(
                   strings.emptySavedRelaxed(feed.openProgrammeCount),
-                  style: context.type.small(
-                    color: EjadahColors.textSecondary,
-                  ),
+                  style: context.type.small(color: EjadahColors.textSecondary),
                 ),
               ],
             ),
@@ -511,39 +512,49 @@ class ExploreTiles extends StatelessWidget {
       ),
     ];
 
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: context.ejadah.windowClass.tileColumns,
-      crossAxisSpacing: EjadahSpacing.cardGap,
-      mainAxisSpacing: EjadahSpacing.cardGap,
-      childAspectRatio: 1.5,
-      children: [
-        for (final tile in tiles)
-          EjadahCard(
-            onTap: () => context.push(tile.route),
-            semanticLabel: tile.title,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  tile.title,
-                  style: context.type.bodyStrong(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+    // A `Wrap` of intrinsically-tall tiles rather than a `GridView` with a
+    // fixed `childAspectRatio`. An aspect ratio fixes the height as soon as the
+    // width is known, and at 200% the two lines of title plus the meta line no
+    // longer fit — worse, `MainAxisAlignment.end` sent the overflow off the top
+    // of the tile, where it reads as a cropped word rather than as a bug.
+    //
+    // The columns still come from the window class; only the height is now
+    // whatever the text needs.
+    final columns = context.ejadah.windowClass.tileColumns;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width =
+            (constraints.maxWidth - EjadahSpacing.cardGap * (columns - 1)) /
+            columns;
+        return Wrap(
+          spacing: EjadahSpacing.cardGap,
+          runSpacing: EjadahSpacing.cardGap,
+          children: [
+            for (final tile in tiles)
+              SizedBox(
+                width: width,
+                child: EjadahCard(
+                  onTap: () => context.push(tile.route),
+                  semanticLabel: tile.title,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(tile.title, style: context.type.bodyStrong()),
+                      const SizedBox(height: EjadahSpacing.xxs),
+                      Text(
+                        tile.meta,
+                        style: context.type.micro(
+                          color: EjadahColors.labelMuted,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: EjadahSpacing.xxs),
-                Text(
-                  tile.meta,
-                  style: context.type.micro(color: EjadahColors.labelMuted),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-      ],
+              ),
+          ],
+        );
+      },
     );
   }
 }

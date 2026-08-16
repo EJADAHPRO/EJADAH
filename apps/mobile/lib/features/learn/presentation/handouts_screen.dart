@@ -167,7 +167,7 @@ class _HandoutRow extends StatelessWidget {
         LtrIsland(
           child: Text(
             handout.sizeLabel,
-            style: context.type.tabular(fontSize: 12),
+            style: context.type.tabular(fontSize: EjadahTypeSize.caption),
           ),
         ),
         const SizedBox(width: EjadahSpacing.xs),

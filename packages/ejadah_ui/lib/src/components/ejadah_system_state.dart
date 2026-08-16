@@ -103,8 +103,10 @@ class EjadahSystemState extends StatelessWidget {
         // scale the Arabic body runs past the viewport, and without this the
         // column overflows instead of scrolling.
         final minHeight = constraints.hasBoundedHeight
-            ? (constraints.maxHeight - EjadahSpacing.section * 2)
-                  .clamp(0.0, constraints.maxHeight)
+            ? (constraints.maxHeight - EjadahSpacing.section * 2).clamp(
+                0.0,
+                constraints.maxHeight,
+              )
             : 0.0;
 
         return SingleChildScrollView(

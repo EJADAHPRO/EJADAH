@@ -13,9 +13,7 @@ const int maxComparisonItems = 3;
 /// searching — picking one programme on page 1 and another on page 4 is the
 /// normal way this gets used.
 final programmeComparisonProvider =
-    NotifierProvider<ComparisonController, List<int>>(
-      ComparisonController.new,
-    );
+    NotifierProvider<ComparisonController, List<int>>(ComparisonController.new);
 
 class ComparisonController extends Notifier<List<int>> {
   @override

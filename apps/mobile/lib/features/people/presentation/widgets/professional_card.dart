@@ -30,8 +30,10 @@ class ProfessionalAvatar extends StatelessWidget {
         .split(RegExp(r'\s+'))
         .where((word) => word.isNotEmpty)
         // "Dr." is a title, not a name: "Dr. Mona Adel" reads as MA, not DM.
-        .where((word) => !RegExp(r'^(dr\.?|د\.?)$', caseSensitive: false)
-            .hasMatch(word))
+        .where(
+          (word) =>
+              !RegExp(r'^(dr\.?|د\.?)$', caseSensitive: false).hasMatch(word),
+        )
         .toList();
     if (words.isEmpty) return '';
     if (words.length == 1) return words.first.characters.take(1).toString();
@@ -96,10 +98,7 @@ class ProfessionalCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfessionalAvatar(
-                name: name,
-                avatarUrl: professional.avatarUrl,
-              ),
+              ProfessionalAvatar(name: name, avatarUrl: professional.avatarUrl),
               const SizedBox(width: EjadahSpacing.sm),
               Expanded(
                 child: Column(

@@ -41,11 +41,12 @@ class ProfessionalProfileFailed extends ProfessionalProfileState {
   final Failure failure;
 }
 
-final professionalProfileControllerProvider = NotifierProvider.family<
-  ProfessionalProfileController,
-  ProfessionalProfileState,
-  String
->(ProfessionalProfileController.new);
+final professionalProfileControllerProvider =
+    NotifierProvider.family<
+      ProfessionalProfileController,
+      ProfessionalProfileState,
+      String
+    >(ProfessionalProfileController.new);
 
 /// Owns one profile, keyed by slug — the slug is what a shared link carries.
 class ProfessionalProfileController

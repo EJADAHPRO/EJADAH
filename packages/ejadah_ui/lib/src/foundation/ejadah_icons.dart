@@ -112,8 +112,21 @@ class DirectionalIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // `icon.matchTextDirection` is the half this widget must not repeat.
+    //
+    // Every glyph on the mirror list is a Material icon that already carries
+    // `matchTextDirection: true`, and `Icon` applies that flip itself in RTL.
+    // Adding `Transform.flip` on top of it composed to the identity, so all
+    // twenty list-row chevrons in the app pointed the wrong way in Arabic —
+    // while the app-bar back arrow beside them, drawn as a bare `Icon`,
+    // pointed the right way. The contradiction was visible on one screen.
+    //
+    // The flip stays for the case it was written for: a glyph on the mirror
+    // list that does *not* self-mirror, which a future icon swap can produce
+    // without touching this file.
     final shouldMirror =
         EjadahIcons.mirrorsInRtl(icon) &&
+        !icon.matchTextDirection &&
         Directionality.of(context) == TextDirection.rtl;
 
     final glyph = Icon(

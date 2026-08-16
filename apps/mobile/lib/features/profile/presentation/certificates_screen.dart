@@ -142,9 +142,9 @@ class CertificatesScreen extends ConsumerWidget {
     );
     if (!confirmed || !context.mounted) return;
     try {
-      await ref.read(profileRepositoryProvider).deleteCertificate(
-        certificate.id,
-      );
+      await ref
+          .read(profileRepositoryProvider)
+          .deleteCertificate(certificate.id);
       ref.invalidate(myCertificatesProvider);
     } on Failure catch (failure) {
       if (!context.mounted) return;
@@ -290,19 +290,21 @@ class _AddCertificateScreenState extends ConsumerState<AddCertificateScreen> {
 
     final title = _title.text.trim();
     try {
-      await ref.read(profileRepositoryProvider).addStatedCertificate(
-        title: LocalizedText(en: title, ar: title),
-        issuer: LocalizedText(
-          en: _issuer.text.trim(),
-          ar: _issuer.text.trim(),
-        ),
-        issuedOn: DateTime.utc(
-          _issuedOn.year,
-          _issuedOn.month,
-          _issuedOn.day,
-        ),
-        cpdPoints: int.tryParse(_points.text.trim()) ?? 0,
-      );
+      await ref
+          .read(profileRepositoryProvider)
+          .addStatedCertificate(
+            title: LocalizedText(en: title, ar: title),
+            issuer: LocalizedText(
+              en: _issuer.text.trim(),
+              ar: _issuer.text.trim(),
+            ),
+            issuedOn: DateTime.utc(
+              _issuedOn.year,
+              _issuedOn.month,
+              _issuedOn.day,
+            ),
+            cpdPoints: int.tryParse(_points.text.trim()) ?? 0,
+          );
       if (!mounted) return;
       Navigator.of(context).pop(true);
     } on ValidationFailure catch (failure) {

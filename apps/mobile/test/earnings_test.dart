@@ -133,10 +133,7 @@ void main() {
     // Not folded into the headline figure, and the reason it is not payable
     // yet is stated rather than left as a number that will not move.
     expect(find.text('بعد انعقاد الجلسات'), findsOneWidget);
-    expect(
-      find.text('تصبح الجلسة قابلة للصرف بعد انتهائها.'),
-      findsOneWidget,
-    );
+    expect(find.text('تصبح الجلسة قابلة للصرف بعد انتهائها.'), findsOneWidget);
   });
 
   testWidgets('an empty ledger routes somewhere rather than dead-ending', (

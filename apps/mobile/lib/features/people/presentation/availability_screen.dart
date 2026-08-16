@@ -45,9 +45,7 @@ class AvailabilityScreen extends ConsumerWidget {
             // the tutor invisible, said before the save rather than after.
             reason: draft.meetsFloor
                 ? null
-                : strings.availabilityFloorHint(
-                    draft.saved.minimumWeeklyHours,
-                  ),
+                : strings.availabilityFloorHint(draft.saved.minimumWeeklyHours),
             child: EjadahPrimaryButton(
               label: strings.saveHours,
               isLoading: draft.isSaving,
@@ -256,7 +254,11 @@ class _Editor extends ConsumerWidget {
 
     // Whole days, in Cairo — a tutor blocking "the 3rd to the 5th" means those
     // days entirely, not from the moment they tapped.
-    final startsAt = DateTime(range.start.year, range.start.month, range.start.day);
+    final startsAt = DateTime(
+      range.start.year,
+      range.start.month,
+      range.start.day,
+    );
     final endsAt = DateTime(
       range.end.year,
       range.end.month,
@@ -316,7 +318,7 @@ class _DayRow extends ConsumerWidget {
               LtrIsland(
                 child: Text(
                   '${draft.forDay(weekday).fold(0, (t, r) => t + r.minutes) ~/ 60}h',
-                  style: type.tabular(fontSize: 12),
+                  style: type.tabular(fontSize: EjadahTypeSize.caption),
                 ),
               ),
             ],

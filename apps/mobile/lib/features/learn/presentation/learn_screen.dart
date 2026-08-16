@@ -187,7 +187,9 @@ class _DepartmentCard extends StatelessWidget {
                     LtrIsland(
                       child: Text(
                         '$courseCount',
-                        style: context.type.tabular(fontSize: 12),
+                        style: context.type.tabular(
+                          fontSize: EjadahTypeSize.caption,
+                        ),
                       ),
                     ),
                     const SizedBox(width: EjadahSpacing.xxs),

@@ -115,19 +115,14 @@ class DashboardRepository {
   Future<TutorDashboard> load() =>
       _client.get('/dashboard/', parse: TutorDashboard.fromJson);
 
-  Future<void> mark(String sessionId) => _client.postVoid(
-    '/dashboard/sessions/$sessionId/mark',
-  );
+  Future<void> mark(String sessionId) =>
+      _client.postVoid('/dashboard/sessions/$sessionId/mark');
 
-  Future<void> setHidden(bool hidden) => _client.putVoid(
-    '/dashboard/visibility',
-    body: {'is_hidden': hidden},
-  );
+  Future<void> setHidden(bool hidden) =>
+      _client.putVoid('/dashboard/visibility', body: {'is_hidden': hidden});
 
-  Future<void> setMeetingUrl(String? url) => _client.putVoid(
-    '/dashboard/meeting-url',
-    body: {'meeting_url': url},
-  );
+  Future<void> setMeetingUrl(String? url) =>
+      _client.putVoid('/dashboard/meeting-url', body: {'meeting_url': url});
 }
 
 final dashboardRepositoryProvider = Provider<DashboardRepository>(

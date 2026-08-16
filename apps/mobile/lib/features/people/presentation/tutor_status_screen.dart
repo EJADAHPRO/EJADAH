@@ -49,19 +49,20 @@ class TutorStatusScreen extends ConsumerWidget {
                   .read(tutorApplicationControllerProvider.notifier)
                   .retry,
             ),
-            TutorApplicationReady(:final application) => application == null
-                // Nothing has been sent. Not an error and not an empty box:
-                // the way in is the answer.
-                ? EjadahEmptyState(
-                    title: strings.becomeTitle,
-                    body: strings.teachLead,
-                    actionLabel: strings.teachStart,
-                    onAction: () => context.go('/teach'),
-                  )
-                : _Status(
-                    application: application,
-                    minimumWeeklyHours: state.snapshot.minimumWeeklyHours,
-                  ),
+            TutorApplicationReady(:final application) =>
+              application == null
+                  // Nothing has been sent. Not an error and not an empty box:
+                  // the way in is the answer.
+                  ? EjadahEmptyState(
+                      title: strings.becomeTitle,
+                      body: strings.teachLead,
+                      actionLabel: strings.teachStart,
+                      onAction: () => context.go('/teach'),
+                    )
+                  : _Status(
+                      application: application,
+                      minimumWeeklyHours: state.snapshot.minimumWeeklyHours,
+                    ),
           },
         ),
       ),
@@ -70,10 +71,7 @@ class TutorStatusScreen extends ConsumerWidget {
 }
 
 class _Status extends ConsumerWidget {
-  const _Status({
-    required this.application,
-    required this.minimumWeeklyHours,
-  });
+  const _Status({required this.application, required this.minimumWeeklyHours});
 
   final TutorApplication application;
 
@@ -182,9 +180,7 @@ class _Status extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: EjadahSpacing.xl),
-                _PlaybookSection(
-                  minimumWeeklyHours: minimumWeeklyHours,
-                ),
+                _PlaybookSection(minimumWeeklyHours: minimumWeeklyHours),
               ],
             ],
           ),

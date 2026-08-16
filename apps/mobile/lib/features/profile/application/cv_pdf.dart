@@ -39,9 +39,7 @@ class CvPdf {
     DateTime? generatedOn,
   }) async {
     final heading = pw.Font.ttf(
-      await rootBundle.load(
-        'packages/ejadah_ui/assets/fonts/Amiri-Bold.ttf',
-      ),
+      await rootBundle.load('packages/ejadah_ui/assets/fonts/Amiri-Bold.ttf'),
     );
     final body = pw.Font.ttf(
       await rootBundle.load(
@@ -118,10 +116,7 @@ class CvPdf {
   }) => pw.Column(
     crossAxisAlignment: pw.CrossAxisAlignment.start,
     children: [
-      pw.Text(
-        name,
-        style: pw.TextStyle(font: heading, fontSize: 24),
-      ),
+      pw.Text(name, style: pw.TextStyle(font: heading, fontSize: 24)),
       pw.SizedBox(height: 4),
       pw.Text(
         stage,

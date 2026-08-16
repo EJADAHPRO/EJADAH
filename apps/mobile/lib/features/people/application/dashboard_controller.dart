@@ -25,17 +25,14 @@ class DashboardController extends AsyncNotifier<TutorDashboard> {
   /// Not optimistic. This moves money — the same reason the payout request is
   /// not optimistic — and a row that ticks and then untricks because the write
   /// failed is worse on a screen about being paid than a moment's wait.
-  Future<Failure?> mark(String sessionId) => _write(
-    () => _repository.mark(sessionId),
-  );
+  Future<Failure?> mark(String sessionId) =>
+      _write(() => _repository.mark(sessionId));
 
-  Future<Failure?> setHidden(bool hidden) => _write(
-    () => _repository.setHidden(hidden),
-  );
+  Future<Failure?> setHidden(bool hidden) =>
+      _write(() => _repository.setHidden(hidden));
 
-  Future<Failure?> setMeetingUrl(String? url) => _write(
-    () => _repository.setMeetingUrl(url),
-  );
+  Future<Failure?> setMeetingUrl(String? url) =>
+      _write(() => _repository.setMeetingUrl(url));
 
   Future<Failure?> _write(Future<void> Function() action) async {
     try {

@@ -1,4 +1,3 @@
-
 import 'package:ejadah_core/ejadah_core.dart';
 import 'package:ejadah_models/ejadah_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -189,7 +188,10 @@ class ProfessionalReview {
 
 /// A professional plus their reviews.
 class ProfessionalProfile {
-  const ProfessionalProfile({required this.professional, required this.reviews});
+  const ProfessionalProfile({
+    required this.professional,
+    required this.reviews,
+  });
 
   final Professional professional;
   final List<ProfessionalReview> reviews;
@@ -276,10 +278,8 @@ class PeopleRepository {
     parse: ProfessionalListPage.fromJson,
   );
 
-  Future<ProfessionalProfile> profile(String slug) => _client.get(
-    '/people/profile/$slug',
-    parse: ProfessionalProfile.fromJson,
-  );
+  Future<ProfessionalProfile> profile(String slug) =>
+      _client.get('/people/profile/$slug', parse: ProfessionalProfile.fromJson);
 
   /// Slots for a window, including the unavailable ones.
   ///

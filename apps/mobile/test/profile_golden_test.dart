@@ -218,7 +218,8 @@ class _FakeProfileRepository implements ProfileRepository {
             ar: 'نايل دنتال ستوديو، الزمالك، القاهرة',
           ),
           bio: const LocalizedText(
-            en: 'Root canal treatment and digital workflows. '
+            en:
+                'Root canal treatment and digital workflows. '
                 'Cairo University, 2023.',
             ar: 'علاج الجذور وسير العمل الرقمي. جامعة القاهرة، 2023.',
           ),

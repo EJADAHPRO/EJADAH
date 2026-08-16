@@ -249,9 +249,7 @@ class _WhatIfGridState extends ConsumerState<_WhatIfGrid> {
                   // Selected while its scenario is generating, so the tap has
                   // an immediate answer on a slow connection.
                   isSelected: _running == item.preset,
-                  onTap: _running != null
-                      ? () {}
-                      : () => _run(item.preset),
+                  onTap: _running != null ? () {} : () => _run(item.preset),
                 ),
             ],
           ),

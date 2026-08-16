@@ -218,8 +218,7 @@ class _NfcEditorScreenState extends ConsumerState<NfcEditorScreen> {
     );
   }
 
-  bool get _hasInvalidLink =>
-      _links.values.any((c) => !_isValidLink(c.text));
+  bool get _hasInvalidLink => _links.values.any((c) => !_isValidLink(c.text));
 
   static bool _isValidLink(String value) {
     final trimmed = value.trim();
@@ -252,21 +251,26 @@ class _NfcEditorScreenState extends ConsumerState<NfcEditorScreen> {
     });
 
     try {
-      await ref.read(profileRepositoryProvider).saveCard(
-        slug: _slug.text.trim(),
-        isPublic: _isPublic,
-        title: LocalizedText(en: _titleEn.text.trim(), ar: _titleAr.text.trim()),
-        clinic: LocalizedText(
-          en: _clinicEn.text.trim(),
-          ar: _clinicAr.text.trim(),
-        ),
-        bio: LocalizedText(en: _bioEn.text.trim(), ar: _bioAr.text.trim()),
-        links: {
-          for (final entry in _links.entries)
-            if (entry.value.text.trim().isNotEmpty)
-              entry.key: entry.value.text.trim(),
-        },
-      );
+      await ref
+          .read(profileRepositoryProvider)
+          .saveCard(
+            slug: _slug.text.trim(),
+            isPublic: _isPublic,
+            title: LocalizedText(
+              en: _titleEn.text.trim(),
+              ar: _titleAr.text.trim(),
+            ),
+            clinic: LocalizedText(
+              en: _clinicEn.text.trim(),
+              ar: _clinicAr.text.trim(),
+            ),
+            bio: LocalizedText(en: _bioEn.text.trim(), ar: _bioAr.text.trim()),
+            links: {
+              for (final entry in _links.entries)
+                if (entry.value.text.trim().isNotEmpty)
+                  entry.key: entry.value.text.trim(),
+            },
+          );
       if (!mounted) return;
       Navigator.of(context).pop();
     } on ValidationFailure catch (failure) {

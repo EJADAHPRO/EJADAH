@@ -203,17 +203,18 @@ class EjadahAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Null hides the back affordance. Back is never the only way back — every
   /// screen also has an edge swipe and a route out of its content.
   final VoidCallback? onBack;
+
   /// Required rather than defaulted to 'Back': an icon-only control with an
   /// English default is a label nobody notices is wrong.
   final String backLabel;
   final Widget? action;
 
   @override
-  Size get preferredSize => const Size.fromHeight(56);
+  Size get preferredSize => const Size.fromHeight(EjadahSizes.appBarHeight);
 
   @override
   Widget build(BuildContext context) => Container(
-    height: 56,
+    height: EjadahSizes.appBarHeight,
     padding: const EdgeInsetsDirectional.symmetric(
       horizontal: EjadahSpacing.xs,
     ),

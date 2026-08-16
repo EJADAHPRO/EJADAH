@@ -80,7 +80,9 @@ class HomeFeed {
 
   factory HomeFeed.fromJson(Map<String, dynamic> json) => HomeFeed(
     persona: HomePersona.fromWire(json['persona'] as String?),
-    primaryAction: HomePrimaryAction.fromWire(json['primary_action'] as String?),
+    primaryAction: HomePrimaryAction.fromWire(
+      json['primary_action'] as String?,
+    ),
     displayName: LocalizedText.fromJson(json['display_name'])!,
     roadmap: json['roadmap'] == null
         ? null
@@ -106,8 +108,10 @@ class HomeFeed {
 }
 
 final homeRepositoryProvider = Provider<HomeRepository>(
-  (ref) =>
-      HomeRepository(ref.watch(apiClientProvider), ref.watch(localStoreProvider)),
+  (ref) => HomeRepository(
+    ref.watch(apiClientProvider),
+    ref.watch(localStoreProvider),
+  ),
 );
 
 class HomeRepository {

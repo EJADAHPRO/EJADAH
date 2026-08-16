@@ -40,7 +40,8 @@ class QrMatrix {
     if (version == null) return null;
 
     final codewords = _codewords(data, version);
-    final builder = _Builder(version)..drawFunctionPatterns()
+    final builder = _Builder(version)
+      ..drawFunctionPatterns()
       ..drawCodewords(codewords);
     final mask = builder.chooseMask();
     builder.applyMask(mask);
@@ -57,7 +58,8 @@ class QrMatrix {
     final version = _versionFor(data.length);
     if (version == null) return null;
 
-    final builder = _Builder(version)..drawFunctionPatterns()
+    final builder = _Builder(version)
+      ..drawFunctionPatterns()
       ..drawCodewords(_codewords(data, version));
     builder.applyMask(mask);
     builder.drawFormatBits(mask);
@@ -188,7 +190,10 @@ class _BitBuffer {
 class _Builder {
   _Builder(this.version)
     : size = version * 4 + 17,
-      modules = List<bool>.filled((version * 4 + 17) * (version * 4 + 17), false),
+      modules = List<bool>.filled(
+        (version * 4 + 17) * (version * 4 + 17),
+        false,
+      ),
       _isFunction = List<bool>.filled(
         (version * 4 + 17) * (version * 4 + 17),
         false,
@@ -340,7 +345,10 @@ class _Builder {
 
   /// The four penalty rules from the specification.
   int _penalty() =>
-      _penaltyRuns() + _penaltyBlocks() + _penaltyFinderLike() + _penaltyRatio();
+      _penaltyRuns() +
+      _penaltyBlocks() +
+      _penaltyFinderLike() +
+      _penaltyRatio();
 
   /// Rule 1: five or more identical modules in a row or column.
   int _penaltyRuns() {
@@ -408,8 +416,7 @@ class _Builder {
     if (at(1) || !at(4) || at(5) || !at(6) || at(9)) return false;
     final trailingLight =
         at(0) && at(2) && at(3) && !at(7) && !at(8) && !at(10);
-    final leadingLight =
-        !at(0) && !at(2) && !at(3) && at(7) && at(8) && at(10);
+    final leadingLight = !at(0) && !at(2) && !at(3) && at(7) && at(8) && at(10);
     return trailingLight || leadingLight;
   }
 

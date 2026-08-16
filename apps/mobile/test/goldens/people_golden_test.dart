@@ -162,11 +162,7 @@ class _SlotGridSample extends StatelessWidget {
         ),
     ];
 
-    return SlotGrid(
-      slots: slots,
-      selected: slots.first,
-      onSelect: (_) {},
-    );
+    return SlotGrid(slots: slots, selected: slots.first, onSelect: (_) {});
   }
 }
 

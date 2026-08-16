@@ -110,12 +110,15 @@ class AvailabilityWindow {
     );
   }
 
-  AvailabilityWindow copyWith({int? weekday, String? startsAt, String? endsAt}) =>
-      AvailabilityWindow(
-        weekday: weekday ?? this.weekday,
-        startsAt: startsAt ?? this.startsAt,
-        endsAt: endsAt ?? this.endsAt,
-      );
+  AvailabilityWindow copyWith({
+    int? weekday,
+    String? startsAt,
+    String? endsAt,
+  }) => AvailabilityWindow(
+    weekday: weekday ?? this.weekday,
+    startsAt: startsAt ?? this.startsAt,
+    endsAt: endsAt ?? this.endsAt,
+  );
 
   static int? _minutesOfDay(String value) {
     final parts = value.split(':');
@@ -169,9 +172,7 @@ class TutorApplication {
       TutorApplication(
         status: ProfessionalStatus.fromWire(json['status'] as String?),
         lastStep: (json['last_step'] as num?)?.toInt() ?? 1,
-        payload: Map<String, dynamic>.from(
-          json['payload'] as Map? ?? const {},
-        ),
+        payload: Map<String, dynamic>.from(json['payload'] as Map? ?? const {}),
         isEditable: json['is_editable'] as bool? ?? false,
         submittedAt: DateTime.tryParse(json['submitted_at'] as String? ?? ''),
         rejectionReason: json['rejection_reason'] as String?,
@@ -204,14 +205,13 @@ class TutorApplicationSnapshot {
 
   static TutorApplicationSnapshot fromJson(Map<String, dynamic> json) =>
       TutorApplicationSnapshot(
-        professionalSharePercent:
-            (json['professional_share_percent'] as num).toInt(),
+        professionalSharePercent: (json['professional_share_percent'] as num)
+            .toInt(),
         minimumWeeklyHours: (json['minimum_weekly_hours'] as num).toInt(),
         missing: (json['missing'] as List<dynamic>? ?? const [])
             .map(
-              (item) => MissingItem.fromJson(
-                Map<String, dynamic>.from(item as Map),
-              ),
+              (item) =>
+                  MissingItem.fromJson(Map<String, dynamic>.from(item as Map)),
             )
             .whereType<MissingItem>()
             .toList(),
@@ -249,10 +249,8 @@ class TutorApplicationRepository {
 
   /// Readable without an account: the pitch states the split before anyone
   /// signs in.
-  Future<TutorApplicationSnapshot> snapshot() => _client.get(
-    '/people/apply',
-    parse: TutorApplicationSnapshot.fromJson,
-  );
+  Future<TutorApplicationSnapshot> snapshot() =>
+      _client.get('/people/apply', parse: TutorApplicationSnapshot.fromJson);
 
   Future<TutorApplication> saveStep({
     required ApplicationStep step,
@@ -265,10 +263,8 @@ class TutorApplicationRepository {
 
   /// Throws [ValidationFailure] carrying **every** missing item, keyed
   /// `step.field`.
-  Future<TutorApplication> submit() => _client.post(
-    '/people/apply/submit',
-    parse: TutorApplication.fromJson,
-  );
+  Future<TutorApplication> submit() =>
+      _client.post('/people/apply/submit', parse: TutorApplication.fromJson);
 
   Future<Playbook> playbook() =>
       _client.get('/people/playbook', parse: Playbook.fromJson);

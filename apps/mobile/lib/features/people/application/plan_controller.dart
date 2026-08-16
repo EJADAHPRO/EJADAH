@@ -183,10 +183,10 @@ class PlanController extends FamilyNotifier<PlanState, Professional> {
   }
 
   Future<void> loadWeek(int index) async {
-    _updateWeek(index, (week) => week.copyWith(
-      isLoading: true,
-      clearFailure: true,
-    ));
+    _updateWeek(
+      index,
+      (week) => week.copyWith(isLoading: true, clearFailure: true),
+    );
 
     final week = state.weeks[index];
     try {

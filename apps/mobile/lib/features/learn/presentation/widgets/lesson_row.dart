@@ -66,7 +66,7 @@ class LessonRow extends StatelessWidget {
           LtrIsland(
             child: Text(
               durationLabel(lesson.durationSeconds),
-              style: type.tabular(fontSize: 12),
+              style: type.tabular(fontSize: EjadahTypeSize.caption),
             ),
           ),
           if (!isLocked && lesson.positionSeconds > 0 && !lesson.isComplete)

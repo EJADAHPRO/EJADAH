@@ -330,9 +330,7 @@ class _Packages extends ConsumerWidget {
                 const SizedBox(height: EjadahSpacing.xxs),
                 Text(
                   package.cadenceSentence(context),
-                  style: context.type.small(
-                    color: EjadahColors.textSecondary,
-                  ),
+                  style: context.type.small(color: EjadahColors.textSecondary),
                 ),
                 const SizedBox(height: EjadahSpacing.sm),
                 Row(
@@ -398,11 +396,8 @@ class _AvailabilityPreview extends ConsumerWidget {
           EjadahSecondaryButton(
             label: strings.pickAnotherWeek,
             expand: false,
-            onPressed: () => openBookingFlow(
-              context,
-              ref,
-              professional: state.professional,
-            ),
+            onPressed: () =>
+                openBookingFlow(context, ref, professional: state.professional),
           ),
         ],
       );
@@ -583,7 +578,8 @@ class _ProfileSkeleton extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Skeleton(width: 160, height: 22),
+                  // The height of the heading it stands in for, not a number.
+                  Skeleton(width: 160, height: EjadahTypeSize.h4),
                   SizedBox(height: EjadahSpacing.xs),
                   Skeleton(width: 220, height: 14),
                 ],

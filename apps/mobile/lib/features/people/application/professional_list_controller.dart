@@ -55,11 +55,12 @@ class ProfessionalListFailed extends ProfessionalListState {
 
 /// One controller per door, keyed by kind, so the three lists keep independent
 /// filters and scroll positions.
-final professionalListControllerProvider = NotifierProvider.family<
-  ProfessionalListController,
-  ProfessionalListState,
-  ServiceKind
->(ProfessionalListController.new);
+final professionalListControllerProvider =
+    NotifierProvider.family<
+      ProfessionalListController,
+      ProfessionalListState,
+      ServiceKind
+    >(ProfessionalListController.new);
 
 class ProfessionalListController
     extends FamilyNotifier<ProfessionalListState, ServiceKind> {
@@ -113,10 +114,8 @@ class ProfessionalListController
   ///
   /// The country-guide crossing lands here: "mentors who made this move" has
   /// to mean this move, not the whole roster.
-  Future<void> showDestination(String iso) => _apply(
-    _query.copyWith(destinations: [iso], page: 1),
-    persist: false,
-  );
+  Future<void> showDestination(String iso) =>
+      _apply(_query.copyWith(destinations: [iso], page: 1), persist: false);
 
   /// Applying a filter resets to page one — staying on page three of a
   /// different result set shows an empty screen for no reason.

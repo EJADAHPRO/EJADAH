@@ -125,7 +125,7 @@ class _Results extends ConsumerWidget {
               LtrIsland(
                 child: Text(
                   '${visible.length}',
-                  style: context.type.tabular(fontSize: 12),
+                  style: context.type.tabular(fontSize: EjadahTypeSize.caption),
                 ),
               ),
               const SizedBox(width: EjadahSpacing.xxs),

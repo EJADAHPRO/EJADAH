@@ -43,10 +43,8 @@ class _SheetFrame extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => GradientBudget(
-    screenName: screenName,
-    child: _body(context),
-  );
+  Widget build(BuildContext context) =>
+      GradientBudget(screenName: screenName, child: _body(context));
 
   Widget _body(BuildContext context) => SafeArea(
     top: false,

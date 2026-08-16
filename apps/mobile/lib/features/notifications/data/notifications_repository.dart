@@ -17,8 +17,9 @@ class NotificationCentre {
       NotificationCentre(
         items: (json['items'] as List<dynamic>? ?? const [])
             .map(
-              (item) =>
-                  AppNotification.fromJson(Map<String, dynamic>.from(item as Map)),
+              (item) => AppNotification.fromJson(
+                Map<String, dynamic>.from(item as Map),
+              ),
             )
             .toList(),
         unread: jsonInt(json['unread']) ?? 0,

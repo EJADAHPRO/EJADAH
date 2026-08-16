@@ -85,7 +85,9 @@ class Earnings {
       Map<String, dynamic>.from(json['summary'] as Map),
     ),
     rows: (json['items'] as List<dynamic>)
-        .map((item) => EarningRow.fromJson(Map<String, dynamic>.from(item as Map)))
+        .map(
+          (item) => EarningRow.fromJson(Map<String, dynamic>.from(item as Map)),
+        )
         .toList(),
     payouts: (json['payouts'] as List<dynamic>)
         .map(

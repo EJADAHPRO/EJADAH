@@ -152,9 +152,7 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                   trailing: Text(
                     strings.manageOnWeb,
-                    style: context.type.caption(
-                      color: EjadahColors.labelMuted,
-                    ),
+                    style: context.type.caption(color: EjadahColors.labelMuted),
                   ),
                 ),
               ],
@@ -167,7 +165,8 @@ class ProfileScreen extends ConsumerWidget {
                   data: (data) => data.shareUrl,
                   orElse: () => null,
                 ),
-                onTap: () => _push(context, ref, 'nfc-card', const NfcCardScreen()),
+                onTap: () =>
+                    _push(context, ref, 'nfc-card', const NfcCardScreen()),
                 trailing: const DirectionalIcon(
                   EjadahIcons.chevronForward,
                   color: EjadahColors.labelMuted,
@@ -200,7 +199,12 @@ class ProfileScreen extends ConsumerWidget {
               EjadahListRow(
                 title: strings.rowCertificates,
                 subtitle: strings.tileCertificatesMeta,
-                onTap: () => _push(context, ref, 'certificates', const CertificatesScreen()),
+                onTap: () => _push(
+                  context,
+                  ref,
+                  'certificates',
+                  const CertificatesScreen(),
+                ),
                 trailing: const DirectionalIcon(
                   EjadahIcons.chevronForward,
                   color: EjadahColors.labelMuted,
@@ -235,7 +239,8 @@ class ProfileScreen extends ConsumerWidget {
               ),
               EjadahListRow(
                 title: strings.rowSettings,
-                onTap: () => _push(context, ref, 'settings', const SettingsScreen()),
+                onTap: () =>
+                    _push(context, ref, 'settings', const SettingsScreen()),
                 trailing: const DirectionalIcon(
                   EjadahIcons.chevronForward,
                   color: EjadahColors.labelMuted,
@@ -273,5 +278,4 @@ class ProfileScreen extends ConsumerWidget {
     );
     ref.invalidate(myCardProvider);
   }
-
 }

@@ -192,9 +192,9 @@ class AuthController extends Notifier<AuthState> {
     // The offline cache holds this account's feed. Leaving it behind would show
     // one person's shortlist and sessions to whoever signs in next on the same
     // device.
-    await ref
-        .read(localStoreProvider)
-        .clearCachedResponses(const [HomeRepository.cacheKey]);
+    await ref.read(localStoreProvider).clearCachedResponses(const [
+      HomeRepository.cacheKey,
+    ]);
 
     state = const Guest();
     await ref.read(analyticsProvider).setUser(userId: null, persona: null);

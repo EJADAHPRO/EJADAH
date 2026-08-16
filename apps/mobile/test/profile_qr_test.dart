@@ -60,8 +60,7 @@ void main() {
     final rows = [
       for (var y = 0; y < matrix.size; y++)
         [
-          for (var x = 0; x < matrix.size; x++)
-            matrix.isDark(x, y) ? '#' : '.',
+          for (var x = 0; x < matrix.size; x++) matrix.isDark(x, y) ? '#' : '.',
         ].join(),
     ];
     expect(rows, _anchor);
@@ -74,11 +73,7 @@ void main() {
     final size = matrix.size;
 
     // The three finder centres are dark, and their separators are light.
-    for (final centre in [
-      (3, 3),
-      (size - 4, 3),
-      (3, size - 4),
-    ]) {
+    for (final centre in [(3, 3), (size - 4, 3), (3, size - 4)]) {
       expect(matrix.isDark(centre.$1, centre.$2), isTrue);
       // The light ring two modules out from the centre.
       expect(matrix.isDark(centre.$1 + 2, centre.$2), isFalse);
@@ -111,9 +106,11 @@ const Map<String, String> _payloads = {
   'short': 'A',
   'card': 'https://ejadah.international/dr/nour-hassan',
   'verify': 'https://ejadah.international/verify/EJ-DEMO-0001',
-  'longHandle': 'https://ejadah.international/dr/'
+  'longHandle':
+      'https://ejadah.international/dr/'
       'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  'longCode': 'https://ejadah.international/verify/'
+  'longCode':
+      'https://ejadah.international/verify/'
       'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',
 };
 

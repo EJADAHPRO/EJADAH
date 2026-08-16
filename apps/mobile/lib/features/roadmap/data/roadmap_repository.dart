@@ -69,19 +69,17 @@ class RoadmapRepository {
   ///
   /// Fetched rather than held in the string tables so the chip the user taps
   /// and the label the scenario is saved with cannot drift apart.
-  Future<List<({WhatIfPreset preset, LocalizedText label})>>
-  whatIfPresets() => _client.get(
-    '/roadmap/what-if-presets',
-    parse: (json) => [
-      for (final item in json['items'] as List<dynamic>? ?? const [])
-        (
-          preset: WhatIfPreset.fromWire(
-            (item as Map)['preset'] as String?,
-          ),
-          label: LocalizedText.fromJson(item['label'])!,
-        ),
-    ],
-  );
+  Future<List<({WhatIfPreset preset, LocalizedText label})>> whatIfPresets() =>
+      _client.get(
+        '/roadmap/what-if-presets',
+        parse: (json) => [
+          for (final item in json['items'] as List<dynamic>? ?? const [])
+            (
+              preset: WhatIfPreset.fromWire((item as Map)['preset'] as String?),
+              label: LocalizedText.fromJson(item['label'])!,
+            ),
+        ],
+      );
 
   Future<RoadmapView> whatIf(String id, WhatIfPreset preset) => _client.post(
     '/roadmap/$id/what-if',

@@ -129,8 +129,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         // than a second implementation. `/dr/{slug}` is canonical (REGISTER
         // conflict 11), but a card printed with the old one must still resolve.
         path: '/card/:handle',
-        redirect: (context, state) =>
-            '/dr/${state.pathParameters['handle']}',
+        redirect: (context, state) => '/dr/${state.pathParameters['handle']}',
       ),
       GoRoute(
         path: '/dr/:slug',
@@ -228,9 +227,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/programmes',
         builder: (context, state) => _screen(
           'programmes',
-          ProgrammesScreen(
-            countryIso: state.uri.queryParameters['country'],
-          ),
+          ProgrammesScreen(countryIso: state.uri.queryParameters['country']),
         ),
       ),
       GoRoute(

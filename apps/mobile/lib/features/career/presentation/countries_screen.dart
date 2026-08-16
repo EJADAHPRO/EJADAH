@@ -146,9 +146,7 @@ class _CountryCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final strings = context.strings;
-    final isSelected = ref
-        .watch(countryComparisonProvider)
-        .contains(guide.iso);
+    final isSelected = ref.watch(countryComparisonProvider).contains(guide.iso);
 
     return EjadahCard(
       onTap: () => context.push('/country/${guide.iso}'),
@@ -204,7 +202,6 @@ class _CountryCard extends ConsumerWidget {
     );
   }
 }
-
 
 /// The compare bar for country guides.
 class _CompareBar extends ConsumerWidget {

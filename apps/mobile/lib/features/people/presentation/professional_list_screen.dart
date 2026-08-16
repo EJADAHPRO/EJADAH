@@ -210,23 +210,35 @@ class _NewThisMonthRail extends StatelessWidget {
       children: [
         SectionHeader(title: context.strings.newThisMonth),
         const SizedBox(height: EjadahSpacing.xs),
-        SizedBox(
-          height: 172,
-          child: ListView.separated(
+        // The rail's height is whatever its tallest card needs, measured
+        // rather than guessed. A fixed 172 fitted at normal type and clipped
+        // the card at 200% — the name alone doubles, and the badges and rate
+        // row with it.
+        //
+        // A `Row` in a horizontal scroll view rather than a horizontal
+        // `ListView`, because `ListView` has no intrinsic height for
+        // `IntrinsicHeight` to measure and would throw. The rail is a handful
+        // of new tutors, so building them all is cheaper than the alternative.
+        IntrinsicHeight(
+          child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            itemCount: result.newThisMonth.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(width: EjadahSpacing.cardGap),
-            itemBuilder: (context, index) {
-              final professional = result.newThisMonth[index];
-              return SizedBox(
-                width: 280,
-                child: ProfessionalCard(
-                  professional: professional,
-                  onTap: () => context.push('/people/who/${professional.slug}'),
-                ),
-              );
-            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (index, professional)
+                    in result.newThisMonth.indexed) ...[
+                  if (index > 0) const SizedBox(width: EjadahSpacing.cardGap),
+                  SizedBox(
+                    width: EjadahSizes.railCardWidth,
+                    child: ProfessionalCard(
+                      professional: professional,
+                      onTap: () =>
+                          context.push('/people/who/${professional.slug}'),
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
         ),
         const SizedBox(height: EjadahSpacing.md),

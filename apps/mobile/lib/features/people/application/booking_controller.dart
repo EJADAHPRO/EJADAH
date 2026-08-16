@@ -147,8 +147,12 @@ class BookingFlowState {
     durationMinutes: durationMinutes ?? this.durationMinutes,
     slots: slots ?? this.slots,
     slotsLoading: slotsLoading ?? this.slotsLoading,
-    slotsFailure: clearSlotsFailure ? null : (slotsFailure ?? this.slotsFailure),
-    selectedSlot: clearSelectedSlot ? null : (selectedSlot ?? this.selectedSlot),
+    slotsFailure: clearSlotsFailure
+        ? null
+        : (slotsFailure ?? this.slotsFailure),
+    selectedSlot: clearSelectedSlot
+        ? null
+        : (selectedSlot ?? this.selectedSlot),
     hold: clearHold ? null : (hold ?? this.hold),
     subject: subject ?? this.subject,
     goal: goal ?? this.goal,
@@ -182,11 +186,12 @@ class BookingFlowArgs {
   int get hashCode => Object.hash(professional.id, packageId);
 }
 
-final bookingFlowControllerProvider = NotifierProvider.family<
-  BookingFlowController,
-  BookingFlowState,
-  BookingFlowArgs
->(BookingFlowController.new);
+final bookingFlowControllerProvider =
+    NotifierProvider.family<
+      BookingFlowController,
+      BookingFlowState,
+      BookingFlowArgs
+    >(BookingFlowController.new);
 
 /// Drives one booking from the first slot tap to the confirmation.
 ///

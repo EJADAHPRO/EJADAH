@@ -37,8 +37,11 @@ class _StaggerGroupState extends State<StaggerGroup> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      _StaggerScope(played: _played, markPlayed: _markPlayed, child: widget.child);
+  Widget build(BuildContext context) => _StaggerScope(
+    played: _played,
+    markPlayed: _markPlayed,
+    child: widget.child,
+  );
 }
 
 class _StaggerScope extends InheritedWidget {
@@ -52,7 +55,8 @@ class _StaggerScope extends InheritedWidget {
   final VoidCallback markPlayed;
 
   @override
-  bool updateShouldNotify(_StaggerScope oldWidget) => played != oldWidget.played;
+  bool updateShouldNotify(_StaggerScope oldWidget) =>
+      played != oldWidget.played;
 }
 
 /// One item of a staggered list.
@@ -61,11 +65,7 @@ class _StaggerScope extends InheritedWidget {
 /// is a plain pass-through, so wrapping an item is never a requirement — a list
 /// that has not opted in simply does not animate.
 class StaggeredIn extends StatefulWidget {
-  const StaggeredIn({
-    required this.index,
-    required this.child,
-    super.key,
-  });
+  const StaggeredIn({required this.index, required this.child, super.key});
 
   /// Position in the list, zero-based.
   final int index;

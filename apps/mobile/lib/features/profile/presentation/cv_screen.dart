@@ -182,20 +182,14 @@ class _Builder extends ConsumerWidget {
     );
   }
 
-  Future<void> _addSection(
-    BuildContext context,
-    WidgetRef ref,
-    Cv cv,
-  ) async {
+  Future<void> _addSection(BuildContext context, WidgetRef ref, Cv cv) async {
     // A screen, not a sheet. The design system's own rule: sheets carry
     // options and confirmations, never forms — a form in a sheet fights the
     // keyboard and loses its place in the back stack.
     final draft = await Navigator.of(context).push<_SectionDraft>(
       MaterialPageRoute(
-        builder: (_) => _SectionEditor(
-          kinds: cv.kinds,
-          warning: cv.patientDataWarning,
-        ),
+        builder: (_) =>
+            _SectionEditor(kinds: cv.kinds, warning: cv.patientDataWarning),
       ),
     );
     if (draft == null || !context.mounted) return;
@@ -267,7 +261,6 @@ class _ExportButtonState extends ConsumerState<_ExportButton> {
       if (mounted) setState(() => _building = false);
     }
   }
-
 }
 
 class _SectionCard extends StatelessWidget {
@@ -384,57 +377,57 @@ class _SectionEditorState extends State<_SectionEditor> {
         body: SafeArea(
           top: false,
           child: EjadahPageBody(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: EjadahSpacing.md),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: EjadahSpacing.md),
 
-                // The same warning, here too: this is where the typing actually
-                // happens, and a reminder on the screen behind it is a reminder
-                // nobody is reading at the moment it matters.
-                InlineAlert(
-                  message: widget.warning(context),
-                  tone: AlertTone.warning,
-                ),
-                const SizedBox(height: EjadahSpacing.md),
+                  // The same warning, here too: this is where the typing actually
+                  // happens, and a reminder on the screen behind it is a reminder
+                  // nobody is reading at the moment it matters.
+                  InlineAlert(
+                    message: widget.warning(context),
+                    tone: AlertTone.warning,
+                  ),
+                  const SizedBox(height: EjadahSpacing.md),
 
-                Text(
-                  type.eyebrowText(strings.cvSectionKind),
-                  style: type.eyebrow(color: EjadahColors.labelMuted),
-                ),
-                const SizedBox(height: EjadahSpacing.xxs),
-                Wrap(
-                  spacing: EjadahSpacing.xxs,
-                  runSpacing: EjadahSpacing.xxs,
-                  children: [
-                    // Only the kinds the server said it accepts — a chip that
-                    // produces a 404 is a chip that should not be offered.
-                    for (final kind in widget.kinds)
-                      EjadahFilterChip(
-                        label: _kindLabel(strings, kind),
-                        isSelected: _kind == kind,
-                        onTap: () => setState(() => _kind = kind),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: EjadahSpacing.md),
-                EjadahInput(
-                  label: strings.cvHeading,
-                  controller: _heading,
-                  textInputAction: TextInputAction.next,
-                ),
-                const SizedBox(height: EjadahSpacing.md),
-                EjadahInput(
-                  label: strings.cvBody,
-                  controller: _body,
-                  maxLines: 6,
-                ),
-                const SizedBox(height: EjadahSpacing.md),
-              ],
+                  Text(
+                    type.eyebrowText(strings.cvSectionKind),
+                    style: type.eyebrow(color: EjadahColors.labelMuted),
+                  ),
+                  const SizedBox(height: EjadahSpacing.xxs),
+                  Wrap(
+                    spacing: EjadahSpacing.xxs,
+                    runSpacing: EjadahSpacing.xxs,
+                    children: [
+                      // Only the kinds the server said it accepts — a chip that
+                      // produces a 404 is a chip that should not be offered.
+                      for (final kind in widget.kinds)
+                        EjadahFilterChip(
+                          label: _kindLabel(strings, kind),
+                          isSelected: _kind == kind,
+                          onTap: () => setState(() => _kind = kind),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: EjadahSpacing.md),
+                  EjadahInput(
+                    label: strings.cvHeading,
+                    controller: _heading,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: EjadahSpacing.md),
+                  EjadahInput(
+                    label: strings.cvBody,
+                    controller: _body,
+                    maxLines: 6,
+                  ),
+                  const SizedBox(height: EjadahSpacing.md),
+                ],
+              ),
             ),
-          ),
           ),
         ),
       ),

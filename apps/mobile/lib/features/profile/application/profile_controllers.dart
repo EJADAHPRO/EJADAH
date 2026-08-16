@@ -7,10 +7,9 @@ import '../data/profile_repository.dart';
 ///
 /// Keyed by slug and deliberately unauthenticated: a signed-out visitor
 /// resolves it exactly as a signed-in one does.
-final publicProfileProvider =
-    FutureProvider.family<PublicProfileView, String>(
-      (ref, slug) => ref.watch(profileRepositoryProvider).publicProfile(slug),
-    );
+final publicProfileProvider = FutureProvider.family<PublicProfileView, String>(
+  (ref, slug) => ref.watch(profileRepositoryProvider).publicProfile(slug),
+);
 
 /// The public certificate check at `/verify/{code}`.
 ///
@@ -38,4 +37,3 @@ final cpdLedgerProvider = FutureProvider<CpdLedger>(
 final notificationPreferencesProvider = FutureProvider<NotificationPreferences>(
   (ref) => ref.watch(profileRepositoryProvider).notificationPreferences(),
 );
-
