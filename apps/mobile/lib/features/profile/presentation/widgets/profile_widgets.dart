@@ -350,3 +350,17 @@ class SettingsToggleRow extends StatelessWidget {
     ),
   );
 }
+
+/// The career stage, in the reader's language.
+///
+/// Shared rather than per-screen: it appears on the profile header and in the
+/// exported CV, and those two disagreeing about what someone is would be worse
+/// than either being wrong alone.
+String careerStageLabel(EjadahStrings strings, CareerStage stage) =>
+    switch (stage) {
+      CareerStage.student => strings.stageStudent,
+      CareerStage.freshGraduate => strings.stageFreshGraduate,
+      CareerStage.generalDentist => strings.stageGeneralDentist,
+      CareerStage.specialist => strings.stageSpecialist,
+      CareerStage.consultantOwner => strings.stageConsultantOwner,
+    };

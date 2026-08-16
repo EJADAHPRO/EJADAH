@@ -103,7 +103,7 @@ against the handoff; what each is missing is named.
 | **Learn** |
 | Course hub / list / detail | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Player + resume position | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — position, checkpointing and resume are real; playback is a surface until a media dependency lands |
-| Handouts | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — fetched and confirmed; not written to disk, so LN-11 Downloads is not built |
+| Handouts | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — fetched and opened in the platform's viewer. Nothing is written to the device, which is the shape of the feature: LN-11 Downloads is CUT |
 | Flashcards (spaced repetition) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — SM-2 shape, pure scheduler |
 | Quizzes + explanations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — graded server-side; the answer key never reaches the client |
 | IAP purchase | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — flow and restore work; store receipt verification is not implemented, and the path fails rather than granting on an unverified receipt |
@@ -115,7 +115,7 @@ against the handoff; what each is missing is named.
 | Certificates (verified vs stated) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — two CHECK constraints make a forged verification impossible |
 | Public verification `/verify/{code}` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | CPD ledger | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
-| CV builder (PR-07) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PARTIAL — upload-first, sections add/delete/reorder, patient-data warning server-supplied and shown on both screens. No export: the CV is stored and shown, never rendered to a PDF |
+| CV builder (PR-07) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — upload-first, sections add/delete/reorder, patient-data warning server-supplied and shown on both screens, A4 PDF export with Amiri and IBM Plex Sans Arabic embedded and Western numerals. The warning does not print |
 | Settings, notification prefs | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | **Home** |
 | Feed (greeting, roadmap CTA, tiles) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — six states, per-persona CTA, partial-data treatment |
@@ -160,7 +160,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **647 keys** in each language, up from the 374 they arrived
+The tables now hold **648 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -211,7 +211,7 @@ Counts as of this commit, all run from a clean tree:
 | Suite | Count |
 |---|---|
 | `server` (`dart test`, real PostgreSQL) | 244 |
-| `apps/mobile` (`flutter test`) | 151 |
+| `apps/mobile` (`flutter test`) | 163 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
@@ -224,7 +224,8 @@ specification and never ported.
 
 ## The smoothness sweep
 
-Done, in the order the owner set:
+Done, in the order the owner set — 8 of 8, item 5 having been voided by the
+Downloads cut rather than left open:
 
 1. **Swipe-back everywhere.** The theme had no `pageTransitionsTheme` at all,
    so Android's default `ZoomPageTransitionsBuilder` gave no drag-to-dismiss —
@@ -238,10 +239,9 @@ Done, in the order the owner set:
    Learn's format filter was process-lifetime only, with a comment naming
    exactly what was missing. It now goes through `LocalStore` like the others.
 4. **Skeletons on the three lists** — already in place on all three.
-5. **Optimistic + Undo.** Shortlist remove already had it, with a five-second
-   window. **Download delete does not exist**, because downloads do not: LN-11
-   was never built (handouts fetch but do not save to disk), so there is
-   nothing to delete and nothing to undo. Not done, and not fudged.
+5. **Optimistic + Undo.** Shortlist remove has it, with a five-second window.
+   Download delete is **void**: LN-11 Downloads is cut (owner decision, 16 Aug
+   2026), so there is no download to delete. Nothing is outstanding here.
 6. **40ms stagger-in, once.** The `staggerListMs` token existed and nothing
    used it. `StaggeredIn` + `StaggerGroup` now do, on all three lists. "Once"
    is the whole design and it is what the group is for — a stagger that
@@ -269,10 +269,14 @@ Done, in the order the owner set:
   no string says "GMT+2". The offset lives in one place per side, `CairoClock`
   on the server and `CairoTime` in the app, so closing the gap is a data change
   (IANA `Africa/Cairo`) rather than a redesign.
+* **Downloads is cut, not missing.** Owner decision, 16 Aug 2026, recorded as
+  conflict 12 in `REGISTER.md`. Lessons stream and handouts open in the
+  platform's viewer; nothing is written to the device. The wifi-only setting
+  and the keep-downloads logout branch went with it, and `incHandouts` was
+  reworded from "Downloadable handouts", which the cut made untrue.
 * **Video playback is a surface.** Position, five-second checkpointing, the
   ten-second resume rule and completion are all real and server-backed; the
   player advances a playhead on a timer until a media dependency is added.
-* **Handouts fetch but do not save**, so LN-11 Downloads does not exist.
 * **In-app purchase is not verified against the store.** The path exists and
   deliberately fails rather than granting entitlement on an unverified receipt.
   On the pre-submission checklist, not the build order: it needs real store

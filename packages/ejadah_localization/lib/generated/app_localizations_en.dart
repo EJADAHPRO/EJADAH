@@ -349,6 +349,13 @@ class EjadahStringsEn extends EjadahStrings {
       'Nothing here yet. Upload a CV, or add a section — whichever is easier.';
 
   @override
+  String get cvExport => 'Export as PDF';
+
+  @override
+  String get cvExportEmpty =>
+      'Add a section first — an empty CV exports an empty page.';
+
+  @override
   String get cvFileRemoved => 'File removed';
 
   @override
@@ -828,7 +835,7 @@ class EjadahStringsEn extends EjadahStrings {
   String get incCpd => 'CPD credits included';
 
   @override
-  String get incHandouts => 'Downloadable handouts';
+  String get incHandouts => 'Handouts included';
 
   @override
   String get incLifetime => 'Full lifetime access';
@@ -1924,7 +1931,7 @@ class EjadahStringsEn extends EjadahStrings {
   String get tileCertificates => 'Certificates';
 
   @override
-  String get tileCertificatesMeta => 'Download & share';
+  String get tileCertificatesMeta => 'Verified and stated';
 
   @override
   String get tileCountries => 'Country guides';
@@ -2092,9 +2099,6 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get whileRestoring => 'Wait for the restore to finish.';
-
-  @override
-  String get wifiOnlyDownloads => 'Download over Wi-Fi only';
 
   @override
   String get windowFrom => 'From';

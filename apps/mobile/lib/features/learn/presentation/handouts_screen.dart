@@ -4,6 +4,7 @@ import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../documents/document_viewer.dart';
 import '../data/learn_models.dart';
 import '../data/learn_repository.dart';
 import 'widgets/learn_skeletons.dart';
@@ -18,9 +19,10 @@ final _handoutsProvider = FutureProvider.family<List<Handout>, int>(
 /// Each row states the file's size before it is fetched, because a dentist on
 /// a phone plan deserves to know what a tap will cost them.
 ///
-/// **Incomplete.** The bytes are fetched from the server, but the application
-/// has no file-system plugin, so nothing is written to the device and there is
-/// no offline library yet. LN-11 Downloads is not built.
+/// A handout **opens in a viewer**; it is never written to the device. LN-11
+/// Downloads is cut (owner decision, 16 Aug 2026), so there is no offline
+/// library, no storage screen and nothing to delete — a tap fetches the bytes,
+/// shows them, and lets them go.
 class HandoutsScreen extends ConsumerStatefulWidget {
   const HandoutsScreen({
     required this.courseId,
@@ -91,7 +93,7 @@ class _HandoutsScreenState extends ConsumerState<HandoutsScreen> {
                                   handout: handout,
                                   isFetching: _inFlight.contains(handout.id),
                                   isFetched: _fetched.contains(handout.id),
-                                  onFetch: () => _fetch(handout),
+                                  onFetch: () => _open(handout),
                                 ),
                               const SizedBox(height: EjadahSpacing.section),
                             ],
@@ -106,18 +108,28 @@ class _HandoutsScreenState extends ConsumerState<HandoutsScreen> {
     );
   }
 
-  Future<void> _fetch(Handout handout) async {
+  /// Fetches the handout and hands it to the platform's document viewer.
+  ///
+  /// The bytes are held for exactly as long as the viewer needs them. Nothing
+  /// reaches the file system, which is the whole shape of the feature after
+  /// Downloads was cut.
+  Future<void> _open(Handout handout) async {
     if (_inFlight.contains(handout.id)) return;
     setState(() => _inFlight.add(handout.id));
 
     try {
-      await ref.read(learnRepositoryProvider).fetchHandout(handout.id);
+      final bytes = await ref
+          .read(learnRepositoryProvider)
+          .fetchHandout(handout.id);
       if (!mounted) return;
       setState(() {
         _inFlight.remove(handout.id);
         _fetched.add(handout.id);
       });
-      showEjadahToast(context, message: context.strings.done);
+      await ref.read(documentViewerProvider)(
+        bytes: bytes,
+        name: handout.title(context),
+      );
     } on Failure catch (failure) {
       if (!mounted) return;
       setState(() => _inFlight.remove(handout.id));
@@ -160,7 +172,8 @@ class _HandoutRow extends StatelessWidget {
         ),
         const SizedBox(width: EjadahSpacing.xs),
         Icon(
-          isFetched ? EjadahIcons.check : EjadahIcons.download,
+          // Opens, not downloads — the glyph has to agree with what happens.
+          isFetched ? EjadahIcons.check : EjadahIcons.externalLink,
           size: EjadahIconSize.inline,
           color: isFetched ? EjadahColors.successText : EjadahColors.labelMuted,
         ),

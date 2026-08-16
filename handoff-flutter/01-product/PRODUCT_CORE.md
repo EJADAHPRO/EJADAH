@@ -64,7 +64,6 @@ LEARN (PRIMARY)
 ├─ Flashcards (deck → session → summary)                 SECONDARY
 ├─ Quiz (per-question feedback → score; <60% offers 1 session) SECONDARY
 ├─ Course complete (certificate earned)                  SECONDARY
-└─ Downloads (storage, remove)                           SECONDARY
 
 CAREER (PRIMARY)
 ├─ Career hub (roadmap entry · database entry · guides grid · shortlist tile)
@@ -114,7 +113,7 @@ PROFILE (PRIMARY)
 ├─ CPD ledger                                            SECONDARY
 ├─ My subscription (Premium · renews 30 Jan 2027 · read-only) SECONDARY
 ├─ Invite a colleague (+1 month after the 6)             SECONDARY
-├─ Settings (language, notif prefs ×3, wifi-only, cache, legal, version) SECONDARY
+├─ Settings (language, notif prefs ×3, cache, legal, version) SECONDARY
 ├─ Log out (keeps-downloads option)                      SHEET
 └─ Delete account (2-step, states losses + tax-kept invoices) SECONDARY
 

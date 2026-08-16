@@ -1,5 +1,4 @@
 import 'package:ejadah_localization/ejadah_localization.dart';
-import 'package:ejadah_models/ejadah_models.dart';
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,7 +70,7 @@ class ProfileScreen extends ConsumerWidget {
                           style: context.type.h5(),
                         ),
                         Text(
-                          _stageLabel(strings, user.stage),
+                          careerStageLabel(strings, user.stage),
                           style: context.type.small(
                             color: EjadahColors.textSecondary,
                           ),
@@ -275,12 +274,4 @@ class ProfileScreen extends ConsumerWidget {
     ref.invalidate(myCardProvider);
   }
 
-  static String _stageLabel(EjadahStrings strings, CareerStage stage) =>
-      switch (stage) {
-        CareerStage.student => strings.stageStudent,
-        CareerStage.freshGraduate => strings.stageFreshGraduate,
-        CareerStage.generalDentist => strings.stageGeneralDentist,
-        CareerStage.specialist => strings.stageSpecialist,
-        CareerStage.consultantOwner => strings.stageConsultantOwner,
-      };
 }

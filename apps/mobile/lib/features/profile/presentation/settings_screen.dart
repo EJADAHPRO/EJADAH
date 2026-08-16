@@ -27,7 +27,6 @@ class SettingsScreen extends ConsumerWidget {
     final strings = context.strings;
     final language = ref.watch(languageProvider);
     final preferences = ref.watch(notificationPreferencesProvider);
-    final wifiOnly = ref.watch(wifiOnlyDownloadsProvider);
 
     return Scaffold(
       appBar: EjadahAppBar(
@@ -109,13 +108,6 @@ class SettingsScreen extends ConsumerWidget {
 
               const SizedBox(height: EjadahSpacing.lg),
               SectionHeader(title: strings.toolsLabel),
-              // Wi-fi-only downloads. A device preference, not an account one.
-              _Toggle(
-                title: strings.wifiOnlyDownloads,
-                value: wifiOnly,
-                onChanged: (value) =>
-                    ref.read(wifiOnlyDownloadsProvider.notifier).set(value),
-              ),
               EjadahListRow(
                 title: strings.clearCache,
                 onTap: () {

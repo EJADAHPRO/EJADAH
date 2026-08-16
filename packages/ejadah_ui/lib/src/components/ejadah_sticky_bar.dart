@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../theme/ejadah_theme.dart';
 import '../tokens/ejadah_tokens.dart';
-import 'ejadah_shell.dart';
 
 /// The bar that keeps a screen's decision reachable.
 ///
@@ -48,27 +47,43 @@ class EjadahStickyBar extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: EjadahPageBody(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: EjadahSpacing.sm),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (reason != null) ...[
-                  Semantics(
-                    // Announced when it appears: a reason nobody hears is a
-                    // reason only sighted users get.
-                    liveRegion: true,
-                    child: Text(
-                      reason!,
-                      style: type.caption(color: EjadahColors.textSecondary),
+        // Deliberately not [EjadahPageBody]: its `Align` fills whatever height
+        // it is given, which as a `bottomNavigationBar` means the whole screen
+        // and a body squeezed to nothing. `heightFactor: 1` hugs the child
+        // instead, while keeping the same centred column and page gutter.
+        child: Align(
+          alignment: Alignment.topCenter,
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: EjadahSizes.phoneContentMaxWidth,
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: context.ejadah.gutter,
+                end: context.ejadah.gutter,
+                top: EjadahSpacing.sm,
+                bottom: EjadahSpacing.sm,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (reason != null) ...[
+                    Semantics(
+                      // Announced when it appears: a reason nobody hears is a
+                      // reason only sighted users get.
+                      liveRegion: true,
+                      child: Text(
+                        reason!,
+                        style: type.caption(color: EjadahColors.textSecondary),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: EjadahSpacing.xs),
+                    const SizedBox(height: EjadahSpacing.xs),
+                  ],
+                  child,
                 ],
-                child,
-              ],
+              ),
             ),
           ),
         ),

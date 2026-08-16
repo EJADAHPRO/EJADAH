@@ -347,6 +347,13 @@ class EjadahStringsAr extends EjadahStrings {
       'لا شيء هنا بعد. ارفع سيرة ذاتية، أو أضف قسمًا — أيهما أسهل.';
 
   @override
+  String get cvExport => 'تصدير بصيغة PDF';
+
+  @override
+  String get cvExportEmpty =>
+      'أضف قسمًا أولًا — السيرة الفارغة تُصدَّر صفحة فارغة.';
+
+  @override
   String get cvFileRemoved => 'تم حذف الملف';
 
   @override
@@ -828,7 +835,7 @@ class EjadahStringsAr extends EjadahStrings {
   String get incCpd => 'ساعات تطوير مهني معتمدة';
 
   @override
-  String get incHandouts => 'مرفقات قابلة للتحميل';
+  String get incHandouts => 'مرفقات مع الدورة';
 
   @override
   String get incLifetime => 'وصول دائم';
@@ -1917,7 +1924,7 @@ class EjadahStringsAr extends EjadahStrings {
   String get tileCertificates => 'الشهادات';
 
   @override
-  String get tileCertificatesMeta => 'تحميل ومشاركة';
+  String get tileCertificatesMeta => 'موثّقة ومُصرَّح بها';
 
   @override
   String get tileCountries => 'أدلة الدول';
@@ -2084,9 +2091,6 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get whileRestoring => 'انتظر حتى تنتهي عملية الاستعادة.';
-
-  @override
-  String get wifiOnlyDownloads => 'التنزيل عبر الواي فاي فقط';
 
   @override
   String get windowFrom => 'من';

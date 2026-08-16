@@ -17,9 +17,10 @@ ID → Screen · auth · states designed (D=default L=loading E=empty X=error O=
 **LN-02 Course list** public · D,E ✓ (**add L**) · format filter persists.
 **LN-03 Course detail** public · D ✓ · Start/Buy per ownership; lesson-1 preview always. `/course/{slug}`
 **LN-04 IAP sheet** auth · D,X ✓ · store wording, restore.
-**LN-05 Player** owner · D ✓ (**document offline-downloaded playback**) · resume ≤10s.
+**LN-05 Player** owner · D ✓ · resume ≤10s. Streams; there is no downloaded playback (LN-11 CUT).
 **LN-06 Lesson complete** owner · D ✓ · 5s auto + cancel.
-**LN-07 Handouts / LN-08 Flashcards / LN-09 Quiz / LN-10 Course complete / LN-11 Downloads** owner · D,E ✓ · quiz <60% offers one session.
+**LN-07 Handouts / LN-08 Flashcards / LN-09 Quiz / LN-10 Course complete** owner · D,E ✓ · quiz <60% offers one session. Handouts open in-viewer.
+~~**LN-11 Downloads**~~ — **CUT**, owner decision 16 Aug 2026. Lessons stream; handouts open in-viewer; nothing is written to the device.
 **CR-01 Career hub** public · D ✓. `/career`
 **CR-02..04 Roadmap funnel Q1–Q4** guest ✓ · D,X; draft resume ✓. `/roadmap`
 **CR-05 Generating** · D,X ✓ · min-display pacing.
@@ -58,7 +59,6 @@ ID → Screen · auth · states designed (D=default L=loading E=empty X=error O=
 |---|---|---|
 | Loading skeletons | LN-01/02, CR-09, PE-02 | Home's shimmer blocks, shaped per card type |
 | Notification L | HM-02 | 3 row skeletons |
-| Offline player note | LN-05 | banner + downloaded-badge; undownloaded lesson rows disabled w/ reason |
 | Guest treatment doc | Learn+People | browse open; Start/Buy/Book → auth sheet w/ return-to intent |
 | Partial data | Home only by design | others fail whole-section to X |
 | First-use vs returning | Home ✓, others n/a | — |

@@ -734,6 +734,18 @@ abstract class EjadahStrings {
   /// **'Nothing here yet. Upload a CV, or add a section — whichever is easier.'**
   String get cvEmpty;
 
+  /// No description provided for @cvExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as PDF'**
+  String get cvExport;
+
+  /// No description provided for @cvExportEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a section first — an empty CV exports an empty page.'**
+  String get cvExportEmpty;
+
   /// No description provided for @cvFileRemoved.
   ///
   /// In en, this message translates to:
@@ -1595,7 +1607,7 @@ abstract class EjadahStrings {
   /// No description provided for @incHandouts.
   ///
   /// In en, this message translates to:
-  /// **'Downloadable handouts'**
+  /// **'Handouts included'**
   String get incHandouts;
 
   /// No description provided for @incLifetime.
@@ -3599,7 +3611,7 @@ abstract class EjadahStrings {
   /// No description provided for @tileCertificatesMeta.
   ///
   /// In en, this message translates to:
-  /// **'Download & share'**
+  /// **'Verified and stated'**
   String get tileCertificatesMeta;
 
   /// No description provided for @tileCountries.
@@ -3913,12 +3925,6 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Wait for the restore to finish.'**
   String get whileRestoring;
-
-  /// No description provided for @wifiOnlyDownloads.
-  ///
-  /// In en, this message translates to:
-  /// **'Download over Wi-Fi only'**
-  String get wifiOnlyDownloads;
 
   /// No description provided for @windowFrom.
   ///

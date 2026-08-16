@@ -39,15 +39,3 @@ final notificationPreferencesProvider = FutureProvider<NotificationPreferences>(
   (ref) => ref.watch(profileRepositoryProvider).notificationPreferences(),
 );
 
-/// Whether downloads are restricted to wi-fi.
-///
-/// A device preference, so it stays on the device rather than on the account.
-final wifiOnlyDownloadsProvider =
-    NotifierProvider<WifiOnlyDownloads, bool>(WifiOnlyDownloads.new);
-
-class WifiOnlyDownloads extends Notifier<bool> {
-  @override
-  bool build() => true;
-
-  void set(bool value) => state = value;
-}

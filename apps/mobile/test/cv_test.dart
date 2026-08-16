@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:ejadah_core/ejadah_core.dart';
 import 'package:ejadah_localization/ejadah_localization.dart';
+import 'package:ejadah_mobile/features/auth/auth_controller.dart';
+import 'package:ejadah_mobile/features/documents/document_viewer.dart';
 import 'package:ejadah_mobile/features/profile/data/cv_repository.dart';
 import 'package:ejadah_mobile/features/profile/presentation/cv_screen.dart';
 import 'package:ejadah_mobile/features/uploads/file_field.dart';
@@ -35,6 +37,9 @@ void main() {
     await tester.pumpWidget(_harness(_FakeRepository(cv: _cv())));
     await tester.pumpAndSettle();
 
+    // Below the fold now that the export bar is pinned; a user scrolls to it.
+    await tester.ensureVisible(find.text('أضف قسمًا'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('أضف قسمًا'));
     await tester.pumpAndSettle();
 
@@ -79,6 +84,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // Below the fold now that the export bar is pinned; a user scrolls to it.
+    await tester.ensureVisible(find.text('أضف قسمًا'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('أضف قسمًا'));
     await tester.pumpAndSettle();
 
@@ -95,6 +103,9 @@ void main() {
     await tester.pumpWidget(_harness(repository));
     await tester.pumpAndSettle();
 
+    // Below the fold now that the export bar is pinned; a user scrolls to it.
+    await tester.ensureVisible(find.text('أضف قسمًا'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('أضف قسمًا'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('حفظ'));
@@ -143,6 +154,53 @@ void main() {
     );
   });
 
+  testWidgets('export is offered, disabled with a reason on an empty CV', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_harness(_FakeRepository(cv: _cv())));
+    await tester.pumpAndSettle();
+
+    // The reason is on the bar, above the button, before any tap.
+    expect(find.text('تصدير بصيغة PDF'), findsOneWidget);
+    expect(
+      find.text('أضف قسمًا أولًا — السيرة الفارغة تُصدَّر صفحة فارغة.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('a CV with a section hands the PDF to the viewer', (
+    tester,
+  ) async {
+    Uint8List? handed;
+    await tester.pumpWidget(
+      _harness(
+        _FakeRepository(
+          cv: _cv(
+            sections: [
+              const CvSection(
+                id: 's1',
+                position: 1,
+                kind: 'summary',
+                heading: 'Summary',
+                body: 'Consultant endodontist.',
+              ),
+            ],
+          ),
+        ),
+        onViewed: (bytes) => handed = bytes,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('تصدير بصيغة PDF'));
+    await tester.pumpAndSettle();
+
+    // A real PDF, handed to the platform's viewer. The app writes no file:
+    // the viewer is where a user already prints, saves or sends.
+    expect(handed, isNotNull);
+    expect(String.fromCharCodes(handed!.take(5)), '%PDF-');
+  });
+
   testWidgets('a failure states what happened and offers a retry', (
     tester,
   ) async {
@@ -155,10 +213,21 @@ void main() {
   });
 }
 
-Widget _harness(CvRepository repository) => ProviderScope(
+Widget _harness(
+  CvRepository repository, {
+  void Function(Uint8List bytes)? onViewed,
+}) => ProviderScope(
   overrides: [
     cvRepositoryProvider.overrideWithValue(repository),
     uploadRepositoryProvider.overrideWithValue(_FakeUploads()),
+    // A widget test cannot open a document viewer; this captures what would
+    // have been handed to one, which is the part that can be wrong.
+    documentViewerProvider.overrideWithValue(
+      ({required Uint8List bytes, required String name}) async =>
+          onViewed?.call(bytes),
+    ),
+    // The export prints the account's name and stage.
+    authControllerProvider.overrideWith(_SignedIn.new),
     filePickerProvider.overrideWithValue(
       (purpose) async =>
           PickedFile(name: 'cv.pdf', bytes: Uint8List.fromList([0x25, 0x50])),
@@ -197,6 +266,25 @@ Cv _cv({
     'other',
   ],
 }) => Cv(sections: sections, patientDataWarning: _warning, kinds: kinds);
+
+/// A signed-in account, so the export has a name and a stage to print.
+class _SignedIn extends AuthController {
+  @override
+  AuthState build() => const Authenticated(
+    AuthUser(
+      id: 'u1',
+      email: 'mona@ejadah.test',
+      fullName: LocalizedText(en: 'Dr. Mona Adel', ar: 'د. منى عادل'),
+      role: UserRole.student,
+      stage: CareerStage.generalDentist,
+      language: AppLanguage.ar,
+      emailVerified: true,
+      professionalStatus: ProfessionalStatus.none,
+      isPremium: true,
+      premiumRenewsOn: null,
+    ),
+  );
+}
 
 class _FakeRepository implements CvRepository {
   _FakeRepository({this.cv, this.failure});

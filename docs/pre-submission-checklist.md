@@ -50,8 +50,9 @@ deliberately outside this app. Until it exists, an application that arrives is
 an application nobody answers, and the promise on PE-12 is one the product
 cannot keep.
 
-Approving by hand is a one-line `UPDATE` on `tutor_applications`, so this does
-not block a build; it blocks the first real tutor.
+Approving by hand is documented in `docs/operations.md` — two statements, one
+transaction, rehearsed against the real schema. So this does not block a build;
+it blocks the first real tutor only until someone runs them.
 
 ### 7. Real rosters and photographs
 Every tutor image in the handoff is a placeholder and unlicensed for

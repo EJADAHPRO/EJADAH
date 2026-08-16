@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../auth/auth_controller.dart';
+import '../../documents/document_viewer.dart';
 import '../../uploads/file_field.dart';
 import '../../uploads/upload_repository.dart' as uploads;
 import '../application/cv_controller.dart';
+import '../application/cv_pdf.dart';
+import 'widgets/profile_widgets.dart';
 import '../data/cv_repository.dart';
 
 /// PR-07 — the CV builder. Upload-first.
@@ -38,6 +42,15 @@ class CvScreen extends ConsumerWidget {
           backLabel: strings.back,
           onBack: () =>
               context.canPop() ? context.pop() : context.go('/profile'),
+        ),
+        // The export is the screen's one decision, and the section list grows
+        // past the fold. Sticky, with the reason on it when there is nothing
+        // worth exporting.
+        bottomNavigationBar: cv.whenOrNull(
+          data: (data) => EjadahStickyBar(
+            reason: data.typed.isEmpty ? strings.cvExportEmpty : null,
+            child: _ExportButton(cv: data),
+          ),
         ),
         body: SafeArea(
           top: false,
@@ -198,6 +211,63 @@ class _Builder extends ConsumerWidget {
       showEjadahToast(context, message: failure.message(context));
     }
   }
+}
+
+/// Renders the CV to A4 and hands it to the platform's viewer.
+///
+/// Nothing is written to the device — the viewer is where a user already
+/// prints, saves or sends. Same seam a handout uses, for the same reason.
+class _ExportButton extends ConsumerStatefulWidget {
+  const _ExportButton({required this.cv});
+
+  final Cv cv;
+
+  @override
+  ConsumerState<_ExportButton> createState() => _ExportButtonState();
+}
+
+class _ExportButtonState extends ConsumerState<_ExportButton> {
+  bool _building = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = context.strings;
+    final hasContent = widget.cv.typed.isNotEmpty;
+
+    return EjadahPrimaryButton(
+      label: strings.cvExport,
+      isLoading: _building,
+      onPressed: hasContent && !_building ? _export : null,
+      disabledReason: strings.cvExportEmpty,
+      onDisabledTap: (reason) => showEjadahToast(context, message: reason),
+    );
+  }
+
+  Future<void> _export() async {
+    final strings = context.strings;
+    final user = ref.read(authControllerProvider).user;
+    setState(() => _building = true);
+
+    try {
+      final bytes = await CvPdf.build(
+        cv: widget.cv,
+        name: user?.fullName ?? const LocalizedText.same(''),
+        stage: user == null ? '' : careerStageLabel(strings, user.stage),
+        language: context.language,
+        // The section headings the screen shows, so the document and the
+        // editor cannot disagree about what a section is called.
+        headingFor: (kind) => _kindLabel(strings, kind),
+      );
+      if (!mounted) return;
+      await ref.read(documentViewerProvider)(
+        bytes: bytes,
+        name: strings.cvTitle,
+      );
+    } finally {
+      if (mounted) setState(() => _building = false);
+    }
+  }
+
 }
 
 class _SectionCard extends StatelessWidget {

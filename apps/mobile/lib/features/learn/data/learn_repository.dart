@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:ejadah_core/ejadah_core.dart';
 import 'package:ejadah_models/ejadah_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,9 +75,14 @@ class LearnRepository {
   );
 
   /// Fetches a handout's bytes. Returns the byte count the server delivered.
-  Future<int> fetchHandout(int handoutId) => _client.get(
+  /// The handout's own bytes, for opening in a viewer.
+  ///
+  /// Returned rather than counted: LN-11 Downloads is cut, so a handout is
+  /// something you open and read, not something the app keeps. Nothing here
+  /// touches the file system.
+  Future<Uint8List> fetchHandout(int handoutId) => _client.get(
     '/learn/handouts/$handoutId/file',
-    parse: (json) => (json['bytes'] as num?)?.toInt() ?? 0,
+    parse: (json) => base64Decode(json['content_base64'] as String),
   );
 
   // --- Purchase -------------------------------------------------------------
