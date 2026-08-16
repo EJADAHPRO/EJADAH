@@ -182,16 +182,21 @@ class DeliverNotificationsJob implements Job {
   }
 }
 
-/// Moves a tutor's earnings from `pending` to `available` once the work is done.
+/// Releases a tutor's earnings for work they never got round to marking.
 ///
-/// "Done" means every session on the booking has ended and the booking was not
-/// cancelled. Paying before the session would mean clawing money back from
-/// someone who has already spent it; the wait is short and the rule is stated
-/// on the earnings screen rather than left to be inferred from a balance that
-/// does not move.
+/// Marking a session is what normally releases its money — that is what the
+/// dashboard says and what `DashboardService.mark` does. This is the backstop
+/// for the tutor who never marks: a week after the last session, the booking
+/// completes itself and the money becomes available.
 ///
-/// Hourly is enough: nothing here is time-critical to the minute, and a tutor
-/// reading the screen sees `pending` with the session date beside it either way.
+/// Without it, "marking releases your earnings" would quietly mean "and if you
+/// forget, you are never paid", which is not a sentence this product could
+/// stand behind. With it, marking is the fast path rather than the only one.
+///
+/// A cancelled booking is excluded, and its earning was reversed at
+/// cancellation time.
+///
+/// Hourly is enough: nothing here is time-critical to the minute.
 class MatureEarningsJob implements Job {
   const MatureEarningsJob(this._database);
 
@@ -205,24 +210,47 @@ class MatureEarningsJob implements Job {
 
   @override
   Future<String> run() async {
-    final result = await _database.run(
+    // Complete the bookings whose grace window has passed, then release their
+    // money. Two statements rather than one so the booking's own status is
+    // right as well — a `confirmed` booking whose sessions ended a month ago
+    // is a row nobody could explain.
+    final completed = await _database.run(
+      (session) => session.execute("""
+        UPDATE bookings b
+        SET status = 'completed', updated_at = now()
+        WHERE b.status = 'confirmed'
+          AND NOT EXISTS (
+            SELECT 1 FROM booking_sessions s
+            WHERE s.booking_id = b.id
+              AND s.ends_at > now() - INTERVAL '$_graceDays days'
+          )
+          -- A booking with no sessions at all is not a finished one.
+          AND EXISTS (
+            SELECT 1 FROM booking_sessions s WHERE s.booking_id = b.id
+          )
+        """),
+    );
+
+    final released = await _database.run(
       (session) => session.execute("""
         UPDATE earnings e
         SET status = 'available'
         WHERE e.status = 'pending'
-          -- Every session on the booking is over.
-          AND NOT EXISTS (
-            SELECT 1 FROM booking_sessions s
-            WHERE s.booking_id = e.booking_id AND s.ends_at > now()
-          )
-          -- And it is a booking that actually happened.
           AND EXISTS (
             SELECT 1 FROM bookings b
-            WHERE b.id = e.booking_id
-              AND b.status IN ('confirmed', 'completed')
+            WHERE b.id = e.booking_id AND b.status = 'completed'
           )
         """),
     );
-    return 'matured ${result.affectedRows} earnings';
+
+    return 'completed ${completed.affectedRows} bookings, '
+        'released ${released.affectedRows} earnings';
   }
+
+  /// Mirrors `DashboardService.autoCompleteAfterDays`.
+  ///
+  /// Interpolated rather than bound because PostgreSQL will not take a
+  /// parameter inside an interval literal; the value is a compile-time
+  /// constant in this file, never anything a request supplies.
+  static const int _graceDays = 7;
 }

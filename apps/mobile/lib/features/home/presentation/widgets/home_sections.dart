@@ -176,7 +176,8 @@ class HomePrimaryCta extends StatelessWidget {
         strings.becomeTitle,
         strings.becomeBlurb,
         strings.ctaTeaching,
-        '/teach',
+        // "Open teaching dashboard" now opens one.
+        '/teach/dashboard',
       ),
     };
 

@@ -116,6 +116,12 @@ abstract class EjadahStrings {
   /// **'Add a certificate'**
   String get addCertificate;
 
+  /// No description provided for @addMeetingLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your meeting link'**
+  String get addMeetingLink;
+
   /// No description provided for @addTimeOff.
   ///
   /// In en, this message translates to:
@@ -908,6 +914,12 @@ abstract class EjadahStrings {
   /// **'Uploaded'**
   String get cvUploaded;
 
+  /// No description provided for @dashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Teaching'**
+  String get dashboardTitle;
+
   /// No description provided for @daysLeft.
   ///
   /// In en, this message translates to:
@@ -1616,11 +1628,29 @@ abstract class EjadahStrings {
   /// **'I already have an account'**
   String get haveAccount;
 
+  /// No description provided for @hiddenNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden — students cannot find you'**
+  String get hiddenNow;
+
   /// No description provided for @hideExpired.
   ///
   /// In en, this message translates to:
   /// **'Expired hidden'**
   String get hideExpired;
+
+  /// No description provided for @hideMeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You disappear from the marketplace. Sessions already booked still happen.'**
+  String get hideMeBody;
+
+  /// No description provided for @hideMeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide me for now'**
+  String get hideMeTitle;
 
   /// No description provided for @holdCountdown.
   ///
@@ -1754,6 +1784,12 @@ abstract class EjadahStrings {
   /// **'Join'**
   String get join;
 
+  /// No description provided for @joinSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get joinSession;
+
   /// No description provided for @keyFacts.
   ///
   /// In en, this message translates to:
@@ -1838,6 +1874,18 @@ abstract class EjadahStrings {
   /// **'Mark done'**
   String get markDone;
 
+  /// No description provided for @markHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as held'**
+  String get markHeld;
+
+  /// No description provided for @markedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked'**
+  String get markedLabel;
+
   /// No description provided for @mastersEyebrow.
   ///
   /// In en, this message translates to:
@@ -1861,6 +1909,18 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Tutors with a photo and intro video get 3× more bookings. The intro video is 2–3 minutes — introduce yourself and your teaching style.'**
   String get mediaNote;
+
+  /// No description provided for @meetingLinkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Meet or Zoom room'**
+  String get meetingLinkHint;
+
+  /// No description provided for @meetingLinkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting link'**
+  String get meetingLinkLabel;
 
   /// No description provided for @mentoringBlurb.
   ///
@@ -2750,6 +2810,12 @@ abstract class EjadahStrings {
   /// **'Send again in {seconds}s'**
   String resendIn(Object seconds);
 
+  /// No description provided for @restOfWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'THE WEEK AHEAD'**
+  String get restOfWeek;
+
   /// No description provided for @restorePurchases.
   ///
   /// In en, this message translates to:
@@ -3061,6 +3127,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'YOUR NEXT SESSION'**
   String get sessionUpcoming;
+
+  /// No description provided for @sessionWith.
+  ///
+  /// In en, this message translates to:
+  /// **'With {name}'**
+  String sessionWith(Object name);
 
   /// No description provided for @sessionsLabel.
   ///
@@ -3770,6 +3842,18 @@ abstract class EjadahStrings {
   /// **'Times shown in Cairo time.'**
   String get timezoneNote;
 
+  /// No description provided for @todayNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing today.'**
+  String get todayNone;
+
+  /// No description provided for @todaySessions.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY'**
+  String get todaySessions;
+
   /// No description provided for @toolsLabel.
   ///
   /// In en, this message translates to:
@@ -3847,6 +3931,24 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Removed from your shortlist'**
   String get undoRemove;
+
+  /// No description provided for @unmarkedAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Left unmarked, sessions release themselves after {days} days.'**
+  String unmarkedAuto(Object days);
+
+  /// No description provided for @unmarkedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WAITING ON YOU'**
+  String get unmarkedTitle;
+
+  /// No description provided for @unmarkedWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'Marking a session releases what it earned.'**
+  String get unmarkedWhy;
 
   /// No description provided for @upcomingLabel.
   ///
@@ -3991,6 +4093,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Week {n}'**
   String weekLabel(Object n);
+
+  /// No description provided for @weekNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked this week.'**
+  String get weekNone;
 
   /// No description provided for @weeklyShapeTitle.
   ///

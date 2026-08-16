@@ -627,7 +627,7 @@ class PeopleRepository {
   Future<Map<ServiceKind, int>> countsByKind() async {
     final rows = await _query(
       'SELECT kind, count(*) AS n FROM professionals '
-      'WHERE is_approved GROUP BY kind',
+      'WHERE is_approved AND NOT is_hidden GROUP BY kind',
       const {},
       null,
     );
@@ -697,7 +697,8 @@ class PeopleRepository {
       SELECT $_professionalColumns
       FROM professionals p
       $_ratingJoin
-      WHERE p.is_approved AND p.kind = @kind::service_kind
+      WHERE p.is_approved AND NOT p.is_hidden
+        AND p.kind = @kind::service_kind
         AND p.created_at >= date_trunc('month', now())
       ORDER BY p.created_at DESC, p.id
       LIMIT @limit
@@ -718,7 +719,7 @@ class PeopleRepository {
       SELECT $_professionalColumns
       FROM professionals p
       $_ratingJoin
-      WHERE p.slug = @slug AND p.is_approved
+      WHERE p.slug = @slug AND p.is_approved AND NOT p.is_hidden
       ''',
       {'slug': slug},
       null,
@@ -849,7 +850,8 @@ class PeopleRepository {
         '''
         SELECT DISTINCT value FROM (
           SELECT $expression AS value FROM professionals p
-          WHERE p.is_approved AND p.kind = @kind::service_kind
+          WHERE p.is_approved AND NOT p.is_hidden
+        AND p.kind = @kind::service_kind
         ) AS values
         WHERE value IS NOT NULL AND value <> ''
         ORDER BY value

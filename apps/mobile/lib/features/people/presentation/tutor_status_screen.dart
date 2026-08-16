@@ -159,6 +159,11 @@ class _Status extends ConsumerWidget {
                 // The ledger is only reachable once there is one. Offering it
                 // to someone still under review would promise a screen that
                 // has nothing to show.
+                EjadahPrimaryButton(
+                  label: strings.dashboardTitle,
+                  onPressed: () => context.push('/teach/dashboard'),
+                ),
+                const SizedBox(height: EjadahSpacing.sm),
                 Row(
                   children: [
                     Expanded(

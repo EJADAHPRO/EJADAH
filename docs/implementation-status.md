@@ -96,7 +96,8 @@ against the handoff; what each is missing is named.
 | Professional discovery (3 kinds) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
 | Multi-session plans | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — one booking, one row per real time, all-or-nothing |
 | Tutor onboarding (6 steps + playbook) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-10/11/12. Every step draft-saved, blocked submit names every missing item, the 70/30 split is read from config so the pitch and the ledger cannot disagree |
-| Tutor dashboard / availability editor | — | — | ✅ | — | — | — | NOT STARTED — PE-13, PE-14. The application's availability step writes rules; there is no editor afterwards |
+| Availability editor (PE-14) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — weekly rules plus dated exceptions. Removing hours a confirmed session occupies is refused with a 409 that names the students |
+| Tutor dashboard (PE-13) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — today with join links, money as figures, unmarked sessions releasing earnings when marked, the week ahead, and hide-me that keeps confirmed sessions |
 | Tutor earnings (70/30 itemised) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — PE-15. Every row is the whole subtraction in a tabular LTR island; the payout floor states the shortfall in figures; two simultaneous requests produce one payout |
 | File uploads (certificate, photo, CV) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE — type decided by the bytes not the request, owner-only reads answering 404 to a stranger, 5 MB cap checked before decode, recorded in `stored_files` |
 | My bookings | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | COMPLETE |
@@ -160,7 +161,7 @@ conflict register and the handoff checklist.
 
 ## Additions made to the canonical string tables
 
-The tables now hold **648 keys** in each language, up from the 374 they arrived
+The tables now hold **684 keys** in each language, up from the 374 they arrived
 with. `CONTENT.md` states its copy "already exists (or belongs)" in the tables;
 where a screen the handoff specifies had no key for copy the handoff itself
 names, the key was added with the handoff's own wording rather than invented
@@ -210,13 +211,13 @@ Counts as of this commit, all run from a clean tree:
 
 | Suite | Count |
 |---|---|
-| `server` (`dart test`, real PostgreSQL) | 244 |
-| `apps/mobile` (`flutter test`) | 163 |
+| `server` (`dart test`, real PostgreSQL) | 274 |
+| `apps/mobile` (`flutter test`) | 181 |
 | `packages/ejadah_ui` | 50 |
 | `packages/ejadah_localization` | 8 |
 
 `dart analyze` and `flutter analyze` are clean across every package. The
-application is **65,896 lines of Dart across 241 files**; there is no JavaScript,
+application is **70,522 lines of Dart across 259 files**; there is no JavaScript,
 TypeScript, PHP or Vue anywhere in `apps/`, `packages/` or `server/`. The single
 `apps/mobile/web/index.html` is Flutter's own generated bootstrap. The `.html`
 under `reference/` and `uploads/` are the preserved design prototypes, read as
@@ -286,9 +287,6 @@ Downloads cut rather than left open:
   object storage changes that one class and nothing that calls it. There is no
   virus scanning and no image re-encoding — a certificate is served back as the
   bytes that arrived, always as an attachment with `nosniff`, never inline.
-* **A tutor cannot edit their availability after approval.** The application's
-  step 5 writes the rules once; PE-14, the editor, is not built, so changing
-  them today means the roster is edited server-side.
 * **A payout request is not a transfer.** `POST /earnings/payouts` moves the
   ledger rows to `requested` and stops there. Nothing in this repository marks
   one `paid` — that is the admin panel's job, and until it exists a request is

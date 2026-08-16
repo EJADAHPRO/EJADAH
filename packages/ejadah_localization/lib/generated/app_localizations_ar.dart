@@ -18,6 +18,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get addCertificate => 'أضف شهادة';
 
   @override
+  String get addMeetingLink => 'أضف رابط اجتماعك';
+
+  @override
   String get addTimeOff => 'احجب تواريخ';
 
   @override
@@ -436,6 +439,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get cvUploaded => 'تم الرفع';
 
   @override
+  String get dashboardTitle => 'التدريس';
+
+  @override
   String get daysLeft => 'يومًا متبقيًا';
 
   @override
@@ -839,7 +845,17 @@ class EjadahStringsAr extends EjadahStrings {
   String get haveAccount => 'لدي حساب بالفعل';
 
   @override
+  String get hiddenNow => 'مخفي — لا يستطيع الطلاب إيجادك';
+
+  @override
   String get hideExpired => 'المنتهية مخفية';
+
+  @override
+  String get hideMeBody =>
+      'تختفي من السوق. وتبقى الجلسات المحجوزة قائمة كما هي.';
+
+  @override
+  String get hideMeTitle => 'أخفِ ملفي مؤقتًا';
 
   @override
   String holdCountdown(Object time) {
@@ -912,6 +928,9 @@ class EjadahStringsAr extends EjadahStrings {
   String get join => 'انضم';
 
   @override
+  String get joinSession => 'انضم';
+
+  @override
   String get keyFacts => 'الحقائق الأساسية';
 
   @override
@@ -955,6 +974,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get markDone => 'علّم كمنجز';
 
   @override
+  String get markHeld => 'علّمها كمنعقدة';
+
+  @override
+  String get markedLabel => 'معلَّمة';
+
+  @override
   String get mastersEyebrow => 'دراسات عليا · 123 دولة';
 
   @override
@@ -966,6 +991,12 @@ class EjadahStringsAr extends EjadahStrings {
   @override
   String get mediaNote =>
       'المدرّسون أصحاب الصورة والفيديو التعريفي يحصلون على 3 أضعاف الحجوزات. الفيديو من دقيقتين إلى ثلاث — عرّف بنفسك وبأسلوبك في التدريس.';
+
+  @override
+  String get meetingLinkHint => 'غرفتك على Meet أو Zoom';
+
+  @override
+  String get meetingLinkLabel => 'رابط الاجتماع';
 
   @override
   String get mentoringBlurb =>
@@ -1445,6 +1476,9 @@ class EjadahStringsAr extends EjadahStrings {
   }
 
   @override
+  String get restOfWeek => 'بقية الأسبوع';
+
+  @override
   String get restorePurchases => 'استعادة المشتريات';
 
   @override
@@ -1610,6 +1644,11 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get sessionUpcoming => 'جلستك القادمة';
+
+  @override
+  String sessionWith(Object name) {
+    return 'مع $name';
+  }
 
   @override
   String get sessionsLabel => 'جلسة';
@@ -2008,6 +2047,12 @@ class EjadahStringsAr extends EjadahStrings {
   String get timezoneNote => 'المواعيد بتوقيت القاهرة.';
 
   @override
+  String get todayNone => 'لا جلسات اليوم.';
+
+  @override
+  String get todaySessions => 'اليوم';
+
+  @override
   String get toolsLabel => 'الأدوات';
 
   @override
@@ -2047,6 +2092,17 @@ class EjadahStringsAr extends EjadahStrings {
 
   @override
   String get undoRemove => 'أُزيل من قائمتك';
+
+  @override
+  String unmarkedAuto(Object days) {
+    return 'إن لم تُعلَّم، تُفرج الجلسات عن نفسها بعد $days أيام.';
+  }
+
+  @override
+  String get unmarkedTitle => 'لم تُعلَّم بعد';
+
+  @override
+  String get unmarkedWhy => 'تعليم الجلسة كمنعقدة يُفرج عن أرباحها.';
 
   @override
   String get upcomingLabel => 'قادم';
@@ -2125,6 +2181,9 @@ class EjadahStringsAr extends EjadahStrings {
   String weekLabel(Object n) {
     return 'الأسبوع $n';
   }
+
+  @override
+  String get weekNone => 'لا حجوزات هذا الأسبوع.';
 
   @override
   String get weeklyShapeTitle => 'كل أسبوع';

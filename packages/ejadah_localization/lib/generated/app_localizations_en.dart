@@ -18,6 +18,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get addCertificate => 'Add a certificate';
 
   @override
+  String get addMeetingLink => 'Add your meeting link';
+
+  @override
   String get addTimeOff => 'Block dates';
 
   @override
@@ -439,6 +442,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get cvUploaded => 'Uploaded';
 
   @override
+  String get dashboardTitle => 'Teaching';
+
+  @override
   String get daysLeft => 'days left';
 
   @override
@@ -839,7 +845,17 @@ class EjadahStringsEn extends EjadahStrings {
   String get haveAccount => 'I already have an account';
 
   @override
+  String get hiddenNow => 'Hidden — students cannot find you';
+
+  @override
   String get hideExpired => 'Expired hidden';
+
+  @override
+  String get hideMeBody =>
+      'You disappear from the marketplace. Sessions already booked still happen.';
+
+  @override
+  String get hideMeTitle => 'Hide me for now';
 
   @override
   String holdCountdown(Object time) {
@@ -912,6 +928,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get join => 'Join';
 
   @override
+  String get joinSession => 'Join';
+
+  @override
   String get keyFacts => 'KEY FACTS';
 
   @override
@@ -955,6 +974,12 @@ class EjadahStringsEn extends EjadahStrings {
   String get markDone => 'Mark done';
 
   @override
+  String get markHeld => 'Mark as held';
+
+  @override
+  String get markedLabel => 'Marked';
+
+  @override
   String get mastersEyebrow => 'POSTGRADUATE · 123 COUNTRIES';
 
   @override
@@ -966,6 +991,12 @@ class EjadahStringsEn extends EjadahStrings {
   @override
   String get mediaNote =>
       'Tutors with a photo and intro video get 3× more bookings. The intro video is 2–3 minutes — introduce yourself and your teaching style.';
+
+  @override
+  String get meetingLinkHint => 'Your Meet or Zoom room';
+
+  @override
+  String get meetingLinkLabel => 'Meeting link';
 
   @override
   String get mentoringBlurb =>
@@ -1451,6 +1482,9 @@ class EjadahStringsEn extends EjadahStrings {
   }
 
   @override
+  String get restOfWeek => 'THE WEEK AHEAD';
+
+  @override
   String get restorePurchases => 'Restore purchases';
 
   @override
@@ -1617,6 +1651,11 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get sessionUpcoming => 'YOUR NEXT SESSION';
+
+  @override
+  String sessionWith(Object name) {
+    return 'With $name';
+  }
 
   @override
   String get sessionsLabel => 'sessions';
@@ -2016,6 +2055,12 @@ class EjadahStringsEn extends EjadahStrings {
   String get timezoneNote => 'Times shown in Cairo time.';
 
   @override
+  String get todayNone => 'Nothing today.';
+
+  @override
+  String get todaySessions => 'TODAY';
+
+  @override
   String get toolsLabel => 'TOOLS';
 
   @override
@@ -2055,6 +2100,17 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get undoRemove => 'Removed from your shortlist';
+
+  @override
+  String unmarkedAuto(Object days) {
+    return 'Left unmarked, sessions release themselves after $days days.';
+  }
+
+  @override
+  String get unmarkedTitle => 'WAITING ON YOU';
+
+  @override
+  String get unmarkedWhy => 'Marking a session releases what it earned.';
 
   @override
   String get upcomingLabel => 'UPCOMING';
@@ -2133,6 +2189,9 @@ class EjadahStringsEn extends EjadahStrings {
   String weekLabel(Object n) {
     return 'Week $n';
   }
+
+  @override
+  String get weekNone => 'Nothing booked this week.';
 
   @override
   String get weeklyShapeTitle => 'EVERY WEEK';

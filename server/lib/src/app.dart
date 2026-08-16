@@ -22,6 +22,8 @@ import 'modules/notifications/notification_scheduler.dart';
 import 'modules/people/availability_routes.dart';
 import 'modules/people/availability_service.dart';
 import 'modules/people/booking_service.dart';
+import 'modules/people/dashboard_routes.dart';
+import 'modules/people/dashboard_service.dart';
 import 'modules/people/earnings_routes.dart';
 import 'modules/people/earnings_service.dart';
 import 'modules/people/people_repository.dart';
@@ -160,6 +162,13 @@ class EjadahApp {
       ..mount(
         '/earnings',
         earningsRoutes(EarningsService(database, config)).call,
+      )
+      ..mount(
+        '/dashboard',
+        dashboardRoutes(
+          DashboardService(database),
+          EarningsService(database, config),
+        ).call,
       )
       ..mount(
         '/availability',

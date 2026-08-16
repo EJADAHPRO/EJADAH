@@ -32,6 +32,7 @@ import '../features/people/presentation/people_screen.dart';
 import '../features/people/presentation/professional_list_screen.dart';
 import '../features/people/presentation/professional_profile_screen.dart';
 import '../features/people/presentation/tutor_application_screen.dart';
+import '../features/people/presentation/tutor_dashboard_screen.dart';
 import '../features/people/presentation/tutor_status_screen.dart';
 import '../features/profile/presentation/certificates_screen.dart';
 import '../features/profile/presentation/cpd_screen.dart';
@@ -110,6 +111,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         '/teach/status',
         '/teach/earnings',
         '/teach/hours',
+        '/teach/dashboard',
       };
       final needsAccount = gated.any(state.matchedLocation.startsWith);
       if (needsAccount && !auth.isAuthenticated) {
@@ -312,6 +314,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'hours',
             builder: (context, state) =>
                 _screen('availability', const AvailabilityScreen()),
+          ),
+          GoRoute(
+            path: 'dashboard',
+            builder: (context, state) =>
+                _screen('tutor-dashboard', const TutorDashboardScreen()),
           ),
         ],
       ),

@@ -234,14 +234,26 @@ void main() {
   });
 
   group('maturing', () {
-    test('a finished session becomes available; a future one does not',
+    test('a long-finished session releases itself; a recent one waits',
         () async {
-      final past = await _earning(
+      // Marking is what normally releases the money — see `dashboard_test`.
+      // This job is the backstop for the tutor who never marks.
+      final old = await _earning(
         db,
         professionalId,
         studentId,
         gross: 1000,
         fee: 300,
+        sessionEndsAt: DateTime.now().toUtc().subtract(
+          const Duration(days: 8),
+        ),
+      );
+      final recent = await _earning(
+        db,
+        professionalId,
+        studentId,
+        gross: 2000,
+        fee: 600,
         sessionEndsAt: DateTime.now().toUtc().subtract(
           const Duration(hours: 2),
         ),
@@ -250,16 +262,18 @@ void main() {
         db,
         professionalId,
         studentId,
-        gross: 2000,
-        fee: 600,
+        gross: 500,
+        fee: 150,
         sessionEndsAt: DateTime.now().toUtc().add(const Duration(days: 3)),
       );
 
       await MatureEarningsJob(db.database).run();
 
-      expect(await _statusOf(db, past), 'available');
-      // Paying before the session would mean clawing money back from someone
-      // who has already spent it.
+      expect(await _statusOf(db, old), 'available');
+      // Still the tutor's to mark: the nudge on the dashboard has not expired.
+      expect(await _statusOf(db, recent), 'pending');
+      // And paying before the session would mean clawing money back from
+      // someone who has already spent it.
       expect(await _statusOf(db, future), 'pending');
     });
 
@@ -271,7 +285,7 @@ void main() {
         gross: 1000,
         fee: 300,
         sessionEndsAt: DateTime.now().toUtc().subtract(
-          const Duration(hours: 2),
+          const Duration(days: 8),
         ),
         bookingStatus: 'cancelled_by_student',
       );
