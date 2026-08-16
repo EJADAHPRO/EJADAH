@@ -6,6 +6,7 @@
 #   ./tool/dev.sh server    run the Dart backend
 #   ./tool/dev.sh app       run the Flutter app (web)
 #   ./tool/dev.sh test      run every suite
+#   ./tool/dev.sh analyze   analyze every package
 #   ./tool/dev.sh reset     drop and rebuild the development database
 #
 # Everything here is idempotent: running setup twice is safe.
@@ -90,11 +91,32 @@ case "${1:-setup}" in
     ensure_postgres
     say "Backend tests"
     (cd server && dart test)
-    say "Model tests"
-    (cd packages/ejadah_models && dart test)
-    say "Flutter tests"
-    (cd apps/mobile && flutter test)
-    (cd packages/ejadah_ui && flutter test)
+    # Every Flutter package that actually has tests. Discovered rather than
+    # listed: the old list named ejadah_models, which has no test/ directory,
+    # and `dart test` exits 65 on that — under `set -e` the whole run stopped
+    # there and the suites after it never ran. It also never named
+    # ejadah_localization, so the guard tests that keep the two string tables
+    # honest were outside the command that claims to run everything.
+    for package in packages/*/ apps/mobile; do
+      [ -d "$ROOT/$package/test" ] || continue
+      say "Tests: $package"
+      (cd "$ROOT/$package" && flutter test)
+    done
+    ;;
+
+  analyze)
+    # `flutter analyze` on the two pure-Dart packages rewrites their
+    # analysis_options.yaml to add platform excludes, which dirties a clean
+    # checkout. They get `dart analyze`, which is also what they are.
+    for package in . server packages/ejadah_models; do
+      say "Analyzing $package"
+      (cd "$ROOT/$package" && dart analyze)
+    done
+    for package in packages/ejadah_core packages/ejadah_localization \
+                   packages/ejadah_ui apps/mobile; do
+      say "Analyzing $package"
+      (cd "$ROOT/$package" && flutter analyze)
+    done
     ;;
 
   reset)

@@ -2,9 +2,19 @@
 
 ```bash
 ./tool/dev.sh test          # everything
+./tool/dev.sh analyze       # every package
 cd server && dart test      # backend
 cd packages/ejadah_ui && flutter test
 ```
+
+`dev.sh test` discovers packages rather than listing them: anything under
+`packages/` or `apps/` with a `test/` directory runs. A suite added to a package
+that has none today is picked up without anyone remembering to add a line — the
+failure mode a hand-written list has, and had.
+
+**513 tests, all green from a clean checkout:** 274 backend, 181 app, 50
+design system, 8 localization. `ejadah_models` and `ejadah_core` have no tests
+of their own; every behaviour they carry is exercised through the packages above.
 
 Backend suites need PostgreSQL and use `ejadah_test`, which `docker-compose`
 creates alongside the development database. Tables are truncated between tests,

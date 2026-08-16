@@ -1,6 +1,18 @@
 include: package:lints/recommended.yaml
 
 analyzer:
+  # Kept in step with what `flutter analyze` would otherwise write here itself:
+  # this is a pure Dart package, but a stray Flutter command run against it
+  # rewrites this file and dirties a clean checkout. Declaring the excludes
+  # makes that migration a no-op.
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
   language:
     strict-casts: true
     strict-raw-types: true
