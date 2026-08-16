@@ -159,9 +159,22 @@ class _Status extends ConsumerWidget {
                 // The ledger is only reachable once there is one. Offering it
                 // to someone still under review would promise a screen that
                 // has nothing to show.
-                EjadahSecondaryButton(
-                  label: strings.earningsLink,
-                  onPressed: () => context.push('/teach/earnings'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: EjadahSecondaryButton(
+                        label: strings.availabilityTitle,
+                        onPressed: () => context.push('/teach/hours'),
+                      ),
+                    ),
+                    const SizedBox(width: EjadahSpacing.sm),
+                    Expanded(
+                      child: EjadahSecondaryButton(
+                        label: strings.earningsLink,
+                        onPressed: () => context.push('/teach/earnings'),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: EjadahSpacing.xl),
                 _PlaybookSection(
@@ -338,10 +351,12 @@ class _StatusSkeleton extends StatelessWidget {
   const _StatusSkeleton();
 
   @override
-  Widget build(BuildContext context) => const EjadahPageBody(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+  Widget build(BuildContext context) => EjadahPageBody(
+    // Scrollable: a skeleton stands in for content that scrolls, and a fixed
+    // column of blocks overflows on a short viewport — which paints Flutter's
+    // striped overflow bar exactly where a loading state should look calm.
+    child: ListView(
+      children: const [
         SizedBox(height: EjadahSpacing.md),
         Skeleton(width: double.infinity, height: 80),
         SizedBox(height: EjadahSpacing.lg),

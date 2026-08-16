@@ -116,6 +116,12 @@ abstract class EjadahStrings {
   /// **'Add a certificate'**
   String get addCertificate;
 
+  /// No description provided for @addTimeOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Block dates'**
+  String get addTimeOff;
+
   /// No description provided for @addWindow.
   ///
   /// In en, this message translates to:
@@ -224,6 +230,24 @@ abstract class EjadahStrings {
   /// **'AVAILABILITY'**
   String get availabilityLabel;
 
+  /// No description provided for @availabilityLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Students can only book the hours you open here.'**
+  String get availabilityLead;
+
+  /// No description provided for @availabilitySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours saved'**
+  String get availabilitySaved;
+
+  /// No description provided for @availabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hours'**
+  String get availabilityTitle;
+
   /// No description provided for @availabilityWeeklyTotal.
   ///
   /// In en, this message translates to:
@@ -283,6 +307,30 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'YOUR BEST ROUTE'**
   String get bestRoute;
+
+  /// No description provided for @blockAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get blockAfternoon;
+
+  /// No description provided for @blockEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get blockEvening;
+
+  /// No description provided for @blockMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get blockMorning;
+
+  /// No description provided for @blockedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get blockedLabel;
 
   /// No description provided for @bookNow.
   ///
@@ -469,6 +517,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Choose'**
   String get choosePlan;
+
+  /// No description provided for @clashTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions in that time'**
+  String get clashTitle;
 
   /// No description provided for @clearAll.
   ///
@@ -715,6 +769,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Curriculum'**
   String get curriculum;
+
+  /// No description provided for @customHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom hours'**
+  String get customHours;
 
   /// No description provided for @cvAddSection.
   ///
@@ -2036,6 +2096,12 @@ abstract class EjadahStrings {
   /// **'Offline — showing your saved content'**
   String get offlineBanner;
 
+  /// No description provided for @openExtraHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Open extra hours'**
+  String get openExtraHours;
+
   /// No description provided for @openGuide.
   ///
   /// In en, this message translates to:
@@ -2053,6 +2119,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Open roadmap'**
   String get openRoadmap;
+
+  /// No description provided for @openedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra hours'**
+  String get openedLabel;
 
   /// No description provided for @orderPhysical.
   ///
@@ -2870,6 +2942,12 @@ abstract class EjadahStrings {
   /// **'Save as draft'**
   String get saveDraft;
 
+  /// No description provided for @saveHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Save hours'**
+  String get saveHours;
+
   /// No description provided for @saveProg.
   ///
   /// In en, this message translates to:
@@ -3662,6 +3740,30 @@ abstract class EjadahStrings {
   /// **'STUDY TIME'**
   String get timeLabel;
 
+  /// No description provided for @timeOffLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Days you are away. Your weekly hours stay as they are.'**
+  String get timeOffLead;
+
+  /// No description provided for @timeOffNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing blocked.'**
+  String get timeOffNone;
+
+  /// No description provided for @timeOffReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get timeOffReason;
+
+  /// No description provided for @timeOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TIME OFF'**
+  String get timeOffTitle;
+
   /// No description provided for @timezoneNote.
   ///
   /// In en, this message translates to:
@@ -3889,6 +3991,12 @@ abstract class EjadahStrings {
   /// In en, this message translates to:
   /// **'Week {n}'**
   String weekLabel(Object n);
+
+  /// No description provided for @weeklyShapeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY WEEK'**
+  String get weeklyShapeTitle;
 
   /// No description provided for @welcomeBack.
   ///

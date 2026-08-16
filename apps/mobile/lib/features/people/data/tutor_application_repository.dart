@@ -74,7 +74,9 @@ class AvailabilityWindow {
     required this.endsAt,
   });
 
-  /// 1 = Monday … 7 = Sunday, as the server's rules table stores it.
+  /// 0 = Sunday … 6 = Saturday — the schema's convention, matching
+  /// `availability_rules` and the booking calendar, which starts on Sunday in
+  /// both languages.
   final int weekday;
 
   /// `"17:00"`. A wall-clock time in Cairo, like every other time in the

@@ -339,6 +339,12 @@ class TutorApplicationService {
   }
 
   /// Total hours a week across the availability rules.
+  ///
+  /// A rule's `weekday` follows the schema's convention — 0 = Sunday, matching
+  /// `availability_rules` and the booking calendar, which starts on Sunday in
+  /// both languages. Nothing here reads it, but the editor and the approval
+  /// path both do, and two conventions for the same field is how a tutor ends
+  /// up bookable on the wrong day.
   static int _weeklyHours(List<dynamic> rules) {
     var minutes = 0;
     for (final rule in rules) {

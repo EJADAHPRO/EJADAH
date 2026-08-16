@@ -24,6 +24,7 @@ import '../features/learn/presentation/course_detail_screen.dart';
 import '../features/learn/presentation/course_list_screen.dart';
 import '../features/learn/presentation/learn_screen.dart';
 import '../features/notifications/presentation/notifications_screen.dart';
+import '../features/people/presentation/availability_screen.dart';
 import '../features/people/presentation/become_tutor_screen.dart';
 import '../features/people/presentation/earnings_screen.dart';
 import '../features/people/presentation/my_bookings_screen.dart';
@@ -108,6 +109,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         '/teach/apply',
         '/teach/status',
         '/teach/earnings',
+        '/teach/hours',
       };
       final needsAccount = gated.any(state.matchedLocation.startsWith);
       if (needsAccount && !auth.isAuthenticated) {
@@ -305,6 +307,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'earnings',
             builder: (context, state) =>
                 _screen('earnings', const EarningsScreen()),
+          ),
+          GoRoute(
+            path: 'hours',
+            builder: (context, state) =>
+                _screen('availability', const AvailabilityScreen()),
           ),
         ],
       ),

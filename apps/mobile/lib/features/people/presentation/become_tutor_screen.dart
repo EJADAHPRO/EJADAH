@@ -205,8 +205,10 @@ class _PitchSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => EjadahPageBody(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    // Scrollable: a skeleton stands in for content that scrolls, and a fixed
+    // column of blocks overflows on a short viewport — which paints Flutter's
+    // striped overflow bar exactly where a loading state should look calm.
+    child: ListView(
       children: [
         const SizedBox(height: EjadahSpacing.md),
         const Skeleton(width: 180, height: 28),

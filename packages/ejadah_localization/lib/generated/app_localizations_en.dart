@@ -18,6 +18,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get addCertificate => 'Add a certificate';
 
   @override
+  String get addTimeOff => 'Block dates';
+
+  @override
   String get addWindow => 'Add hours';
 
   @override
@@ -75,6 +78,16 @@ class EjadahStringsEn extends EjadahStrings {
   String get availabilityLabel => 'AVAILABILITY';
 
   @override
+  String get availabilityLead =>
+      'Students can only book the hours you open here.';
+
+  @override
+  String get availabilitySaved => 'Hours saved';
+
+  @override
+  String get availabilityTitle => 'Your hours';
+
+  @override
   String availabilityWeeklyTotal(Object hours) {
     return '$hours hours a week';
   }
@@ -106,6 +119,18 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get bestRoute => 'YOUR BEST ROUTE';
+
+  @override
+  String get blockAfternoon => 'Afternoon';
+
+  @override
+  String get blockEvening => 'Evening';
+
+  @override
+  String get blockMorning => 'Morning';
+
+  @override
+  String get blockedLabel => 'Blocked';
 
   @override
   String get bookNow => 'Book a session';
@@ -207,6 +232,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get choosePlan => 'Choose';
+
+  @override
+  String get clashTitle => 'Sessions in that time';
 
   @override
   String get clearAll => 'Clear all';
@@ -337,6 +365,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get curriculum => 'Curriculum';
+
+  @override
+  String get customHours => 'Custom hours';
 
   @override
   String get cvAddSection => 'Add a section';
@@ -1060,6 +1091,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get offlineBanner => 'Offline — showing your saved content';
 
   @override
+  String get openExtraHours => 'Open extra hours';
+
+  @override
   String get openGuide => 'Open the guide';
 
   @override
@@ -1067,6 +1101,9 @@ class EjadahStringsEn extends EjadahStrings {
 
   @override
   String get openRoadmap => 'Open roadmap';
+
+  @override
+  String get openedLabel => 'Extra hours';
 
   @override
   String get orderPhysical => 'Order the physical card';
@@ -1519,6 +1556,9 @@ class EjadahStringsEn extends EjadahStrings {
   String get saveDraft => 'Save as draft';
 
   @override
+  String get saveHours => 'Save hours';
+
+  @override
   String get saveProg => 'Save';
 
   @override
@@ -1960,6 +2000,19 @@ class EjadahStringsEn extends EjadahStrings {
   String get timeLabel => 'STUDY TIME';
 
   @override
+  String get timeOffLead =>
+      'Days you are away. Your weekly hours stay as they are.';
+
+  @override
+  String get timeOffNone => 'Nothing blocked.';
+
+  @override
+  String get timeOffReason => 'Reason (optional)';
+
+  @override
+  String get timeOffTitle => 'TIME OFF';
+
+  @override
   String get timezoneNote => 'Times shown in Cairo time.';
 
   @override
@@ -2080,6 +2133,9 @@ class EjadahStringsEn extends EjadahStrings {
   String weekLabel(Object n) {
     return 'Week $n';
   }
+
+  @override
+  String get weeklyShapeTitle => 'EVERY WEEK';
 
   @override
   String get welcomeBack => 'Welcome back';

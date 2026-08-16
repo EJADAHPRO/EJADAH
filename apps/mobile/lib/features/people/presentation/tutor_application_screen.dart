@@ -3,13 +3,13 @@ import 'package:ejadah_localization/ejadah_localization.dart';
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../uploads/file_field.dart';
 import '../../uploads/upload_repository.dart' as uploads;
 import '../application/tutor_application_controller.dart';
 import '../data/tutor_application_repository.dart';
+import 'widgets/cairo_time.dart';
 
 /// PE-11 — the six-step application.
 ///
@@ -634,7 +634,8 @@ class _AvailabilityEditor extends StatelessWidget {
               ? () => onChanged([
                   ...windows,
                   const AvailabilityWindow(
-                    weekday: 1,
+                    // Sunday, the first day of the booking week.
+                    weekday: 0,
                     startsAt: '17:00',
                     endsAt: '20:00',
                   ),
@@ -686,7 +687,7 @@ class _WindowRow extends StatelessWidget {
             spacing: EjadahSpacing.xxs,
             runSpacing: EjadahSpacing.xxs,
             children: [
-              for (var weekday = 1; weekday <= 7; weekday++)
+              for (var weekday = 0; weekday <= 6; weekday++)
                 EjadahFilterChip(
                   label: _weekdayLabel(context, weekday),
                   isSelected: window.weekday == weekday,
@@ -735,11 +736,8 @@ class _WindowRow extends StatelessWidget {
   /// The weekday's short name, from the locale rather than from seven strings
   /// of our own — `intl` already knows both languages' day names, and a hand
   /// table would be one more thing to keep in sync.
-  static String _weekdayLabel(BuildContext context, int weekday) {
-    // 1 Jan 2024 was a Monday, which is weekday 1 in both this app and Dart.
-    final day = DateTime(2024, 1, weekday);
-    return DateFormat.E(context.language.code).format(day);
-  }
+  static String _weekdayLabel(BuildContext context, int weekday) =>
+      weekdayShortLabel(context, weekday);
 }
 
 class _HourPicker extends StatelessWidget {
@@ -921,8 +919,10 @@ class _FormSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => EjadahPageBody(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    // Scrollable: a skeleton stands in for content that scrolls, and a fixed
+    // column of blocks overflows on a short viewport — which paints Flutter's
+    // striped overflow bar exactly where a loading state should look calm.
+    child: ListView(
       children: [
         const SizedBox(height: EjadahSpacing.md),
         const Skeleton(width: double.infinity, height: 4),

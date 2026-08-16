@@ -1,3 +1,4 @@
+import 'package:ejadah_localization/ejadah_localization.dart';
 import 'package:ejadah_ui/ejadah_ui.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -66,4 +67,19 @@ class TimeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       LtrIsland(child: Text(text, style: style ?? context.type.tabular()));
+}
+
+/// The weekday's short name, `0` = Sunday.
+///
+/// Zero-based from Sunday because that is what `availability_rules` stores and
+/// what the booking calendar shows first, in both languages. Two conventions
+/// for this one number is how a tutor ends up bookable on the wrong day.
+///
+/// The name comes from the locale rather than from seven strings of our own:
+/// `intl` already knows both languages' day names, and a hand table would be
+/// one more thing to keep in step.
+String weekdayShortLabel(BuildContext context, int weekday) {
+  // 7 January 2024 was a Sunday, so adding `weekday` lands on the right day.
+  final day = DateTime(2024, 1, 7 + weekday);
+  return DateFormat.E(context.language.code).format(day);
 }

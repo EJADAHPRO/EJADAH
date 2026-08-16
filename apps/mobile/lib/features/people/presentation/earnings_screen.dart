@@ -443,10 +443,12 @@ class _EarningsSkeleton extends StatelessWidget {
   const _EarningsSkeleton();
 
   @override
-  Widget build(BuildContext context) => const EjadahPageBody(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+  Widget build(BuildContext context) => EjadahPageBody(
+    // Scrollable: a skeleton stands in for content that scrolls, and a fixed
+    // column of blocks overflows on a short viewport — which paints Flutter's
+    // striped overflow bar exactly where a loading state should look calm.
+    child: ListView(
+      children: const [
         SizedBox(height: EjadahSpacing.md),
         Skeleton(width: double.infinity, height: 140),
         SizedBox(height: EjadahSpacing.lg),
